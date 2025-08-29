@@ -1,0 +1,9 @@
+<!-- src/components/SectionHeader.astro -->
+---
+const { title, subtitle } = Astro.props;
+---
+
+<section class="w-full py-10 bg-bg text-center">
+  <h1 class="text-4xl font-bold text-accent">{title}</h1>
+  {subtitle && <p class="mt-2 text-muted">{subtitle}</p>}
+</section>

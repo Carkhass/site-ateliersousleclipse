@@ -1,0 +1,21 @@
+<!-- src/components/ColorPalette.astro -->
+---
+const colors = [
+  { name: 'bg', var: 'bg-bg' },
+  { name: 'surface', var: 'bg-surface' },
+  { name: 'text', var: 'bg-text text-bg' },
+  { name: 'muted', var: 'bg-muted text-bg' },
+  { name: 'accent', var: 'bg-accent text-bg' },
+  { name: 'success', var: 'bg-success text-bg' },
+  { name: 'warning', var: 'bg-warning text-bg' },
+  { name: 'danger', var: 'bg-danger text-bg' }
+];
+---
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+  {colors.map(c => (
+    <div class={`h-20 flex items-center justify-center font-bold ${c.var}`}>
+      {c.name}
+    </div>
+  ))}
+</div>
