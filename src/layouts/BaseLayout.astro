@@ -1,3 +1,7 @@
+---
+import ScriptsFooter from '../components/ScriptsFooter.astro';
+---
+
 <html lang="fr" class="transition-colors duration-300 no-js">
   <head>
     <meta charset="UTF-8" />
@@ -236,15 +240,9 @@
       ?.classList.toggle('scrolled', window.scrollY > 50);
   });
 </script>
+  <!-- Inclusion brute des scripts -->
+  <ScriptsFooter />
 
-    <!-- Reveal: laisse le fallback no-js actif jusqu'à ce que ce script prenne la main -->
-    <script src="/scripts/reveal-on-scroll.js" defer></script>
-
-    <!-- JS Swiper -->
-     <script src="/scripts/swiper-bundle.min.js"></script>
-    <!-- JS GLightbox -->
-     <script src="/scripts/glightbox.min.js"></script>
-    <!-- Script d'init -->
-     <script src="/scripts/swiper-init.js"></script>
-  </body>
+</body>
 </html>
+
