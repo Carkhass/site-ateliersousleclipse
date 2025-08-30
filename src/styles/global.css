@@ -401,6 +401,26 @@ form button[type="submit"]:hover {
 }
 
 /* =========================================================
+   14B. SECTION HÉROS
+   ========================================================= */
+
+.hero-section {
+  background-size: contain; /* ou cover si tu veux recadrer */
+  background-position: center;
+}
+
+.hero-section .hero-subtitle {
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.hero-section .hero-button {
+  display: block;
+  margin: 1rem auto 0;
+}
+
+
+/* =========================================================
    15. SECTION PREMIUM (hors carte 3D)
    ========================================================= */
 
@@ -478,7 +498,6 @@ footer img.qr {
 }
 
 
-
 /* =========================================================
    17. CARTE 3D — STRUCTURE & STYLES DE BASE
    ========================================================= */
@@ -536,14 +555,14 @@ footer img.qr {
     display: block !important;
     opacity: 1 !important;
     transform: none !important;
-    width: 320px; /* ou la largeur que tu veux */
-    aspect-ratio: 650 / 1004; /* garde le ratio de ta carte */
+    width: 320px; /* largeur fixe */
+    aspect-ratio: 650 / 1004; /* ratio de ta carte */
+    margin: 0 auto; /* centrer si besoin */
   }
   .card-3d {
     transform: rotateY(0deg) !important;
   }
 }
-
 
 /* =========================================================
    19. CARTE 3D — COMPORTEMENT MOBILE
