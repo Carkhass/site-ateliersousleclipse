@@ -1,159 +1,91 @@
+/* =========================================================
+   1. IMPORTS & RESET
+   ========================================================= */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ----------------------------
-   IMPORT POLICE
------------------------------ */
+/* Import police principale */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
-/* ----------------------------
-   🎨 THÈME CLAIR
------------------------------ */
+/* =========================================================
+   2. VARIABLES DE THÈME
+   ========================================================= */
+
+/* 🎨 Thème clair */
 :root {
-  --color-bg: #f5f0e6;        /* Crème/parchemin chaud pour le fond */
-  --color-surface: #e8dfd4;   /* Variation plus foncée pour sections */
-  --color-text: #2b1b1d;      /* Texte brun/violine foncé */
-  --color-muted: #8c7b75;     /* Gris chaud légèrement rosé */
-  --color-accent: #e64547;    /* Rouge lumineux identitaire */
+  --color-bg: #f5f0e6;
+  --color-bg-rgb: 245, 240, 230;
+  --color-surface: #e8dfd4;
+  --color-text: #2b1b1d;
+  --color-muted: #8c7b75;
+  --color-accent: #e64547;
   --color-success: #3fa073;
   --color-warning: #d89c00;
   --color-danger: #c94141;
 }
 
-/* ----------------------------
-   🌙 THÈME SOMBRE
------------------------------ */
+/* 🌙 Thème sombre */
 .dark {
-  --color-bg: #1a0d0f;        
-  --color-surface: #2b1518;   
-  --color-text: #f5f0e6;      
-  --color-muted: #b8a8a0;     
-  --color-accent: #e64547;    
-  --color-success: #4ad295;   
-  --color-warning: #f0c020;   
-  --color-danger: #ff5c5c;    
+  --color-bg: #1a0d0f;
+  --color-bg-rgb: 26, 13, 15;
+  --color-surface: #2b1518;
+  --color-text: #f5f0e6;
+  --color-muted: #b8a8a0;
+  --color-accent: #e64547;
+  --color-success: #4ad295;
+  --color-warning: #f0c020;
+  --color-danger: #ff5c5c;
 }
 
-/* ----------------------------
-   UTILITAIRES COULEURS 
------------------------------ */
-.bg-bg       { background-color: var(--color-bg); }
-.bg-surface  { background-color: var(--color-surface); }
-.text-text   { color: var(--color-text); }
-.text-muted  { color: var(--color-muted); }
+/* =========================================================
+   3. UTILITAIRES DE COULEURS
+   ========================================================= */
+
+.bg-bg { background-color: var(--color-bg); }
+.bg-surface { background-color: var(--color-surface); }
+.text-text { color: var(--color-text); }
+.text-muted { color: var(--color-muted); }
 .text-accent { color: var(--color-accent); }
 .hover\:text-accent:hover { color: var(--color-accent); }
-.bg-accent   { background-color: var(--color-accent); }
+.bg-accent { background-color: var(--color-accent); }
 
-/* ----------------------------
-   BODY & TRANSITIONS THEME
------------------------------ */
+/* =========================================================
+   4. STYLES GLOBAUX
+   ========================================================= */
+
 body {
   @apply bg-bg text-text;
   font-family: 'Inter', system-ui, sans-serif;
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* Transitions globales sur éléments colorés */
-.bg-bg,
-.bg-surface,
-.bg-accent,
-.text-text,
-.text-muted,
-.text-accent {
+.bg-bg, .bg-surface, .bg-accent, .text-text, .text-muted, .text-accent {
   transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
 }
 
-/* ----------------------------
-   HOVER BOUTONS & LIENS
------------------------------ */
+/* Empêche les débordements horizontaux */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Images responsives */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* =========================================================
+   5. LIENS & BOUTONS
+   ========================================================= */
+
 button, a {
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
 button:hover, a:hover {
   transform: translateY(-1px);
 }
-
-/* ----------------------------
-   MENU OVERLAY MOBILE
------------------------------ */
-.menu-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 90;
-}
-.menu-overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* ----------------------------
-   ANIMATIONS MENU BURGER
------------------------------ */
-@keyframes fadeScaleIn {
-  0% { opacity: 0; transform: scale(0.95); }
-  100% { opacity: 1; transform: scale(1); }
-}
-@keyframes fadeScaleOut {
-  0% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(0.95); }
-}
-.menu {
-  position: fixed;
-  top: 0; right: 0;
-  width: 280px;
-  height: 100%;
-  background-color: var(--color-surface);
-  box-shadow: -4px 0 20px rgba(0,0,0,0.2);
-  z-index: 100;
-  transform: scale(0.95);
-  opacity: 0;
-  pointer-events: none;
-}
-.menu.open {
-  animation: fadeScaleIn 0.3s ease forwards;
-  pointer-events: auto;
-}
-.menu.closing {
-  animation: fadeScaleOut 0.25s ease forwards;
-}
-
-/* ----------------------------
-   ANIMATION FADE IN GLOBALE
------------------------------ */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-in {
-  animation: fadeIn 1.2s ease-out both;
-}
-
-/* ----------------------------
-   HERO & IMAGES
------------------------------ */
-.hero-parallax { position: relative; overflow: hidden; }
-.parallax-bg { position: absolute; inset: 0; will-change: transform, opacity; }
-.hero-img { max-height: 60vh; width: 100%; }
-
-/* Fade in vers le haut */
-.fade-in {
-  opacity: 0; transform: translateY(10px);
-  animation: fadeInUp 0.8s ease forwards;
-}
-@keyframes fadeInUp {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Zoom subtil */
-.img-zoom { transition: transform 0.4s ease; }
-.img-zoom:hover { transform: scale(1.02); }
 
 /* Bouton premium */
 .cta-premium {
@@ -166,248 +98,398 @@ button:hover, a:hover {
   box-shadow: 0 6px 14px rgba(0,0,0,0.25);
 }
 
-/* ----------------------------
-   PARALLAXE - CIBLE INTERNE
------------------------------ */
-[data-parallax-target] {
-  will-change: transform;
-  transform: scale(1.1);
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
-  display: block;
+/* =========================================================
+   6. LAYOUTS GÉNÉRAUX
+   ========================================================= */
+
+/* Conteneur principal centré avec largeur max */
+.container {
+  @apply mx-auto px-4;
+  max-width: 1280px;
 }
 
-/* Dégradé overlay (réutilisable) */
-.parallax-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.28), rgba(0,0,0,0.55));
-  pointer-events: none;
+/* Grilles utilitaires */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
 }
 
-/* Contenu centré dans la section parallaxe */
-.parallax-content {
+/* =========================================================
+   7. HEADER FIXE & NAVIGATION
+   ========================================================= */
+
+/* Header collé en haut avec effet de transparence et blur */
+header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 9999;
+  background-color: rgba(var(--color-bg-rgb), 0.2);
+  backdrop-filter: blur(8px);
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+html.dark header {
+  background-color: rgba(26, 13, 15, 0.2);
+}
+header.scrolled {
+  background-color: rgba(var(--color-bg-rgb), 0.6);
+}
+html.dark header.scrolled {
+  background-color: rgba(26, 13, 15, 0.6);
+}
+
+/* Décalage du contenu pour compenser la hauteur du header */
+main {
+  padding-top: 5rem;
+}
+
+/* Liens de navigation */
+header nav a {
+  color: var(--color-text);
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  transition: color 0.3s ease;
+}
+header nav a:hover {
+  color: var(--color-accent);
+}
+
+/* Menu burger mobile */
+.menu-toggle {
+  display: none;
+}
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+  nav ul {
+    display: none;
+  }
+  nav.open ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* =========================================================
+   8. SECTIONS PLEINE LARGEUR & PARALLAX
+   ========================================================= */
+
+.section-fullwidth {
+  width: 100%;
   position: relative;
-  z-index: 2;
-  height: 100%;
-  display: flex; align-items: center; justify-content: center;
-  text-align: center; color: white;
-  padding: 1rem;
 }
 
-/* ----------------------------
-   BLOC DÉDIÉ .parallax-section
-   (NOUVEAU + OPTIMISÉ)
------------------------------ */
+/* Section parallaxe */
 .parallax-section {
   position: relative;
-  width: 100vw;             /* pleine largeur */
   overflow: hidden;
-  will-change: transform;   /* optimise le rendu */
-  backface-visibility: hidden;
-  -webkit-transform: translateZ(0); /* GPU boost */
 }
-.parallax-section [data-parallax-target] {
-  position: absolute; top: 0; left: 0;
-  width: 100%; height: 100%;
-  transform-origin: center;
-  transition: transform 0.1s ease-out; /* fluidité */
+.parallax-section img {
+  will-change: transform;
+  transition: transform 0.2s ease-out;
 }
-/* Overlay générique si besoin */
-.parallax-section::after {
+
+/* Overlay sombre pour lisibilité */
+.parallax-section::before {
   content: "";
-  position: absolute; inset: 0;
-  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1;
+}
+
+/* Contenu au-dessus de l'image */
+.parallax-section > .relative {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================================
+   9. ANIMATIONS GLOBALES
+   ========================================================= */
+
+/* Apparition fade + slide up */
+.fade-slide-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-slide-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Variantes */
+.var-slide-left {
+  transform: translateX(-20px);
+}
+.var-slide-left.visible {
+  transform: translateX(0);
+}
+.var-zoom-in {
+  transform: scale(0.95);
+}
+.var-zoom-in.visible {
+  transform: scale(1);
+}
+
+/* Halo lumineux pour titres */
+.halo {
+  text-shadow: 0 0 10px var(--color-accent), 0 0 20px var(--color-accent);
+}
+
+/* Animation lettre par lettre (typewriter) */
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--color-accent);
+  animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
+}
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+@keyframes blink {
+  50% { border-color: transparent }
+}
+
+
+/* =========================================================
+   10. BOUTONS & LIENS SPÉCIFIQUES
+   ========================================================= */
+
+/* Bouton clair */
+.btn-light {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+.btn-light:hover {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+/* Bouton sombre */
+.btn-dark {
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+.btn-dark:hover {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+/* =========================================================
+   11. FORMULAIRES
+   ========================================================= */
+
+input, textarea, select {
+  border: none;
+  outline: none;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  background-color: rgba(255,255,255,0.9);
+  color: var(--color-text);
+  transition: box-shadow 0.2s ease;
+}
+input:focus, textarea:focus, select:focus {
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+/* Bouton d'envoi de formulaire */
+form button[type="submit"] {
+  display: inline-block;
+  background-color: var(--color-accent);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+form button[type="submit"]:hover {
+  background-color: var(--color-accent-dark);
+}
+
+
+/* =========================================================
+   12. SLIDERS (Swiper.js)
+   ========================================================= */
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+.swiper-slide {
+  width: auto; /* permet d'afficher les slides latérales */
+}
+.swiper-pagination-bullet {
+  background-color: var(--color-accent);
+}
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--color-accent);
+}
+.hamon-swiper .swiper-slide {
+  width: auto; /* conserve la largeur naturelle */
+}
+
+.hamon-swiper .swiper-slide img {
+  display: block;
+  width: 100%;
+  height: auto; /* conserve le ratio */
+  object-fit: cover; /* ou contain selon rendu souhaité */
+  max-height: 500px; /* limite la hauteur sur desktop */
+}
+
+
+/* =========================================================
+   13. GALERIES & IMAGES
+   ========================================================= */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+.gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 0.375rem;
+  transition: transform 0.3s ease;
+}
+.gallery img:hover {
+  transform: scale(1.03);
+}
+
+/* =========================================================
+   14. SECTION INSPIRATION
+   ========================================================= */
+
+.inspiration-section {
+  background-color: var(--color-surface);
+  padding: 4rem 0;
+}
+.inspiration-section h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+.inspiration-section .inspiration-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* =========================================================
+   15. SECTION PREMIUM (hors carte 3D)
+   ========================================================= */
+
+.premium-section {
+  position: relative;
+  color: #fff;
+  text-align: center;
+}
+.premium-section .cta-premium {
+  background-color: var(--color-accent);
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+.premium-section .cta-premium:hover {
+  background-color: #8c2f2f;
+}
+.premium-section .premium-text {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+
+/* =========================================================
+   16. EFFETS VISUELS SPÉCIFIQUES
+   ========================================================= */
+
+/* Zoom subtil sur portrait */
+.img-zoom {
+  transition: transform 0.4s ease;
+}
+.img-zoom:hover {
+  transform: scale(1.02);
+}
+
+/* QR codes dans le footer */
+footer img.qr {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  transform-origin: center;
+  width: 160px !important;
+  height: 160px !important;
+  min-width: 160px !important;
+  min-height: 160px !important;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 14px var(--color-accent), 0 0 28px var(--color-accent);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.group:hover img.qr {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* Harmonisation alignement texte sur mobile */
+.section-centrale,
+.section-2,
+.inspiration-section {
+  text-align: left;
 }
 
 @media (max-width: 768px) {
-  .parallax-section { height: 35vh; } /* réduit hauteur */
-  .parallax-bg { background-attachment: scroll; }
+  .section-centrale,
+  .section-2,
+  .inspiration-section {
+    text-align: center;
+  }
 }
 
-/* Effet fade + légère montée pour le titre */
-.fade-in-up {
-  animation: fadeInUp 0.8s ease forwards;
-}
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
 
-/* Apparition progressive de chaque lettre */
-.letter {
-  opacity: 0;
-  display: inline-block;
-  animation: fadeInLetter 0.04s forwards; /* durée de l'anim d'une lettre */
-}
-@keyframes fadeInLetter {
-  to { opacity: 1; }
-}
 
-/* Animation du halo (même couleur que le header) */
-@keyframes glowPulse {
-  0%   { text-shadow: 0 0 4px var(--color-accent),
-                     0 0 8px var(--color-accent),
-                     0 0 12px var(--color-accent); }
-  50%  { text-shadow: 0 0 6px var(--color-accent),
-                     0 0 12px var(--color-accent),
-                     0 0 18px var(--color-accent); }
-  100% { text-shadow: 0 0 4px var(--color-accent),
-                     0 0 8px var(--color-accent),
-                     0 0 12px var(--color-accent); }
-}
+/* =========================================================
+   17. CARTE 3D — STRUCTURE & STYLES DE BASE
+   ========================================================= */
 
-/* Style du halo fixe */
-#hero-title.halo {
-  text-shadow: 0 0 10px var(--color-accent),
-               0 0 20px var(--color-accent),
-               0 0 40px var(--color-accent);
-}
-
-/* Apparition fluide + halo fixe */
-#hero-title {
-  opacity: 0;                   /* invisible au départ */
-  transform: translateY(10px);  /* léger décalage vers le bas */
-  transition:
-    opacity 1.5s ease-out,
-    transform 1.5s ease-out,
-    text-shadow 1.5s ease-out;  /* fondu du halo */
-}
-
-/* Quand on déclenche l'apparition */
-#hero-title.fade-in-up {
-  opacity: 1;
-  transform: translateY(0);
-  text-shadow:
-    0 0 10px var(--color-accent),
-    0 0 20px var(--color-accent),
-    0 0 40px var(--color-accent);
-}
-
-/* Effet de zoom et ombre douce au survol des images hamon */
-.hamon-photo {
-  @apply w-full h-full object-cover transition-transform duration-500;
-}
-.hamon-photo:hover {
-  transform: scale(1.08);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
-
-/* Fallback si JS off */
-html.no-js .reveal-on-scroll,
-html.no-js .reveal-on-scroll > * {
-  opacity: 1 !important;
-  transform: none !important;
-  transition: none !important;
-}
-
-/* Le conteneur ne s’anime pas: il reste neutre */
-.reveal-on-scroll {
-  opacity: 1;            /* clé: le parent n'est JAMAIS transparent */
-  transform: none;
-  transition: none;
-}
-
-/* État initial des enfants — par défaut slide-up */
-.reveal-on-scroll > * {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: none; /* supprime toute anim au load */
-}
-
-/* Variante slide-left */
-.reveal-on-scroll.var-slide-left > * {
-  transform: translateX(-20px);
-}
-
-/* Variante zoom-in */
-.reveal-on-scroll.var-zoom-in > * {
-  transform: scale(0.95);
-}
-
-/* État final — visible avec transition fluide */
-.reveal-on-scroll > *.visible {
-  opacity: 1;
-  transform: none;
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-/* Effet de zoom et ombre douce au survol des images hamon
-   + recadrage visuel adaptatif sur la zone centrale */
-.hamon-photo {
-  @apply w-full object-cover transition-transform duration-500;
-  height: clamp(150px, 25vw, 220px); /* min 150px, idéal 25% de la largeur viewport, max 220px */
-  object-position: center 50%;       /* centre verticalement (axe Y) */
-}
-
-.hamon-photo:hover {
-  transform: scale(1.08);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
-
-/* Animation fade + slide-up pour les éléments qui apparaissent */
-.fade-slide-up {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.fade-slide-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Optionnel : petit délai pour certains éléments */
-.fade-slide-up.delay-150 {
-  transition-delay: 0.15s;
-}
-
-/* Bloc premium : centrer l'image sur l'emballage */
-.premium-bg img {
-  object-position: center 80%; /* centre horizontalement ET verticalement */
-}
-
-.fade-slide-up {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-.fade-slide-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.fade-slide-up.delay-150 { transition-delay: 0.15s; }
-.fade-slide-up.delay-300 { transition-delay: 0.3s; }
-
-/* Carte 3D — largeur par défaut (desktop) */
 .card-3d-wrapper {
   perspective: 1000px;
-  width: 320px; /* largeur de référence desktop */
+  width: 100%;
   aspect-ratio: 650 / 1004;
   display: flex;
   align-items: center;
-  animation: floaty 5s ease-in-out infinite;
-}
-
-/* Desktop : la carte prend sa taille de référence */
-@media (min-width: 769px) {
-  .card-3d-wrapper {
-    width: 320px;
-    aspect-ratio: 650 / 1004; /* garde les proportions */
-  }
-}
-
-@media (min-width: 769px) {
-  .card-3d {
-    transform: rotateY(0deg);
-  }
-}
-
-/* Limite uniquement sur mobile */
-@media (max-width: 768px) {
-  .card-3d-wrapper {
-    max-width: 220px;
-    margin-bottom: 1.5rem;
-  }
+  animation: floaty 5s ease-in-out infinite; /* flottement léger */
 }
 
 .card-3d {
@@ -418,7 +500,6 @@ html.no-js .reveal-on-scroll > * {
   cursor: pointer;
   will-change: transform, box-shadow;
   transition: transform 0.45s ease, box-shadow 0.25s ease;
-  /* Ombre de base (le JS la renforce dynamiquement) */
   box-shadow: 0 20px 40px rgba(0,0,0,0.35);
 }
 
@@ -434,95 +515,57 @@ html.no-js .reveal-on-scroll > * {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain; /* aucune coupe */
-}
-.card-back { transform: rotateY(180deg); }
-
-/* Reflet vernis: plus de transform, aligné via background-position */
-.card-reflection {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: inherit;
-  mix-blend-mode: screen;
-  /* Dégradé doux qui "glisse" horizontalement */
-  background: linear-gradient(120deg,
-              rgba(255,255,255,0.5) 0%,
-              rgba(255,255,255,0.18) 35%,
-              rgba(255,255,255,0.0) 70%);
-  background-size: 200% 100%;
-  background-position: var(--reflectX, 50%) 0%;
-  transition: background-position 0.15s ease-out;
-  will-change: background-position;
+  object-fit: contain;
 }
 
-/* Lueur pulsée du logo (réglable) */
-.logo-glow {
-  /* Positionne au pixel près sur la zone du logo */
-  --logo-x: 64%;   /* Ajuste la position X du centre de la lueur */
-  --logo-y: 11%;   /* Ajuste la position Y du centre de la lueur */
-  --logo-size: 24%; /* Diamètre relatif par rapport à la carte */
-
-  position: absolute;
-  left: var(--logo-x);
-  top: var(--logo-y);
-  width: var(--logo-size);
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  border-radius: 999px;
-  mix-blend-mode: screen;
-  background:
-    radial-gradient(circle at 50% 50%,
-      rgba(255,255,255,0.85) 0%,
-      rgba(255,255,255,0.4) 35%,
-      rgba(255,255,255,0.0) 70%),
-    radial-gradient(circle at 50% 50%,
-      rgba(230,69,71,0.55) 0%,
-      rgba(230,69,71,0.25) 40%,
-      rgba(230,69,71,0.0) 75%);
-  opacity: 0; /* pilotée par JS selon flip */
-
-  animation:
-    glowPulse 2.4s ease-in-out infinite alternate,
-    glowDrift 4.8s ease-in-out infinite alternate,
-    glowFlash 6s ease-in-out infinite; /* flash ponctuel */
+.card-back {
+  transform: rotateY(180deg);
 }
 
-@keyframes glowPulse {
-  from { transform: translate(-50%, -50%) scale(0.94); opacity: 0.35; filter: blur(0.6px); }
-  to   { transform: translate(-50%, -50%) scale(1.06); opacity: 0.75; filter: blur(1.4px); }
-}
-
-@keyframes glowDrift {
-  from { transform: translate(calc(-50% + 0.4px), calc(-50% - 0.4px)) scale(1); }
-  to   { transform: translate(calc(-50% - 0.4px), calc(-50% + 0.4px)) scale(1); }
-}
-
-/* Flash court et intense */
-@keyframes glowFlash {
-  0%, 85%, 100% { filter: brightness(1) blur(1px); }
-  88% { filter: brightness(2.5) blur(1.2px); }
-  90% { filter: brightness(3) blur(1.4px); }
-  92% { filter: brightness(2) blur(1.2px); }
+/* Désactivation de l'animation hintFlip après clic */
+.card-3d.clicked {
+  animation: none !important;
 }
 
 
-/* Flottement permanent */
-@keyframes floaty {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-6px); }
-}
-
-@media (max-width: 768px) {
-  .premium-section {
-    height: auto !important; /* plus de hauteur figée */
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+/* =========================================================
+   18. CARTE 3D — COMPORTEMENT DESKTOP
+   ========================================================= */
+@media (min-width: 1024px) {
+  .card-3d-wrapper {
+    display: block !important;
+    opacity: 1 !important;
+    transform: none !important;
+    width: 320px; /* ou la largeur que tu veux */
+    aspect-ratio: 650 / 1004; /* garde le ratio de ta carte */
+  }
+  .card-3d {
+    transform: rotateY(0deg) !important;
   }
 }
 
-/* Invitation au clic sur la carte mobile */
+
+/* =========================================================
+   19. CARTE 3D — COMPORTEMENT MOBILE
+   ========================================================= */
+@media (max-width: 768px) {
+  .card-3d-wrapper {
+    max-width: 220px;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* =========================================================
+   20. ANIMATIONS SPÉCIFIQUES
+   ========================================================= */
+
+/* Flottement permanent */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+  50% { transform: translateY(-4px) rotateX(0deg) rotateY(0deg); }
+}
+
+/* Invitation au clic sur mobile */
 @media (max-width: 768px) {
   .hint-flip .card-3d {
     animation: hintFlip 1s ease-out;
@@ -530,325 +573,21 @@ html.no-js .reveal-on-scroll > * {
   }
 
   @keyframes hintFlip {
-    0%   { transform: rotateY(0deg) rotateX(0deg); }
-    30%  { transform: rotateY(20deg) rotateX(0deg); }
-    60%  { transform: rotateY(-15deg) rotateX(0deg); }
-    100% { transform: rotateY(0deg) rotateX(0deg); }
+    0%   { transform: rotateY(0deg); }
+    30%  { transform: rotateY(25deg); }
+    60%  { transform: rotateY(-20deg); }
+    100% { transform: rotateY(0deg); }
   }
 }
 
+/* =========================================================
+   21. OVERRIDES & AJUSTEMENTS FINALS
+   ========================================================= */
 
-
-
-/* ===============================
-   HEADER PREMIUM TRANSPARENT - FIX EDGE + STICKY
-================================= */
-/* HEADER COLLÉ AU VIEWPORT */
-header {
-  position: fixed;             /* plus de dépendance au contexte sticky */
-  top: 0;
-  left: 0;
-  width: 100%;                  /* largeur safe */
-  box-sizing: border-box;
-  z-index: 9999;                /* au-dessus de tout */
-  background-color: rgba(var(--color-bg-rgb, 255,255,255), 0.2);
-  backdrop-filter: blur(8px);
-  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-}
-
-/* Version thème sombre */
-html.dark header {
-  background-color: rgba(26, 26, 26, 0.2);
-}
-
-/* État au scroll */
-header.scrolled {
-  background-color: rgba(var(--color-bg-rgb, 255,255,255), 0.6);
-}
-html.dark header.scrolled {
-  background-color: rgba(26, 26, 26, 0.6);
-}
-
-/* Compense la hauteur du header pour le contenu */
-body {
-  padding-top: 0; /* plus de padding sur body */
-}
-
-main {
-  padding-top: 5rem; /* hauteur du header */
-}
-
-/* Contenu interne centré */
-.container {
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-/* Halo permanent identique au logo */
-header .site-title {
-  text-shadow:
-    0 0 10px var(--color-accent),
-    0 0 20px var(--color-accent);
-  transition: text-shadow 0.3s ease;
-}
-
-/* Animation "pulse" synchronisée au survol du bloc logo+texte */
-header .flex.items-center:hover .site-title {
-  animation: textGlowPulse 1.5s ease-out;
-}
-
-@keyframes textGlowPulse {
-  0% {
-    text-shadow:
-      0 0 10px var(--color-accent),
-      0 0 20px var(--color-accent);
-  }
-  50% {
-    text-shadow:
-      0 0 16px var(--color-accent),
-      0 0 32px var(--color-accent);
-  }
-  100% {
-    text-shadow:
-      0 0 10px var(--color-accent),
-      0 0 20px var(--color-accent);
-  }
-}
-
-
-
-/* ===============================
-   MENU MOBILE
-================================= */
-.menu-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 90;
-}
-
-.menu-overlay.active {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.menu {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 16rem;
-  background-color: var(--color-surface);
-  transform: translateX(100%);
-  transition: transform 0.3s ease;
-  z-index: 100;
-}
-
-.menu.open {
-  transform: translateX(0);
-}
-
-.menu a {
-  font-weight: 500;
-  padding: 0.5rem 0;
-}
-
-/* ===============================
-   BOUTONS HEADER
-================================= */
-#theme-toggle,
-#menu-toggle {
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-#theme-toggle:hover,
-#menu-toggle:hover {
-  transform: translateY(-1px);
-}
-
-/* ===============================
-   QRCODES FOOTER
-================================= */
-/* Icônes footer */
-footer svg {
-  transition: transform 0.3s ease, color 0.3s ease;
-}
-footer a:hover svg {
-  color: var(--color-accent);
-}
-
-/* QR codes - Carré parfait + glow */
-/* QR codes footer */
-footer img.qr {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%) scale(0.95); /* centrage figé + scale initial */
-  transform-origin: center;
-  width: 160px !important;
-  height: 160px !important;
-  min-width: 160px !important;
-  min-height: 160px !important;
-  aspect-ratio: 1 / 1;
-  object-fit: contain;
-  background: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 0 14px var(--color-accent), 0 0 28px var(--color-accent);
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease; /* pas de translate animé */
-  animation: none; /* pas d'anim par défaut */
-}
-
-/* Apparition + glow animé puissant au survol */
-.group:hover img.qr {
-  opacity: 1;
-  transform: translateX(-50%) scale(1); /* scale seul */
-  animation: qrGlowPulse 1.8s ease-out forwards;
-}
-
-/* Keyframes du glow pulse */
-@keyframes qrGlowPulse {
-  0% {
-    box-shadow: 0 0 0 var(--color-accent), 0 0 0 var(--color-accent);
-    transform: translateX(-50%) scale(0.95);
-  }
-  25% {
-    box-shadow: 0 0 18px var(--color-accent), 0 0 36px var(--color-accent);
-    transform: translateX(-50%) scale(1.05);
-  }
-  50% {
-    box-shadow: 0 0 22px var(--color-accent), 0 0 44px var(--color-accent);
-    transform: translateX(-50%) scale(1);
-  }
-  75% {
-    box-shadow: 0 0 18px var(--color-accent), 0 0 36px var(--color-accent);
-  }
-  100% {
-    box-shadow: 0 0 14px var(--color-accent), 0 0 28px var(--color-accent);
-  }
-}
-
-/* --- Carousel Hamon --- */
-.hamon-swiper {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.hamon-photo {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 0.75rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-}
-
-/* Boutons Swiper */
-.hamon-swiper .swiper-button-next,
-.hamon-swiper .swiper-button-prev {
-  color: #fff;
-  background: rgba(0,0,0,0.35);
-  padding: 1.25rem;
-  border-radius: 50%;
-  transition: background 0.3s ease;
-  z-index: 5;
-}
-.hamon-swiper .swiper-button-next:hover,
-.hamon-swiper .swiper-button-prev:hover {
-  background: rgba(0,0,0,0.6);
-}
-
-/* Pagination dots */
-.hamon-swiper .swiper-pagination-bullet {
-  background: #fff;
-  opacity: 0.6;
-}
-.hamon-swiper .swiper-pagination-bullet-active {
-  opacity: 1;
-}
-
-/* Effet bokeh Lightbox */
-.goverlay {
-  backdrop-filter: blur(8px);
-  background: rgba(0,0,0,0.6) !important;
-}
-
-/* Largeur des slides (desktop par défaut) */
-.hamon-swiper .swiper-slide {
-  width: 480px;
-  position: relative;
-  transition: transform 0.3s ease;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-/* Image dans la slide */
-.hamon-swiper .swiper-slide img.hamon-photo {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Voile sur les slides voisines */
-.hamon-swiper .swiper-slide:not(.swiper-slide-active)::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.35);
-  pointer-events: none;
-  border-radius: 8px;
-}
-
-/* Zoom sur la slide entière (image + voile) */
-.hamon-swiper .swiper-slide:not(.swiper-slide-active):hover {
-  transform: scale(1.05);
-}
-
-/* Pas de voile sur la slide centrale */
-.hamon-swiper .swiper-slide-active::after {
-  background: rgba(0,0,0,0);
-}
-
-/* --- Responsive --- */
-
-/* Tablettes : slides un peu plus petites */
-@media (max-width: 1024px) {
-  .hamon-swiper .swiper-slide {
-    width: 360px;
-  }
-}
-
-/* Mobiles : une seule slide visible, largeur quasi pleine */
+/* Correction des marges sur petits écrans */
 @media (max-width: 640px) {
-  .hamon-swiper .swiper-slide {
-    width: 85%; /* laisse un petit aperçu des voisines */
-  }
-
-  /* Réduire la taille des boutons pour mobile */
-  .hamon-swiper .swiper-button-next,
-  .hamon-swiper .swiper-button-prev {
-    padding: 0.75rem;
-  }
-}
-
-/* --- Responsive bloc premium --- */
-@media (max-width: 768px) {
-  .premium-section .flex {
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-
-  .premium-section .card-3d-wrapper {
-    max-width: 220px; /* largeur limitée uniquement sur mobile */
-    margin-bottom: 1.5rem;
-  }
-
-  .premium-section form {
-    max-width: 90%;
+  .px-4 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
 }

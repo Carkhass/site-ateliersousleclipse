@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     breakpoints: {
       // Tablettes et + (>= 1024px)
       1024: {
-        slidesPerView: 'auto',
+        slidesPerView: 'auto', // conserve l'affichage des slides latérales
         spaceBetween: 60
       },
       // Mobiles (< 1024px et >= 640px)
