@@ -16,7 +16,7 @@
   };
 
   window.addEventListener('load', () => {
-    // Retirer les classes de blocage initial
+    // Retire les classes de blocage initial
     document.querySelectorAll('.hidden-init').forEach(el => el.classList.remove('hidden-init'));
     document.documentElement.classList.remove('no-js');
 
@@ -28,7 +28,7 @@
           obs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0, root: null, rootMargin: '0px 0px -10% 0px' });
+    }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
 
     const observeAll = () => {
       document.querySelectorAll('.fade-slide-up, .reveal-on-scroll').forEach(el => observer.observe(el));
@@ -36,7 +36,13 @@
 
     // Observation initiale
     observeAll();
-    console.log('Observing', document.querySelectorAll('.reveal-on-scroll').length, 'reveal-on-scroll elements and', document.querySelectorAll('.fade-slide-up').length, 'fade-slide-up elements');
+    console.log(
+      'Observing',
+      document.querySelectorAll('.reveal-on-scroll').length,
+      'reveal-on-scroll elements and',
+      document.querySelectorAll('.fade-slide-up').length,
+      'fade-slide-up elements'
+    );
 
     // Observer les ajouts dynamiques
     const mo = new MutationObserver(observeAll);

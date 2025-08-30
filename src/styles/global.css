@@ -1,3 +1,6 @@
+/* Import police principale */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
 /* =========================================================
    1. IMPORTS & RESET
    ========================================================= */
@@ -6,8 +9,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import police principale */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 /* =========================================================
    2. VARIABLES DE THÈME
