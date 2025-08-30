@@ -396,6 +396,11 @@ html.no-js .reveal-on-scroll > * {
   }
 }
 
+@media (min-width: 769px) {
+  .card-3d {
+    transform: rotateY(0deg);
+  }
+}
 
 /* Limite uniquement sur mobile */
 @media (max-width: 768px) {
@@ -845,24 +850,5 @@ footer img.qr {
 
   .premium-section form {
     max-width: 90%;
-  }
-}
-
-@media (min-width: 769px) {
-  .card-3d-wrapper {
-    width: 320px;
-    height: auto;
-    outline: 2px solid red; /* debug visuel */
-  }
-
-  .card-3d {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-
-  .card-face {
-    position: relative; /* temporairement, pour voir si ça force l'affichage */
-    backface-visibility: visible !important; /* pour vérifier si c'est ça qui masque */
   }
 }
