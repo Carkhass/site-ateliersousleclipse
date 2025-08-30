@@ -95,7 +95,7 @@
               // Boucle toutes les 3 secondes
               const intervalId = setInterval(() => {
                 cardWrapper.classList.remove('hint-flip');
-                void cardWrapper.offsetWidth; // force un reflow pour relancer l'anim
+                void cardWrapper.offsetWidth; // force un reflow
                 cardWrapper.classList.add('hint-flip');
               }, 3000);
 

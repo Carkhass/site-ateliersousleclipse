@@ -509,18 +509,19 @@ html.no-js .reveal-on-scroll > * {
 
 /* Invitation au clic sur la carte mobile */
 @media (max-width: 768px) {
-  /* On anime directement .card-3d pour que l'effet soit visible */
   .hint-flip .card-3d {
     animation: hintFlip 1s ease-out;
+    transform-style: preserve-3d;
   }
 
   @keyframes hintFlip {
-    0%   { transform: rotateY(0deg); }
-    30%  { transform: rotateY(25deg); }
-    60%  { transform: rotateY(-20deg); }
-    100% { transform: rotateY(0deg); }
+    0%   { transform: rotateY(0deg) rotateX(0deg); }
+    30%  { transform: rotateY(20deg) rotateX(0deg); }
+    60%  { transform: rotateY(-15deg) rotateX(0deg); }
+    100% { transform: rotateY(0deg) rotateX(0deg); }
   }
 }
+
 
 
 
