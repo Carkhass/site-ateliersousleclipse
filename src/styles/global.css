@@ -379,19 +379,21 @@ html.no-js .reveal-on-scroll > * {
 .fade-slide-up.delay-300 { transition-delay: 0.3s; }
 
 /* Carte 3D: dimensions réduites + ratio exact */
-/* Dimensions déjà OK d’après tes derniers réglages */
+/* Carte 3D — largeur par défaut (desktop) */
 .card-3d-wrapper {
   perspective: 1000px;
   width: 100%;
   aspect-ratio: 650 / 1004;
   display: flex;
   align-items: center;
-  animation: floaty 5s ease-in-out infinite; /* flottement sur le wrapper */
+  animation: floaty 5s ease-in-out infinite;
 }
 
+/* Limite uniquement sur mobile */
 @media (max-width: 768px) {
   .card-3d-wrapper {
     max-width: 220px;
+    margin-bottom: 1.5rem;
   }
 }
 
