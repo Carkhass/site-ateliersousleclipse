@@ -1,18 +1,22 @@
 ---
-import '../styles/global.css';
-import '/styles/swiper-bundle.min.css';
-import '/styles/glightbox.min.css';
+import '../styles/global.css'; // ton CSS principal
+import ScriptsFooter from '../components/ScriptsFooter.astro';
 ---
 
-<html lang="fr" class="transition-colors duration-300 no-js">
+<html lang="fr">
   <head>
-    <!-- Métas de base -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>L'Atelier sous l'éclipse</title>
 
-    <!-- Titre global -->
-    <title>L'Atelier sous l’éclipse</title>
+    <!-- Meta SEO -->
+    <meta name="description" content="L'Atelier sous l'éclipse - Coutellerie artisanale" />
+    <meta name="author" content="Yann" />
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <!-- Plus besoin des <link> CSS Swiper/GLightbox ici -->
   </head>
 
   <body class="flex flex-col min-h-screen font-sans bg-bg text-text">

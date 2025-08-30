@@ -1,14 +1,42 @@
-<!-- src/components/ScriptsFooter.astro -->
-<!-- Inclusion brute des scripts depuis /public/scripts/ -->
+---
+import Swiper from 'swiper';
+import GLightbox from 'glightbox';
 
-<!-- Effets au scroll -->
-<script src="/scripts/reveal-on-scroll.js" defer is:inline></script>
+// Import des CSS directement depuis node_modules
+import 'swiper/css';
+import 'glightbox/dist/css/glightbox.min.css';
+---
 
-<!-- Swiper (slider) -->
-<script src="/scripts/swiper-bundle.min.js" is:inline></script>
+<!-- Scripts spécifiques au site -->
+<script src="/scripts/reveal-on-scroll.js" defer></script>
+<script src="/scripts/swiper-init.js" defer></script>
+<script src="/scripts/layout/header-scroll.js" defer></script>
+<script src="/scripts/layout/menu-mobi.js" defer></script>
+<script src="/scripts/layout/parallax.js" defer></script>
+<script src="/scripts/layout/theme-toggle.js" defer></script>
 
-<!-- GLightbox (lightbox pour galerie) -->
-<script src="/scripts/glightbox.min.js" is:inline></script>
+<!-- Initialisation Swiper et GLightbox -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Swiper : si tu as plusieurs carousels, adapte la config ici
+    const swipers = document.querySelectorAll('.swiper');
+    swipers.forEach(swiperEl => {
+      new Swiper(swiperEl, {
+        slidesPerView: 'auto',
+        spaceBetween: 20,
+        loop: true,
+        centeredSlides: true,
+        grabCursor: true,
+        breakpoints: {
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 }
+        }
+      });
+    });
 
-<!-- Script d'initialisation de Swiper + GLightbox -->
-<script src="/scripts/swiper-init.js" is:inline></script>
+    // GLightbox
+    GLightbox({
+      selector: '.glightbox'
+    });
+  });
+</script>
