@@ -383,7 +383,6 @@ html.no-js .reveal-on-scroll > * {
 .card-3d-wrapper {
   perspective: 1000px;
   width: 100%;
-  max-width: 260px;
   aspect-ratio: 650 / 1004;
   display: flex;
   align-items: center;
@@ -499,22 +498,6 @@ html.no-js .reveal-on-scroll > * {
     height: auto !important; /* plus de hauteur figée */
     padding-top: 2rem;
     padding-bottom: 2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .premium-section .flex {
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-
-  .premium-section .card-3d-wrapper {
-    max-width: 220px; /* un peu plus compact */
-    margin-bottom: 1.5rem;
-  }
-
-  .premium-section form {
-    max-width: 90%;
   }
 }
 
@@ -826,5 +809,22 @@ footer img.qr {
   .hamon-swiper .swiper-button-next,
   .hamon-swiper .swiper-button-prev {
     padding: 0.75rem;
+  }
+}
+
+/* --- Responsive bloc premium --- */
+@media (max-width: 768px) {
+  .premium-section .flex {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .premium-section .card-3d-wrapper {
+    max-width: 220px; /* largeur limitée uniquement sur mobile */
+    margin-bottom: 1.5rem;
+  }
+
+  .premium-section form {
+    max-width: 90%;
   }
 }
