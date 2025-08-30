@@ -16,6 +16,7 @@
   };
 
   window.addEventListener('load', () => {
+    // Retirer les classes de blocage initial
     document.querySelectorAll('.hidden-init').forEach(el => el.classList.remove('hidden-init'));
     document.documentElement.classList.remove('no-js');
 
@@ -41,7 +42,7 @@
     const mo = new MutationObserver(observeAll);
     mo.observe(document.body, { childList: true, subtree: true });
 
-    // Filet de sécurité : tout rendre visible après 1,5s si pas déclenché
+    // Filet de sécurité global
     setTimeout(() => {
       document.querySelectorAll('.fade-slide-up, .reveal-on-scroll').forEach(el => {
         if (!el.classList.contains('visible')) el.classList.add('visible');

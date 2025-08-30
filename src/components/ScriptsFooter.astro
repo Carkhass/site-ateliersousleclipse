@@ -2,23 +2,22 @@
 import Swiper from 'swiper';
 import GLightbox from 'glightbox';
 
-// Import des CSS directement depuis node_modules
+// Import des CSS des libs
 import 'swiper/css';
 import 'glightbox/dist/css/glightbox.min.css';
 ---
 
 <!-- Scripts spécifiques au site -->
 <script src="/scripts/reveal-on-scroll.js" defer></script>
-<script src="/scripts/swiper-init.js" defer></script>
 <script src="/scripts/layout/header-scroll.js" defer></script>
-<script src="/scripts/layout/menu-mobi.js" defer></script>
+<script src="/scripts/layout/menu-mobile.js" defer></script>
 <script src="/scripts/layout/parallax.js" defer></script>
 <script src="/scripts/layout/theme-toggle.js" defer></script>
 
 <!-- Initialisation Swiper et GLightbox -->
-<script>
+<script type="module">
   document.addEventListener('DOMContentLoaded', () => {
-    // Swiper : si tu as plusieurs carousels, adapte la config ici
+    // Swiper
     const swipers = document.querySelectorAll('.swiper');
     swipers.forEach(swiperEl => {
       new Swiper(swiperEl, {
