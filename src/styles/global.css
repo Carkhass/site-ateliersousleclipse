@@ -378,16 +378,24 @@ html.no-js .reveal-on-scroll > * {
 .fade-slide-up.delay-150 { transition-delay: 0.15s; }
 .fade-slide-up.delay-300 { transition-delay: 0.3s; }
 
-/* Carte 3D: dimensions réduites + ratio exact */
 /* Carte 3D — largeur par défaut (desktop) */
 .card-3d-wrapper {
   perspective: 1000px;
-  width: 100%;
+  width: 320px; /* largeur de référence desktop */
   aspect-ratio: 650 / 1004;
   display: flex;
   align-items: center;
   animation: floaty 5s ease-in-out infinite;
 }
+
+/* Desktop : la carte prend sa taille de référence */
+@media (min-width: 769px) {
+  .card-3d-wrapper {
+    width: 320px;
+    aspect-ratio: 650 / 1004; /* garde les proportions */
+  }
+}
+
 
 /* Limite uniquement sur mobile */
 @media (max-width: 768px) {
@@ -837,5 +845,24 @@ footer img.qr {
 
   .premium-section form {
     max-width: 90%;
+  }
+}
+
+@media (min-width: 769px) {
+  .card-3d-wrapper {
+    width: 320px;
+    height: auto;
+    outline: 2px solid red; /* debug visuel */
+  }
+
+  .card-3d {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .card-face {
+    position: relative; /* temporairement, pour voir si ça force l'affichage */
+    backface-visibility: visible !important; /* pour vérifier si c'est ça qui masque */
   }
 }
