@@ -81,20 +81,40 @@
     });
 
     // -----------------------------------------
-    // Hint flip sur mobile pour la carte 3D
+    // Hint flip sur mobile pour la carte 3D (boucle toutes les 3s tant qu'elle est visible)
     // -----------------------------------------
     if (window.innerWidth <= 768) {
-      const card = document.querySelector('.card-3d-wrapper');
-      if (card) {
+      const cardWrapper = document.querySelector('.card-3d-wrapper');
+      if (cardWrapper) {
         const flipObserver = new IntersectionObserver((entries, obs) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              card.classList.add('hint-flip');
-              obs.unobserve(card); // une seule fois
+              // Première animation immédiate
+              cardWrapper.classList.add('hint-flip');
+
+              // Boucle toutes les 3 secondes
+              const intervalId = setInterval(() => {
+                cardWrapper.classList.remove('hint-flip');
+                void cardWrapper.offsetWidth; // force un reflow pour relancer l'anim
+                cardWrapper.classList.add('hint-flip');
+              }, 3000);
+
+              // Stoppe la boucle si la carte sort du viewport
+              const stopObserver = new IntersectionObserver((ents) => {
+                ents.forEach(ent => {
+                  if (!ent.isIntersecting) {
+                    clearInterval(intervalId);
+                    stopObserver.disconnect();
+                  }
+                });
+              }, { threshold: 0 });
+              stopObserver.observe(cardWrapper);
+
+              obs.unobserve(cardWrapper);
             }
           });
         }, { threshold: 0.5 });
-        flipObserver.observe(card);
+        flipObserver.observe(cardWrapper);
       }
     }
   });
