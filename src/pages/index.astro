@@ -63,7 +63,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- SECTION POINÇON -->
   <!-- ========================================================= -->
   <section 
-    class="parallax-section relative w-screen h-[50vh] overflow-hidden" 
+    class="parallax-section relative w-screen h-[60vh] overflow-hidden" 
     data-parallax-speed="60"
     data-parallax-zoom="1"
     data-parallax-zoom-strength="0.04"
@@ -132,8 +132,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </p>
     </div>
 
-    <!-- 📷 CAROUSEL HAMON -->
-    <div class="swiper hamon-swiper">
+<div class="swiper hamon-swiper">
   <div class="swiper-wrapper">
     {[
       "hamon-1.jpg",
@@ -144,28 +143,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       "hamon-6.jpg"
     ].map(img => (
       <div class="swiper-slide">
-        <a href={`/images/${img}`} class="glightbox" data-gallery="hamon">
-          <img src={`/images/${img}`} alt={`Détail de ${img}`} class="hamon-photo" />
-        </a>
+        <div class="hamon-card">
+          <a href={`/images/${img}`} class="glightbox" data-gallery="hamon">
+            <img src={`/images/${img}`} alt={`Détail de ${img}`} class="hamon-photo" />
+          </a>
+        </div>
       </div>
     ))}
   </div>
+
   <div class="swiper-button-next"></div>
   <div class="swiper-button-prev"></div>
   <div class="swiper-pagination"></div>
 </div>
 
 
-      <!-- Flèches -->
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-
-      <!-- Pagination -->
-      <div class="swiper-pagination"></div>
-    </div>
   </div>
 </section>
-
 
 
 <!-- ========================================================= -->

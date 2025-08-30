@@ -9,8 +9,6 @@ import ScriptsFooter from '../components/ScriptsFooter.astro';
     <title>L'Atelier sous l’éclipse</title>
 
     <!-- Styles globaux: retiré le <link> cassé; index.astro importe déjà global.css -->
-    <!-- Si tu veux le global via layout, je te le prépare proprement ensuite -->
-
     <!-- CSS Swiper -->
 <link rel="stylesheet" href="/styles/swiper-bundle.min.css" />
 <!-- CSS GLightbox -->
@@ -240,8 +238,10 @@ import ScriptsFooter from '../components/ScriptsFooter.astro';
       ?.classList.toggle('scrolled', window.scrollY > 50);
   });
 </script>
+
   <!-- Inclusion brute des scripts -->
-  <ScriptsFooter />
+      <script src="/scripts/reveal-on-scroll.js" defer></script>
+      <ScriptsFooter />
 
 </body>
 </html>

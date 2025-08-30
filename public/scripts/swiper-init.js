@@ -1,10 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Init Swiper
+  const swiperEl = document.querySelector('.hamon-swiper');
+  if (!swiperEl) return;
+
   const hamonSwiper = new Swiper('.hamon-swiper', {
-    slidesPerView: 1,
-    spaceBetween: 20,
     loop: true,
-    speed: 500,
+    centeredSlides: true,
+    slidesPerView: 'auto', // largeur fixée par CSS = contrôle total
+    spaceBetween: 80,      // un peu plus d’air
+    speed: 700,
+
     navigation: {
       nextEl: '.hamon-swiper .swiper-button-next',
       prevEl: '.hamon-swiper .swiper-button-prev'
@@ -12,16 +16,26 @@ document.addEventListener('DOMContentLoaded', () => {
     pagination: {
       el: '.hamon-swiper .swiper-pagination',
       clickable: true
+    },
+
+    effect: 'coverflow',
+    coverflowEffect: {
+      rotate: 8,      // rotation très légère
+      stretch: 0,
+      depth: 150,     // profondeur plus prononcée
+      modifier: 1,
+      slideShadows: true
     }
   });
 
-  // Init GLightbox
-  const lightbox = GLightbox({
-    selector: '.glightbox',
-    touchNavigation: true,
-    loop: true,
-    zoomable: true,
-    openEffect: 'fade',
-    closeEffect: 'fade'
-  });
+  if (typeof GLightbox !== 'undefined') {
+    GLightbox({
+      selector: '.glightbox',
+      touchNavigation: true,
+      loop: true,
+      zoomable: true,
+      openEffect: 'fade',
+      closeEffect: 'fade'
+    });
+  }
 });

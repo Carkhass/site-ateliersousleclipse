@@ -1,14 +1,14 @@
 <!-- src/components/ScriptsFooter.astro -->
-<footer class="scripts-footer">
-  <!-- Effets scroll -->
-  <script src="/scripts/reveal-on-scroll.js" defer></script>
+<!-- Inclusion brute des scripts depuis /public/scripts/ -->
 
-  <!-- Bibliothèque Swiper -->
-  <script src="/scripts/swiper-bundle.min.js"></script>
+<!-- Effets au scroll -->
+<script src="/scripts/reveal-on-scroll.js" defer is:inline></script>
 
-  <!-- Bibliothèque Glightbox -->
-  <script src="/scripts/glightbox.min.js"></script>
+<!-- Swiper (slider) -->
+<script src="/scripts/swiper-bundle.min.js" is:inline></script>
 
-  <!-- Initialisation slider + lightbox -->
-  <script src="/scripts/swiper-init.js"></script>
-</footer>
+<!-- GLightbox (lightbox pour galerie) -->
+<script src="/scripts/glightbox.min.js" is:inline></script>
+
+<!-- Script d'initialisation de Swiper + GLightbox -->
+<script src="/scripts/swiper-init.js" is:inline></script>
