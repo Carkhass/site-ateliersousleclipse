@@ -79,5 +79,23 @@
     window.addEventListener('load', () => {
       setTimeout(delayedCheck, 200);
     });
+
+    // -----------------------------------------
+    // Hint flip sur mobile pour la carte 3D
+    // -----------------------------------------
+    if (window.innerWidth <= 768) {
+      const card = document.querySelector('.card-3d-wrapper');
+      if (card) {
+        const flipObserver = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              card.classList.add('hint-flip');
+              obs.unobserve(card); // une seule fois
+            }
+          });
+        }, { threshold: 0.5 });
+        flipObserver.observe(card);
+      }
+    }
   });
 })();
