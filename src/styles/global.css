@@ -731,43 +731,61 @@ footer img.qr {
   background: rgba(0,0,0,0.6) !important;
 }
 
-/* Conteneur interne qui va être zoomé */
-.hamon-card {
+/* Largeur des slides (desktop par défaut) */
+.hamon-swiper .swiper-slide {
+  width: 480px;
   position: relative;
-  border-radius: 8px;       /* même arrondi que l'image */
-  overflow: hidden;         /* masque l'image et le voile pendant le zoom */
   transition: transform 0.3s ease;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-/* Voile au-dessus de l'image */
-.hamon-card::after {
+/* Image dans la slide */
+.hamon-swiper .swiper-slide img.hamon-photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Voile sur les slides voisines */
+.hamon-swiper .swiper-slide:not(.swiper-slide-active)::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.35); /* opacité du voile */
-  pointer-events: none;         /* laisse passer les clics vers la lightbox */
+  background: rgba(0,0,0,0.35);
+  pointer-events: none;
   border-radius: 8px;
 }
 
-/* Zoom sur le conteneur (image + voile) au survol des slides voisines */
-.hamon-swiper .swiper-slide:not(.swiper-slide-active) .hamon-card:hover {
+/* Zoom sur la slide entière (image + voile) */
+.hamon-swiper .swiper-slide:not(.swiper-slide-active):hover {
   transform: scale(1.05);
 }
 
 /* Pas de voile sur la slide centrale */
-.hamon-swiper .swiper-slide-active .hamon-card::after {
+.hamon-swiper .swiper-slide-active::after {
   background: rgba(0,0,0,0);
 }
 
-/* Largeur des slides (à ajuster selon la taille voulue) */
-.hamon-swiper .swiper-slide {
-  width: 480px; /* augmente pour des images plus grandes */
+/* --- Responsive --- */
+
+/* Tablettes : slides un peu plus petites */
+@media (max-width: 1024px) {
+  .hamon-swiper .swiper-slide {
+    width: 360px;
+  }
 }
 
-/* Image contrainte à remplir .hamon-card */
-.hamon-card img.hamon-photo {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* évite les déformations et garde le voile calé */
+/* Mobiles : une seule slide visible, largeur quasi pleine */
+@media (max-width: 640px) {
+  .hamon-swiper .swiper-slide {
+    width: 85%; /* laisse un petit aperçu des voisines */
+  }
+
+  /* Réduire la taille des boutons pour mobile */
+  .hamon-swiper .swiper-button-next,
+  .hamon-swiper .swiper-button-prev {
+    padding: 0.75rem;
+  }
 }
