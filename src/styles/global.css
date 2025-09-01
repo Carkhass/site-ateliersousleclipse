@@ -496,38 +496,44 @@ form button[type="submit"]:hover {
 }
 
 /* =========================================================
-   12. SLIDERS (Swiper.js)
+   12. SLIDERS (Swiper.js) — Version clean et centrée
    ========================================================= */
 
+/* Règles globales Swiper */
 .swiper {
   width: 100%;
   height: 100%;
 }
-
 .swiper-slide {
-  width: auto; /* permet d'afficher les slides latérales */
+  width: auto; /* nécessaire pour slidesPerView: 'auto' */
 }
 
+/* Carrousel Hamon */
 .hamon-swiper {
   perspective: 1200px;
+  padding: 20px 0;
+  width: 100%;
+  max-width: 1280px; /* limite sur grand écran */
+  margin: 0 auto;    /* centrage */
 }
 
+/* Largeur responsive des slides */
 .hamon-swiper .swiper-slide {
+  width: clamp(240px, 55vw, 800px) !important; /* largeur centrale */
   transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
 }
 
-/* Images par défaut : taille normale */
+/* Images */
 .hamon-swiper .swiper-slide img {
   display: block;
   width: 100%;
-  height: auto; /* conserve le ratio */
+  height: auto;
+  max-height: 420px; /* limite la hauteur */
   object-fit: cover;
-  max-height: 500px; /* limite la hauteur sur desktop */
   border-radius: 8px;
-  /* Pas de zoom par défaut : le JS s'en charge */
 }
 
-/* Slides latérales : plus petites, transparentes et floutées */
+/* Effets latérales */
 .hamon-swiper .swiper-slide-prev,
 .hamon-swiper .swiper-slide-next {
   opacity: 0.5;
@@ -538,7 +544,7 @@ form button[type="submit"]:hover {
   filter: brightness(0.9) saturate(0.9) blur(2px);
 }
 
-/* Flèches Swiper premium + hover */
+/* Flèches premium */
 .swiper-button-next,
 .swiper-button-prev {
   color: var(--color-accent);
@@ -559,6 +565,17 @@ form button[type="submit"]:hover {
 }
 .swiper-pagination-bullet-active {
   opacity: 1;
+}
+
+/* Breakpoints pour ajuster la largeur des slides */
+@media (max-width: 640px) {
+  .hamon-swiper .swiper-slide { width: 80vw !important; }
+}
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hamon-swiper .swiper-slide { width: 65vw !important; }
+}
+@media (min-width: 1025px) {
+  .hamon-swiper .swiper-slide { width: 50vw !important; }
 }
 
 
