@@ -21,7 +21,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
     <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent"></div>
     <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
-  <h1 id="hero-title" class="text-4xl md:text-6xl font-serif mb-4 tracking-wide">
+  <h1 id="hero-title" class="halo text-4xl md:text-6xl font-serif mb-4 tracking-wide">
     L’art dans la lame
   </h1>
   <p id="hero-subtitle" class="text-lg md:text-xl font-light opacity-0">
@@ -30,34 +30,35 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </div>
   </section>
 
-  <!-- ========================================================= -->
-  <!-- SECTION CENTRALE -->
-  <!-- ========================================================= -->
-  <section class="container mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center">
-    <div class="relative fade-in">
-      <img 
-        src="/images/portrait-yann.jpg" 
-        alt="Portrait de Yann, artisan coutelier"
-        class="img-zoom max-w-md w-full h-auto rounded-lg shadow-xl object-cover border-4 border-accent mx-auto md:mx-0"
-      />
-    </div>
-    <div class="fade-in" style="animation-delay:0.2s">
-      <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent">
-        Bienvenue à l’atelier sous l’éclipse
-      </h2>
-      <p class="text-lg text-muted leading-relaxed mb-4">
-        Mon premier langage fut celui des ordinateurs et des infrastructures invisibles, un monde où la précision est une loi et la patience une vertu.<br />
-        Aujourd'hui, je parle une autre langue : celle du métal et du bois.<br />
-        Dans chaque barre d’acier, une promesse silencieuse.
-		</p>
-      <p class="text-lg text-muted leading-relaxed mb-6 italic">
-        Mes créations portent la mémoire du feu, du geste et de l’âme.
-      </p>
-      <a href="/me-connaitre" class="cta-premium inline-block px-6 py-3 text-white rounded">
-        En savoir plus
-      </a>
-    </div>
-  </section>
+<!-- ========================================================= -->
+<!-- SECTION CENTRALE                                          -->
+<!-- ========================================================= -->
+<section class="container mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center">
+  <div class="relative fade-in">
+    <img 
+      src="/images/portrait-yann.jpg" 
+      alt="Portrait de Yann, artisan coutelier"
+      class="img-zoom max-w-md w-full h-auto rounded-lg shadow-xl object-cover border-4 border-accent mx-auto md:mx-0 reveal-child"
+    />
+  </div>
+  <div class="fade-in">
+    <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
+      Bienvenue à l’atelier sous l’éclipse
+    </h2>
+    <p class="text-lg text-muted leading-relaxed mb-4 reveal-child">
+      Mon premier langage fut celui des ordinateurs et des infrastructures invisibles, un monde où la précision est une loi et la patience une vertu.<br />
+      Aujourd'hui, je parle une autre langue : celle du métal et du bois.<br />
+      Dans chaque barre d’acier, une promesse silencieuse.
+    </p>
+    <p class="text-lg text-muted leading-relaxed mb-6 italic reveal-child">
+      Mes créations portent la mémoire du feu, du geste et de l’âme.
+    </p>
+    <a href="/me-connaitre" class="cta-premium inline-block px-6 py-3 text-white rounded reveal-child">
+      En savoir plus
+    </a>
+  </div>
+</section>
+
 
   <!-- ========================================================= -->
   <!-- SECTION POINÇON -->
@@ -81,7 +82,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <div class="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
 
     <!-- 📷 IMAGE PRINCIPALE -->
-    <div class="relative group reveal-on-scroll">
+    <div class="relative group slide-up">
       <img 
         src="/images/couteau-cuisine.jpg" 
         alt="Couteau artisanal de cuisine" 
@@ -90,7 +91,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
 
     <!-- 📝 TEXTE -->
-    <div class="space-y-6 reveal-on-scroll">
+    <div class="space-y-6 fade-slide-up">
       <h2 class="text-3xl md:text-4xl font-serif font-bold text-accent reveal-child">
         À chaque utilisation son couteau
       </h2>
@@ -110,31 +111,32 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </section>
 
 
+
 <!-- ========================================================= -->
 <!-- SECTION 3 : Inspiration + Galerie hamon                   -->
 <!-- ========================================================= -->
 <section class="w-full max-w-none bg-surface py-16 inspiration-section">
   <div class="max-w-6xl mx-auto px-4 space-y-10">
 
-
     <!-- 📝 TEXTE -->
-    <div class="space-y-6 max-w-3xl mx-auto text-center">
-      <h2 class="text-3xl md:text-4xl font-serif font-bold text-accent">
+    <div class="space-y-6 max-w-3xl mx-auto text-center fade-in">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-accent reveal-child">
         Inspiration
       </h2>
-      <p class="text-lg text-muted leading-relaxed">
+      <p class="text-lg text-muted leading-relaxed reveal-child">
         L’esthétique japonaise, sobre et naturelle, m’inspire profondément. 
         J’aime travailler des matières authentiques pour les manches : textures brutes, couleurs organiques.
       </p>
-      <p class="text-lg text-muted leading-relaxed">
+      <p class="text-lg text-muted leading-relaxed reveal-child">
         Sur beaucoup de mes créations, vous remarquerez une “ligne” sur la lame : le <em>hamon</em>. 
         Parfois fluide, parfois indomptée, c’est la signature laissée par la trempe sélective — 
         un savoir-faire ancestral japonais. Chaque hamon est unique, fruit de l’acier, du feu et du geste.
       </p>
     </div>
 
-<div class="swiper hamon-swiper">
-  <div class="swiper-wrapper">
+    <!-- Swiper -->
+    <div class="swiper hamon-swiper slide-up">
+      <div class="swiper-wrapper">
     {[
       "hamon-1.jpg",
       "hamon-2.jpg",
@@ -152,13 +154,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     ))}
   </div>
-
   <div class="swiper-button-next"></div>
   <div class="swiper-button-prev"></div>
   <div class="swiper-pagination"></div>
 </div>
-
-
   </div>
 </section>
 
