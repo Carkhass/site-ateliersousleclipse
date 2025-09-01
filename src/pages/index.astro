@@ -26,7 +26,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   <!-- Contenu -->
   <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
-    <h1 id="hero-title" class="halo text-4xl md:text-6xl font-serif mb-4 tracking-wide">
+    <h1 id="hero-title" class="halo fade-in-up text-4xl md:text-6xl font-serif mb-4 tracking-wide">
       L’art dans la lame
     </h1>
     <p id="hero-subtitle" class="text-lg md:text-xl text-white max-w-2xl mx-auto opacity-0">
@@ -82,19 +82,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="absolute inset-0 bg-black/30"></div>
   </section>
 
+
 <!-- ========================================================= -->
 <!-- SECTION 2 : À chaque utilisation son couteau              -->
 <!-- ========================================================= -->
 <section class="bg-bg text-text py-16">
   <div class="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
 
-    <!-- 📷 IMAGE PRINCIPALE -->
-    <div class="relative group slide-up">
-      <img 
-        src="/images/couteau-cuisine.jpg" 
-        alt="Couteau artisanal de cuisine" 
-        class="w-full h-auto rounded-lg shadow-lg object-cover transition-transform duration-500 group-hover:scale-105 reveal-child"
-      />
+    <!-- 📷 SLIDER PREMIUM -->
+    <div class="relative overflow-hidden rounded-lg shadow-lg group fade-slide-up h-full">
+      <div class="slideshow h-full">
+        <img src="/images/couteau-grand-bonap.jpg" alt="Couteau artisanal Atelier sous l'éclipse Grand Bon'Ap" class="slide active" />
+        <img src="/images/couteau_nakiri.jpg" alt="Couteau artisanal Atelier sous l'éclipse Nakiri" class="slide" />
+        <img src="/images/couteau-kiritsuke.jpg" alt="Couteau artisanal Atelier sous l'éclipse Kiritsuke" class="slide" />
+        <img src="/images/couteau-baby-bonap.jpg" alt="Couteau artisanal Atelier sous l'éclipse Baby Bon'Ap" class="slide" />
+        <img src="/images/couteau-camp.jpg" alt="Couteau artisanal Atelier sous l'éclipse de Camp" class="slide" />
+        <img src="/images/couteau-trancheur.jpg" alt="Couteau artisanal Atelier sous l'éclipse Trancheur" class="slide" />
+        <img src="/images/couteau-table.jpg" alt="Couteau artisanal Atelier sous l'éclipse de table" class="slide" />
+        <img src="/images/couteau-long-bonap.jpg" alt="Couteau artisanal Atelier sous l'éclipse Long Bon'Ap" class="slide" />
+        <img src="/images/couteau-petty.jpg" alt="Couteau artisanal Atelier sous l'éclipse Petty" class="slide" />
+        <img src="/images/couteau-gyuto.jpg" alt="Couteau artisanal Atelier sous l'éclipse Gyuto" class="slide" />
+        <img src="/images/couteau-fighter.jpg" alt="Couteau artisanal Atelier sous l'éclipse Fighter" class="slide" />       
+      </div>
     </div>
 
     <!-- 📝 TEXTE -->
@@ -241,16 +250,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const title = document.getElementById('hero-title');
     const subtitle = document.getElementById('hero-subtitle');
 
-    // Animation du titre avec halo
+    // Animation du titre (stagger: d'abord .fade-in-up, puis .visible)
     setTimeout(() => {
-      title.classList.add('fade-in-up', 'visible');
-    }, 800);
+      title.classList.add('visible');           // état initial (opacity:0, translateY)
+      requestAnimationFrame(() => {
+        title.classList.add('visible');            // déclenche la transition vers l'état final
+      });
+    }, 500);
 
-    // Animation lettre par lettre du sous-titre
+    // Animation lettre par lettre du sous-titre (inchangée)
     setTimeout(() => {
       const rawHTML = subtitle.innerHTML;
       const chars = rawHTML
-        .split(/(<[^>]+>)/g) // conserve les balises HTML
+        .split(/(<[^>]+>)/g)
         .map(part =>
           part.startsWith('<') && part.endsWith('>')
             ? part
@@ -270,13 +282,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       let delay = 0;
       subtitle.querySelectorAll('.letter').forEach(span => {
         span.style.animationDelay = `${delay}s`;
-        delay += 0.03; // vitesse d'apparition des lettres
+        delay += 0.03; // ta vitesse actuelle
       });
 
       subtitle.style.opacity = 1;
-    }, 500);
+    }, 700);
   });
 </script>
+
 
 
   <!-- SCRIPT CARTE VISITE -->
@@ -338,6 +351,19 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+  <!-- SCRIPT SLIDESHOW SECTION 2 -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const slides = document.querySelectorAll('.slideshow .slide');
+    let index = 0;
+
+    setInterval(() => {
+      slides[index].classList.remove('active');
+      index = (index + 1) % slides.length;
+      slides[index].classList.add('active');
+    }, 4000); // change toutes les 5s
+  });
+</script>
 
 
 </BaseLayout
