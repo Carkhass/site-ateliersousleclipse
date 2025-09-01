@@ -501,16 +501,11 @@ form button[type="submit"]:hover {
   width: 100%;
   height: 100%;
 }
+
 .swiper-slide {
   width: auto; /* permet d'afficher les slides latérales */
 }
-.swiper-pagination-bullet {
-  background-color: var(--color-accent);
-}
-.swiper-button-next,
-.swiper-button-prev {
-  color: var(--color-accent);
-}
+
 .hamon-swiper .swiper-slide {
   width: auto; /* conserve la largeur naturelle */
 }
@@ -521,6 +516,37 @@ form button[type="submit"]:hover {
   height: auto; /* conserve le ratio */
   object-fit: cover; /* ou contain selon rendu souhaité */
   max-height: 500px; /* limite la hauteur sur desktop */
+  transform: scale(1.05); /* Ken Burns initial */
+  transition: transform 4s ease;
+}
+
+.hamon-swiper .swiper-slide-active img {
+  transform: scale(1); /* zoom-out subtil sur l'image active */
+}
+
+/* Flèches Swiper premium + hover */
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--color-accent);
+  text-shadow: 0 0 8px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+  opacity: 0.9;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  transform: scale(1.15);
+  opacity: 1;
+}
+
+/* Pagination premium */
+.swiper-pagination-bullet {
+  background-color: var(--color-accent);
+  opacity: 0.6;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
 }
 
 
