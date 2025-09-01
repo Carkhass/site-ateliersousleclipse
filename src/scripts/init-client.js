@@ -1,24 +1,15 @@
-import Swiper from 'swiper';
-import 'swiper/css';
-import GLightbox from 'glightbox';
-import 'glightbox/dist/css/glightbox.min.css';
+import { initSwipers, initLightbox } from './init-swiper-glightbox.js';
 
-export function initSwipers() {
-  document.querySelectorAll('.swiper').forEach(swiperEl => {
-    new Swiper(swiperEl, {
-      slidesPerView: 'auto',
-      spaceBetween: 20,
-      loop: true,
-      centeredSlides: true,
-      grabCursor: true,
-      breakpoints: {
-        768: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 }
-      }
-    });
-  });
-}
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialisation des sliders Swiper
+  initSwipers();
 
-export function initLightbox() {
-  GLightbox({ selector: '.glightbox' });
-}
+  // Initialisation de GLightbox
+  initLightbox();
+
+  // Si le script reveal-on-scroll est chargé et expose observeNewElements(),
+  // on force un rescan pour inclure les éléments ajoutés par Swiper/GLightbox
+  if (typeof window.observeNewElements === 'function') {
+    window.observeNewElements();
+  }
+});

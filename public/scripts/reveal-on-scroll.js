@@ -1,101 +1,62 @@
 (() => {
-  if (typeof window === 'undefined' || typeof document === 'undefined') return;
+  // Liste des classes d'animation à observer
+  const animationClasses = [
+    '.reveal-on-scroll',
+    '.fade-slide-up',
+    '.fade-in',
+    '.slide-up',
+    '.animate-on-scroll'
+  ];
 
-  const makeVisible = (el) => {
-    const blockIndex = [...document.querySelectorAll('.reveal-on-scroll')].indexOf(el);
-    const initialDelay = (blockIndex % 3) * 100;
-    const children = el.querySelectorAll(':scope > *');
+  const observedElements = new Set();
 
-    if (children.length) {
-      children.forEach((child, i) => {
-        setTimeout(() => child.classList.add('visible'), initialDelay + i * 150);
-      });
-    } else {
-      setTimeout(() => el.classList.add('visible'), initialDelay);
-    }
+  const observerOptions = { threshold: 0.1 };
+
+  const onIntersect = (entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
   };
 
-  window.addEventListener('load', () => {
-    // Retire les classes de blocage initial
-    document.querySelectorAll('.hidden-init').forEach(el => el.classList.remove('hidden-init'));
-    document.documentElement.classList.remove('no-js');
+  const revealObserver = new IntersectionObserver(onIntersect, observerOptions);
 
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (entry.target.classList.contains('reveal-on-scroll')) makeVisible(entry.target);
-          if (entry.target.classList.contains('fade-slide-up')) entry.target.classList.add('visible');
-          obs.unobserve(entry.target);
+  function observeNewElements(root = document) {
+    root.querySelectorAll(animationClasses.join(',')).forEach(el => {
+      if (!observedElements.has(el)) {
+        observedElements.add(el);
+        revealObserver.observe(el);
+      }
+    });
+
+    console.log(
+      `Observing ${observedElements.size} elements (${animationClasses.join(', ')})`
+    );
+  }
+
+  // Premier scan au chargement
+  document.addEventListener('DOMContentLoaded', () => {
+    observeNewElements();
+  });
+
+  // Surveille le DOM pour détecter de nouveaux éléments
+  const mutationObserver = new MutationObserver(mutations => {
+    mutations.forEach(mutation => {
+      mutation.addedNodes.forEach(node => {
+        if (node.nodeType === 1) {
+          observeNewElements(node);
         }
       });
-    }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
-
-    const observeAll = () => {
-      document.querySelectorAll('.fade-slide-up, .reveal-on-scroll').forEach(el => observer.observe(el));
-    };
-
-    // Observation initiale
-    observeAll();
-    console.log(
-      'Observing',
-      document.querySelectorAll('.reveal-on-scroll').length,
-      'reveal-on-scroll elements and',
-      document.querySelectorAll('.fade-slide-up').length,
-      'fade-slide-up elements'
-    );
-
-    // Observer les ajouts dynamiques
-    const mo = new MutationObserver(observeAll);
-    mo.observe(document.body, { childList: true, subtree: true });
-
-    // Filet de sécurité global
-    setTimeout(() => {
-      document.querySelectorAll('.fade-slide-up, .reveal-on-scroll').forEach(el => {
-        if (!el.classList.contains('visible')) el.classList.add('visible');
-      });
-    }, 1500);
-
-    // Sécurité spécifique carte 3D + premium
-    setTimeout(() => {
-      document.querySelector('.card-3d-wrapper')?.classList.add('visible');
-      document.querySelector('.premium-section .premium-text')?.classList.add('visible');
-    }, 1000);
-
-    // Hint flip mobile
-    if (window.innerWidth <= 768) {
-      const cardWrapper = document.querySelector('.card-3d-wrapper');
-      let cardClicked = false;
-      if (cardWrapper) {
-        cardWrapper.addEventListener('click', () => {
-          cardClicked = true;
-          cardWrapper.querySelector('.card-3d')?.classList.add('clicked');
-        });
-        const flipObserver = new IntersectionObserver((entries, obs) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              cardWrapper.classList.add('hint-flip');
-              const intervalId = setInterval(() => {
-                if (!cardClicked) {
-                  cardWrapper.classList.remove('hint-flip');
-                  void cardWrapper.offsetWidth;
-                  cardWrapper.classList.add('hint-flip');
-                }
-              }, 3000);
-              const stopObserver = new IntersectionObserver((ents) => {
-                ents.forEach(ent => {
-                  if (!ent.isIntersecting) {
-                    clearInterval(intervalId);
-                    stopObserver.disconnect();
-                  }
-                });
-              }, { threshold: 0 });
-              stopObserver.observe(cardWrapper);
-              obs.unobserve(cardWrapper);
-            }
-          });
-        }, { threshold: 0.5 });
-        flipObserver.observe(cardWrapper);
-      }
-    }
+    });
   });
+
+  mutationObserver.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  // On expose la fonction pour init-client.js
+  window.observeNewElements = observeNewElements;
 })();
