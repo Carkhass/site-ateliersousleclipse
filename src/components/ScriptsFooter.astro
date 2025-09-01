@@ -1,16 +1,12 @@
----
-import { initSwipers, initLightbox } from '../scripts/init-swiper-glightbox.js';
----
-
-<!-- Scripts spécifiques au site -->
 <script src="/scripts/reveal-on-scroll.js" defer></script>
 <script src="/scripts/layout/header-scroll.js" defer></script>
 <script src="/scripts/layout/menu-mobile.js" defer></script>
 <script src="/scripts/layout/parallax.js" defer></script>
 <script src="/scripts/layout/theme-toggle.js" defer></script>
 
-<!-- Initialisation Swiper + GLightbox via bundler -->
 <script type="module">
+  import { initSwipers, initLightbox } from '../scripts/init-client.js';
+
   document.addEventListener('DOMContentLoaded', () => {
     initSwipers();
     initLightbox();
