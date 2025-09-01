@@ -7,11 +7,13 @@ import 'glightbox/dist/css/glightbox.min.css';
 
 export function initSwipers() {
   document.querySelectorAll('.swiper').forEach(swiperEl => {
+
+    // Carrousel Hamon premium
     if (swiperEl.classList.contains('hamon-swiper')) {
       const swiper = new Swiper(swiperEl, {
         loop: true,
         centeredSlides: true,
-        slidesPerView: 'auto',
+        slidesPerView: 'auto', // indispensable pour voir les latérales
         spaceBetween: 0,
         grabCursor: true,
         speed: 800,
@@ -55,7 +57,7 @@ export function initSwipers() {
             const activeImg = swiper.slides[swiper.activeIndex].querySelector('img');
             if (activeImg) {
               activeImg.style.transition = 'transform 1.5s ease, box-shadow 0.6s ease, filter 0.6s ease';
-              activeImg.style.transform = 'scale(1.1)';
+              activeImg.style.transform = 'scale(1.1)'; // zoom doux
               activeImg.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.5)';
               activeImg.style.filter = 'brightness(1.05) saturate(1.1)';
             }
