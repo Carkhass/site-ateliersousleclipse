@@ -1,56 +1,77 @@
-import Swiper, { Navigation, Pagination, EffectFade, Autoplay } from 'swiper';
-
-// Import des CSS Swiper nécessaires
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/effect-fade';
+// src/scripts/init-swiper-glightbox.js
+import Swiper from 'swiper/bundle';
+import 'swiper/css/bundle';
 
 import GLightbox from 'glightbox';
 import 'glightbox/dist/css/glightbox.min.css';
 
 export function initSwipers() {
   document.querySelectorAll('.swiper').forEach(swiperEl => {
-    // Cas spécifique : carrousel premium de la section hamon
     if (swiperEl.classList.contains('hamon-swiper')) {
-      new Swiper(swiperEl, {
-        modules: [Navigation, Pagination, EffectFade, Autoplay],
+      const swiper = new Swiper(swiperEl, {
         loop: true,
-        effect: 'fade',
-        fadeEffect: { crossFade: true },
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        spaceBetween: 0,
+        grabCursor: true,
         speed: 800,
-        autoplay: {
-          delay: 4000,
-          disableOnInteraction: false
+        effect: 'coverflow',
+        coverflowEffect: {
+          rotate: 40,
+          stretch: 0,
+          depth: 200,
+          modifier: 1.2,
+          slideShadows: false // pas d'ombres Swiper, on gère en CSS
         },
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
+          nextEl: '.hamon-swiper .swiper-button-next',
+          prevEl: '.hamon-swiper .swiper-button-prev'
         },
         pagination: {
-          el: '.swiper-pagination',
+          el: '.hamon-swiper .swiper-pagination',
           clickable: true
+        },
+        on: {
+          // Avant la transition : reset uniquement les slides hors champ
+          slideChangeTransitionStart(swiper) {
+            swiper.slides.forEach(slide => {
+              if (
+                !slide.classList.contains('swiper-slide-prev') &&
+                !slide.classList.contains('swiper-slide-next') &&
+                !slide.classList.contains('swiper-slide-active')
+              ) {
+                const img = slide.querySelector('img');
+                if (img) {
+                  img.style.transition = 'transform 1.5s ease, box-shadow 0.6s ease, filter 0.6s ease';
+                  img.style.transform = 'scale(1)';
+                  img.style.boxShadow = '';
+                  img.style.filter = '';
+                }
+              }
+            });
+          },
+          // Après la transition : zoom sur la nouvelle active
+          slideChangeTransitionEnd(swiper) {
+            const activeImg = swiper.slides[swiper.activeIndex].querySelector('img');
+            if (activeImg) {
+              activeImg.style.transition = 'transform 1.5s ease, box-shadow 0.6s ease, filter 0.6s ease';
+              activeImg.style.transform = 'scale(1.1)';
+              activeImg.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.5)';
+              activeImg.style.filter = 'brightness(1.05) saturate(1.1)';
+            }
+          }
         }
       });
-      return; // on sort pour ne pas ré-instancier
+
+      return;
     }
 
-    // Cas générique pour les autres sliders
+    // Config générique pour les autres sliders
     new Swiper(swiperEl, {
-      modules: [Navigation, Pagination, Autoplay],
-      slidesPerView: 'auto',
-      spaceBetween: 20,
       loop: true,
-      centeredSlides: true,
-      grabCursor: true,
-      breakpoints: {
-        768: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 }
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true
-      }
+      slidesPerView: 1,
+      spaceBetween: 20,
+      pagination: { el: '.swiper-pagination', clickable: true }
     });
   });
 }

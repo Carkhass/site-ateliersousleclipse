@@ -1,5 +1,9 @@
 /* Import police principale */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+@import 'swiper/css/effect-fade';
 
 /* =========================================================
    1. IMPORTS & RESET
@@ -8,7 +12,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 /* =========================================================
    2. VARIABLES DE THÈME
@@ -492,7 +495,6 @@ form button[type="submit"]:hover {
   background-color: var(--color-accent-dark);
 }
 
-
 /* =========================================================
    12. SLIDERS (Swiper.js)
    ========================================================= */
@@ -506,22 +508,34 @@ form button[type="submit"]:hover {
   width: auto; /* permet d'afficher les slides latérales */
 }
 
-.hamon-swiper .swiper-slide {
-  width: auto; /* conserve la largeur naturelle */
+.hamon-swiper {
+  perspective: 1200px;
 }
 
+.hamon-swiper .swiper-slide {
+  transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
+}
+
+/* Images par défaut : taille normale */
 .hamon-swiper .swiper-slide img {
   display: block;
   width: 100%;
   height: auto; /* conserve le ratio */
-  object-fit: cover; /* ou contain selon rendu souhaité */
+  object-fit: cover;
   max-height: 500px; /* limite la hauteur sur desktop */
-  transform: scale(1.05); /* Ken Burns initial */
-  transition: transform 4s ease;
+  border-radius: 8px;
+  /* Pas de zoom par défaut : le JS s'en charge */
 }
 
-.hamon-swiper .swiper-slide-active img {
-  transform: scale(1); /* zoom-out subtil sur l'image active */
+/* Slides latérales : plus petites, transparentes et floutées */
+.hamon-swiper .swiper-slide-prev,
+.hamon-swiper .swiper-slide-next {
+  opacity: 0.5;
+}
+.hamon-swiper .swiper-slide-prev img,
+.hamon-swiper .swiper-slide-next img {
+  transform: scale(0.9) rotateY(-10deg);
+  filter: brightness(0.9) saturate(0.9) blur(2px);
 }
 
 /* Flèches Swiper premium + hover */
@@ -532,7 +546,6 @@ form button[type="submit"]:hover {
   transition: transform 0.3s ease, color 0.3s ease, opacity 0.3s ease;
   opacity: 0.9;
 }
-
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
   transform: scale(1.15);
@@ -544,7 +557,6 @@ form button[type="submit"]:hover {
   background-color: var(--color-accent);
   opacity: 0.6;
 }
-
 .swiper-pagination-bullet-active {
   opacity: 1;
 }
