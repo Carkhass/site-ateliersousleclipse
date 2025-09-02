@@ -4,6 +4,8 @@
 @import 'swiper/css/navigation';
 @import 'swiper/css/pagination';
 @import 'swiper/css/effect-fade';
+@import 'glightbox/dist/css/glightbox.css';
+
 
 /* =========================================================
    1. IMPORTS & RESET
@@ -694,45 +696,22 @@ form button[type="submit"]:hover {
     display: none;
   }
 }
-
 /* =========================================================
-   GLightbox — base (ne pas sur-styler globalement)
+   GLightbox — base minimale
    ========================================================= */
-
-/* Base minimale pour des transitions propres sur toutes les lightbox */
-.gslide-image { overflow: hidden; }
-.gslide-image img {
-  will-change: transform;
-  transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
-  transform: translate3d(0,0,0) scale(1);
+.glightbox-container {
+  z-index: 9999 !important;
 }
 
-/* Boutons (base) — discret mais réutilisable */
-.glightbox-container .gbtn {
-  background: rgba(0,0,0,0.45);
-  border-radius: 999px;
-  width: 44px; height: 44px;
-  transition: transform 0.15s ease, background 0.15s ease;
-}
-.glightbox-container .gbtn:hover {
-  transform: scale(1.06);
-  background: rgba(0,0,0,0.6);
-}
-
-/* =========================================================
-   GLightbox (skin hamon) — taille réduite + overlay léger + flou
-   ========================================================= */
-
-.glightbox-hamon .ginner-container {
-  width: auto;
-  max-width: min(88vw, 1200px);
-  margin-inline: auto;
+.glightbox-container .ginner-container {
+  position: relative;
+  z-index: 10000;
 }
 
 .glightbox-hamon .gslide-image {
+  overflow: hidden;
   max-height: 78vh;
   border-radius: 12px;
-  overflow: hidden;
 }
 
 .glightbox-hamon .gslide-image img {
@@ -743,6 +722,7 @@ form button[type="submit"]:hover {
   height: auto;
   will-change: transform;
   transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform: translate3d(0,0,0) scale(1);
 }
 
 .glightbox-hamon .goverlay {
@@ -769,11 +749,11 @@ form button[type="submit"]:hover {
 .glightbox-hamon .gslide-image img.glb-ken {
   animation: glb-kenburns 9s ease-out forwards;
 }
+
 @keyframes glb-kenburns {
   from { transform: scale(1.02); }
   to   { transform: scale(1.06); }
 }
-
 
 
 /* =========================================================

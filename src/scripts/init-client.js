@@ -2,20 +2,28 @@ import { initSwipers, initLightbox } from './init-swiper-glightbox.js';
 import { initEmbla } from './init-embla.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialisation des sliders Swiper (sections qui l'utilisent encore)
+  // Initialisation Swiper
   initSwipers();
 
-  // Initialisation du carrousel Embla (section Inspiration)
+  // Initialisation Embla
   initEmbla();
 
-  // Initialisation de GLightbox APRES Embla
-  // Petit délai pour s'assurer que le DOM des slides est prêt
-  setTimeout(() => {
-    initLightbox();
-  }, 0);
+  // Initialisation unique de la lightbox
+  // On détruit toute instance précédente pour éviter les doublons
+  if (window.__glb) {
+    window.__glb.destroy();
+    window.__glb = null;
+  }
+  initLightbox();
 
-  // Si le script reveal-on-scroll est chargé et expose observeNewElements(),
-  // on force un rescan pour inclure les éléments ajoutés par Swiper/Embla/GLightbox
+  // Debug : vérifier que le clic part bien du lien attendu
+  document.querySelectorAll('.embla-spotlight').forEach(link => {
+    link.addEventListener('click', (e) => {
+      console.log('[DEBUG] Clic sur', e.currentTarget);
+    });
+  });
+
+  // Relance du reveal-on-scroll si présent
   if (typeof window.observeNewElements === 'function') {
     window.observeNewElements();
   }

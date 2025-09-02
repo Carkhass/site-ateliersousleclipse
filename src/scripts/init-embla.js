@@ -1,4 +1,5 @@
 import EmblaCarousel from 'embla-carousel';
+import { initLightbox } from './init-swiper-glightbox.js';
 
 export function initEmbla() {
   const emblaNode = document.querySelector('.embla');
@@ -98,4 +99,17 @@ export function initEmbla() {
   // Pause autoplay au survol
   emblaNode.addEventListener('mouseenter', stopAutoplay);
   emblaNode.addEventListener('mouseleave', startAutoplay);
+
+  // 🔥 Initialiser la lightbox une fois Embla prêt
+  embla.on('init', () => {
+    initLightbox();
+  });
+
+  // Si ta version d’Embla ne déclenche pas init automatiquement :
+  if (typeof embla.init === 'function') {
+    embla.init();
+  }
 }
+
+// Embla est prêt, on initialise la lightbox
+initLightbox();
