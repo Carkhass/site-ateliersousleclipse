@@ -696,76 +696,77 @@ form button[type="submit"]:hover {
 }
 
 /* =========================================================
-   Lightbox morphing premium pour Embla
+   GLightbox — base (ne pas sur-styler globalement)
    ========================================================= */
 
-.embla-lightbox {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;               /* centre l'image */
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;                /* au-dessus de tout */
-  opacity: 0;                   /* invisible par défaut */
-  pointer-events: none;         /* non interactif par défaut */
-  transition: opacity 0.3s ease;
+/* Base minimale pour des transitions propres sur toutes les lightbox */
+.gslide-image { overflow: hidden; }
+.gslide-image img {
+  will-change: transform;
+  transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform: translate3d(0,0,0) scale(1);
 }
 
-.embla-lightbox.active {
-  pointer-events: auto;
-  opacity: 1;
+/* Boutons (base) — discret mais réutilisable */
+.glightbox-container .gbtn {
+  background: rgba(0,0,0,0.45);
+  border-radius: 999px;
+  width: 44px; height: 44px;
+  transition: transform 0.15s ease, background 0.15s ease;
 }
-
-.embla-lightbox__bg {
-  position: absolute;
-  inset: 0;
+.glightbox-container .gbtn:hover {
+  transform: scale(1.06);
   background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(6px);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none; /* laisse passer les interactions vers Embla */
 }
 
-.embla-lightbox.active .embla-lightbox__bg {
-  opacity: 1;
+/* =========================================================
+   GLightbox (skin hamon) — taille réduite + overlay léger + flou
+   ========================================================= */
+
+.glightbox-hamon .ginner-container {
+  width: auto;
+  max-width: min(88vw, 1200px); /* largeur réduite, look galerie */
+  margin-inline: auto;
 }
 
-.embla-lightbox img {
-  position: absolute;
+.glightbox-hamon .gslide-image {
+  max-height: 78vh;            /* pas plein écran */
   border-radius: 12px;
-  box-shadow: 0 10px 26px rgba(0,0,0,0.4);
-  transition:
-    transform 0.4s ease,
-    top 0.4s ease,
-    left 0.4s ease,
-    width 0.4s ease,
-    height 0.4s ease,
-    opacity 0.2s ease;
-  will-change: transform, top, left, width, height, opacity;
-  opacity: 0; /* cachée tant qu’inactive */
+  overflow: hidden;
 }
 
-.embla-lightbox.active img {
-  opacity: 1;
+/* Image: ratio intact, fond neutre (évite bandes) */
+.glightbox-hamon .gslide-image img {
+  object-fit: contain;
+  background: #000;
+  max-height: 78vh;
+  width: auto;
+  height: auto;
 }
 
-.embla-lightbox__close {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 2rem;
-  color: white;
-  cursor: pointer;
-  z-index: 2;
-  transition: transform 0.2s ease;
+/* Overlay plus clair + flou doux sur l’arrière-plan */
+.glightbox-hamon .goverlay {
+  background: rgba(0, 0, 0, 0.38) !important; /* moins sombre */
+  backdrop-filter: blur(6px);
 }
 
-.embla-lightbox__close:hover {
-  transform: scale(1.1);
+/* Boutons un peu plus discrets sur hamon */
+.glightbox-hamon .gbtn {
+  background: rgba(0,0,0,0.35);
+  width: 42px; height: 42px;
+}
+.glightbox-hamon .gbtn:hover {
+  background: rgba(0,0,0,0.5);
 }
 
+/* Ken Burns très léger (si activé via JS par la classe .glb-ken) */
+.glightbox-hamon .gslide-image img.glb-ken {
+  animation: glb-kenburns 9s ease-out forwards;
+}
+@keyframes glb-kenburns {
+  from { transform: scale(1.02); }
+  to   { transform: scale(1.06); }
+}
 
 
 /* =========================================================

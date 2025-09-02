@@ -17,6 +17,7 @@ export function initEmbla() {
   const snaps = embla.scrollSnapList();
   const images = emblaNode.querySelectorAll('.embla__parallax__img');
 
+  // Opacité progressive
   const updateOpacityStates = () => {
     const selected = embla.selectedScrollSnap();
     const total = snaps.length;
@@ -28,6 +29,7 @@ export function initEmbla() {
     });
   };
 
+  // Parallaxe
   const applyParallax = () => {
     const viewportRect = viewportNode.getBoundingClientRect();
     const viewportCenter = viewportRect.left + viewportRect.width / 2;
@@ -74,102 +76,18 @@ export function initEmbla() {
 
   // Autoplay continu maison
   const AUTOPLAY_DELAY = 4000;
-  let autoplayId = null;
-  const startAutoplay = () => {
-    stopAutoplay();
-    autoplayId = setInterval(() => embla.scrollNext(), AUTOPLAY_DELAY);
-  };
-  const stopAutoplay = () => {
-    if (autoplayId) {
-      clearInterval(autoplayId);
-      autoplayId = null;
-    }
-  };
-  startAutoplay();
+  setInterval(() => embla.scrollNext(), AUTOPLAY_DELAY);
 
-  // Spotlight interactif
-  const lightbox = document.getElementById('emblaLightbox');
-  const lightboxImg = document.getElementById('emblaLightboxImg');
-  const lightboxBg = lightbox?.querySelector('.embla-lightbox__bg');
-  const lightboxClose = document.getElementById('emblaLightboxClose');
-
-  let originRect = null;
-
-  const openLightboxFromSlide = (slideEl) => {
-    const img = slideEl.querySelector('.embla__parallax__img');
-    if (!img || !lightbox || !lightboxImg || !lightboxBg || !lightboxClose) return;
-
-    // Active le lightbox d'abord
-    lightbox.classList.add('active');
-    stopAutoplay();
-
-    // Recalcule la position exacte après activation
-    originRect = img.getBoundingClientRect();
-    lightboxImg.src = img.currentSrc || img.src;
-    lightboxImg.style.top = originRect.top + 'px';
-    lightboxImg.style.left = originRect.left + 'px';
-    lightboxImg.style.width = originRect.width + 'px';
-    lightboxImg.style.height = 'auto';
-    lightboxImg.style.transform = 'scale(1)';
-
-    // Zoom fluide ×2
-    requestAnimationFrame(() => {
-      lightboxImg.style.top = '50%';
-      lightboxImg.style.left = '50%';
-      lightboxImg.style.transform = 'translate(-50%, -50%) scale(2)';
-    });
-  };
-
-  const closeLightbox = () => {
-    if (!lightbox || !lightboxImg || !lightboxBg) return;
-
-    let targetRect = originRect;
-    if (!targetRect) {
-      const selectedImg = document.querySelector('.embla__slide.is-selected .embla__parallax__img');
-      if (selectedImg) targetRect = selectedImg.getBoundingClientRect();
-    }
-    if (!targetRect) {
-      lightbox.classList.remove('active');
-      lightboxImg.removeAttribute('style');
-      lightboxImg.src = '';
-      originRect = null;
-      startAutoplay();
-      return;
-    }
-
-    // Retour à la position d'origine
-    lightboxImg.style.top = targetRect.top + 'px';
-    lightboxImg.style.left = targetRect.left + 'px';
-    lightboxImg.style.width = targetRect.width + 'px';
-    lightboxImg.style.height = 'auto';
-    lightboxImg.style.transform = 'scale(1)';
-
-    setTimeout(() => {
-      lightbox.classList.remove('active');
-      lightboxImg.removeAttribute('style');
-      lightboxImg.src = '';
-      originRect = null;
-      startAutoplay();
-    }, 400);
-  };
-
-  // Ouvrir au clic sur la slide centrale
-  slides.forEach((slide) => {
-    slide.addEventListener('click', () => {
-      if (slide.classList.contains('is-selected')) {
-        openLightboxFromSlide(slide);
+  // Click gating pour GLightbox: clique une slide non centrée -> recentre; centrée -> ouvre
+  slides.forEach((slide, i) => {
+    const anchor = slide.querySelector('a.glightbox');
+    if (!anchor) return;
+    anchor.addEventListener('click', (e) => {
+      if (!slide.classList.contains('is-selected')) {
+        e.preventDefault();
+        embla.scrollTo(i);
       }
+      // si centrée, on laisse GLightbox gérer
     });
-  });
-
-  // Fermer
-  lightboxClose?.addEventListener('click', closeLightbox);
-  lightbox?.addEventListener('click', (e) => {
-    if (e.target === lightboxBg) closeLightbox();
-  });
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightbox?.classList.contains('active')) {
-      closeLightbox();
-    }
   });
 }

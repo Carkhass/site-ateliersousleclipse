@@ -164,11 +164,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           ].map(img => (
             <div class="embla__slide" key={img}>
               <div class="embla__parallax">
-                <img 
-                  src={`/images/${img}`} 
-                  alt={`Détail du couteau - ${img}`} 
-                  class="embla__parallax__img" 
-                />
+                <a 
+                  href={`/images/${img}`} 
+                  class="glightbox embla-spotlight" 
+                  data-gallery="hamon"
+                  aria-label={`Agrandir l’image ${img}`}
+                >
+                  <img 
+                    src={`/images/${img}`} 
+                    alt={`Détail du couteau - ${img}`} 
+                    class="embla__parallax__img" 
+                  />
+                </a>
               </div>
             </div>
           ))}
@@ -183,16 +190,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="embla__dots"></div>
     </div>
 
-    <!-- Lightbox morphing pour Embla -->
-    <div class="embla-lightbox" id="emblaLightbox">
-      <div class="embla-lightbox__bg"></div>
-      <img src="" alt="Zoom image" id="emblaLightboxImg" />
-      <span class="embla-lightbox__close" id="emblaLightboxClose">&times;</span>
-    </div>
-
   </div>
 </section>
-
 
 
 <!-- ========================================================= -->
