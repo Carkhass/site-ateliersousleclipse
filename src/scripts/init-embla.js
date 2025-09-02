@@ -50,9 +50,11 @@ export function initEmbla() {
   updateOpacityStates();
   applyParallax();
 
+  // Navigation
   emblaNode.querySelector('.embla__prev')?.addEventListener('click', embla.scrollPrev);
   emblaNode.querySelector('.embla__next')?.addEventListener('click', embla.scrollNext);
 
+  // Pagination
   const dotsNode = emblaNode.querySelector('.embla__dots');
   if (dotsNode) {
     const dots = snaps.map(() => {
@@ -72,63 +74,102 @@ export function initEmbla() {
 
   // Autoplay continu maison
   const AUTOPLAY_DELAY = 4000;
-  setInterval(() => {
-    embla.scrollNext();
-  }, AUTOPLAY_DELAY);
-}
+  let autoplayId = null;
+  const startAutoplay = () => {
+    stopAutoplay();
+    autoplayId = setInterval(() => embla.scrollNext(), AUTOPLAY_DELAY);
+  };
+  const stopAutoplay = () => {
+    if (autoplayId) {
+      clearInterval(autoplayId);
+      autoplayId = null;
+    }
+  };
+  startAutoplay();
 
-// Lightbox morphing
-const lightbox = document.getElementById('emblaLightbox');
-const lightboxImg = document.getElementById('emblaLightboxImg');
-const lightboxBg = lightbox.querySelector('.embla-lightbox__bg');
-const lightboxClose = document.getElementById('emblaLightboxClose');
+  // Spotlight interactif
+  const lightbox = document.getElementById('emblaLightbox');
+  const lightboxImg = document.getElementById('emblaLightboxImg');
+  const lightboxBg = lightbox?.querySelector('.embla-lightbox__bg');
+  const lightboxClose = document.getElementById('emblaLightboxClose');
 
-slides.forEach((slide) => {
-  slide.addEventListener('click', () => {
-    if (slide.classList.contains('is-selected')) {
-      const img = slide.querySelector('.embla__parallax__img');
-      const rect = img.getBoundingClientRect();
+  let originRect = null;
 
-      // Position initiale = position dans le slider
-      lightboxImg.src = img.src;
-      lightboxImg.style.top = rect.top + 'px';
-      lightboxImg.style.left = rect.left + 'px';
-      lightboxImg.style.width = rect.width + 'px';
-      lightboxImg.style.height = rect.height + 'px';
-      lightboxImg.style.transform = 'scale(1)';
+  const openLightboxFromSlide = (slideEl) => {
+    const img = slideEl.querySelector('.embla__parallax__img');
+    if (!img || !lightbox || !lightboxImg || !lightboxBg || !lightboxClose) return;
 
-      lightbox.classList.add('active');
+    // Active le lightbox d'abord
+    lightbox.classList.add('active');
+    stopAutoplay();
 
-      // Forcer reflow pour déclencher la transition
-      requestAnimationFrame(() => {
-        lightboxImg.style.top = '50%';
-        lightboxImg.style.left = '50%';
-        lightboxImg.style.transform = 'translate(-50%, -50%) scale(2)';
-        lightboxImg.style.width = rect.width * 2 + 'px';
-        lightboxImg.style.height = rect.height * 2 + 'px';
-      });
+    // Recalcule la position exacte après activation
+    originRect = img.getBoundingClientRect();
+    lightboxImg.src = img.currentSrc || img.src;
+    lightboxImg.style.top = originRect.top + 'px';
+    lightboxImg.style.left = originRect.left + 'px';
+    lightboxImg.style.width = originRect.width + 'px';
+    lightboxImg.style.height = 'auto';
+    lightboxImg.style.transform = 'scale(1)';
+
+    // Zoom fluide ×2
+    requestAnimationFrame(() => {
+      lightboxImg.style.top = '50%';
+      lightboxImg.style.left = '50%';
+      lightboxImg.style.transform = 'translate(-50%, -50%) scale(2)';
+    });
+  };
+
+  const closeLightbox = () => {
+    if (!lightbox || !lightboxImg || !lightboxBg) return;
+
+    let targetRect = originRect;
+    if (!targetRect) {
+      const selectedImg = document.querySelector('.embla__slide.is-selected .embla__parallax__img');
+      if (selectedImg) targetRect = selectedImg.getBoundingClientRect();
+    }
+    if (!targetRect) {
+      lightbox.classList.remove('active');
+      lightboxImg.removeAttribute('style');
+      lightboxImg.src = '';
+      originRect = null;
+      startAutoplay();
+      return;
+    }
+
+    // Retour à la position d'origine
+    lightboxImg.style.top = targetRect.top + 'px';
+    lightboxImg.style.left = targetRect.left + 'px';
+    lightboxImg.style.width = targetRect.width + 'px';
+    lightboxImg.style.height = 'auto';
+    lightboxImg.style.transform = 'scale(1)';
+
+    setTimeout(() => {
+      lightbox.classList.remove('active');
+      lightboxImg.removeAttribute('style');
+      lightboxImg.src = '';
+      originRect = null;
+      startAutoplay();
+    }, 400);
+  };
+
+  // Ouvrir au clic sur la slide centrale
+  slides.forEach((slide) => {
+    slide.addEventListener('click', () => {
+      if (slide.classList.contains('is-selected')) {
+        openLightboxFromSlide(slide);
+      }
+    });
+  });
+
+  // Fermer
+  lightboxClose?.addEventListener('click', closeLightbox);
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightboxBg) closeLightbox();
+  });
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox?.classList.contains('active')) {
+      closeLightbox();
     }
   });
-});
-
-// Fermeture
-function closeLightbox() {
-  const rect = document.querySelector('.embla__slide.is-selected .embla__parallax__img').getBoundingClientRect();
-  lightboxImg.style.top = rect.top + 'px';
-  lightboxImg.style.left = rect.left + 'px';
-  lightboxImg.style.width = rect.width + 'px';
-  lightboxImg.style.height = rect.height + 'px';
-  lightboxImg.style.transform = 'scale(1)';
-
-  lightboxBg.style.opacity = '0';
-
-  setTimeout(() => {
-    lightbox.classList.remove('active');
-    lightboxBg.style.opacity = '';
-  }, 400);
 }
-
-lightboxClose.addEventListener('click', closeLightbox);
-lightbox.addEventListener('click', (e) => {
-  if (e.target === lightboxBg) closeLightbox();
-});
