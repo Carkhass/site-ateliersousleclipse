@@ -579,7 +579,7 @@ form button[type="submit"]:hover {
 }
 .embla__slide {
   position: relative;
-  flex: 0 0 65%; /* largeur slide ajustée pour réduire le gap */
+  flex: 0 0 65%;
   margin-right: 20px;
   opacity: 0.35;
   transition: opacity 300ms ease;
@@ -612,7 +612,7 @@ form button[type="submit"]:hover {
   box-shadow: none;
 }
 
-/* Mode-contain : couteaux entiers, pas d'ombre */
+/* Mode-contain */
 .embla.mode-contain .embla__parallax__img {
   object-fit: contain;
   object-position: center;
@@ -621,7 +621,7 @@ form button[type="submit"]:hover {
   box-shadow: none;
 }
 
-/* Mode-cover : plein cadre immersif + ombre */
+/* Mode-cover */
 .embla.mode-cover .embla__parallax__img {
   object-fit: cover;
   object-position: center 50%;
@@ -629,26 +629,53 @@ form button[type="submit"]:hover {
   box-shadow: 0 10px 26px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.12);
 }
 
-/* Navigation */
+/* Navigation — version translucide premium */
 .embla__prev,
 .embla__next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: var(--color-accent);
+  background: rgba(0, 0, 0, 0.35); /* translucide */
   color: #fff;
   border: none;
-  padding: 0.55rem 0.9rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   cursor: pointer;
-  z-index: 2;
-  border-radius: 8px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1),
+              background-color 0.25s ease,
+              box-shadow 0.25s ease;
+  will-change: transform;
 }
+
+/* Taille icône */
+.embla__prev svg,
+.embla__next svg {
+  width: 18px;
+  height: 18px;
+}
+.embla__prev,
+.embla__next {
+  font-size: 1.4rem; /* si caractère texte */
+}
+
+/* Hover premium */
+.embla__prev:hover,
+.embla__next:hover {
+  transform: translateY(-50%) scale(1.12);
+  background-color: rgba(0, 0, 0, 0.55); /* plus sombre au survol */
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3), 0 0 8px rgba(255,255,255,0.25); /* glow subtil */
+}
+
 .embla__prev {
-  left: -44px;
+  left: -54px;
 }
 .embla__next {
-  right: -44px;
+  right: -54px;
 }
 
 /* Pagination */
@@ -696,6 +723,9 @@ form button[type="submit"]:hover {
     display: none;
   }
 }
+
+
+
 /* =========================================================
    GLightbox — base minimale
    ========================================================= */

@@ -23,15 +23,7 @@ export function initSwipers() {
 }
 
 export function initLightbox() {
-  const targets = document.querySelectorAll('.embla-spotlight');
-  console.log(`[GLB] Slides détectées : ${targets.length}`);
-
-  if (!targets.length) {
-    console.warn('[GLB] Aucune cible trouvée pour la lightbox.');
-    return;
-  }
-
-  const lb = GLightbox({
+  GLightbox({
     selector: '.embla-spotlight',
     touchNavigation: true,
     loop: true,
@@ -41,21 +33,4 @@ export function initLightbox() {
     slideDuration: 420,
     skin: 'hamon'
   });
-
-  const isElement = (obj) => obj instanceof Element || obj instanceof HTMLDocument;
-
-  lb.on('open', (instance) => {
-    console.log('[GLB] Lightbox ouverte', instance);
-  });
-
-  lb.on('slide_changed', ({ slide, prev }) => {
-    if (!isElement(slide)) return;
-    console.log('[GLB] Slide changée', slide);
-  });
-
-  lb.on('close', () => {
-    console.log('[GLB] Lightbox fermée');
-  });
-
-  window.__glb = lb;
 }
