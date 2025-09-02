@@ -12,6 +12,8 @@
     "@astrojs/tailwind": "^5.1.5",
     "astro": "^5.13.3",
     "autoprefixer": "^10.4.21",
+    "embla-carousel": "^8.6.0",
+    "embla-carousel-autoplay": "^8.6.0",
     "glightbox": "^3.3.1",
     "postcss": "^8.5.6",
     "swiper": "^11.2.10",

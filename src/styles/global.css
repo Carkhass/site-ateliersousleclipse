@@ -496,89 +496,44 @@ form button[type="submit"]:hover {
 }
 
 /* =========================================================
-   12. SLIDERS (Swiper.js) — Coverflow élargi avec profondeur
+   12. SLIDERS (Swiper.js) — Parallaxe fluide
    ========================================================= */
 
-/* Swiper container */
-.swiper {
-  width: 100%;
-  height: 100%;
-}
-.swiper-slide {
-  width: auto;
-  flex-shrink: 0;
-}
-
-/* Carrousel Hamon */
 .hamon-swiper {
-  perspective: 1200px;
-  padding: 20px 0;
   width: 100%;
-  max-width: 1080px;
+  max-width: 960px;
   margin: 0 auto;
+  padding: 20px 0;
+  position: relative;
 }
 
-/* Slides — largeur auto pour format naturel */
 .hamon-swiper .swiper-slide {
-  width: auto !important;
-  height: auto;
-  transition: transform 0.4s ease, opacity 0.4s ease, filter 0.4s ease;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Images — taille contenue + ombre */
-.hamon-swiper .swiper-slide img {
+.hamon-photo {
   display: block;
   width: 100%;
-  height: auto;
   max-height: 400px;
   object-fit: cover;
-  margin: 0 auto;
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  transition: transform 0.4s ease;
 }
 
-/* Slide centrale */
-.hamon-swiper .swiper-slide-active {
-  opacity: 1;
-  transform: scale(1);
-  z-index: 3;
+.hamon-photo:hover {
+  transform: scale(1.05);
 }
 
-/* Slides juste à gauche */
-.hamon-swiper .slide-left-1 {
-  opacity: 0.6;
-  transform: scale(0.9) rotateY(6deg);
-  z-index: 2;
-}
-
-/* Slides extrême gauche */
-.hamon-swiper .slide-left-2 {
-  opacity: 0.3;
-  transform: scale(0.85) rotateY(12deg);
-  z-index: 1;
-}
-
-/* Slides juste à droite */
-.hamon-swiper .slide-right-1 {
-  opacity: 0.6;
-  transform: scale(0.9) rotateY(-6deg);
-  z-index: 2;
-}
-
-/* Slides extrême droite */
-.hamon-swiper .slide-right-2 {
-  opacity: 0.3;
-  transform: scale(0.85) rotateY(-12deg);
-  z-index: 1;
-}
-
-
-/* Flèches premium */
+/* Navigation */
 .swiper-button-next,
 .swiper-button-prev {
   color: var(--color-accent);
   text-shadow: 0 0 8px rgba(0,0,0,0.4);
-  transition: transform 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease;
   opacity: 0.9;
 }
 .swiper-button-next:hover,
@@ -587,7 +542,7 @@ form button[type="submit"]:hover {
   opacity: 1;
 }
 
-/* Pagination premium */
+/* Pagination */
 .swiper-pagination-bullet {
   background-color: var(--color-accent);
   opacity: 0.6;
@@ -596,25 +551,151 @@ form button[type="submit"]:hover {
   opacity: 1;
 }
 
-/* Ombre responsive sur mobile */
+/* Responsive shadow */
 @media (max-width: 640px) {
-  .hamon-swiper .swiper-slide img {
+  .hamon-photo {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   }
 }
 
-/* Slides non actives (hors focus) */
-.hamon-swiper .swiper-slide[aria-hidden="true"] {
-  opacity: 0.3;
-  transform: scale(0.85);
-  z-index: 0;
+/* =========================================================
+   12.B SLIDERS (Embla Carousel) — Parallaxe + opacité
+   ========================================================= */
+
+/* Base Embla */
+.embla {
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.embla__viewport {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+  align-items: stretch;
+}
+.embla__slide {
+  position: relative;
+  flex: 0 0 65%; /* largeur slide ajustée pour réduire le gap */
+  margin-right: 20px;
+  opacity: 0.35;
+  transition: opacity 300ms ease;
+}
+.embla__slide.is-near {
+  opacity: 0.6;
+}
+.embla__slide.is-selected {
+  opacity: 1;
 }
 
-.hamon-swiper .slide-far {
-  opacity: 0.3 !important;
-  transform: scale(0.85) rotateY(12deg) !important;
-  z-index: 0 !important;
+/* Conteneur image */
+.embla__parallax {
+  position: relative;
+  overflow: hidden;
+  height: clamp(360px, 58vh, 640px);
+  border-radius: 12px;
+  background: var(--color-surface);
+  backface-visibility: hidden;
 }
+
+/* Image animée par le parallaxe */
+.embla__parallax__img {
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  transform: translateZ(0);
+  transition: transform 0.2s ease-out;
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+/* Mode-contain : couteaux entiers, pas d'ombre */
+.embla.mode-contain .embla__parallax__img {
+  object-fit: contain;
+  object-position: center;
+  background-color: var(--color-surface);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Mode-cover : plein cadre immersif + ombre */
+.embla.mode-cover .embla__parallax__img {
+  object-fit: cover;
+  object-position: center 50%;
+  transform: scale(1.02);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.12);
+}
+
+/* Navigation */
+.embla__prev,
+.embla__next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+  z-index: 2;
+  border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.18);
+}
+.embla__prev {
+  left: -44px;
+}
+.embla__next {
+  right: -44px;
+}
+
+/* Pagination */
+.embla__dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 8px;
+}
+.embla__dot {
+  width: 9px;
+  height: 9px;
+  background: var(--color-accent);
+  border-radius: 50%;
+  opacity: 0.4;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.embla__dot.is-selected {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .embla__slide {
+    flex-basis: 70%;
+  }
+  .embla__prev {
+    left: -32px;
+  }
+  .embla__next {
+    right: -32px;
+  }
+}
+@media (max-width: 768px) {
+  .embla__slide {
+    flex-basis: 86%;
+    margin-right: 14px;
+  }
+  .embla__parallax {
+    height: clamp(280px, 48vh, 520px);
+  }
+  .embla__prev,
+  .embla__next {
+    display: none;
+  }
+}
+
+
 
 /* =========================================================
    13. GALERIES & IMAGES

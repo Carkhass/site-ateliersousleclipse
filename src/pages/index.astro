@@ -126,8 +126,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </div>
 </section>
 
+
 <!-- ========================================================= -->
-<!-- SECTION 3 : Inspiration + Galerie hamon                   -->
+<!-- SECTION 3 : Inspiration + Galerie hamon (Embla Carousel)  -->
 <!-- ========================================================= -->
 <section class="w-full max-w-none bg-surface py-16 inspiration-section">
   <div class="max-w-6xl mx-auto px-4 space-y-10">
@@ -148,35 +149,44 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </p>
     </div>
 
-    <!-- Swiper -->
-    <div class="swiper hamon-swiper slide-up">
-      <div class="swiper-wrapper">
-        {[
-          "hamon-1.jpg",
-          "hamon-2.jpg",
-          "hamon-3.jpg",
-          "hamon-4.jpg",
-          "hamon-5.jpg",
-          "hamon-6.jpg"
-        ].map(img => (
-          <div class="swiper-slide" key={img}>
-            <a href={`/images/${img}`} class="glightbox" data-gallery="hamon">
-              <img src={`/images/${img}`} alt={`Détail de ${img}`} class="hamon-photo" />
-            </a>
-          </div>
-        ))}
+    <!-- Embla Carousel -->
+    <!-- Ajoute .mode-contain ou .mode-cover selon le rendu voulu -->
+    <div class="embla mode-contain">
+      <div class="embla__viewport">
+        <div class="embla__container">
+          {[
+            "hamon-1.jpg",
+            "hamon-2.jpg",
+            "hamon-3.jpg",
+            "hamon-4.jpg",
+            "hamon-5.jpg",
+            "hamon-6.jpg"
+          ].map(img => (
+            <div class="embla__slide" key={img}>
+              <div class="embla__parallax">
+                <img 
+                  src={`/images/${img}`} 
+                  alt={`Détail du couteau - ${img}`} 
+                  class="embla__parallax__img" 
+                />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <!-- Navigation -->
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+      <button class="embla__prev">‹</button>
+      <button class="embla__next">›</button>
 
       <!-- Pagination -->
-      <div class="swiper-pagination"></div>
+      <div class="embla__dots"></div>
     </div>
 
   </div>
 </section>
+
+
 
 
 <!-- ========================================================= -->
