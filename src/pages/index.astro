@@ -126,8 +126,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </div>
 </section>
 
-
-
 <!-- ========================================================= -->
 <!-- SECTION 3 : Inspiration + Galerie hamon                   -->
 <!-- ========================================================= -->
@@ -153,27 +151,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <!-- Swiper -->
     <div class="swiper hamon-swiper slide-up">
       <div class="swiper-wrapper">
-    {[
-      "hamon-1.jpg",
-      "hamon-2.jpg",
-      "hamon-3.jpg",
-      "hamon-4.jpg",
-      "hamon-5.jpg",
-      "hamon-6.jpg"
-    ].map(img => (
-      <div class="swiper-slide">
-        <div class="hamon-card">
-          <a href={`/images/${img}`} class="glightbox" data-gallery="hamon">
-            <img src={`/images/${img}`} alt={`Détail de ${img}`} class="hamon-photo" />
-          </a>
-        </div>
+        {[
+          "hamon-1.jpg",
+          "hamon-2.jpg",
+          "hamon-3.jpg",
+          "hamon-4.jpg",
+          "hamon-5.jpg",
+          "hamon-6.jpg"
+        ].map(img => (
+          <div class="swiper-slide" key={img}>
+            <a href={`/images/${img}`} class="glightbox" data-gallery="hamon">
+              <img src={`/images/${img}`} alt={`Détail de ${img}`} class="hamon-photo" />
+            </a>
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
-  <div class="swiper-button-next"></div>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-pagination"></div>
-</div>
+
+      <!-- Navigation -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+
+      <!-- Pagination -->
+      <div class="swiper-pagination"></div>
+    </div>
+
   </div>
 </section>
 

@@ -1,4 +1,3 @@
-// src/scripts/init-swiper-glightbox.js
 import Swiper from 'swiper/bundle';
 import 'swiper/css/bundle';
 
@@ -8,12 +7,11 @@ import 'glightbox/dist/css/glightbox.min.css';
 export function initSwipers() {
   document.querySelectorAll('.swiper').forEach(swiperEl => {
 
-    // Carrousel Hamon (Coverflow 3D)
     if (swiperEl.classList.contains('hamon-swiper')) {
-      new Swiper(swiperEl, {
+      const swiper = new Swiper(swiperEl, {
         loop: true,
         centeredSlides: true,
-        slidesPerView: 'auto', // indispensable pour voir les latérales
+        slidesPerView: 'auto',
         spaceBetween: 0,
         grabCursor: true,
         speed: 800,
@@ -21,8 +19,8 @@ export function initSwipers() {
         coverflowEffect: {
           rotate: 40,
           stretch: 0,
-          depth: 200,
-          modifier: 1.2,
+          depth: 300,
+          modifier: 1.4,
           slideShadows: false
         },
         navigation: {
@@ -32,12 +30,32 @@ export function initSwipers() {
         pagination: {
           el: '.hamon-swiper .swiper-pagination',
           clickable: true
+        },
+        on: {
+          slideChangeTransitionStart() {
+            swiper.slides.forEach(slide => {
+              slide.classList.remove('slide-left-1', 'slide-left-2', 'slide-right-1', 'slide-right-2');
+            });
+
+            const active = swiper.realIndex;
+            const total = swiper.slides.length;
+
+            swiper.slides.forEach((slide, i) => {
+              const index = swiper.slides[i].swiperSlideIndex;
+              const offset = (index - active + total) % total;
+
+              if (offset === 1) slide.classList.add('slide-right-1');
+              if (offset === 2) slide.classList.add('slide-right-2');
+              if (offset === total - 1) slide.classList.add('slide-left-1');
+              if (offset === total - 2) slide.classList.add('slide-left-2');
+            });
+          }
         }
       });
+
       return;
     }
 
-    // Config générique pour les autres sliders
     new Swiper(swiperEl, {
       loop: true,
       slidesPerView: 1,
