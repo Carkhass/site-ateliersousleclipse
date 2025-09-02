@@ -17,7 +17,7 @@ export function initEmbla() {
   const snaps = embla.scrollSnapList();
   const images = emblaNode.querySelectorAll('.embla__parallax__img');
 
-  // Opacité progressive
+  // Gestion opacité des slides
   const updateOpacityStates = () => {
     const selected = embla.selectedScrollSnap();
     const total = snaps.length;
@@ -29,7 +29,7 @@ export function initEmbla() {
     });
   };
 
-  // Parallaxe
+  // Effet parallaxe
   const applyParallax = () => {
     const viewportRect = viewportNode.getBoundingClientRect();
     const viewportCenter = viewportRect.left + viewportRect.width / 2;
@@ -46,8 +46,14 @@ export function initEmbla() {
   };
 
   embla.on('scroll', applyParallax);
-  embla.on('select', () => { updateOpacityStates(); applyParallax(); });
-  embla.on('resize', () => { updateOpacityStates(); applyParallax(); });
+  embla.on('select', () => {
+    updateOpacityStates();
+    applyParallax();
+  });
+  embla.on('resize', () => {
+    updateOpacityStates();
+    applyParallax();
+  });
 
   updateOpacityStates();
   applyParallax();
@@ -74,20 +80,22 @@ export function initEmbla() {
     setSelectedDot();
   }
 
-  // Autoplay continu maison
+  // Autoplay simple
   const AUTOPLAY_DELAY = 4000;
-  setInterval(() => embla.scrollNext(), AUTOPLAY_DELAY);
+  let autoplayId = null;
+  const startAutoplay = () => {
+    stopAutoplay();
+    autoplayId = setInterval(() => embla.scrollNext(), AUTOPLAY_DELAY);
+  };
+  const stopAutoplay = () => {
+    if (autoplayId) {
+      clearInterval(autoplayId);
+      autoplayId = null;
+    }
+  };
+  startAutoplay();
 
-  // Click gating pour GLightbox: clique une slide non centrée -> recentre; centrée -> ouvre
-  slides.forEach((slide, i) => {
-    const anchor = slide.querySelector('a.glightbox');
-    if (!anchor) return;
-    anchor.addEventListener('click', (e) => {
-      if (!slide.classList.contains('is-selected')) {
-        e.preventDefault();
-        embla.scrollTo(i);
-      }
-      // si centrée, on laisse GLightbox gérer
-    });
-  });
+  // Pause autoplay au survol
+  emblaNode.addEventListener('mouseenter', stopAutoplay);
+  emblaNode.addEventListener('mouseleave', startAutoplay);
 }

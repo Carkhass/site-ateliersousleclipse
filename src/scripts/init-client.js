@@ -8,8 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialisation du carrousel Embla (section Inspiration)
   initEmbla();
 
-  // Initialisation de GLightbox
-  initLightbox();
+  // Initialisation de GLightbox APRES Embla
+  // Petit délai pour s'assurer que le DOM des slides est prêt
+  setTimeout(() => {
+    initLightbox();
+  }, 0);
 
   // Si le script reveal-on-scroll est chargé et expose observeNewElements(),
   // on force un rescan pour inclure les éléments ajoutés par Swiper/Embla/GLightbox
