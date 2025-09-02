@@ -1,55 +1,20 @@
-import Swiper from 'swiper/bundle';
-import 'swiper/css/bundle';
-
-import GLightbox from 'glightbox';
-import 'glightbox/dist/css/glightbox.min.css';
-
-export function initSwipers() {
-  document.querySelectorAll('.swiper').forEach(swiperEl => {
-
-    // Carrousel Hamon — effet parallaxe fluide
-    if (swiperEl.classList.contains('hamon-swiper')) {
-      new Swiper(swiperEl, {
-        loop: true,
-        slidesPerView: 1,
-        speed: 1000,
-        parallax: true,
-        grabCursor: true,
-        navigation: {
-          nextEl: '.hamon-swiper .swiper-button-next',
-          prevEl: '.hamon-swiper .swiper-button-prev'
-        },
-        pagination: {
-          el: '.hamon-swiper .swiper-pagination',
-          clickable: true
-        }
-      });
-      return;
-    }
-
-    // Autres sliders
-    new Swiper(swiperEl, {
-      loop: true,
-      slidesPerView: 1,
-      spaceBetween: 20,
-      pagination: { el: '.swiper-pagination', clickable: true }
-    });
-  });
-}
-
 export function initLightbox() {
   const lb = GLightbox({
-    selector: '.embla-spotlight',      // uniquement les images du carrousel
+    selector: '.embla-spotlight', // uniquement les images du carrousel
     touchNavigation: true,
     loop: true,
     openEffect: 'fade',
     closeEffect: 'fade',
     slideEffect: 'slide',
     slideDuration: 420,
-    skin: 'hamon'                      // ajoute .glightbox-hamon au container
+    skin: 'hamon', // => classe .glightbox-hamon sur le container
+    svg: {
+      next: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>',
+      prev: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M15.41 7.41 10.83 12l4.58 4.59L14 18l-6-6 6-6z"/></svg>',
+      close: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>'
+    }
   });
 
-  // Parallaxe pointeur + Ken Burns (subtils)
   const isCoarse = window.matchMedia('(pointer: coarse)').matches;
   const listeners = new WeakMap();
 
@@ -74,16 +39,16 @@ export function initLightbox() {
     const frame = slide.querySelector('.gslide-image');
     if (!img || !frame) return;
 
-    // Ken Burns très léger par défaut
+    // Ken Burns léger
     img.classList.add('glb-ken');
 
-    if (isCoarse) return; // pas de parallaxe sur tactile
+    if (isCoarse) return;
 
-    // Parallaxe pointeur (amplitude faible)
-    const AMPLITUDE = 12; // px
+    // Parallaxe pointeur
+    const AMPLITUDE = 12;
     const onMove = (e) => {
       const rect = frame.getBoundingClientRect();
-      const nx = (e.clientX - rect.left) / rect.width - 0.5;  // -0.5..0.5
+      const nx = (e.clientX - rect.left) / rect.width - 0.5;
       const ny = (e.clientY - rect.top) / rect.height - 0.5;
       const tx = nx * AMPLITUDE * 2;
       const ty = ny * AMPLITUDE;
@@ -105,7 +70,6 @@ export function initLightbox() {
   });
 
   lb.on('open', () => {
-    // Sécurise l’état initial si le premier 'slide_changed' tarde
     const current = document.querySelector('.glightbox-container .gslide.current');
     enhanceSlide(current);
   });
@@ -114,6 +78,6 @@ export function initLightbox() {
     document.querySelectorAll('.glightbox-container .gslide').forEach(cleanup);
   });
 
-  // Expose (debug éventuel)
+  // Expose pour debug
   window.__glb = lb;
 }
