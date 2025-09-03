@@ -380,182 +380,81 @@ header nav a:hover {
    9. ANIMATIONS GLOBALES
    ========================================================= */
 
-/* Apparition fade + slide up */
-.fade-slide-up {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.fade-slide-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* fade-in-up : fondu + translation vers le haut */
+/* --- Fade-in-up générique --- */
 .fade-in-up {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: opacity, transform;
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
+
 .fade-in-up.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Variantes */
-.var-slide-left {
-  transform: translateX(-20px);
-}
-.var-slide-left.visible {
-  transform: translateX(0);
-}
-.var-zoom-in {
-  transform: scale(0.95);
-}
-.var-zoom-in.visible {
-  transform: scale(1);
-}
-
-
-/* Animations au scroll - état initial */
-.reveal-on-scroll,
-.fade-slide-up,
-.fade-in,
-.slide-up,
-.animate-on-scroll {
-  opacity: 0;
-  will-change: opacity, transform;
-}
-
-/* fade-slide-up : fade + translation douce */
+/* --- Fade-slide-up --- */
 .fade-slide-up {
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  opacity: 0;
+  transform: translateY(40px);
+  will-change: opacity, transform;
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
+
 .fade-slide-up.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* fade-in : simple fondu */
+/* --- Fade-in simple --- */
 .fade-in {
+  opacity: 0;
   transition: opacity 0.8s ease;
 }
+
 .fade-in.visible {
   opacity: 1;
 }
 
-/* slide-up : translation plus marquée */
+/* --- Slide-up simple --- */
 .slide-up {
-  transform: translateY(40px);
-  transition: opacity 0.6s ease, transform 0.6s ease-out;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
+
 .slide-up.visible {
-  opacity: 1;
   transform: translateY(0);
-}
-
-/* animate-on-scroll : déclenche une keyframe */
-.animate-on-scroll {
-  transform: translateY(20px);
-}
-.animate-on-scroll.visible {
-  animation: aos-fade-up 0.8s ease forwards;
-}
-
-@keyframes aos-fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Cascade : délai échelonné pour les enfants visibles
-   → On cible uniquement .reveal-child pour un contrôle précis */
-.reveal-on-scroll.visible .reveal-child,
-.fade-slide-up.visible .reveal-child,
-.fade-in.visible .reveal-child,
-.slide-up.visible .reveal-child,
-.animate-on-scroll.visible .reveal-child {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUpChild 0.6s ease forwards;
-}
-
-.reveal-on-scroll.visible .reveal-child:nth-child(1),
-.fade-slide-up.visible .reveal-child:nth-child(1),
-.fade-in.visible .reveal-child:nth-child(1),
-.slide-up.visible .reveal-child:nth-child(1),
-.animate-on-scroll.visible .reveal-child:nth-child(1) {
-  animation-delay: 0.1s;
-}
-
-.reveal-on-scroll.visible .reveal-child:nth-child(2),
-.fade-slide-up.visible .reveal-child:nth-child(2),
-.fade-in.visible .reveal-child:nth-child(2),
-.slide-up.visible .reveal-child:nth-child(2),
-.animate-on-scroll.visible .reveal-child:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.reveal-on-scroll.visible .reveal-child:nth-child(3),
-.fade-slide-up.visible .reveal-child:nth-child(3),
-.fade-in.visible .reveal-child:nth-child(3),
-.slide-up.visible .reveal-child:nth-child(3),
-.animate-on-scroll.visible .reveal-child:nth-child(3) {
-  animation-delay: 0.3s;
-}
-
-.reveal-on-scroll.visible .reveal-child:nth-child(4),
-.fade-slide-up.visible .reveal-child:nth-child(4),
-.fade-in.visible .reveal-child:nth-child(4),
-.slide-up.visible .reveal-child:nth-child(4),
-.animate-on-scroll.visible .reveal-child:nth-child(4) {
-  animation-delay: 0.4s;
-}
-
-.reveal-on-scroll.visible .reveal-child:nth-child(5),
-.fade-slide-up.visible .reveal-child:nth-child(5),
-.fade-in.visible .reveal-child:nth-child(5),
-.slide-up.visible .reveal-child:nth-child(5),
-.animate-on-scroll.visible .reveal-child:nth-child(5) {
-  animation-delay: 0.5s;
-}
-
-/* Ajoute plus si besoin */
-
-@keyframes fadeUpChild {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Slideshow "section 2 */
-.slideshow {
-  position: relative;
-  width: 100%;
-  height: 100%; /* prend toute la hauteur de la colonne */
-}
-.slideshow .slide {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transform: scale(1.05);
-  transition: opacity 1.5s ease, transform 4s ease;
-}
-.slideshow .slide.active {
   opacity: 1;
-  transform: scale(1);
 }
 
+/* --- Animation lettre par lettre (fade-in progressif) --- */
+.letter {
+  opacity: 0;
+  display: inline-block;
+  animation: fadeInLetter 0.04s forwards;
+}
+
+@keyframes fadeInLetter {
+  to { opacity: 1; }
+}
+
+/* --- Animation lettre par lettre (typewriter) --- */
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--color-accent);
+  animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink {
+  50% { border-color: transparent }
+}
 
 
 /* =========================================================
@@ -955,7 +854,6 @@ form button[type="submit"]:hover {
    14B. SECTION HÉROS
    ========================================================= */
 
-/* Conteneur principal du hero */
 .hero-section {
   background-size: contain; /* ou cover si tu veux recadrer */
   background-position: center;
@@ -971,19 +869,7 @@ form button[type="submit"]:hover {
   margin: 1rem auto 0;
 }
 
-/* --- Animation fade-in-up pour le titre --- */
-.fade-in-up {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.fade-in-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* --- Halo du titre héros (adapté du logo) --- */
+/* --- Halo du titre héros --- */
 .hero-title-glow {
   filter:
     drop-shadow(0 0 8px var(--color-accent-dark))
@@ -998,15 +884,9 @@ form button[type="submit"]:hover {
     drop-shadow(0 0 36px rgba(168, 50, 50, 0.5));
 }
 
-/* --- Animation lettre par lettre pour le sous-titre --- */
+/* --- Style spécifique des lettres du sous-titre du hero --- */
 .hero-subtitle .letter {
-  opacity: 0;
-  display: inline-block;
-  animation: fadeInLetter 0.04s forwards;
-}
-
-@keyframes fadeInLetter {
-  to { opacity: 1; }
+  /* On peut surcharger ici si on veut un style différent du global */
 }
 
 

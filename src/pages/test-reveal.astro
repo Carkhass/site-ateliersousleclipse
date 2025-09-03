@@ -1,73 +1,50 @@
----
-import BaseLayout from '../layouts/BaseLayout.astro';
----
-
-<BaseLayout title="Test Révélation">
-  <main class="space-y-32 p-8">
-    
-    <section style="height: 100vh; background: #ddd; display: flex; align-items: center; justify-content: center;">
-      <h1>Scroll vers le bas ↓</h1>
-    </section>
-
-    <!-- Bloc à révéler -->
-    <section class="reveal-on-scroll" style="background: #f5f5f5; padding: 3rem; text-align: center; border: 2px solid #ccc;">
-      <h2>Bloc de test</h2>
-      <p>Ce bloc devrait apparaître en fade-in quand il entre dans le viewport.</p>
-    </section>
-
-    <section style="height: 100vh; background: #ddd;"></section>
-
-  </main>
-
-  <!-- Script directement ici -->
-  <script>
-  (() => {
-    if (typeof window === 'undefined') return;
-
-    document.addEventListener('DOMContentLoaded', () => {
-      document.documentElement.classList.remove('no-js');
-      const revealElements = document.querySelectorAll('.reveal-on-scroll');
-      if (!revealElements.length) return;
-
-      const makeVisible = (el) => {
-        el.classList.add('visible');
-      };
-
-      const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            makeVisible(entry.target);
-            obs.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
-
-      revealElements.forEach(el => {
-        observer.observe(el);
-        const rect = el.getBoundingClientRect();
-        if (rect.bottom > 0 && rect.top < window.innerHeight) {
-          makeVisible(el);
-          observer.unobserve(el);
-        }
-      });
-    });
-  })();
-  </script>
-
-  <style>
-  html.no-js .reveal-on-scroll {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Test fade-in-up</title>
+<style>
+  body {
+    background: #111;
+    color: white;
+    font-family: sans-serif;
+    height: 200vh; /* pour scroller */
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 150vh; /* titre hors écran au départ */
   }
-  .reveal-on-scroll {
+
+  .fade-in-up {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  .reveal-on-scroll.visible {
+  .fade-in-up.visible {
     opacity: 1;
     transform: translateY(0);
   }
-  </style>
-</BaseLayout>
+</style>
+</head>
+<body>
+
+<h1 id="test-title" class="fade-in-up">Ceci est un test</h1>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const el = document.getElementById('test-title');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        el.classList.add('visible');
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>
