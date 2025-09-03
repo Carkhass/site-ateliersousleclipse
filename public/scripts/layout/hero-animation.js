@@ -3,32 +3,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const subtitle = document.getElementById('hero-subtitle');
   if (!title || !subtitle) return;
 
-  const showTitle = () => {
-    title.classList.add('visible'); // fade-in-up
-    title.classList.add('active');  // halo
-  };
+  // --- TITRE ---
+  title.style.opacity = '0';
+  title.style.transition = 'opacity 0.6s ease';
 
-  // Si déjà visible au chargement → déclenche après un petit délai
-  const rect = title.getBoundingClientRect();
-  const inView = rect.top < window.innerHeight && rect.bottom > 0;
-  if (inView) {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(showTitle);
-    });
-  } else {
-    // Sinon, on attend qu'il entre dans le viewport
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          showTitle();
-          observer.unobserve(title);
-        }
-      });
-    }, { threshold: 0.1 });
-    observer.observe(title);
-  }
+  setTimeout(() => {
+    title.style.opacity = '1';
+    title.classList.add('active'); // halo
+  }, 100);
 
-  // Animation lettre par lettre du sous-titre
+  // --- SOUS-TITRE ---
   const animateSubtitle = (el) => {
     const rawHTML = el.innerHTML;
     const chars = rawHTML
@@ -48,25 +32,15 @@ document.addEventListener("DOMContentLoaded", () => {
     let delay = 0;
     el.querySelectorAll('.letter').forEach(span => {
       span.style.animationDelay = `${delay}s`;
-      delay += 0.03;
+      delay += 0.03; // vitesse de décalage entre lettres
     });
-    el.style.opacity = 1;
+
+    el.style.opacity = 1; // rendre visible maintenant
   };
 
-  // Déclenche le sous-titre immédiatement si visible
-  const subRect = subtitle.getBoundingClientRect();
-  const subInView = subRect.top < window.innerHeight && subRect.bottom > 0;
-  if (subInView) {
+  const fadeInDuration = 600; // ms
+  const extraDelay = 100; // ms
+  setTimeout(() => {
     animateSubtitle(subtitle);
-  } else {
-    const subObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateSubtitle(subtitle);
-          subObserver.unobserve(subtitle);
-        }
-      });
-    }, { threshold: 0.1 });
-    subObserver.observe(subtitle);
-  }
+  }, fadeInDuration + extraDelay);
 });

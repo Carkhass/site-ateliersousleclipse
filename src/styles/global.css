@@ -428,34 +428,6 @@ header nav a:hover {
   opacity: 1;
 }
 
-/* --- Animation lettre par lettre (fade-in progressif) --- */
-.letter {
-  opacity: 0;
-  display: inline-block;
-  animation: fadeInLetter 0.04s forwards;
-}
-
-@keyframes fadeInLetter {
-  to { opacity: 1; }
-}
-
-/* --- Animation lettre par lettre (typewriter) --- */
-.typewriter {
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 2px solid var(--color-accent);
-  animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
-}
-
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-@keyframes blink {
-  50% { border-color: transparent }
-}
-
 
 /* =========================================================
    10. BOUTONS & LIENS SPÉCIFIQUES
@@ -887,6 +859,21 @@ form button[type="submit"]:hover {
 /* --- Style spécifique des lettres du sous-titre du hero --- */
 .hero-subtitle .letter {
   /* On peut surcharger ici si on veut un style différent du global */
+}
+
+/* Animation premium : fade-in-up lettre par lettre */
+.letter {
+  opacity: 0;
+  transform: translateY(8px); /* léger mouvement vers le haut */
+  display: inline-block;
+  animation: fadeInUpLetter 0.4s ease-out forwards;
+}
+
+@keyframes fadeInUpLetter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 

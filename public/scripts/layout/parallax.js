@@ -45,9 +45,10 @@
 
       const translate = -progress * (speed / 2) + offset;
 
-      const baseZoom = parseFloat(section.getAttribute('data-parallax-zoom')) || 1.28;
-      const zoomStrength = parseFloat(section.getAttribute('data-parallax-zoom-strength')) || 0.08;
-      const zoom = baseZoom + Math.abs(progress) * zoomStrength;
+      const baseZoom = parseFloat(section.getAttribute('data-parallax-zoom')) || 1;
+      const zoomStrength = parseFloat(section.getAttribute('data-parallax-zoom-strength')) || 0;
+      const zoom = baseZoom; // pas de variation
+
 
       target.style.transform = `translateY(${translate}px) scale(${zoom})`;
     });
