@@ -512,6 +512,30 @@ form button[type="submit"]:hover {
    12. SLIDERS (Swiper.js) — Parallaxe fluide
    ========================================================= */
 
+   /* Slider section 2 */
+.swiper-section2 {
+  width: 100%;
+  height: clamp(400px, 80vh, 900px);
+}
+
+.swiper-section2 .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swiper-section2 .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: smooth;
+}
+
+
+   /* Slider HAMON (désactivé) */
 .hamon-swiper {
   width: 100%;
   max-width: 960px;
@@ -575,7 +599,8 @@ form button[type="submit"]:hover {
    12.B SLIDERS (Embla Carousel) — Parallaxe + opacité
    ========================================================= */
 
-/* Base Embla */
+
+/* EMBLA SECTION INSPIRATION*/
 .embla {
   position: relative;
   max-width: 960px;

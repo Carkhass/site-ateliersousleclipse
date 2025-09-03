@@ -5,9 +5,14 @@ import Button from "../components/Button.astro";
 import Card from "../components/Card.astro";
 import ColorPalette from "../components/ColorPalette.astro";
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+/* On importe toutes les images du dossier src/assets/slider-section2 */
+const images = import.meta.glob('../assets/slider-section2/*.{jpg,jpeg,png,webp}', { eager: true });
+const imageList = Object.values(images).map((img) => img.default);
 ---
 
 <BaseLayout title="Accueil">
+
 
 <!-- ========================================================= -->
 <!-- HERO -->
@@ -39,7 +44,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </p>
   </div>
 </section>
-
 
 
 
@@ -93,42 +97,41 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <!-- SECTION 2 : À chaque utilisation son couteau              -->
 <!-- ========================================================= -->
 <section class="bg-bg text-text py-16">
-  <div class="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+  <div class="grid md:grid-cols-3 items-center gap-8">
 
-    <!-- 📷 SLIDER PREMIUM -->
-    <div class="relative overflow-hidden rounded-lg shadow-lg group fade-slide-up h-full">
-      <div class="slideshow h-full">
-        <img src="/images/couteau-grand-bonap.jpg" alt="Couteau artisanal Atelier sous l'éclipse Grand Bon'Ap" class="slide active" />
-        <img src="/images/couteau_nakiri.jpg" alt="Couteau artisanal Atelier sous l'éclipse Nakiri" class="slide" />
-        <img src="/images/couteau-kiritsuke.jpg" alt="Couteau artisanal Atelier sous l'éclipse Kiritsuke" class="slide" />
-        <img src="/images/couteau-baby-bonap.jpg" alt="Couteau artisanal Atelier sous l'éclipse Baby Bon'Ap" class="slide" />
-        <img src="/images/couteau-camp.jpg" alt="Couteau artisanal Atelier sous l'éclipse de Camp" class="slide" />
-        <img src="/images/couteau-trancheur.jpg" alt="Couteau artisanal Atelier sous l'éclipse Trancheur" class="slide" />
-        <img src="/images/couteau-table.jpg" alt="Couteau artisanal Atelier sous l'éclipse de table" class="slide" />
-        <img src="/images/couteau-long-bonap.jpg" alt="Couteau artisanal Atelier sous l'éclipse Long Bon'Ap" class="slide" />
-        <img src="/images/couteau-petty.jpg" alt="Couteau artisanal Atelier sous l'éclipse Petty" class="slide" />
-        <img src="/images/couteau-gyuto.jpg" alt="Couteau artisanal Atelier sous l'éclipse Gyuto" class="slide" />
-        <img src="/images/couteau-fighter.jpg" alt="Couteau artisanal Atelier sous l'éclipse Fighter" class="slide" />       
+    <!-- 📷 SLIDER 2/3 AVEC MARGE LATÉRALE -->
+    <div class="relative overflow-hidden h-full w-full col-span-2 px-6 md:px-12">
+      <div class="swiper swiper-section2 h-full">
+        <div class="swiper-wrapper">
+          {imageList.map((src) => (
+            <div class="swiper-slide">
+              <img src={src} alt="" />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
 
-    <!-- 📝 TEXTE -->
-    <div class="space-y-6 fade-slide-up">
-      <h2 class="text-3xl md:text-4xl font-serif font-bold text-accent reveal-child">
-        À chaque utilisation son couteau
-      </h2>
-      <p class="text-lg text-muted leading-relaxed reveal-child">
-        Je prends un plaisir particulier à façonner des couteaux de cuisine — la gourmandise, ça ne s’invente pas ! 
-        La plupart de mes créations se destinent aux arts de la table, mais je réalise aussi des pièces utilitaires, 
-        d’extérieur, voire de chasse.
-      </p>
-      <p class="text-lg text-muted leading-relaxed reveal-child">
-        Chaque usage appelle son acier. Pour la cuisine, je privilégie des aciers peu alliés mais riches en carbone, 
-        offrant un tranchant exceptionnel. Pour un couteau de camp, je sélectionne un acier plus chargé, 
-        résistant mieux aux contraintes et à l’abrasion. Associés à un profil et une géométrie adaptés, 
-        ils donnent naissance à des lames agréables en main, précises et durables.
-      </p>
+    <!-- 📝 TEXTE 1/3 ALIGNÉ -->
+    <div class="container mx-auto px-4">
+      <div class="space-y-6 fade-slide-up">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-accent reveal-child">
+          À chaque utilisation son couteau
+        </h2>
+        <p class="text-lg text-muted leading-relaxed reveal-child">
+          Je prends un plaisir particulier à façonner des couteaux de cuisine — la gourmandise, ça ne s’invente pas ! 
+          La plupart de mes créations se destinent aux arts de la table, mais je réalise aussi des pièces utilitaires, 
+          d’extérieur, voire de chasse.
+        </p>
+        <p class="text-lg text-muted leading-relaxed reveal-child">
+          Chaque usage appelle son acier. Pour la cuisine, je privilégie des aciers peu alliés mais riches en carbone, 
+          offrant un tranchant exceptionnel. Pour un couteau de camp, je sélectionne un acier plus chargé, 
+          résistant mieux aux contraintes et à l’abrasion. Associés à un profil et une géométrie adaptés, 
+          ils donnent naissance à des lames agréables en main, précises et durables.
+        </p>
+      </div>
     </div>
+
   </div>
 </section>
 
@@ -327,19 +330,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-  <!-- SCRIPT SLIDESHOW SECTION 2 -->
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const slides = document.querySelectorAll('.slideshow .slide');
-    let index = 0;
-
-    setInterval(() => {
-      slides[index].classList.remove('active');
-      index = (index + 1) % slides.length;
-      slides[index].classList.add('active');
-    }, 4000); // change toutes les 5s
-  });
-</script>
 
 
 </BaseLayout

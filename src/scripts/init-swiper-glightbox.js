@@ -1,10 +1,28 @@
 import Swiper from 'swiper';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, EffectFade, Autoplay } from 'swiper/modules';
 import GLightbox from 'glightbox';
 
 export function initSwipers() {
   const swiperEls = document.querySelectorAll('.swiper');
+
   swiperEls.forEach((el) => {
+    // 🎯 Cas spécial : slider section 2 (fade + autoplay)
+    if (el.classList.contains('swiper-section2')) {
+      new Swiper(el, {
+        modules: [EffectFade, Autoplay],
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
+        loop: true,
+        autoplay: {
+          delay: 3500, // ⬅️ délai entre deux images (ms) — ici 3,5s au lieu de 5s
+          disableOnInteraction: false
+        },
+        speed: 1600 // ⬅️ durée du fondu (ms) — plus grand = plus smooth
+      });
+      return;
+    }
+
+    // ⚙️ Config par défaut pour les autres sliders
     new Swiper(el, {
       modules: [Navigation, Pagination],
       loop: true,
