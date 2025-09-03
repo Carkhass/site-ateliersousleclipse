@@ -26,7 +26,12 @@
   --color-surface: #e8dfd4;
   --color-text: #2b1b1d;
   --color-muted: #8c7b75;
-  --color-accent: #e64547;
+
+  /* 🔥 Rouge Sombre */
+  --color-accent: #7a1e1e;
+  --color-accent-light: #a83232;
+  --color-accent-dark: #5c0f0f;
+
   --color-success: #3fa073;
   --color-warning: #d89c00;
   --color-danger: #c94141;
@@ -39,7 +44,12 @@
   --color-surface: #2b1518;
   --color-text: #f5f0e6;
   --color-muted: #b8a8a0;
-  --color-accent: #e64547;
+
+  /* 🔥 Rouge Sombre dark */
+  --color-accent: #7a1e1e;
+  --color-accent-light: #a83232;
+  --color-accent-dark: #5c0f0f;
+
   --color-success: #4ad295;
   --color-warning: #f0c020;
   --color-danger: #ff5c5c;
@@ -130,54 +140,52 @@ button:hover, a:hover {
    7. HEADER FIXE & NAVIGATION
    ========================================================= */
 
+/* 🧱 Structure principale */
 main {
-  padding-top: 5rem; /* compense la hauteur du header */
+  padding-top: 5rem; /* Compense la hauteur du header fixe */
 }
 
-/* État visuel du header au scroll (inchangé) */
+/* 🧭 État visuel du header au scroll */
 #site-header.scrolled {
   background-color: rgba(var(--color-bg-rgb), 0.65);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.35);
 }
-#site-header.scrolled img { transform: scale(0.9); }
-#site-header.scrolled span { transform: translateY(-1px); }
+#site-header.scrolled img {
+  transform: scale(1.2); /* Logo agrandi */
+}
+#site-header.scrolled span {
+  transform: translateY(-1px); /* Titre légèrement relevé */
+}
 
-/* Ligne d’accent — ouverture symétrique depuis le centre */
+/* 🌈 Ligne d’accent animée */
 #header-accent {
   position: absolute;
   bottom: 0;
   left: 0;
-  right: 0;              /* pleine largeur du container */
+  right: 0;
   height: 2px;
   background: linear-gradient(
     90deg,
     var(--color-accent) 0%,
     var(--color-accent-light, var(--color-accent)) 50%,
     var(--color-accent) 100%
-  ) !important;          /* neutralise tout background:none !important résiduel */
+  ) !important;
   background-size: 200% 100%;
   background-position: 0% 50%;
-
-  /* clé: largeur fixe, on anime l’échelle */
   transform: scaleX(0);
   transform-origin: 50% 50%;
   transition: transform 1s ease, background-position 1.6s linear;
   z-index: 10;
 }
-
-/* Déploiement au scroll: du centre vers les bords */
 #site-header.scrolled #header-accent {
   transform: scaleX(1);
   background-position: 100% 50%;
 }
-
-/* Sécurité: au repos, force l’échelle à 0 (si des styles résiduels traînent) */
 #site-header:not(.scrolled) #header-accent {
   transform: scaleX(0) !important;
 }
 
-
-/* Liens de navigation */
+/* 🧩 Liens de navigation desktop */
 header nav a {
   color: var(--color-text);
   font-weight: 500;
@@ -188,22 +196,149 @@ header nav a:hover {
   color: var(--color-accent);
 }
 
-/* Menu burger mobile */
-.menu-toggle {
+/* 🌟 Halo du logo */
+.logo-glow {
+  filter:
+    drop-shadow(0 0 6px var(--color-accent-dark))
+    drop-shadow(0 0 12px var(--color-accent-light));
+  transition: transform 0.4s ease, filter 0.4s ease;
+  transform: scale(1);
+}
+#site-header.scrolled .logo-glow {
+  filter:
+    drop-shadow(0 0 10px var(--color-accent-dark))
+    drop-shadow(0 0 20px var(--color-accent-light))
+    drop-shadow(0 0 30px rgba(168, 50, 50, 0.5));
+  transform: scale(1.15);
+}
+
+/* 🔠 Animation du texte (logo + titre + liens) */
+.text-magnify {
+  transition: transform 0.4s ease;
+  transform: scale(1);
+  transform-origin: center;
+}
+#site-header.scrolled .text-magnify {
+  transform: scale(1.15);
+}
+
+/* 🧱 Conteneur logo + titre */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: gap 0.4s ease;
+}
+#site-header.scrolled .header-brand {
+  gap: 1.5rem;
+}
+
+/* 🪟 Overlay du menu mobile (clic extérieur) */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: transparent;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 90;
+}
+.menu-overlay.active {
+  pointer-events: auto;
+}
+
+/* 📱 Menu mobile (slide latéral) */
+.menu-mobile {
+  position: fixed;
+  top: 5rem;
+  right: 1rem;
+  width: 160px;
+  background-color: rgba(var(--color-bg-rgb), 0.65); /* aligné avec le header */
+  backdrop-filter: blur(6px);
+  border-radius: 0.75rem;
+  box-shadow: -4px 0 20px rgba(0,0,0,0.35);
+  padding: 2rem 1.5rem;
+  z-index: 100;
+  opacity: 0;
+  transform: translateX(100%);
+  pointer-events: none;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+.menu-mobile.open {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 📱 Liste des liens dans le menu mobile */
+.menu-mobile ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* 📱 Liens du menu mobile — slide right échelonné */
+.menu-mobile a {
+  text-align: right;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.menu-mobile.open a {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ⏱️ Cascade horizontale */
+.menu-mobile.open a:nth-child(1) { transition-delay: 0.1s; }
+.menu-mobile.open a:nth-child(2) { transition-delay: 0.2s; }
+.menu-mobile.open a:nth-child(3) { transition-delay: 0.3s; }
+.menu-mobile.open a:nth-child(4) { transition-delay: 0.4s; }
+.menu-mobile.open a:nth-child(5) { transition-delay: 0.5s; }
+
+
+/* 🍔 Changement d’icône burger → ✕ */
+#menu-toggle.active .icon-burger {
   display: none;
 }
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-  nav ul {
-    display: none;
-  }
-  nav.open ul {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
+#menu-toggle.active .icon-close {
+  display: inline;
+}
+
+/* 🍔 Animation entre burger et ✕ */
+.icon-toggle {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-toggle span {
+  position: absolute;
+  font-size: 1.5rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* État initial : burger visible, ✕ caché */
+.icon-burger {
+  opacity: 1;
+  transform: rotate(0deg);
+}
+.icon-close {
+  opacity: 0;
+  transform: rotate(-90deg);
+}
+
+/* État actif : ✕ visible, burger caché */
+.icon-toggle.active .icon-burger {
+  opacity: 0;
+  transform: rotate(90deg);
+}
+.icon-toggle.active .icon-close {
+  opacity: 1;
+  transform: rotate(0deg);
 }
 
 
@@ -281,35 +416,6 @@ header nav a:hover {
   transform: scale(1);
 }
 
-/* Halo lumineux pour titres */
-.halo {
-  text-shadow: 0 0 10px var(--color-accent), 0 0 20px var(--color-accent);
-}
-
-/* Animation lettre par lettre (typewriter) */
-.typewriter {
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 2px solid var(--color-accent);
-  animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
-}
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-@keyframes blink {
-  50% { border-color: transparent }
-}
-
-/* Animation lettre par lettre (fade-in progressif) */
-.letter {
-  opacity: 0;
-  display: inline-block;
-  animation: fadeInLetter 0.04s forwards;
-}
-@keyframes fadeInLetter {
-  to { opacity: 1; }
-}
 
 /* Animations au scroll - état initial */
 .reveal-on-scroll,
@@ -849,6 +955,7 @@ form button[type="submit"]:hover {
    14B. SECTION HÉROS
    ========================================================= */
 
+/* Conteneur principal du hero */
 .hero-section {
   background-size: contain; /* ou cover si tu veux recadrer */
   background-position: center;
@@ -862,6 +969,44 @@ form button[type="submit"]:hover {
 .hero-section .hero-button {
   display: block;
   margin: 1rem auto 0;
+}
+
+/* --- Animation fade-in-up pour le titre --- */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- Halo du titre héros (adapté du logo) --- */
+.hero-title-glow {
+  filter:
+    drop-shadow(0 0 8px var(--color-accent-dark))
+    drop-shadow(0 0 16px var(--color-accent-light));
+  transition: filter 0.4s ease;
+}
+
+.hero-title-glow.active {
+  filter:
+    drop-shadow(0 0 12px var(--color-accent-dark))
+    drop-shadow(0 0 24px var(--color-accent-light))
+    drop-shadow(0 0 36px rgba(168, 50, 50, 0.5));
+}
+
+/* --- Animation lettre par lettre pour le sous-titre --- */
+.hero-subtitle .letter {
+  opacity: 0;
+  display: inline-block;
+  animation: fadeInLetter 0.04s forwards;
+}
+
+@keyframes fadeInLetter {
+  to { opacity: 1; }
 }
 
 

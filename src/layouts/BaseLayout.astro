@@ -16,21 +16,56 @@ import ScriptsFooter from '../components/ScriptsFooter.astro';
   class="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm transition-all duration-500"
 >
   <div class="container mx-auto px-4 flex justify-between items-center h-20 relative">
-    <div class="flex items-center space-x-4">
-      <img src="/images/logo-eclipse.png" alt="Logo Atelier sous l’éclipse" class="h-12 w-12 drop-shadow-[0_0_10px_var(--color-accent)] transition-all duration-500" loading="eager" decoding="async" />
-      <span class="text-xl font-bold tracking-wide transition-all duration-500">L'Atelier sous l’éclipse</span>
+    
+    <!-- Logo + Titre -->
+    <div class="flex items-center space-x-4 header-brand">
+      <img src="/images/logo-eclipse.png" alt="Logo Atelier sous l’éclipse" 
+        class="h-12 w-12 logo-glow text-magnify" />
+      <span class="text-magnify text-xl font-bold tracking-wide">
+        L'Atelier sous l’éclipse
+      </span>
     </div>
 
-    <nav class="hidden md:flex space-x-6 font-semibold" aria-label="Navigation principale">
-      <a href="/" class="hover:text-accent transition-colors">Accueil</a>
-      <a href="/galerie" class="hover:text-accent transition-colors">Galerie</a>
-      <a href="/boutique" class="hover:text-accent transition-colors">Boutique</a>
-      <a href="/me-connaitre" class="hover:text-accent transition-colors">Me connaître</a>
-      <a href="/contact" class="hover:text-accent transition-colors">Contact</a>
+    <!-- Navigation desktop -->
+    <nav class="hidden md:flex space-x-3 font-semibold" aria-label="Navigation principale">
+      <a href="/" class="text-magnify hover:text-accent transition-colors">Accueil</a>
+      <a href="/galerie" class="text-magnify hover:text-accent transition-colors">Galerie</a>
+      <a href="/boutique" class="text-magnify hover:text-accent transition-colors">Boutique</a>
+      <a href="/me-connaitre" class="text-magnify hover:text-accent transition-colors">Me connaître</a>
+      <a href="/contact" class="text-magnify hover:text-accent transition-colors">Contact</a>
     </nav>
 
+    <!-- Boutons thème + menu -->
     <div class="flex items-center space-x-4">
-      <button id="theme-toggle" class="p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Changer le thème">🌙</button>
+      <button id="theme-toggle" class="text-magnify p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Changer le thème">🌙</button>
+      <button id="menu-toggle" class="icon-toggle md:hidden p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Ouvrir le menu">
+        <span class="icon-burger">☰</span>
+        <span class="icon-close">✕</span>
+      </button>
+
+    </div>
+
+    <!-- Ligne d’accent -->
+    <span id="header-accent"></span>
+  </div>
+</header>
+
+<!-- Overlay du menu mobile -->
+<div class="menu-overlay"></div>
+
+<!-- Menu mobile -->
+<nav class="menu-mobile fixed top-5 right-2 w-56 max-h-[90vh] overflow-y-auto bg-surface backdrop-blur-sm rounded-xl shadow-xl p-6 flex flex-col space-y-4 transition-transform duration-300 z-[100]" aria-label="Menu mobile">
+  <a href="/" class="hover:text-accent">Accueil</a>
+  <a href="/galerie" class="hover:text-accent">Galerie</a>
+  <a href="/boutique" class="hover:text-accent">Boutique</a>
+  <a href="/me-connaitre" class="hover:text-accent">Me connaître</a>
+  <a href="/contact" class="hover:text-accent">Contact</a>
+</nav>
+
+
+    <!-- Boutons thème + menu -->
+    <div class="flex items-center space-x-4">
+      <button id="theme-toggle" class="text-magnify p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Changer le thème">🌙</button>
       <button id="menu-toggle" class="md:hidden p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Ouvrir le menu">☰</button>
     </div>
 
@@ -39,18 +74,7 @@ import ScriptsFooter from '../components/ScriptsFooter.astro';
   </div>
 </header>
 
-
-
-    <!-- Menu mobile -->
-    <div class="menu-overlay"></div>
-    <nav class="menu flex flex-col space-y-4 p-6 bg-surface fixed top-0 right-0 h-full w-64 transform translate-x-full transition-transform duration-300 z-[100]" aria-label="Menu mobile">
-      <a href="/" class="hover:text-accent">Accueil</a>
-      <a href="/galerie" class="hover:text-accent">Galerie</a>
-      <a href="/boutique" class="hover:text-accent">Boutique</a>
-      <a href="/me-connaitre" class="hover:text-accent">Me connaître</a>
-      <a href="/contact" class="hover:text-accent">Contact</a>
-    </nav>
-
+    <!-- Overlay -->
     <main class="flex-1">
       <slot />
     </main>
