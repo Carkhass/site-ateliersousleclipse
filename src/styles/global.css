@@ -376,6 +376,19 @@ header nav a:hover {
   z-index: 2;
 }
 
+/* État initial et mouvement fluide pour hero et poinçon */
+.hero-section [data-parallax-target],
+.poincon-section [data-parallax-target] {
+  transform: translateY(0) scale(1);
+  will-change: transform;
+  transition: transform 0.4s ease-out;
+}
+
+/* Surcharge premium pour le poinçon */
+.poincon-section [data-parallax-target] {
+  transition: transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1); /* ease-out premium */
+}
+
 /* =========================================================
    9. ANIMATIONS GLOBALES
    ========================================================= */

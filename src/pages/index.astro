@@ -16,9 +16,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   class="hero-section parallax-section relative w-screen h-[40vh] md:h-[30vh] flex items-center justify-center overflow-hidden" 
   data-parallax-speed="50"
   data-parallax-zoom="1"
+  data-parallax-zoom-strength="0"
 >
   <!-- Image de fond avec effet parallaxe -->
-  <div class="absolute inset-0 scale-110" data-parallax-target>
+  <div class="absolute inset-0" data-parallax-target style="transform: translateY(0px) scale(1); will-change: transform;">
     <img src="/images/hero-hamon.png" alt="Ligne du hamon sur lame" class="w-full h-full object-cover" />
   </div>
 
@@ -79,9 +80,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     class="parallax-section relative w-screen h-[60vh] overflow-hidden" 
     data-parallax-speed="60"
     data-parallax-zoom="1"
-    data-parallax-zoom-strength="0.04"
+    data-parallax-zoom-strength="0"
   >
-    <div class="absolute inset-0 scale-110" data-parallax-target>
+    <div class="absolute inset-0" data-parallax-target style="transform: translateY(-23.48px) scale(1); will-change: transform;">
       <img src="/images/gros-plan-poincon.jpg" alt="Détail poinçon sur lame" class="w-full h-full object-cover" />
     </div>
     <div class="absolute inset-0 bg-black/30"></div>
