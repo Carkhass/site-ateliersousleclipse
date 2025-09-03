@@ -11,27 +11,35 @@ import ScriptsFooter from '../components/ScriptsFooter.astro';
   </head>
 
   <body class="flex flex-col min-h-screen font-sans bg-bg text-text">
-    <header class="bg-bg/20 backdrop-blur-sm text-text shadow-md sticky top-0 z-50 transition-colors duration-300">
-      <div class="container mx-auto px-4 flex justify-between items-center h-20">
-        <div class="flex items-center space-x-4">
-          <img src="/images/logo-eclipse.png" alt="Logo Atelier sous l’éclipse" class="h-12 w-12 drop-shadow-[0_0_10px_var(--color-accent)]" loading="eager" decoding="async" />
-          <span class="text-xl font-bold tracking-wide">L'Atelier sous l’éclipse</span>
-        </div>
+    <header 
+  id="site-header"
+  class="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm transition-all duration-500"
+>
+  <div class="container mx-auto px-4 flex justify-between items-center h-20 relative">
+    <div class="flex items-center space-x-4">
+      <img src="/images/logo-eclipse.png" alt="Logo Atelier sous l’éclipse" class="h-12 w-12 drop-shadow-[0_0_10px_var(--color-accent)] transition-all duration-500" loading="eager" decoding="async" />
+      <span class="text-xl font-bold tracking-wide transition-all duration-500">L'Atelier sous l’éclipse</span>
+    </div>
 
-        <nav class="hidden md:flex space-x-6 font-semibold" aria-label="Navigation principale">
-          <a href="/" class="hover:text-accent transition-colors" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Accueil</a>
-          <a href="/galerie" class="hover:text-accent transition-colors" aria-current={Astro.url.pathname.startsWith('/galerie') ? 'page' : undefined}>Galerie</a>
-          <a href="/boutique" class="hover:text-accent transition-colors" aria-current={Astro.url.pathname.startsWith('/boutique') ? 'page' : undefined}>Boutique</a>
-          <a href="/me-connaitre" class="hover:text-accent transition-colors" aria-current={Astro.url.pathname.startsWith('/me-connaitre') ? 'page' : undefined}>Me connaître</a>
-          <a href="/contact" class="hover:text-accent transition-colors" aria-current={Astro.url.pathname.startsWith('/contact') ? 'page' : undefined}>Contact</a>
-        </nav>
+    <nav class="hidden md:flex space-x-6 font-semibold" aria-label="Navigation principale">
+      <a href="/" class="hover:text-accent transition-colors">Accueil</a>
+      <a href="/galerie" class="hover:text-accent transition-colors">Galerie</a>
+      <a href="/boutique" class="hover:text-accent transition-colors">Boutique</a>
+      <a href="/me-connaitre" class="hover:text-accent transition-colors">Me connaître</a>
+      <a href="/contact" class="hover:text-accent transition-colors">Contact</a>
+    </nav>
 
-        <div class="flex items-center space-x-4">
-          <button id="theme-toggle" class="p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Changer le thème">🌙</button>
-          <button id="menu-toggle" class="md:hidden p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Ouvrir le menu">☰</button>
-        </div>
-      </div>
-    </header>
+    <div class="flex items-center space-x-4">
+      <button id="theme-toggle" class="p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Changer le thème">🌙</button>
+      <button id="menu-toggle" class="md:hidden p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Ouvrir le menu">☰</button>
+    </div>
+
+    <!-- Ligne d’accent -->
+    <span id="header-accent"></span>
+  </div>
+</header>
+
+
 
     <!-- Menu mobile -->
     <div class="menu-overlay"></div>

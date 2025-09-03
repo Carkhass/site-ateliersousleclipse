@@ -130,32 +130,52 @@ button:hover, a:hover {
    7. HEADER FIXE & NAVIGATION
    ========================================================= */
 
-/* Header collé en haut avec effet de transparence et blur */
-header {
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  box-sizing: border-box;
-  z-index: 9999;
-  background-color: rgba(var(--color-bg-rgb), 0.2);
-  backdrop-filter: blur(8px);
-  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
-}
-html.dark header {
-  background-color: rgba(26, 13, 15, 0.2);
-}
-header.scrolled {
-  background-color: rgba(var(--color-bg-rgb), 0.6);
-}
-html.dark header.scrolled {
-  background-color: rgba(26, 13, 15, 0.6);
+main {
+  padding-top: 5rem; /* compense la hauteur du header */
 }
 
-/* Décalage du contenu pour compenser la hauteur du header */
-main {
-  padding-top: 5rem;
+/* État visuel du header au scroll (inchangé) */
+#site-header.scrolled {
+  background-color: rgba(var(--color-bg-rgb), 0.65);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
 }
+#site-header.scrolled img { transform: scale(0.9); }
+#site-header.scrolled span { transform: translateY(-1px); }
+
+/* Ligne d’accent — ouverture symétrique depuis le centre */
+#header-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;              /* pleine largeur du container */
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--color-accent) 0%,
+    var(--color-accent-light, var(--color-accent)) 50%,
+    var(--color-accent) 100%
+  ) !important;          /* neutralise tout background:none !important résiduel */
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+
+  /* clé: largeur fixe, on anime l’échelle */
+  transform: scaleX(0);
+  transform-origin: 50% 50%;
+  transition: transform 1s ease, background-position 1.6s linear;
+  z-index: 10;
+}
+
+/* Déploiement au scroll: du centre vers les bords */
+#site-header.scrolled #header-accent {
+  transform: scaleX(1);
+  background-position: 100% 50%;
+}
+
+/* Sécurité: au repos, force l’échelle à 0 (si des styles résiduels traînent) */
+#site-header:not(.scrolled) #header-accent {
+  transform: scaleX(0) !important;
+}
+
 
 /* Liens de navigation */
 header nav a {
@@ -185,6 +205,7 @@ header nav a:hover {
     gap: 0.5rem;
   }
 }
+
 
 /* =========================================================
    8. SECTIONS PLEINE LARGEUR & PARALLAX
