@@ -16,6 +16,10 @@ module.exports = {
         warning: 'var(--color-warning)',
         danger: 'var(--color-danger)',
       },
+      gridTemplateColumns: {
+        // Ajout de notre grille 20 colonnes
+        20: 'repeat(20, minmax(0, 1fr))',
+      },
     },
   },
   plugins: [],

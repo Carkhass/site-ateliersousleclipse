@@ -441,6 +441,64 @@ header nav a:hover {
   opacity: 1;
 }
 
+/* --- Fade-slide-left (slide depuis la gauche + fade) --- */
+.fade-slide-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  will-change: opacity, transform;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-slide-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Cascade sur les enfants */
+.fade-slide-left.visible .reveal-child {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.fade-slide-left .reveal-child {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-slide-left.visible .reveal-child:nth-child(1) { transition-delay: 0.1s; }
+.fade-slide-left.visible .reveal-child:nth-child(2) { transition-delay: 0.3s; }
+.fade-slide-left.visible .reveal-child:nth-child(3) { transition-delay: 0.5s; }
+.fade-slide-left.visible .reveal-child:nth-child(4) { transition-delay: 0.7s; }
+
+.fade-slide-up .reveal-child {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-slide-up.visible .reveal-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-slide-up.visible .reveal-child:nth-child(1) { transition-delay: 0.1s; }
+.fade-slide-up.visible .reveal-child:nth-child(2) { transition-delay: 0.3s; }
+.fade-slide-up.visible .reveal-child:nth-child(3) { transition-delay: 0.5s; }
+.fade-slide-up.visible .reveal-child:nth-child(4) { transition-delay: 0.7s; }
+
+/* --- Fade-slide-up simple pour un bloc complet --- */
+.fade-in-delay {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.fade-in-delay.visible {
+  opacity: 1;
+  transition-delay: 0.6s; /* arrive après le texte */
+}
+
+
 
 /* =========================================================
    10. BOUTONS & LIENS SPÉCIFIQUES
@@ -515,7 +573,7 @@ form button[type="submit"]:hover {
    /* Slider section 2 */
 .swiper-section2 {
   width: 100%;
-  height: clamp(400px, 80vh, 900px);
+  height: clamp(400px, 80vh, 700px);
 }
 
 .swiper-section2 .swiper-slide {
@@ -532,6 +590,34 @@ form button[type="submit"]:hover {
   transform: translateZ(0);
   image-rendering: -webkit-optimize-contrast;
   image-rendering: smooth;
+}
+
+/* Section 2 — ancrage à droite + débord à gauche */
+.section2-anchor {
+  position: relative;
+}
+
+/* Donne une hauteur au parent pour l'absolu (calée sur ton Swiper) */
+.section2-sizer {
+  height: clamp(400px, 80vh, 900px);
+}
+
+/* Ancrage à droite, débord à gauche, respiration côté viewport */
+.section2-bleed {
+  position: absolute;
+  inset: 0;
+  right: 0;                                   /* le bord droit du slider = bord droit de l’ancre */
+  width: calc(100% + var(--bleed, 12rem));    /* combien on étend vers la gauche */
+  transform: translateX(calc(var(--bleed, 12rem) * -1));
+  padding-left: var(--pad-left, 2rem);        /* respiration au bord gauche de l’écran */
+  overflow: hidden;
+}
+
+/* Assure la bonne hauteur interne */
+.section2-bleed .swiper,
+.section2-bleed .swiper-section2,
+.section2-bleed .swiper-wrapper {
+  height: 100%;
 }
 
 
@@ -759,7 +845,6 @@ form button[type="submit"]:hover {
     display: none;
   }
 }
-
 
 
 /* =========================================================
