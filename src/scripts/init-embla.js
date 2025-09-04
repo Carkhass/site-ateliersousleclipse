@@ -22,12 +22,11 @@ export function initEmbla(root = document) {
       containScroll: false,
       skipSnaps: false,
       inViewThreshold: 0.6,
-      speed: 25 // plus lent = plus smooth
+      speed: 25
     });
 
     const slides = embla.slideNodes();
     const snaps = embla.scrollSnapList();
-    const images = emblaNode.querySelectorAll('.embla__parallax__img');
 
     // --- Opacité selon proximité ---
     const updateOpacityStates = () => {
@@ -41,68 +40,12 @@ export function initEmbla(root = document) {
       });
     };
 
-    // --- Parallaxe fluide + boost centrale ---
-    const currentMap = new WeakMap();
-    const lerp = (start, end, t) => start + (end - start) * t;
-    let ticking = false;
-
-    const applyParallax = () => {
-      if (ticking) return;
-      ticking = true;
-
-      requestAnimationFrame(() => {
-        const viewportRect = viewportNode.getBoundingClientRect();
-        const viewportCenter = viewportRect.left + viewportRect.width / 2;
-        const isContain = emblaNode.classList.contains('mode-contain');
-        const selectedIndex = embla.selectedScrollSnap();
-        const progress = embla.scrollProgress();
-
-        images.forEach((img, index) => {
-          const slideRect = img.closest('.embla__slide').getBoundingClientRect();
-          const slideCenter = slideRect.left + slideRect.width / 2;
-          const distanceFromCenter = slideCenter - viewportCenter;
-
-          // Facteur de base plus ample
-          let targetTranslate = distanceFromCenter * (isContain ? -0.14 : -0.12);
-
-          // BOOST x3 pour la centrale
-          if (index === selectedIndex) {
-            const localProgress = Math.abs(progress % 1);
-            const boost = (localProgress > 0.5 ? 1 - localProgress : localProgress) * 90; // px max
-            targetTranslate += (distanceFromCenter >= 0 ? boost : -boost);
-          }
-
-          // Interpolation douce
-          const prev = currentMap.get(img) ?? 0;
-          const smooth = lerp(prev, targetTranslate, 0.15);
-          currentMap.set(img, smooth);
-
-          // Zoom progressif
-          const maxZoom = 1.05;
-          const minZoom = 1.00;
-          const zoom = maxZoom - (Math.abs(distanceFromCenter) / viewportRect.width) * (maxZoom - minZoom);
-
-          img.style.transform = `translateX(${smooth}px) scale(${zoom})`;
-        });
-
-        ticking = false;
-      });
-    };
-
     // --- Événements Embla ---
-    embla.on('scroll', applyParallax);
-    embla.on('select', () => {
-      updateOpacityStates();
-      applyParallax();
-    });
-    embla.on('resize', () => {
-      updateOpacityStates();
-      applyParallax();
-    });
+    embla.on('select', updateOpacityStates);
+    embla.on('resize', updateOpacityStates);
 
     // Premier rendu
     updateOpacityStates();
-    applyParallax();
 
     // Navigation
     emblaNode.querySelector('.embla__prev')?.addEventListener('click', embla.scrollPrev);

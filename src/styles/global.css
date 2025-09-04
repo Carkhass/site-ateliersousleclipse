@@ -737,7 +737,7 @@ form button[type="submit"]:hover {
   margin-right: 20px;
   opacity: 0.35;
   transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1); /* plus doux */
-  will-change: opacity, transform;
+  will-change: opacity;
 }
 .embla__slide.is-near {
   opacity: 0.65;
@@ -751,7 +751,6 @@ form button[type="submit"]:hover {
 .embla__parallax {
   position: relative;
   overflow: hidden;
-  height: clamp(360px, 58vh, 640px);
   background: var(--color-surface);
   backface-visibility: hidden;
 }
@@ -773,7 +772,6 @@ form button[type="submit"]:hover {
   object-fit: cover;
   border-radius: inherit;
   box-shadow: none;
-  will-change: transform;
   position: relative;
   z-index: 0;
 }
@@ -1048,7 +1046,7 @@ form button[type="submit"]:hover {
 /* Responsive */
 @media (max-width: 1024px) {
   .inspiration-section .embla__slide {
-    flex-basis: 7%;
+    flex-basis: 70%;
   }
   .inspiration-section .embla__viewport::before,
   .inspiration-section .embla__viewport::after {
