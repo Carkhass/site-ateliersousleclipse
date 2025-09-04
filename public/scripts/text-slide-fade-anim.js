@@ -1,27 +1,37 @@
-// text-slide-fade-anim.js
-import { initEmbla } from './init-embla.js';
+// public/scripts/text-slide-fade-anim.js
+// Rôle: gérer exclusivement les animations d'apparition (fade/slide + cascade).
+// - Ajoute .visible aux éléments .fade-slide-up, .fade-slide-left, .fade-in-up, .fade-in-delay.
+// - Ne déclenche JAMAIS de logique de carrousel (Embla/Swiper).
+// - Compatible avec reveal-on-scroll.js qui gère d'autres classes (.fade-in, .slide-up, etc.)
 
-// Fonction générique pour observer et déclencher les animations
 document.addEventListener("DOMContentLoaded", () => {
+  const SELECTORS = ['.fade-slide-up', '.fade-slide-left', '.fade-in-up', '.fade-in-delay'];
+  const elements = document.querySelectorAll(SELECTORS.join(','));
+
+  const reveal = el => el.classList.add('visible');
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        // Ajoute la classe visible pour déclencher l'animation CSS
-        entry.target.classList.add('visible');
-
-        // Si c'est le wrapper du carousel → on initialise Embla maintenant
-        if (entry.target.classList.contains('fade-in-delay')) {
-          initEmbla();
-        }
-
-        // On arrête d'observer cet élément
+        reveal(entry.target);
         observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.2 });
 
-  // On observe tous les éléments animables
-  document.querySelectorAll(
-    '.fade-slide-up, .fade-slide-left, .fade-in-delay'
-  ).forEach(el => observer.observe(el));
+  // Observer classique
+  elements.forEach(el => observer.observe(el));
+
+  // Révélation immédiate pour les éléments déjà dans le viewport au chargement
+  const revealIfInViewport = () => {
+    elements.forEach(el => {
+      if (el.classList.contains('visible')) return;
+      const r = el.getBoundingClientRect();
+      const inView = r.top < (window.innerHeight || document.documentElement.clientHeight) && r.bottom > 0;
+      if (inView) {
+        setTimeout(() => reveal(el), 100);
+      }
+    });
+  };
+  revealIfInViewport();
 });

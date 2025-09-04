@@ -621,37 +621,55 @@ form button[type="submit"]:hover {
 }
 
 
-   /* Slider HAMON (désactivé) */
+/* Slider HAMON */
 .hamon-swiper {
-  width: 100%;
-  max-width: 960px;
+  width: calc(100vw - 8rem);
+  max-width: none;
   margin: 0 auto;
   padding: 20px 0;
   position: relative;
 }
 
+/* Donne une largeur ET une hauteur aux slides */
 .hamon-swiper .swiper-slide {
-  text-align: center;
+  width: 70vw;
+  max-width: 900px;
+  height: clamp(360px, 65vh, 720px);
+  flex: 0 0 auto !important;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  /* important: ne pas couper le parallaxe au niveau de la slide */
+  overflow: visible;
 }
 
-.hamon-photo {
-  display: block;
+/* Wrapper parallaxe: clip interne + base pour le transform */
+.hamon-photo-wrapper {
   width: 100%;
-  max-height: 400px;
-  object-fit: cover;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-  transition: transform 0.4s ease;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  will-change: transform;
 }
 
+/* Image: couvre, ombre collée, prête à être parallaxée */
+.hamon-photo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  will-change: transform;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Hover */
 .hamon-photo:hover {
   transform: scale(1.05);
 }
 
-/* Navigation */
+/* Nav + pagination (inchangés) */
 .swiper-button-next,
 .swiper-button-prev {
   color: var(--color-accent);
@@ -664,8 +682,6 @@ form button[type="submit"]:hover {
   transform: scale(1.15);
   opacity: 1;
 }
-
-/* Pagination */
 .swiper-pagination-bullet {
   background-color: var(--color-accent);
   opacity: 0.6;
@@ -674,64 +690,107 @@ form button[type="submit"]:hover {
   opacity: 1;
 }
 
-/* Responsive shadow */
+/* Mobile */
 @media (max-width: 640px) {
+  .hamon-swiper .swiper-slide {
+    width: 86vw;
+    max-width: none;
+    height: clamp(280px, 48vh, 520px);
+  }
   .hamon-photo {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   }
 }
 
+
+
 /* =========================================================
    12.B SLIDERS (Embla Carousel) — Parallaxe + opacité
    ========================================================= */
 
-
 /* EMBLA SECTION INSPIRATION*/
 .embla {
   position: relative;
-  max-width: 960px;
+  max-width: 100%;
   margin: 0 auto;
 }
 .embla__viewport {
-  overflow: hidden;
+  position: relative;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
 }
+
 .embla__container {
   display: flex;
   align-items: stretch;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important;
 }
+
+/* --- Slides --- */
 .embla__slide {
   position: relative;
-  flex: 0 0 65%;
+  flex: 0 0 72%;
   margin-right: 20px;
   opacity: 0.35;
-  transition: opacity 300ms ease;
+  transition: opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1); /* plus doux */
+  will-change: opacity, transform;
 }
 .embla__slide.is-near {
-  opacity: 0.6;
+  opacity: 0.65;
 }
 .embla__slide.is-selected {
   opacity: 1;
 }
 
-/* Conteneur image */
+/* --- Conteneur image --- */
+/* Nouveau wrapper pour l’ombre */
 .embla__parallax {
   position: relative;
   overflow: hidden;
   height: clamp(360px, 58vh, 640px);
-  border-radius: 12px;
   background: var(--color-surface);
   backface-visibility: hidden;
 }
 
-/* Image animée par le parallaxe */
+.embla__parallax::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  pointer-events: none;
+  z-index: 1; /* au-dessus de l'image */
+}
+
+/* Image : pas d’ombre, translate autorisé mais masqué */
 .embla__parallax__img {
   width: 100%;
   height: 100%;
-  will-change: transform;
-  transform: translateZ(0);
-  transition: transform 0.2s ease-out;
-  border-radius: 12px;
+  object-fit: cover;
+  border-radius: inherit;
   box-shadow: none;
+  will-change: transform;
+  position: relative;
+  z-index: 0;
+}
+
+
+/* Effet au survol (desktop) */
+@media (hover: hover) {
+  .embla__slide.is-selected .embla__parallax__img:hover {
+    transform: scale(1.04); /* zoom subtil */
+  }
+}
+
+/* Mode-cover */
+.embla.mode-cover .embla__parallax__img {
+  object-fit: cover;
+  object-position: center 50%;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
 }
 
 /* Mode-contain */
@@ -739,16 +798,7 @@ form button[type="submit"]:hover {
   object-fit: contain;
   object-position: center;
   background-color: var(--color-surface);
-  transform: none;
   box-shadow: none;
-}
-
-/* Mode-cover */
-.embla.mode-cover .embla__parallax__img {
-  object-fit: cover;
-  object-position: center 50%;
-  transform: scale(1.02);
-  box-shadow: 0 10px 26px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.12);
 }
 
 /* Navigation — version translucide premium */
@@ -927,23 +977,127 @@ form button[type="submit"]:hover {
 }
 
 /* =========================================================
-   14. SECTION INSPIRATION
+   14. SECTION INSPIRATION — optimisée pour Embla plein écran
    ========================================================= */
 
 .inspiration-section {
   background-color: var(--color-surface);
   padding: 4rem 0;
 }
+
+/* Titre */
 .inspiration-section h2 {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 2rem;
+  text-align: center;
 }
+
+/* Grille inspiration (si utilisée ailleurs) */
 .inspiration-section .inspiration-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
 }
+
+/* --- Embla plein écran --- */
+.inspiration-section .embla {
+  width: calc(100vw - 48rem); /* laisse ~4rem de marge de chaque côté occupe toute la largeur viewport */
+  max-width: none;       /* ignore les limites du parent */
+  margin-left: 50%;      /* recentre */
+  transform: translateX(-50%);
+  position: relative;
+}
+
+/* Viewport avec dégradés latéraux */
+.inspiration-section .embla__viewport {
+  position: relative;
+  overflow: hidden;
+}
+
+.inspiration-section .embla__viewport::before,
+.inspiration-section .embla__viewport::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 120px; /* largeur du fondu */
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.inspiration-section .embla__viewport::before {
+  left: 0;
+  background: linear-gradient(to right, var(--color-surface) 0%, transparent 100%);
+}
+
+.inspiration-section .embla__viewport::after {
+  right: 0;
+  background: linear-gradient(to left, var(--color-surface) 0%, transparent 100%);
+}
+
+/* Slides plus larges mais hauteur conservée */
+.inspiration-section .embla__slide {
+  flex: 0 0 60%; /* ajuste pour voir plus de latérales */
+}
+
+.inspiration-section .embla__parallax {
+  height: clamp(420px, 65vh, 720px); /* hauteur fixe et généreuse */
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .inspiration-section .embla__slide {
+    flex-basis: 7%;
+  }
+  .inspiration-section .embla__viewport::before,
+  .inspiration-section .embla__viewport::after {
+    width: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .inspiration-section .embla__slide {
+    flex-basis: 86%;
+  }
+  .inspiration-section .embla__parallax {
+    height: clamp(280px, 48vh, 520px);
+  }
+  .inspiration-section .embla__viewport::before,
+  .inspiration-section .embla__viewport::after {
+    display: none; /* pas de dégradé sur mobile */
+  }
+}
+
+/* --- Fix ombre Inspiration --- */
+.inspiration-section .embla__viewport {
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+.inspiration-section .embla__parallax {
+  overflow: hidden;
+}
+
+.inspiration-section .embla__parallax__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  will-change: transform;
+}
+
+.inspiration-section .embla__parallax::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  pointer-events: none;
+  z-index: 1;
+}
+
 
 /* =========================================================
    14B. SECTION HÉROS
