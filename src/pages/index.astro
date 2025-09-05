@@ -165,9 +165,9 @@ console.log("DEBUG imageList:", imageList);
       </p>
     </div>
 
-    <!-- 🎠 CAROUSEL avec wrapper animé -->
+    <!-- 🎠 CAROUSEL -->
     <div class="fade-in-delay px-4">
-      <div class="embla mode-contain max-w-[1400px] mx-auto">
+      <div class="embla max-w-[1400px] mx-auto">
         <div class="embla__viewport">
           <div class="embla__container">
             {[
@@ -180,35 +180,40 @@ console.log("DEBUG imageList:", imageList);
             ].map(img => (
               <div class="embla__slide" key={img}>
                 <div class="embla__parallax">
-                  <a 
-                    href={`/images/${img}`} 
-                    class="embla-spotlight glightbox" 
-                    data-gallery="hamon"
-                    aria-label={`Agrandir l’image ${img}`}
-                  >
-                    <img 
-                      src={`/images/${img}`} 
-                      alt={`Détail du couteau - ${img}`} 
-                      class="embla__parallax__img" 
-                    />
-                  </a>
+                  <div class="embla__parallax__layer">
+                    <a 
+                      href={`/images/${img}`} 
+                      class="embla-spotlight glightbox" 
+                      data-gallery="hamon"
+                      aria-label={`Agrandir l’image ${img}`}
+                    >
+                      <img 
+                        src={`/images/${img}`} 
+                        alt={`Détail du couteau - ${img}`} 
+                        class="embla__parallax__img" 
+                      />
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <!-- Navigation -->
-        <button class="embla__prev">‹</button>
-        <button class="embla__next">›</button>
-
-        <!-- Pagination -->
-        <div class="embla__dots"></div>
+        <!-- Contrôles Embla -->
+        <div class="embla__controls mt-4 flex items-center justify-between">
+          <div class="embla__buttons flex gap-2">
+            <button class="embla__button embla__button--prev" type="button" aria-label="Précédent">‹</button>
+            <button class="embla__button embla__button--next" type="button" aria-label="Suivant">›</button>
+          </div>
+          <div class="embla__dots flex gap-2"></div>
+        </div>
       </div>
     </div>
 
   </div>
 </section>
+
 
 
 

@@ -1,13 +1,57 @@
 // src/scripts/init-embla.js
 import EmblaCarousel from 'embla-carousel';
-import { initLightbox } from './init-swiper-glightbox.js';
+
+const TWEEN_FACTOR_BASE = 0.2;
+let tweenFactor = 0;
+let tweenNodes = [];
+
+const setTweenNodes = (emblaApi) => {
+  tweenNodes = emblaApi.slideNodes().map((slideNode) => {
+    return slideNode.querySelector('.embla__parallax__layer');
+  });
+};
+
+const setTweenFactor = (emblaApi) => {
+  tweenFactor = TWEEN_FACTOR_BASE * emblaApi.scrollSnapList().length;
+};
+
+const tweenParallax = (emblaApi, eventName) => {
+  const engine = emblaApi.internalEngine();
+  const scrollProgress = emblaApi.scrollProgress();
+  const slidesInView = emblaApi.slidesInView();
+  const isScrollEvent = eventName === 'scroll';
+
+  emblaApi.scrollSnapList().forEach((scrollSnap, snapIndex) => {
+    let diffToTarget = scrollSnap - scrollProgress;
+    const slidesInSnap = engine.slideRegistry[snapIndex];
+
+    slidesInSnap.forEach((slideIndex) => {
+      if (isScrollEvent && !slidesInView.includes(slideIndex)) return;
+
+      if (engine.options.loop) {
+        engine.slideLooper.loopPoints.forEach((loopItem) => {
+          const target = loopItem.target();
+          if (slideIndex === loopItem.index && target !== 0) {
+            const sign = Math.sign(target);
+            if (sign === -1) diffToTarget = scrollSnap - (1 + scrollProgress);
+            if (sign === 1) diffToTarget = scrollSnap + (1 - scrollProgress);
+          }
+        });
+      }
+
+      const translate = diffToTarget * (-1 * tweenFactor) * 100;
+      const tweenNode = tweenNodes[slideIndex];
+      if (tweenNode) {
+        tweenNode.style.transform = `translateX(${translate}%)`;
+      }
+    });
+  });
+};
 
 export function initEmbla(root = document) {
   const emblaNodes = (root instanceof Element)
     ? [root]
     : Array.from(root.querySelectorAll('.embla'));
-
-  if (!emblaNodes.length) return;
 
   emblaNodes.forEach((emblaNode) => {
     if (emblaNode.dataset.emblaInit === 'true') return;
@@ -16,83 +60,59 @@ export function initEmbla(root = document) {
     const viewportNode = emblaNode.querySelector('.embla__viewport');
     if (!viewportNode) return;
 
+    const prevBtn = emblaNode.querySelector('.embla__button--prev');
+    const nextBtn = emblaNode.querySelector('.embla__button--next');
+    const dotsNode = emblaNode.querySelector('.embla__dots');
+
     const embla = EmblaCarousel(viewportNode, {
       loop: true,
-      align: 'center',
-      containScroll: false,
-      skipSnaps: false,
-      inViewThreshold: 0.6,
-      speed: 25
+      align: 'center'
     });
 
-    const slides = embla.slideNodes();
-    const snaps = embla.scrollSnapList();
+    // Parallax setup
+    setTweenNodes(embla);
+    setTweenFactor(embla);
+    tweenParallax(embla);
 
-    // --- Opacité selon proximité ---
-    const updateOpacityStates = () => {
-      const selected = embla.selectedScrollSnap();
-      const total = snaps.length;
-      slides.forEach((slide, i) => {
-        slide.classList.remove('is-selected', 'is-near');
-        const diff = Math.min(Math.abs(i - selected), total - Math.abs(i - selected));
-        if (diff === 0) slide.classList.add('is-selected');
-        else if (diff === 1) slide.classList.add('is-near');
-      });
+    embla
+      .on('reInit', setTweenNodes)
+      .on('reInit', setTweenFactor)
+      .on('reInit', tweenParallax)
+      .on('scroll', tweenParallax)
+      .on('slideFocus', tweenParallax);
+
+    // Buttons
+    const disablePrevAndNextBtns = () => {
+      if (!prevBtn || !nextBtn) return;
+      prevBtn.disabled = !embla.canScrollPrev();
+      nextBtn.disabled = !embla.canScrollNext();
     };
+    prevBtn?.addEventListener('click', embla.scrollPrev, false);
+    nextBtn?.addEventListener('click', embla.scrollNext, false);
+    embla.on('select', disablePrevAndNextBtns).on('init', disablePrevAndNextBtns);
 
-    // --- Événements Embla ---
-    embla.on('select', updateOpacityStates);
-    embla.on('resize', updateOpacityStates);
-
-    // Premier rendu
-    updateOpacityStates();
-
-    // Navigation
-    emblaNode.querySelector('.embla__prev')?.addEventListener('click', embla.scrollPrev);
-    emblaNode.querySelector('.embla__next')?.addEventListener('click', embla.scrollNext);
-
-    // Pagination
-    const dotsNode = emblaNode.querySelector('.embla__dots');
+    // Dots
     if (dotsNode) {
-      const dots = snaps.map(() => {
-        const b = document.createElement('button');
-        b.classList.add('embla__dot');
-        dotsNode.appendChild(b);
-        b.addEventListener('click', () => embla.scrollTo(dots.indexOf(b)));
-        return b;
-      });
-      const setSelectedDot = () => {
-        const selectedIndex = embla.selectedScrollSnap();
-        dots.forEach((dot, i) => dot.classList.toggle('is-selected', i === selectedIndex));
+      const addDotBtnsAndClickHandlers = () => {
+        dotsNode.innerHTML = '';
+        const scrollSnaps = embla.scrollSnapList();
+        const dots = scrollSnaps.map(() => {
+          const button = document.createElement('button');
+          button.classList.add('embla__dot');
+          dotsNode.appendChild(button);
+          return button;
+        });
+        const setSelectedDotBtn = () => {
+          const selected = embla.selectedScrollSnap();
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('embla__dot--selected', i === selected);
+          });
+        };
+        dots.forEach((dot, i) => dot.addEventListener('click', () => embla.scrollTo(i)));
+        embla.on('select', setSelectedDotBtn).on('init', setSelectedDotBtn);
       };
-      embla.on('select', setSelectedDot);
-      setSelectedDot();
-    }
-
-    // Autoplay
-    const AUTOPLAY_DELAY = 5000;
-    let autoplayId = null;
-    const startAutoplay = () => {
-      stopAutoplay();
-      autoplayId = setInterval(() => embla.scrollNext(), AUTOPLAY_DELAY);
-    };
-    const stopAutoplay = () => {
-      if (autoplayId) {
-        clearInterval(autoplayId);
-        autoplayId = null;
-      }
-    };
-    startAutoplay();
-    emblaNode.addEventListener('mouseenter', stopAutoplay);
-    emblaNode.addEventListener('mouseleave', startAutoplay);
-
-    // Lightbox après init
-    embla.on('init', () => {
-      initLightbox();
-    });
-
-    if (typeof embla.init === 'function') {
-      embla.init();
+      addDotBtnsAndClickHandlers();
+      embla.on('reInit', addDotBtnsAndClickHandlers);
     }
   });
 }
