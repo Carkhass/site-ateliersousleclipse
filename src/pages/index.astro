@@ -1,9 +1,5 @@
 ---
 import "../styles/global.css";
-import SectionHeader from "../components/SectionHeader.astro";
-import Button from "../components/Button.astro";
-import Card from "../components/Card.astro";
-import ColorPalette from "../components/ColorPalette.astro";
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 /* On importe toutes les images du dossier src/assets/slider-section2 */
@@ -55,11 +51,12 @@ console.log("DEBUG imageList:", imageList);
 <!-- SECTION CENTRALE                                          -->
 <!-- ========================================================= -->
 <section class="container mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center">
-  <div class="relative fade-slide-left">
+  <div class="relative fade-slide-left img-zoom">
     <img 
       src="/images/portrait-yann.jpg" 
       alt="Portrait de Yann, artisan coutelier"
       class="img-zoom max-w-md w-full h-auto rounded-lg shadow-xl object-cover border-4 border-accent mx-auto md:mx-0 reveal-child"
+      tabindex="0"
     />
   </div>
   <div class="fade-slide-left">
@@ -171,26 +168,27 @@ console.log("DEBUG imageList:", imageList);
         <div class="embla__viewport">
           <div class="embla__container">
             {[
-              "hamon-1.jpg",
-              "hamon-2.jpg",
-              "hamon-3.jpg",
-              "hamon-4.jpg",
-              "hamon-5.jpg",
-              "hamon-6.jpg"
-            ].map(img => (
-              <div class="embla__slide" key={img}>
+              "hamon-1",
+              "hamon-2",
+              "hamon-3",
+              "hamon-4",
+              "hamon-5",
+              "hamon-6"
+            ].map(name => (
+              <div class="embla__slide" key={name}>
                 <div class="embla__parallax">
                   <div class="embla__parallax__layer">
                     <a 
-                      href={`/images/${img}`} 
+                      href={`/images/full/${name}.jpg`} 
                       class="embla-spotlight glightbox" 
                       data-gallery="hamon"
-                      aria-label={`Agrandir l’image ${img}`}
+                      aria-label={`Agrandir l’image ${name}`}
                     >
                       <img 
-                        src={`/images/${img}`} 
-                        alt={`Détail du couteau - ${img}`} 
+                        src={`/images/slider/${name}.webp`} 
+                        alt={`Détail du couteau - ${name}`} 
                         class="embla__parallax__img" 
+                        loading="lazy"
                       />
                     </a>
                   </div>

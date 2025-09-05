@@ -137,27 +137,27 @@ button:hover, a:hover {
 }
 
 /* =========================================================
-   7. HEADER FIXE & NAVIGATION
+  7.  HEADER FIXE & NAVIGATION — VERSION OPTIMISÉE
    ========================================================= */
 
-/* 🧱 Structure principale */
+/* Structure principale */
 main {
   padding-top: 5rem; /* Compense la hauteur du header fixe */
 }
 
-/* 🧭 État visuel du header au scroll */
+/* État visuel du header au scroll */
 #site-header.scrolled {
   background-color: rgba(var(--color-bg-rgb), 0.65);
   box-shadow: 0 4px 20px rgba(0,0,0,0.35);
 }
 #site-header.scrolled img {
-  transform: scale(1.2); /* Logo agrandi */
+  transform: scale(1.2);
 }
 #site-header.scrolled span {
-  transform: translateY(-1px); /* Titre légèrement relevé */
+  transform: translateY(-1px);
 }
 
-/* 🌈 Ligne d’accent animée */
+/* Ligne d’accent animée */
 #header-accent {
   position: absolute;
   bottom: 0;
@@ -169,23 +169,21 @@ main {
     var(--color-accent) 0%,
     var(--color-accent-light, var(--color-accent)) 50%,
     var(--color-accent) 100%
-  ) !important;
+  );
   background-size: 200% 100%;
   background-position: 0% 50%;
   transform: scaleX(0);
   transform-origin: 50% 50%;
   transition: transform 1s ease, background-position 1.6s linear;
   z-index: 10;
+  will-change: transform, background-position;
 }
 #site-header.scrolled #header-accent {
   transform: scaleX(1);
   background-position: 100% 50%;
 }
-#site-header:not(.scrolled) #header-accent {
-  transform: scaleX(0) !important;
-}
 
-/* 🧩 Liens de navigation desktop */
+/* Liens de navigation desktop */
 header nav a {
   color: var(--color-text);
   font-weight: 500;
@@ -196,13 +194,15 @@ header nav a:hover {
   color: var(--color-accent);
 }
 
-/* 🌟 Halo du logo */
+/* Halo du logo — isolé pour perf */
 .logo-glow {
+  will-change: transform, filter;
+  transform: scale(1);
+  transform-origin: center;
+  transition: transform 0.4s ease, filter 0.4s ease;
   filter:
     drop-shadow(0 0 6px var(--color-accent-dark))
     drop-shadow(0 0 12px var(--color-accent-light));
-  transition: transform 0.4s ease, filter 0.4s ease;
-  transform: scale(1);
 }
 #site-header.scrolled .logo-glow {
   filter:
@@ -212,28 +212,30 @@ header nav a:hover {
   transform: scale(1.15);
 }
 
-/* 🔠 Animation du texte (logo + titre + liens) */
+/* Animation du texte */
 .text-magnify {
-  transition: transform 0.4s ease;
+  will-change: transform;
   transform: scale(1);
   transform-origin: center;
+  transition: transform 0.4s ease;
 }
 #site-header.scrolled .text-magnify {
   transform: scale(1.15);
 }
 
-/* 🧱 Conteneur logo + titre */
+/* Conteneur logo + titre — suppression de l’animation sur gap */
 .header-brand {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  transition: gap 0.4s ease;
+  gap: 1rem; /* fixe */
 }
-#site-header.scrolled .header-brand {
-  gap: 1.5rem;
+#site-header.scrolled .header-brand > * {
+  transform: translateX(0.25rem);
+  transition: transform 0.4s ease;
+  will-change: transform;
 }
 
-/* 🪟 Overlay du menu mobile (clic extérieur) */
+/* Overlay du menu mobile */
 .menu-overlay {
   position: fixed;
   inset: 0;
@@ -246,13 +248,13 @@ header nav a:hover {
   pointer-events: auto;
 }
 
-/* 📱 Menu mobile (slide latéral) */
+/* Menu mobile */
 .menu-mobile {
   position: fixed;
   top: 5rem;
   right: 1rem;
   width: 160px;
-  background-color: rgba(var(--color-bg-rgb), 0.65); /* aligné avec le header */
+  background-color: rgba(var(--color-bg-rgb), 0.65);
   backdrop-filter: blur(6px);
   border-radius: 0.75rem;
   box-shadow: -4px 0 20px rgba(0,0,0,0.35);
@@ -262,6 +264,7 @@ header nav a:hover {
   transform: translateX(100%);
   pointer-events: none;
   transition: transform 0.4s ease, opacity 0.4s ease;
+  will-change: transform, opacity;
 }
 .menu-mobile.open {
   transform: translateX(0);
@@ -269,43 +272,30 @@ header nav a:hover {
   pointer-events: auto;
 }
 
-/* 📱 Liste des liens dans le menu mobile */
+/* Liens du menu mobile */
 .menu-mobile ul {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-
-/* 📱 Liens du menu mobile — slide right échelonné */
 .menu-mobile a {
   text-align: right;
   opacity: 0;
   transform: translateX(-20px);
   transition: opacity 0.4s ease, transform 0.4s ease;
+  will-change: transform, opacity;
 }
-
 .menu-mobile.open a {
   opacity: 1;
   transform: translateX(0);
 }
-
-/* ⏱️ Cascade horizontale */
 .menu-mobile.open a:nth-child(1) { transition-delay: 0.1s; }
 .menu-mobile.open a:nth-child(2) { transition-delay: 0.2s; }
 .menu-mobile.open a:nth-child(3) { transition-delay: 0.3s; }
 .menu-mobile.open a:nth-child(4) { transition-delay: 0.4s; }
 .menu-mobile.open a:nth-child(5) { transition-delay: 0.5s; }
 
-
-/* 🍔 Changement d’icône burger → ✕ */
-#menu-toggle.active .icon-burger {
-  display: none;
-}
-#menu-toggle.active .icon-close {
-  display: inline;
-}
-
-/* 🍔 Animation entre burger et ✕ */
+/* Icônes burger/close */
 .icon-toggle {
   position: relative;
   width: 24px;
@@ -314,32 +304,16 @@ header nav a:hover {
   align-items: center;
   justify-content: center;
 }
-
 .icon-toggle span {
   position: absolute;
   font-size: 1.5rem;
   transition: opacity 0.3s ease, transform 0.3s ease;
+  will-change: transform, opacity;
 }
-
-/* État initial : burger visible, ✕ caché */
-.icon-burger {
-  opacity: 1;
-  transform: rotate(0deg);
-}
-.icon-close {
-  opacity: 0;
-  transform: rotate(-90deg);
-}
-
-/* État actif : ✕ visible, burger caché */
-.icon-toggle.active .icon-burger {
-  opacity: 0;
-  transform: rotate(90deg);
-}
-.icon-toggle.active .icon-close {
-  opacity: 1;
-  transform: rotate(0deg);
-}
+.icon-burger { opacity: 1; transform: rotate(0deg); }
+.icon-close { opacity: 0; transform: rotate(-90deg); }
+.icon-toggle.active .icon-burger { opacity: 0; transform: rotate(90deg); }
+.icon-toggle.active .icon-close { opacity: 1; transform: rotate(0deg); }
 
 
 /* =========================================================
@@ -1010,10 +984,14 @@ form button[type="submit"]:hover {
 
 /* Zoom subtil sur portrait */
 .img-zoom {
-  transition: transform 0.4s ease;
+  transform: scale(1);
+  transition: transform 0.4s ease-out;
 }
-.img-zoom:hover {
+.img-zoom:hover,
+.img-zoom:focus,
+.img-zoom:active {
   transform: scale(1.02);
+  transition: transform 0.4s ease-in-out;
 }
 
 /* QR codes dans le footer */
