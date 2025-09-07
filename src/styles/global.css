@@ -605,42 +605,38 @@ form button[type="submit"]:hover {
    12.C. Section 2 parallaxe thématique
    ========================================================= */
 
-/* ========================= */
-/* STRUCTURE GÉNÉRALE        */
-/* ========================= */
+/* === SECTION NARRATIVE COMPLÈTE === */
 
+/* Conteneur principal */
 #sequence-narrative {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
+  overflow: visible !important;
 }
 
-/* Chaque scène occupe 300vh pour permettre les 3 phases */
+/* Titre global : encadré sous le header, animé par JS */
+#global-title {
+  position: relative; /* piloté par JS */
+  max-width: 42rem;
+  margin: 0 auto;
+  margin-top: 1rem;
+  background-color: color-mix(in srgb, var(--color-bg) 85%, transparent);
+  color: var(--color-accent);
+  backdrop-filter: blur(6px);
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  text-align: center;
+  z-index: 100;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Scènes */
 #sequence-narrative .scene {
   position: relative;
   height: 300vh;
-  overflow: visible; /* éviter que les couteaux soient coupés */
-  background: none; /* pas de fond blanc derrière */
+  overflow: visible;
+  background: none;
 }
 
-/* ========================= */
-/* TITRE GLOBAL STICKY       */
-/* ========================= */
-
-#global-title {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background-color: rgba(0,0,0,0.85);
-  color: #fff;
-  padding: 1rem;
-  text-align: center;
-}
-
-/* ========================= */
-/* FOND STICKY               */
-/* ========================= */
-
+/* Fond sticky */
 #sequence-narrative .bg-layer {
   position: sticky;
   top: 0;
@@ -648,7 +644,6 @@ form button[type="submit"]:hover {
   overflow: hidden;
   z-index: 0;
 }
-
 #sequence-narrative .bg-layer img {
   width: 100%;
   height: 100%;
@@ -657,77 +652,51 @@ form button[type="submit"]:hover {
   will-change: transform;
 }
 
-/* ========================= */
-/* TEXTE STICKY (VARIANTE)   */
-/* ========================= */
-/* On crée une variante pour ne pas impacter .fade-slide-up globale */
-
+/* Encadrés texte */
 #sequence-narrative .fade-slide-up {
-  position: sticky;
-  top: 20%;
+  position: relative; /* piloté par JS */
   max-width: 32rem;
   margin-left: 5%;
   margin-right: auto;
   padding: 1.5rem;
-  background-color: rgba(0,0,0,0.3);
+  background-color: color-mix(in srgb, var(--color-bg) 85%, transparent);
+  color: var(--color-accent);
   backdrop-filter: blur(6px);
   border-radius: 0.5rem;
-  color: #fff;
-  transform: translateY(0);
-  will-change: transform, opacity;
-  z-index: 2; /* au-dessus des couteaux */
+  z-index: 2;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-#sequence-narrative .fade-slide-up h2 {
-  margin-bottom: 1.5rem;
+/* Neutralisation des effets reveal globaux dans la narrative */
+#sequence-narrative .fade-slide-up,
+#sequence-narrative .fade-slide-up.visible,
+#global-title.visible {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
 }
 
-#sequence-narrative .fade-slide-up p {
-  line-height: 1.6;
-}
-
-/* ========================= */
-/* COUTEAUX                   */
-/* ========================= */
-
+/* Couteaux */
 #knives-cuisine,
 #knives-table,
 #knives-outdoor {
   position: absolute;
   inset: 0;
   overflow: visible;
-  z-index: 1; /* au-dessus du fond, sous le texte */
+  z-index: 1;
 }
-
 .knife {
   position: absolute;
-  bottom: -150px; /* départ hors écran */
+  bottom: -150px;
   opacity: 0;
   will-change: transform, opacity;
   transform-origin: center;
   filter: drop-shadow(0 10px 14px rgba(0,0,0,0.28));
   transition: transform 0.1s linear, opacity 0.3s ease;
 }
-
-/* Largeurs adaptatives */
 .knife-large  { width: clamp(450px, 55vw, 1050px); }
 .knife-medium { width: clamp(375px, 45vw, 850px); }
 .knife-small  { width: clamp(300px, 35vw, 700px); }
-
-/* ========================= */
-/* ANIMATIONS OPTIONNELLES   */
-/* ========================= */
-
-@media (prefers-reduced-motion: no-preference) {
-  .knife.float {
-    animation: floatY 6s ease-in-out infinite alternate;
-  }
-  @keyframes floatY {
-    0%   { transform: translateY(0) rotate(var(--rot, 0deg)); }
-    100% { transform: translateY(-6px) rotate(var(--rot, 0deg)); }
-  }
-}
-
 
 
 /* =========================================================
