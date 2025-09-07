@@ -1,0 +1,343 @@
+---
+import "../styles/global.css";
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+/* On importe toutes les images du dossier src/assets/slider-section2 */
+const images = import.meta.glob('../assets/slider-section2/*.{jpg,jpeg,png,webp}', { eager: true });
+const imageList = Object.values(images).map((mod) => mod.default.src);
+
+
+
+console.log("DEBUG imageList:", imageList);
+---
+
+<BaseLayout title="Accueil">
+
+
+<!-- ========================================================= -->
+<!-- HERO -->
+<!-- ========================================================= -->
+<section 
+  class="hero-section parallax-section relative w-screen h-[40vh] md:h-[30vh] flex items-center justify-center overflow-hidden" 
+  data-parallax-speed="50"
+  data-parallax-zoom="1"
+  data-parallax-zoom-strength="0"
+>
+  <!-- Image de fond avec effet parallaxe -->
+  <div class="absolute inset-0" data-parallax-target style="transform: translateY(0px) scale(1); will-change: transform;">
+    <img src="/images/hero-hamon.png" alt="Ligne du hamon sur lame" class="w-full h-full object-cover" />
+  </div>
+
+  <!-- Overlay dégradé -->
+  <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent"></div>
+
+  <!-- Contenu -->
+  <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
+    <!-- Titre avec halo + fade-in-up -->
+    <h1 id="hero-title" class="hero-title-glow fade-in-up text-4xl md:text-6xl font-serif mb-8 tracking-wide">
+      L’art dans la lame
+    </h1>
+
+    <!-- Sous-titre avec animation lettre par lettre -->
+    <p id="hero-subtitle" class="hero-subtitle text-lg md:text-xl text-white max-w-2xl mx-auto opacity-0">
+      La ligne du <em>hamon</em> reflète l’histoire de l’acier et l’intention de l’artisan.
+    </p>
+  </div>
+</section>
+
+
+
+<!-- ========================================================= -->
+<!-- SECTION CENTRALE                                          -->
+<!-- ========================================================= -->
+<section class="container1 mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center">
+  <div class="relative fade-slide-left">
+    <img 
+      src="/images/portrait-yann.jpg" 
+      alt="Portrait de Yann, artisan coutelier"
+      class="img-zoom max-w-md w-full h-auto rounded-lg shadow-xl object-cover border-4 border-accent mx-auto md:mx-0"
+      tabindex="0"
+    />
+  </div>
+  <div class="fade-slide-left">
+    <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
+      Bienvenue à l’atelier sous l’éclipse
+    </h2>
+    <p class="text-lg text-muted leading-relaxed mb-4 reveal-child">
+      Mon premier langage fut celui des ordinateurs et des infrastructures invisibles, un monde où la précision est une loi et la patience une vertu.<br />
+      Aujourd'hui, je parle une autre langue : celle du métal et du bois.<br />
+      Dans chaque barre d’acier, une promesse silencieuse.
+    </p>
+    <p class="text-lg text-muted leading-relaxed mb-6 italic reveal-child">
+      Mes créations portent la mémoire du feu, du geste et de l’âme.
+    </p>
+    <a href="/me-connaitre" class="cta-premium inline-block px-6 py-3 text-white rounded reveal-child">
+      En savoir plus
+    </a>
+  </div>
+</section>
+
+
+
+<!-- ========================================================= -->
+<!-- SECTION 2 : À chaque utilisation son couteau              -->
+<!-- ========================================================= -->
+<section class="bg-bg text-text py-16 overflow-visible">
+  <div
+    class="section-2-container
+           max-w-[90%] lg:max-w-none   /* ✔️ débride la largeur sur desktop */
+           mx-auto
+           px-4 lg:px-0               /* padding mobile / desktop */
+           grid gap-8 lg:gap-10
+           items-center
+           lg:grid-cols-[60%_40%]     /* ratio slider / texte */
+           overflow-visible           /* laisse le slider déborder */
+    "
+  >
+    <!-- 📷 SLIDER -->
+    <div class="slider-wrapper
+                w-full
+                lg:w-[120%]             /* rend le slider 120% de sa colonne */
+                lg:-ml-32               /* décale fortement à gauche */
+                relative
+                rounded-lg shadow-xl object-cover border-4 border-accent
+               "
+    >
+      <div class="swiper swiper-section2 aspect-[16/9]">
+        <div class="swiper-wrapper">
+          {imageList.map((src) => (
+            <div class="swiper-slide">
+              <img src={src} alt="" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- 📝 TEXTE -->
+    <div class="space-y-6 fade-slide-up lg:-ml-6">  
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-accent reveal-child">
+        À chaque utilisation son couteau
+      </h2>
+      <p class="text-lg text-muted leading-relaxed reveal-child">
+        Je prends un plaisir particulier à façonner des couteaux de cuisine — la gourmandise, ça ne s’invente pas ! 
+        La plupart de mes créations se destinent aux arts de la table, mais je réalise aussi des pièces utilitaires, 
+        d’extérieur, voire de chasse.
+      </p>
+      <p class="text-lg text-muted leading-relaxed reveal-child">
+        Chaque usage appelle son acier. Pour la cuisine, je privilégie des aciers peu alliés mais riches en carbone, 
+        offrant un tranchant exceptionnel. Pour un couteau de camp, je sélectionne un acier plus chargé, 
+        résistant mieux aux contraintes et à l’abrasion. Associés à un profil et une géométrie adaptés, 
+        ils donnent naissance à des lames agréables en main, précises et durables.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ========================================================= -->
+<!-- SECTION 3 : Inspiration + Galerie hamon (Embla Carousel)  -->
+<!-- ========================================================= -->
+<section class="w-full max-w-none bg-surface py-16 inspiration-section">
+  <div class="max-w-6xl mx-auto px-4 space-y-10">
+
+    <!-- 📝 TEXTE -->
+    <div class="space-y-6 max-w-3xl mx-auto text-center fade-slide-up">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-accent reveal-child">
+        Inspiration
+      </h2>
+      <p class="text-lg text-muted leading-relaxed reveal-child">
+        L’esthétique japonaise, sobre et naturelle, m’inspire profondément. 
+        J’aime travailler des matières authentiques pour les manches : textures brutes, couleurs organiques.
+      </p>
+      <p class="text-lg text-muted leading-relaxed reveal-child">
+        Sur beaucoup de mes créations, vous remarquerez une “ligne” sur la lame : le <em>hamon</em>. 
+        Parfois fluide, parfois indomptée, c’est la signature laissée par la trempe sélective — 
+        un savoir-faire ancestral japonais. Chaque hamon est unique, fruit de l’acier, du feu et du geste.
+      </p>
+    </div>
+
+    <!-- 🎠 CAROUSEL -->
+    <div class="fade-in-delay px-4">
+      <div class="embla max-w-[1400px] mx-auto">
+        <div class="embla__viewport">
+          <div class="embla__container">
+            {[
+              "hamon-1",
+              "hamon-2",
+              "hamon-3",
+              "hamon-4",
+              "hamon-5",
+              "hamon-6"
+            ].map(name => (
+              <div class="embla__slide" key={name}>
+                <div class="embla__parallax">
+                  <div class="embla__parallax__layer">
+                    <a 
+                      href={`/images/full/${name}.jpg`} 
+                      class="embla-spotlight glightbox" 
+                      data-gallery="hamon"
+                      aria-label={`Agrandir l’image ${name}`}
+                    >
+                      <img 
+                        src={`/images/slider/${name}.webp`} 
+                        alt={`Détail du couteau - ${name}`} 
+                        class="embla__parallax__img" 
+                        loading="lazy"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Contrôles Embla -->
+        <div class="embla__controls mt-4 flex items-center justify-between">
+          <div class="embla__buttons flex gap-2">
+            <button class="embla__button embla__button--prev" type="button" aria-label="Précédent">‹</button>
+            <button class="embla__button embla__button--next" type="button" aria-label="Suivant">›</button>
+          </div>
+          <div class="embla__dots flex gap-2"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<!-- ========================================================= -->
+<!-- BLOC PREMIUM FINAL AVEC IMAGE, CITATION, ANIMATIONS & CARTE 3D -->
+<!-- ========================================================= -->
+<section 
+  class="parallax-section premium-section relative w-full h-[60vh] flex items-center justify-center text-center text-white overflow-hidden"
+  data-parallax-speed="60"
+  data-parallax-zoom="1.05"
+  data-parallax-zoom-strength="0.04"
+>
+  <!-- Image de fond -->
+  <div class="absolute inset-0" data-parallax-target>
+    <img 
+      src="/images/packaging-ateliersousleclipse.jpg"
+      alt="Emballage artisanal d’un couteau"
+      class="w-full h-full object-cover object-center"
+    />
+  </div>
+
+  <!-- Overlay sombre -->
+  <div class="absolute inset-0 bg-black/45 backdrop-blur-[2px]"></div>
+
+  <!-- Contenu principal -->
+  <div class="relative z-10 px-4 max-w-6xl w-full space-y-6">
+    <!-- Citation -->
+    <p class="text-xl md:text-2xl font-serif italic fade-slide-up delay-0">
+      « Chaque lame raconte une histoire… écrivons la vôtre. »
+    </p>
+
+    <!-- Boutons -->
+    <div class="flex flex-col md:flex-row gap-3 justify-center fade-slide-up delay-150">
+      <a href="/me-connaitre" class="cta-premium px-5 py-2.5 text-white rounded text-sm">Me connaître</a>
+      <a href="/galerie" class="cta-premium px-5 py-2.5 text-white rounded text-sm">Voir la galerie</a>
+    </div>
+
+    <!-- Carte + Formulaire -->
+    <div class="flex flex-col md:flex-row gap-6 justify-center items-center md:items-stretch mt-4 fade-slide-up delay-200">
+      
+      <!-- Carte 3D -->
+      <div class="card-3d-wrapper fade-slide-up delay-300 w-full md:w-auto">
+        <div class="card-3d">
+          <div class="card-face card-front">
+            <img src="/images/carte-visite-ateliersousleclipse-recto.jpg" alt="Carte recto" />
+            <div class="card-reflection"></div>
+            <div class="logo-glow" aria-hidden="true"></div>
+          </div>
+          <div class="card-face card-back">
+            <img src="/images/carte-visite-ateliersousleclipse-verso.jpg" alt="Carte verso" />
+            <div class="card-reflection"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulaire (compact) -->
+      <form action="/contact" method="POST" class="bg-black/30 p-4 rounded-lg space-y-3 w-full max-w-xs md:max-w-md fade-slide-up delay-450 flex flex-col justify-between">
+        <div class="space-y-3">
+          <input type="text" name="nom" placeholder="Votre nom" class="w-full p-2.5 rounded bg-white/90 text-black text-sm" required>
+          <input type="email" name="email" placeholder="Votre email" class="w-full p-2.5 rounded bg-white/90 text-black text-sm" required>
+          <textarea name="message" rows="3" placeholder="Votre message..." class="w-full p-2.5 rounded bg-white/90 text-black text-sm" required></textarea>
+        </div>
+        <button type="submit" class="cta-premium w-full px-5 py-2.5 rounded text-white text-sm">Envoyer</button>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- SCRIPT CARTE VISITE -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const wrapper = document.querySelector(".card-3d-wrapper");
+  const card = wrapper?.querySelector(".card-3d");
+  const frontReflection = wrapper?.querySelector(".card-front .card-reflection");
+  const backReflection  = wrapper?.querySelector(".card-back  .card-reflection");
+  const logoGlow        = wrapper?.querySelector(".card-front .logo-glow");
+  if (!wrapper || !card || !frontReflection || !backReflection || !logoGlow) return;
+
+  let isFlipped = false;
+  let rx = 0, ry = 0;
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+  const applyTransform = () => {
+    // Flip + tilt
+    const flip = isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
+    card.style.transform = `${flip} rotateX(${rx}deg) rotateY(${ry}deg)`;
+
+    // Ombre dynamique (plus visible)
+    const shadowX = ry * -3.2;
+    const shadowY = rx * 3.2;
+    const blur    = 46;
+    const alpha   = 0.40;
+    card.style.boxShadow = `${shadowX}px ${shadowY}px ${blur}px rgba(0,0,0,${alpha})`;
+
+    // Reflet vernis: on décale la position du dégradé
+    // Front suit le tilt, Back inverse pour rester "logique" après flip
+    const refFront = 50 + clamp(ry, -12, 12) * 3;  // 50% +/- 36%
+    const refBack  = 50 - clamp(ry, -12, 12) * 3;
+    frontReflection.style.setProperty('--reflectX', `${refFront}%`);
+    backReflection.style.setProperty('--reflectX',  `${refBack}%`);
+
+    // Lueur logo visible seulement quand recto face à l'utilisateur
+    logoGlow.style.opacity = isFlipped ? '0' : '1';
+  };
+
+  const setTilt = (e) => {
+    const rect = wrapper.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top  - rect.height / 2;
+    rx = clamp((-y / rect.height) * 10, -10, 10);
+    ry = clamp(( x / rect.width)  * 10, -10, 10);
+    applyTransform();
+  };
+
+  // Flip au survol (desktop) + retour à plat
+  wrapper.addEventListener("mouseenter", () => { isFlipped = true;  applyTransform(); });
+  wrapper.addEventListener("mouseleave", () => { isFlipped = false; rx = 0; ry = 0; applyTransform(); });
+
+  // Tilt
+  wrapper.addEventListener("mousemove", setTilt);
+
+  // Fallback mobile: flip au tap
+  wrapper.addEventListener("click", () => { isFlipped = !isFlipped; applyTransform(); });
+});
+</script>
+
+
+
+</BaseLayout

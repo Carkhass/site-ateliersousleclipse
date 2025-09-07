@@ -1,13 +1,6 @@
 // src/scripts/init-swiper-glightbox.js
 import Swiper from 'swiper';
-import { Navigation, Pagination, EffectFade, Autoplay, Parallax } from 'swiper/modules';
-
-// Important: styles Swiper
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/effect-fade';
-import 'swiper/css/parallax';
+import { Navigation, Pagination, EffectFade, Autoplay } from 'swiper/modules';
 
 import GLightbox from 'glightbox';
 
@@ -20,6 +13,7 @@ export function initSwipers(root = document) {
     if (el.dataset.swiperInit === 'true') return;
     el.dataset.swiperInit = 'true';
 
+    // Section 2
     if (el.classList.contains('swiper-section2')) {
       new Swiper(el, {
         modules: [EffectFade, Autoplay],
@@ -32,29 +26,7 @@ export function initSwipers(root = document) {
       return;
     }
 
-    if (el.classList.contains('hamon-swiper')) {
-      new Swiper(el, {
-        modules: [Navigation, Pagination, Autoplay, Parallax],
-        loop: true,
-        centeredSlides: true,
-        slidesPerView: 'auto',
-        spaceBetween: 20,
-        speed: 900,
-        parallax: true,
-        grabCursor: true,
-        autoplay: { delay: 5000, disableOnInteraction: false },
-        navigation: {
-          nextEl: el.querySelector('.swiper-button-next'),
-          prevEl: el.querySelector('.swiper-button-prev')
-        },
-        pagination: {
-          el: el.querySelector('.swiper-pagination'),
-          clickable: true
-        }
-      });
-      return;
-    }
-
+    // Slider par défaut
     new Swiper(el, {
       modules: [Navigation, Pagination],
       loop: true,

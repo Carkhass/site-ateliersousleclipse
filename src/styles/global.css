@@ -81,16 +81,18 @@ body {
   transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
 }
 
-/* Empêche les débordements horizontaux */
+/* Empêche les débordements horizontaux
 html, body {
   overflow-x: hidden;
 }
 
-/* Images responsives */
+/* Images responsives
 img {
   max-width: 100%;
   height: auto;
 }
+ */
+
 
 /* =========================================================
    5. LIENS & BOUTONS
@@ -118,13 +120,13 @@ button:hover, a:hover {
    6. LAYOUTS GÉNÉRAUX
    ========================================================= */
 
-/* Conteneur principal centré avec largeur max */
-.container {
+/* Conteneur principal centré avec largeur max pour section 1 */
+.container1 {
   @apply mx-auto px-4;
   max-width: 1280px;
 }
 
-/* Grilles utilitaires */
+/* Grilles utilitaires 
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -134,7 +136,7 @@ button:hover, a:hover {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.5rem;
-}
+}*/
 
 /* =========================================================
   7.  HEADER FIXE & NAVIGATION — VERSION OPTIMISÉE
@@ -163,7 +165,7 @@ main {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 2px;
+  height: 4px;
   background: linear-gradient(
     90deg,
     var(--color-accent) 0%,
@@ -541,140 +543,191 @@ form button[type="submit"]:hover {
 }
 
 /* =========================================================
-   12. SLIDERS (Swiper.js) — Parallaxe fluide
+   SECTION 2 — Slider : position et largeur adaptatives
    ========================================================= */
 
-   /* Slider section 2 */
-.swiper-section2 {
+@media (min-width: 1024px) {
+  /* Colonne slider : décalage fluide et borné */
+  section.bg-bg.text-text.py-16 .grid > :first-child {
+    /* Plus l'écran est large, plus on décale, mais jamais moins de -8rem ni plus de -18rem */
+    --slider-shift: clamp(-8rem, -12vw, -18rem);
+    transform: translateX(var(--slider-shift));
+  }
+
+  /* Largeur slider : liée au décalage */
+  section.bg-bg.text-text.py-16 .swiper-section2 {
+    /* Largeur de base 108%, +0.4% par rem de décalage (valeur négative → élargit) */
+    width: calc(108% + (var(--slider-shift) * -0.4)) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Décalage du slider vers la gauche */
+  .slider-col {
+    transform: translateX(-2rem);
+  }
+}
+
+@media (max-width: 1023px) {
+  /* Reset sur mobile/tablette */
+  .slider-col {
+    transform: none !important;
+  }
+}
+
+/* =========================================================
+   12.B. SLIDER SECTION 2 — RESPONSIVE (mobile/tablette)
+   ========================================================= */
+
+@media (max-width: 1023px) {
+  /* Colonne slider : reset position et largeur */
+  section.bg-bg.text-text.py-16 .grid > :first-child {
+    transform: none !important;
+    margin-left: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  /* Slider : largeur normale et pas de débordement */
+  section.bg-bg.text-text.py-16 .swiper-section2 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Les slides : s'adaptent à la largeur dispo */
+  section.bg-bg.text-text.py-16 .swiper-slide {
+    width: 100% !important;
+  }
+}
+
+
+/* =========================================================
+   12.C. Section 2 parallaxe thématique
+   ========================================================= */
+
+/* ========================= */
+/* STRUCTURE GÉNÉRALE        */
+/* ========================= */
+
+#sequence-narrative {
+  position: relative;
   width: 100%;
-  height: clamp(400px, 80vh, 700px);
+  overflow: hidden;
 }
 
-.swiper-section2 .swiper-slide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Chaque scène occupe 300vh pour permettre les 3 phases */
+#sequence-narrative .scene {
+  position: relative;
+  height: 300vh;
+  overflow: visible; /* éviter que les couteaux soient coupés */
+  background: none; /* pas de fond blanc derrière */
 }
 
-.swiper-section2 .swiper-slide img {
+/* ========================= */
+/* TITRE GLOBAL STICKY       */
+/* ========================= */
+
+#global-title {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: rgba(0,0,0,0.85);
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* ========================= */
+/* FOND STICKY               */
+/* ========================= */
+
+#sequence-narrative .bg-layer {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 0;
+}
+
+#sequence-narrative .bg-layer img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: smooth;
+  transform: translateY(0);
+  will-change: transform;
 }
 
-/* Section 2 — ancrage à droite + débord à gauche */
-.section2-anchor {
-  position: relative;
+/* ========================= */
+/* TEXTE STICKY (VARIANTE)   */
+/* ========================= */
+/* On crée une variante pour ne pas impacter .fade-slide-up globale */
+
+#sequence-narrative .fade-slide-up {
+  position: sticky;
+  top: 20%;
+  max-width: 32rem;
+  margin-left: 5%;
+  margin-right: auto;
+  padding: 1.5rem;
+  background-color: rgba(0,0,0,0.3);
+  backdrop-filter: blur(6px);
+  border-radius: 0.5rem;
+  color: #fff;
+  transform: translateY(0);
+  will-change: transform, opacity;
+  z-index: 2; /* au-dessus des couteaux */
 }
 
-/* Donne une hauteur au parent pour l'absolu (calée sur ton Swiper) */
-.section2-sizer {
-  height: clamp(400px, 80vh, 900px);
+#sequence-narrative .fade-slide-up h2 {
+  margin-bottom: 1.5rem;
 }
 
-/* Ancrage à droite, débord à gauche, respiration côté viewport */
-.section2-bleed {
+#sequence-narrative .fade-slide-up p {
+  line-height: 1.6;
+}
+
+/* ========================= */
+/* COUTEAUX                   */
+/* ========================= */
+
+#knives-cuisine,
+#knives-table,
+#knives-outdoor {
   position: absolute;
   inset: 0;
-  right: 0;                                   /* le bord droit du slider = bord droit de l’ancre */
-  width: calc(100% + var(--bleed, 12rem));    /* combien on étend vers la gauche */
-  transform: translateX(calc(var(--bleed, 12rem) * -1));
-  padding-left: var(--pad-left, 2rem);        /* respiration au bord gauche de l’écran */
-  overflow: hidden;
-}
-
-/* Assure la bonne hauteur interne */
-.section2-bleed .swiper,
-.section2-bleed .swiper-section2,
-.section2-bleed .swiper-wrapper {
-  height: 100%;
-}
-
-
-/* Slider HAMON */
-.hamon-swiper {
-  width: calc(100vw - 8rem);
-  max-width: none;
-  margin: 0 auto;
-  padding: 20px 0;
-  position: relative;
-}
-
-/* Donne une largeur ET une hauteur aux slides */
-.hamon-swiper .swiper-slide {
-  width: 70vw;
-  max-width: 900px;
-  height: clamp(360px, 65vh, 720px);
-  flex: 0 0 auto !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* important: ne pas couper le parallaxe au niveau de la slide */
   overflow: visible;
+  z-index: 1; /* au-dessus du fond, sous le texte */
 }
 
-/* Wrapper parallaxe: clip interne + base pour le transform */
-.hamon-photo-wrapper {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  will-change: transform;
+.knife {
+  position: absolute;
+  bottom: -150px; /* départ hors écran */
+  opacity: 0;
+  will-change: transform, opacity;
+  transform-origin: center;
+  filter: drop-shadow(0 10px 14px rgba(0,0,0,0.28));
+  transition: transform 0.1s linear, opacity 0.3s ease;
 }
 
-/* Image: couvre, ombre collée, prête à être parallaxée */
-.hamon-photo {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-  will-change: transform;
-  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-}
+/* Largeurs adaptatives */
+.knife-large  { width: clamp(450px, 55vw, 1050px); }
+.knife-medium { width: clamp(375px, 45vw, 850px); }
+.knife-small  { width: clamp(300px, 35vw, 700px); }
 
-/* Hover */
-.hamon-photo:hover {
-  transform: scale(1.05);
-}
+/* ========================= */
+/* ANIMATIONS OPTIONNELLES   */
+/* ========================= */
 
-/* Nav + pagination (inchangés) */
-.swiper-button-next,
-.swiper-button-prev {
-  color: var(--color-accent);
-  text-shadow: 0 0 8px rgba(0,0,0,0.4);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  opacity: 0.9;
-}
-.swiper-button-next:hover,
-.swiper-button-prev:hover {
-  transform: scale(1.15);
-  opacity: 1;
-}
-.swiper-pagination-bullet {
-  background-color: var(--color-accent);
-  opacity: 0.6;
-}
-.swiper-pagination-bullet-active {
-  opacity: 1;
-}
-
-/* Mobile */
-@media (max-width: 640px) {
-  .hamon-swiper .swiper-slide {
-    width: 86vw;
-    max-width: none;
-    height: clamp(280px, 48vh, 520px);
+@media (prefers-reduced-motion: no-preference) {
+  .knife.float {
+    animation: floatY 6s ease-in-out infinite alternate;
   }
-  .hamon-photo {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  @keyframes floatY {
+    0%   { transform: translateY(0) rotate(var(--rot, 0deg)); }
+    100% { transform: translateY(-6px) rotate(var(--rot, 0deg)); }
   }
 }
+
 
 
 /* =========================================================
@@ -1138,10 +1191,11 @@ footer img.qr {
    21. OVERRIDES & AJUSTEMENTS FINALS
    ========================================================= */
 
-/* Correction des marges sur petits écrans */
+/* Correction des marges sur petits écrans 
 @media (max-width: 640px) {
   .px-4 {
     padding-left: 1rem !important;
     padding-right: 1rem !important;
   }
-}
+} */
+

@@ -50,12 +50,12 @@ console.log("DEBUG imageList:", imageList);
 <!-- ========================================================= -->
 <!-- SECTION CENTRALE                                          -->
 <!-- ========================================================= -->
-<section class="container mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center">
-  <div class="relative fade-slide-left img-zoom">
+<section class="container1 mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center">
+  <div class="relative fade-slide-left">
     <img 
       src="/images/portrait-yann.jpg" 
       alt="Portrait de Yann, artisan coutelier"
-      class="img-zoom max-w-md w-full h-auto rounded-lg shadow-xl object-cover border-4 border-accent mx-auto md:mx-0 reveal-child"
+      class="img-zoom max-w-md w-full h-auto rounded-lg shadow-xl object-cover border-4 border-accent mx-auto md:ml-auto"
       tabindex="0"
     />
   </div>
@@ -78,15 +78,14 @@ console.log("DEBUG imageList:", imageList);
 </section>
 
 
-
   <!-- ========================================================= -->
   <!-- SECTION POINÇON -->
   <!-- ========================================================= -->
   <section 
     class="parallax-section relative w-screen h-[60vh] overflow-hidden" 
-    data-parallax-speed="60"
+    data-parallax-speed="120"
     data-parallax-zoom="1"
-    data-parallax-zoom-strength="0"
+    data-parallax-zoom-strength="0.2"
   >
     <div class="absolute inset-0" data-parallax-target style="transform: translateY(-23.48px) scale(1); will-change: transform;">
       <img src="/images/gros-plan-poincon.jpg" alt="Détail poinçon sur lame" class="w-full h-full object-cover" />
@@ -96,48 +95,134 @@ console.log("DEBUG imageList:", imageList);
 
 
 
+
 <!-- ========================================================= -->
 <!-- SECTION 2 : À chaque utilisation son couteau              -->
 <!-- ========================================================= -->
-<section class="bg-bg text-text py-16 max-w-[85%] mx-auto">
-  <div class="grid grid-cols-20 items-center gap-6">
-
-    <!-- 📷 SLIDER -->
-    <div class="col-span-9 pr-14 -ml-32">
-      <div class="swiper swiper-section2 h-full">
+<section class="bg-bg text-text py-16">
+  <div class="container section-2-grid mx-auto px-4 grid gap-12 items-center lg:grid-cols-2">
+    
+    <!-- 📷 SLIDER avec animation -->
+    <div class="fade-slide-left">
+      <div class="swiper swiper-section2">
         <div class="swiper-wrapper">
           {imageList.map((src) => (
-            <div class="swiper-slide">
-              <img src={src} alt="" />
+            <div class="swiper-slide overflow-hidden">
+              <img
+                class="rounded-lg shadow-xl border-4 border-accent object-cover w-full h-full block"
+                src={src}
+                alt=""
+              />
             </div>
           ))}
         </div>
       </div>
     </div>
 
-    <!-- 🆓 GAP -->
-    <div class="col-span-1"></div>
-
-    <!-- 📝 TEXTE -->
-    <div class="col-span-6 space-y-6 pl-3 fade-slide-up">
-      <h2 class="text-3xl md:text-4xl font-serif font-bold text-accent reveal-child">
+    <!-- 📝 TEXTE avec échelonnage -->
+    <div class="fade-slide-left">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-accent reveal-child mb-6">
         À chaque utilisation son couteau
       </h2>
-      <p class="text-lg text-muted leading-relaxed reveal-child">
+      <p class="text-lg text-muted leading-relaxed mb-4 reveal-child">
         Je prends un plaisir particulier à façonner des couteaux de cuisine — la gourmandise, ça ne s’invente pas ! 
         La plupart de mes créations se destinent aux arts de la table, mais je réalise aussi des pièces utilitaires, 
         d’extérieur, voire de chasse.
       </p>
-      <p class="text-lg text-muted leading-relaxed reveal-child">
+      <p class="text-lg text-muted leading-relaxed mb-4 reveal-child">
         Chaque usage appelle son acier. Pour la cuisine, je privilégie des aciers peu alliés mais riches en carbone, 
         offrant un tranchant exceptionnel. Pour un couteau de camp, je sélectionne un acier plus chargé, 
         résistant mieux aux contraintes et à l’abrasion. Associés à un profil et une géométrie adaptés, 
         ils donnent naissance à des lames agréables en main, précises et durables.
       </p>
     </div>
+
   </div>
 </section>
 
+
+<!-- ========================================================= -->
+<!-- SECTION 2.5 : À chaque utilisation son couteau SEQUENCE NARRATIVE MULTI-PLANS -->
+<!-- ========================================================= -->
+<section id="sequence-narrative" class="relative w-screen overflow-hidden">
+
+  <!-- Titre global sticky -->
+  <div id="global-title">
+    <h2 class="text-3xl md:text-4xl font-serif font-bold">
+      À chaque utilisation son couteau
+    </h2>
+  </div>
+
+  <!-- SCÈNE 1 — CUISINE -->
+  <section class="scene scene-cuisine">
+    <!-- Fond flou -->
+    <div class="bg-layer">
+      <img src="/images/fond-cuisine.png" alt="Cuisine floue" loading="eager" />
+    </div>
+
+    <!-- Couteaux (injectés par JS) -->
+    <div id="knives-cuisine"></div>
+
+    <!-- Bloc texte sticky -->
+    <div class="fade-slide-up">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
+        À chaque utilisation son couteau
+      </h2>
+      <p class="text-lg md:text-xl font-serif leading-relaxed">
+        Je prends un plaisir particulier à façonner des couteaux de cuisine — la gourmandise, ça ne s’invente pas ! 
+        La plupart de mes créations se destinent aux arts de la table, où chaque lame raconte une histoire et sublime 
+        le geste culinaire. Du tranchant précis d’un petty à la puissance d’un grand chef, chaque couteau est pensé 
+        pour devenir le prolongement naturel de la main.
+      </p>
+    </div>
+  </section>
+
+  <!-- SCÈNE 2 — TABLE -->
+  <section class="scene scene-table">
+    <div class="bg-layer">
+      <img src="/images/fond-table.png" alt="Table dressée floue" loading="lazy" />
+    </div>
+
+    <div id="knives-table"></div>
+
+    <div class="fade-slide-up">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
+        Pour sublimer l’art de la table
+      </h2>
+      <p class="text-lg md:text-xl font-serif leading-relaxed">
+        Ici, le couteau devient un élément de mise en scène. L’équilibre des formes, la noblesse des matériaux et 
+        la précision de l’affûtage transforment chaque repas en un moment d’exception. Un hommage à l’art de recevoir.
+      </p>
+    </div>
+  </section>
+
+  <!-- SCÈNE 3 — OUTDOOR -->
+  <section class="scene scene-outdoor">
+    <div class="bg-layer">
+      <img src="/images/fond-foret.png" alt="Outdoor flou" loading="lazy" />
+    </div>
+
+    <div id="knives-outdoor"></div>
+
+    <div class="fade-slide-up">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
+        Pour l’aventure et l’extérieur
+      </h2>
+      <p class="text-lg md:text-xl font-serif leading-relaxed">
+        Robustes, fiables et prêts à affronter toutes les conditions, ces couteaux sont conçus pour accompagner 
+        les explorateurs et les amoureux de nature. Du bivouac improvisé au repas au grand air, ils sont de toutes les aventures.
+      </p>
+    </div>
+  </section>
+
+</section>
+
+
+
+<!-- Section 3 — Inspiration (atterrissage plus posé) -->
+<section id="inspiration" class="bg-bg text-text py-16">
+  <!-- Ton slider manuel tranquille ici -->
+</section>
 
 
 <!-- ========================================================= -->
@@ -219,10 +304,10 @@ console.log("DEBUG imageList:", imageList);
 <!-- BLOC PREMIUM FINAL AVEC IMAGE, CITATION, ANIMATIONS & CARTE 3D -->
 <!-- ========================================================= -->
 <section 
-  class="parallax-section premium-section relative w-full h-[60vh] flex items-center justify-center text-center text-white overflow-hidden"
-  data-parallax-speed="60"
+  class="parallax-section premium-section relative w-full h-[80vh] flex items-center justify-center text-center text-white overflow-hidden"
+  data-parallax-speed="120"
   data-parallax-zoom="1.05"
-  data-parallax-zoom-strength="0.04"
+  data-parallax-zoom-strength="0.2"
 >
   <!-- Image de fond -->
   <div class="absolute inset-0" data-parallax-target>
