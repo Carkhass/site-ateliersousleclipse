@@ -141,88 +141,93 @@ console.log("DEBUG imageList:", imageList);
 </section>
 
 
+
 <!-- ========================================================= -->
-<!-- SECTION 2.5 : À chaque utilisation son couteau SEQUENCE NARRATIVE MULTI-PLANS -->
+<!-- SECTION 2.5 : À chaque utilisation son couteau -->
 <!-- ========================================================= -->
-<section id="sequence-narrative" class="relative w-screen overflow-hidden">
+<section class="parallax-multi-story">
 
-  <!-- Titre global sticky -->
-  <div id="global-title">
-    <h2 class="text-3xl md:text-4xl font-serif font-bold">
-      À chaque utilisation son couteau
-    </h2>
-  </div>
+  <!-- THÈME 1 : CUISINE -->
+  <section class="story-sequence">
+    <figure class="story-image-container">
+      <img src="/images/fond-cuisine.png" alt="Fond cuisine artisanale" />
+    </figure>
 
-  <!-- SCÈNE 1 — CUISINE -->
-  <section class="scene scene-cuisine">
-    <!-- Fond flou -->
-    <div class="bg-layer">
-      <img src="/images/fond-cuisine.png" alt="Cuisine floue" loading="eager" />
-    </div>
-
-    <!-- Couteaux (injectés par JS) -->
-    <div id="knives-cuisine"></div>
-
-    <!-- Bloc texte sticky -->
-    <div class="fade-slide-up">
-      <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
-        À chaque utilisation son couteau
-      </h2>
-      <p class="text-lg md:text-xl font-serif leading-relaxed">
-        Je prends un plaisir particulier à façonner des couteaux de cuisine — la gourmandise, ça ne s’invente pas ! 
-        La plupart de mes créations se destinent aux arts de la table, où chaque lame raconte une histoire et sublime 
-        le geste culinaire. Du tranchant précis d’un petty à la puissance d’un grand chef, chaque couteau est pensé 
-        pour devenir le prolongement naturel de la main.
+    <article class="story-content">
+    
+      <p>
+        Je prends un plaisir particulier à façonner des couteaux de cuisine — la gourmandise, ça ne s'invente pas ! 
+        Donc la plupart de mes créations se destinent aux arts de la table.
       </p>
-    </div>
+      
+      <p>
+        Du tranchant précis d'un petty à la puissance d'un grand chef, chaque couteau est pensé pour devenir 
+        le prolongement naturel de la main.
+      </p>
+
+      <!-- Couteaux flottants - Cuisine -->
+      <div class="floating-knives">
+        <img src="/images/cuisine/detoure-petty1.png" alt="Couteau Petty" class="knife knife-1" />
+        <img src="/images/cuisine/detoure-gyuto1.png" alt="Couteau Gyuto" class="knife knife-2" />
+        <img src="/images/cuisine/detoure-nakiri.png" alt="Couteau Nakiri" class="knife knife-3" />
+        <img src="/images/cuisine/detoure-bonap.png" alt="Couteau Bonap" class="knife knife-4" />
+      </div>
+    </article>
   </section>
 
-  <!-- SCÈNE 2 — TABLE -->
-  <section class="scene scene-table">
-    <div class="bg-layer">
-      <img src="/images/fond-table.png" alt="Table dressée floue" loading="lazy" />
-    </div>
+  <!-- THÈME 2 : TABLE -->
+  <section class="story-sequence">
+    <figure class="story-image-container">
+      <img src="/images/fond-table.png" alt="Fond art de la table" />
+    </figure>
 
-    <div id="knives-table"></div>
+    <article class="story-content">
 
-    <div class="fade-slide-up">
-      <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
-        Pour sublimer l’art de la table
-      </h2>
-      <p class="text-lg md:text-xl font-serif leading-relaxed">
-        Ici, le couteau devient un élément de mise en scène. L’équilibre des formes, la noblesse des matériaux et 
-        la précision de l’affûtage transforment chaque repas en un moment d’exception. Un hommage à l’art de recevoir.
+      <p>
+        Mariage de lignes épurées et de matériaux nobles, mes couteaux de table incarnent une vision 
+        exigeante de l'art de recevoir... mais rassurez-vous, ils conviendront aussi parfaitement 
+        aux repas du quotidien !
       </p>
-    </div>
+
+      <!-- Couteaux flottants - Table -->
+      <div class="floating-knives">
+        <img src="/images/cuisine/detoure-long-bonap.png" alt="Long Bonap" class="knife knife-5" />
+        <img src="/images/cuisine/detoure-grand-bonap6.png" alt="Grand Bonap" class="knife knife-6" />
+        <img src="/images/cuisine/detoure-lance1.png" alt="Lance" class="knife knife-7" />
+      </div>
+    </article>
   </section>
 
-  <!-- SCÈNE 3 — OUTDOOR -->
-  <section class="scene scene-outdoor">
-    <div class="bg-layer">
-      <img src="/images/fond-foret.png" alt="Outdoor flou" loading="lazy" />
-    </div>
+  <!-- THÈME 3 : OUTDOOR -->
+  <section class="story-sequence">
+    <figure class="story-image-container">
+      <img src="/images/fond-foret.png" alt="Fond forêt et nature" />
+    </figure>
 
-    <div id="knives-outdoor"></div>
+    <article class="story-content">
 
-    <div class="fade-slide-up">
-      <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
-        Pour l’aventure et l’extérieur
-      </h2>
-      <p class="text-lg md:text-xl font-serif leading-relaxed">
-        Robustes, fiables et prêts à affronter toutes les conditions, ces couteaux sont conçus pour accompagner 
-        les explorateurs et les amoureux de nature. Du bivouac improvisé au repas au grand air, ils sont de toutes les aventures.
+      <p>
+        Et si vous avez l'esprit d'aventure, que vous aimez les grands espaces, l'odeur des forêts 
+        et les sentiers reculés... L'Atelier a quelques compagnons fiables à vous proposer.
       </p>
-    </div>
+      
+      <p>
+        Aciers robustes sélectionnés pour leurs caractéristiques techniques, tranchant robuste pour 
+        passer de la coupe fine à l'ouvrage le plus exigeant, mais toujours avec l'empreinte unique de l'atelier.
+      </p>
+
+      <!-- Couteaux flottants - Outdoor (réutilisation pour la demo) -->
+      <div class="floating-knives">
+        <img src="/images/cuisine/detoure-gyuto1.png" alt="Couteau robuste" class="knife knife-8" />
+        <img src="/images/cuisine/detoure-bonap.png" alt="Couteau camp" class="knife knife-9" />
+      </div>
+    </article>
   </section>
 
 </section>
 
 
 
-<!-- Section 3 — Inspiration (atterrissage plus posé) -->
-<section id="inspiration" class="bg-bg text-text py-16">
-  <!-- Ton slider manuel tranquille ici -->
-</section>
 
 
 <!-- ========================================================= -->
