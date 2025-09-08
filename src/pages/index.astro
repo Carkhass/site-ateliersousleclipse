@@ -143,18 +143,17 @@ console.log("DEBUG imageList:", imageList);
 
 
 <!-- ========================================================= -->
-<!-- SECTION 2.5 : À chaque utilisation son couteau -->
+<!-- SECTION 2.5 : PARALLAXE SCROLL-DRIVEN MULTI-THÈMES    -->
 <!-- ========================================================= -->
-<section class="parallax-multi-story">
+<section class="scroll-driven-story" id="scrollDrivenStory">
 
   <!-- THÈME 1 : CUISINE -->
-  <section class="story-sequence">
-    <figure class="story-image-container">
-      <img src="/images/fond-cuisine.png" alt="Fond cuisine artisanale" />
-    </figure>
+  <section class="scroll-sequence" data-theme="cuisine" data-bg="/images/fond-cuisine.png">
+    <div class="sequence-bg-container">
+      <div class="sequence-bg" style="background-image: url('/images/fond-cuisine.png')"></div>
+    </div>
 
-    <article class="story-content">
-    
+    <article class="sequence-text-card">
       <p>
         Je prends un plaisir particulier à façonner des couteaux de cuisine — la gourmandise, ça ne s'invente pas ! 
         Donc la plupart de mes créations se destinent aux arts de la table.
@@ -164,48 +163,49 @@ console.log("DEBUG imageList:", imageList);
         Du tranchant précis d'un petty à la puissance d'un grand chef, chaque couteau est pensé pour devenir 
         le prolongement naturel de la main.
       </p>
-
-      <!-- Couteaux flottants - Cuisine -->
-      <div class="floating-knives">
-        <img src="/images/cuisine/detoure-petty1.png" alt="Couteau Petty" class="knife knife-1" />
-        <img src="/images/cuisine/detoure-gyuto1.png" alt="Couteau Gyuto" class="knife knife-2" />
-        <img src="/images/cuisine/detoure-nakiri.png" alt="Couteau Nakiri" class="knife knife-3" />
-        <img src="/images/cuisine/detoure-bonap.png" alt="Couteau Bonap" class="knife knife-4" />
-      </div>
     </article>
+
+    <!-- Couteaux défilants -->
+    <div class="sequence-knives-container">
+      <img src="/images/cuisine/detoure-petty1.png" alt="Couteau Petty" class="scroll-knife" data-path="1" data-rotation="12" />
+      <img src="/images/cuisine/detoure-gyuto1.png" alt="Couteau Gyuto" class="scroll-knife" data-path="2" data-rotation="-15" />
+      <img src="/images/cuisine/detoure-nakiri.png" alt="Couteau Nakiri" class="scroll-knife" data-path="3" data-rotation="18" />
+      <img src="/images/cuisine/detoure-bonap.png" alt="Couteau Bonap" class="scroll-knife" data-path="4" data-rotation="-12" />
+      <img src="/images/cuisine/detoure-long-bonap.png" alt="Long Bonap" class="scroll-knife" data-path="5" data-rotation="15" />
+      <img src="/images/cuisine/detoure-grand-bonap6.png" alt="Grand Bonap" class="scroll-knife" data-path="6" data-rotation="-18" />
+      <img src="/images/cuisine/detoure-lance1.png" alt="Lance" class="scroll-knife" data-path="7" data-rotation="10" />
+    </div>
   </section>
 
   <!-- THÈME 2 : TABLE -->
-  <section class="story-sequence">
-    <figure class="story-image-container">
-      <img src="/images/fond-table.png" alt="Fond art de la table" />
-    </figure>
+  <section class="scroll-sequence" data-theme="table" data-bg="/images/fond-table.png">
+    <div class="sequence-bg-container">
+      <div class="sequence-bg" style="background-image: url('/images/fond-table.png')"></div>
+    </div>
 
-    <article class="story-content">
-
+    <article class="sequence-text-card">
       <p>
         Mariage de lignes épurées et de matériaux nobles, mes couteaux de table incarnent une vision 
         exigeante de l'art de recevoir... mais rassurez-vous, ils conviendront aussi parfaitement 
         aux repas du quotidien !
       </p>
-
-      <!-- Couteaux flottants - Table -->
-      <div class="floating-knives">
-        <img src="/images/cuisine/detoure-long-bonap.png" alt="Long Bonap" class="knife knife-5" />
-        <img src="/images/cuisine/detoure-grand-bonap6.png" alt="Grand Bonap" class="knife knife-6" />
-        <img src="/images/cuisine/detoure-lance1.png" alt="Lance" class="knife knife-7" />
-      </div>
     </article>
+
+    <!-- Couteaux temporaires pour table -->
+    <div class="sequence-knives-container">
+      <img src="/images/cuisine/detoure-long-bonap.png" alt="Couteau table 1" class="scroll-knife" data-path="1" data-rotation="-14" />
+      <img src="/images/cuisine/detoure-lance1.png" alt="Couteau table 2" class="scroll-knife" data-path="3" data-rotation="16" />
+      <img src="/images/cuisine/detoure-grand-bonap6.png" alt="Couteau table 3" class="scroll-knife" data-path="5" data-rotation="-11" />
+    </div>
   </section>
 
   <!-- THÈME 3 : OUTDOOR -->
-  <section class="story-sequence">
-    <figure class="story-image-container">
-      <img src="/images/fond-foret.png" alt="Fond forêt et nature" />
-    </figure>
+  <section class="scroll-sequence" data-theme="outdoor" data-bg="/images/fond-foret.png">
+    <div class="sequence-bg-container">
+      <div class="sequence-bg" style="background-image: url('/images/fond-foret.png')"></div>
+    </div>
 
-    <article class="story-content">
-
+    <article class="sequence-text-card">
       <p>
         Et si vous avez l'esprit d'aventure, que vous aimez les grands espaces, l'odeur des forêts 
         et les sentiers reculés... L'Atelier a quelques compagnons fiables à vous proposer.
@@ -215,17 +215,16 @@ console.log("DEBUG imageList:", imageList);
         Aciers robustes sélectionnés pour leurs caractéristiques techniques, tranchant robuste pour 
         passer de la coupe fine à l'ouvrage le plus exigeant, mais toujours avec l'empreinte unique de l'atelier.
       </p>
-
-      <!-- Couteaux flottants - Outdoor (réutilisation pour la demo) -->
-      <div class="floating-knives">
-        <img src="/images/cuisine/detoure-gyuto1.png" alt="Couteau robuste" class="knife knife-8" />
-        <img src="/images/cuisine/detoure-bonap.png" alt="Couteau camp" class="knife knife-9" />
-      </div>
     </article>
+
+    <!-- Couteaux temporaires pour outdoor -->
+    <div class="sequence-knives-container">
+      <img src="/images/cuisine/detoure-gyuto1.png" alt="Couteau outdoor 1" class="scroll-knife" data-path="2" data-rotation="13" />
+      <img src="/images/cuisine/detoure-bonap.png" alt="Couteau outdoor 2" class="scroll-knife" data-path="4" data-rotation="-17" />
+    </div>
   </section>
 
 </section>
-
 
 
 
