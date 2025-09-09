@@ -602,236 +602,465 @@ form button[type="submit"]:hover {
 
 
 /* =========================================================
-   12.C. Section 2 parallaxe thématique
+   12.C. Section 2 fenêtres parallaxées
    ========================================================= */
-
 /* =========================================================
-   PARALLAXE SCROLL-DRIVEN - SYSTÈME FLUIDE
+   SECTION COUTEAUX PARALLAX - APPROCHE SIMPLIFIÉE
    ========================================================= */
 
-.scroll-driven-story {
-  position: relative;
+.parallax-knives-section {
   width: 100%;
+  position: relative;
 }
 
-.scroll-sequence {
+/* Conteneur pour chaque thème - FOND COULEUR UNIE */
+.knife-theme-container {
   position: relative;
-  height: 300vh; /* Hauteur étendue pour plus de contrôle */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
   overflow: hidden;
+  
+  /* Fonds de couleur unie selon le thème */
+  background-color: var(--color-bg);
+}
+
+.knife-theme-container.table-theme {
+  background-color: var(--color-surface);
 }
 
 /* =========================================================
-   ARRIÈRE-PLANS AVEC PARALLAXE
+   LAYOUT DU CONTENU - PLUS DÉCALÉ
    ========================================================= */
 
-.sequence-bg-container {
-  position: sticky;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -5;
-  overflow: hidden;
+.theme-content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr; /* Plus de place pour les fenêtres */
+  gap: 2rem;
+  align-items: center;
+  min-height: 70vh;
+  padding: 5rem 0;
 }
 
-.sequence-bg {
-  width: 110%; /* Légèrement plus large pour l'effet parallaxe */
-  height: 110%; /* Légèrement plus haut pour l'effet parallaxe */
-  background-size: cover;
-  background-position: center;
+.theme-text {
+  max-width: 500px;
+}
+
+/* Texte plus décalé vers les bords */
+.theme-text-left {
+  justify-self: start;
+  text-align: left;
+  margin-left: -3rem; /* Plus de décalage */
+}
+
+.theme-text-right {
+  justify-self: end;
+  text-align: left;
+  order: 2;
+  margin-right: -3rem; /* Plus de décalage */
+  grid-column: 2;
+}
+
+.theme-knives {
+  position: relative;
+}
+
+.theme-knives-right {
+  justify-self: end;
+  order: 2;
+  grid-column: 2;
+}
+
+.theme-knives-left {
+  justify-self: start;
+  order: 1;
+  grid-column: 1;
+}
+
+/* Pour les thèmes avec texte à droite, inverser les colonnes */
+.table-theme .theme-content {
+  grid-template-columns: 1.2fr 0.8fr;
+}
+
+.table-theme .theme-text-right {
+  grid-column: 2;
+}
+
+.table-theme .theme-knives-left {
+  grid-column: 1;
+}
+
+/* =========================================================
+   GRILLES DES COUTEAUX
+   ========================================================= */
+
+.knives-grid {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Grille cuisine (7 couteaux) - disposition 3x3 décalée */
+.cuisine-grid {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, auto);
+  width: 450px;
+  height: 400px;
+}
+
+.cuisine-grid .knife-window:nth-child(1) { grid-column: 1; grid-row: 1; }
+.cuisine-grid .knife-window:nth-child(2) { grid-column: 2; grid-row: 2; }
+.cuisine-grid .knife-window:nth-child(3) { grid-column: 3; grid-row: 1; }
+.cuisine-grid .knife-window:nth-child(4) { grid-column: 1; grid-row: 3; }
+.cuisine-grid .knife-window:nth-child(5) { grid-column: 3; grid-row: 3; }
+.cuisine-grid .knife-window:nth-child(6) { grid-column: 2; grid-row: 1; }
+.cuisine-grid .knife-window:nth-child(7) { grid-column: 2; grid-row: 3; }
+
+/* Grilles table et outdoor (4 couteaux) - disposition 2x2 décalée */
+.table-grid,
+.outdoor-grid {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+  width: 350px;
+  height: 320px;
+}
+
+.table-grid .knife-window:nth-child(1) { 
+  grid-column: 1; grid-row: 1; 
+  transform: translateY(-20px); 
+}
+.table-grid .knife-window:nth-child(2) { 
+  grid-column: 2; grid-row: 1; 
+  transform: translateY(20px); 
+}
+.table-grid .knife-window:nth-child(3) { 
+  grid-column: 1; grid-row: 2; 
+  transform: translateY(20px); 
+}
+.table-grid .knife-window:nth-child(4) { 
+  grid-column: 2; grid-row: 2; 
+  transform: translateY(-20px); 
+}
+
+.outdoor-grid .knife-window:nth-child(1) { 
+  grid-column: 1; grid-row: 1; 
+  transform: translateY(-15px); 
+}
+.outdoor-grid .knife-window:nth-child(2) { 
+  grid-column: 2; grid-row: 1; 
+  transform: translateY(15px); 
+}
+.outdoor-grid .knife-window:nth-child(3) { 
+  grid-column: 1; grid-row: 2; 
+  transform: translateY(15px); 
+}
+.outdoor-grid .knife-window:nth-child(4) { 
+  grid-column: 2; grid-row: 2; 
+  transform: translateY(-15px); 
+}
+
+/* =========================================================
+   FENÊTRES COUTEAUX AVEC EFFET PARALLAX
+   ========================================================= */
+
+.knife-window {
+  position: relative;
+  border-radius: var(--r, 15px);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  will-change: transform, clip-path;
+  
+  /* Variables pour l'effet parallax de l'exemple */
+  --_f: calc(100% * var(--f) / (1 + var(--f)));
+  --_a: calc(90deg * var(--f));
+  
+  aspect-ratio: calc(1 + var(--f));
+  object-fit: cover;
+  clip-path: inset(0 var(--_f) 0 0 round var(--r));
+  transform: perspective(400px) var(--_t, rotateY(var(--_a)));
+}
+
+.knife-window:hover {
+  clip-path: inset(0 0 0 var(--_f) round var(--r));
+  --_t: translateX(calc(-1 * var(--_f))) rotateY(calc(-1 * var(--_a)));
+}
+
+/* Tailles des fenêtres */
+.knife-small {
+  width: 180px;
+}
+
+.knife-medium {
+  width: 220px;
+}
+
+.knife-large {
+  width: 280px;
+}
+
+.knife-xlarge {
+  width: 320px;
+}
+
+/* =========================================================
+   FOND DES FENÊTRES - DÉCOUPAGE SIMPLIFIÉ
+   ========================================================= */
+
+.knife-bg-window {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
   background-repeat: no-repeat;
-  will-change: transform;
-  transform: translate(-5%, -5%); /* Centrage de l'oversizing */
+  
+  /* Effet verre dépoli marqué */
+  filter: blur(4px);
+  backdrop-filter: blur(6px);
 }
 
-/* Overlay dégradé pour meilleure lisibilité */
-.sequence-bg::after {
+.knife-bg-window::after {
   content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 70%;
-  background: linear-gradient(
-    to bottom,
-    rgba(var(--color-bg-rgb), 0) 0%,
-    rgba(var(--color-bg-rgb), 0.05) 15%,
-    rgba(var(--color-bg-rgb), 0.15) 30%,
-    rgba(var(--color-bg-rgb), 0.3) 45%,
-    rgba(var(--color-bg-rgb), 0.5) 60%,
-    rgba(var(--color-bg-rgb), 0.7) 75%,
-    rgba(var(--color-bg-rgb), 0.9) 90%,
-    rgb(var(--color-bg-rgb)) 100%
-  );
-}
-
-/* =========================================================
-   ENCARTS TEXTE AMÉLIORÉS
-   ========================================================= */
-
-.sequence-text-card {
-  position: absolute;
-  top: -20vh; /* Position initiale : au-dessus */
-  left: 5vw;
-  max-width: 50ch;
-  width: calc(45% - 5vw);
-  
-  /* Styles visuels améliorés */
-  padding: 2.8rem 3.2rem;
-  background: rgba(var(--color-bg-rgb), 0.7);
-  backdrop-filter: blur(16px);
-  border-radius: 20px;
-  
-  /* Ombre pour le relief */
-  box-shadow: 
-    0 16px 48px rgba(0,0,0,0.18),
-    0 8px 24px rgba(122, 30, 30, 0.12),
-    0 4px 12px rgba(0,0,0,0.08);
-  border: 1px solid rgba(122, 30, 30, 0.15);
-  
-  z-index: 10;
-  will-change: transform;
-}
-
-.sequence-text-card p {
-  font-size: clamp(1.15rem, 3.2vw, 1.35rem); /* Police plus grande */
-  color: var(--color-muted);
-  line-height: 1.8;
-  margin: 0;
-  font-weight: 400;
-}
-
-.sequence-text-card p + p {
-  margin-top: 1.6rem;
-}
-
-/* =========================================================
-   COUTEAUX DÉFILANTS REPOSITIONNÉS
-   ========================================================= */
-
-.sequence-knives-container {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
-  z-index: 5;
-  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(3px);
 }
 
-.scroll-knife {
-  position: absolute;
-  width: clamp(180px, 18vw, 280px); /* Plus grands */
-  opacity: 0;
-  filter: drop-shadow(0 8px 20px rgba(122, 30, 30, 0.3));
-  will-change: transform, opacity;
-  transition: none; /* Pas de transition CSS, tout en JS */
+/* Positions spécifiques pour chaque fenêtre de chaque grille */
+/* CUISINE */
+.cuisine-grid .knife-window:nth-child(1) .knife-bg-window {
+  background-size: 1350px 1200px; /* 3x la grille */
+  background-position: 0% 0%; /* Top-left */
+}
+.cuisine-grid .knife-window:nth-child(2) .knife-bg-window {
+  background-size: 1350px 1200px;
+  background-position: 50% 50%; /* Center */
+}
+.cuisine-grid .knife-window:nth-child(3) .knife-bg-window {
+  background-size: 1350px 1200px;
+  background-position: 100% 0%; /* Top-right */
+}
+.cuisine-grid .knife-window:nth-child(4) .knife-bg-window {
+  background-size: 1350px 1200px;
+  background-position: 0% 100%; /* Bottom-left */
+}
+.cuisine-grid .knife-window:nth-child(5) .knife-bg-window {
+  background-size: 1350px 1200px;
+  background-position: 100% 100%; /* Bottom-right */
+}
+.cuisine-grid .knife-window:nth-child(6) .knife-bg-window {
+  background-size: 1350px 1200px;
+  background-position: 50% 0%; /* Top-center */
+}
+.cuisine-grid .knife-window:nth-child(7) .knife-bg-window {
+  background-size: 1350px 1200px;
+  background-position: 50% 100%; /* Bottom-center */
 }
 
-/* Positions initiales variées pour éviter les chevauchements */
-.scroll-knife[data-path="1"] { 
-  right: 8%; 
-  bottom: -25%; 
+/* TABLE ET OUTDOOR */
+.table-grid .knife-window:nth-child(1) .knife-bg-window,
+.outdoor-grid .knife-window:nth-child(1) .knife-bg-window {
+  background-size: 700px 640px; /* 2x la grille */
+  background-position: 0% 0%;
 }
-.scroll-knife[data-path="2"] { 
-  right: 25%; 
-  bottom: -30%; 
+.table-grid .knife-window:nth-child(2) .knife-bg-window,
+.outdoor-grid .knife-window:nth-child(2) .knife-bg-window {
+  background-size: 700px 640px;
+  background-position: 100% 0%;
 }
-.scroll-knife[data-path="3"] { 
-  right: 42%; 
-  bottom: -20%; 
+.table-grid .knife-window:nth-child(3) .knife-bg-window,
+.outdoor-grid .knife-window:nth-child(3) .knife-bg-window {
+  background-size: 700px 640px;
+  background-position: 0% 100%;
 }
-.scroll-knife[data-path="4"] { 
-  right: 15%; 
-  bottom: -35%; 
-}
-.scroll-knife[data-path="5"] { 
-  right: 35%; 
-  bottom: -25%; 
-}
-.scroll-knife[data-path="6"] { 
-  right: 52%; 
-  bottom: -30%; 
-}
-.scroll-knife[data-path="7"] { 
-  right: 22%; 
-  bottom: -40%; 
+.table-grid .knife-window:nth-child(4) .knife-bg-window,
+.outdoor-grid .knife-window:nth-child(4) .knife-bg-window {
+  background-size: 700px 640px;
+  background-position: 100% 100%;
 }
 
-/* Effet de brillance sur les lames */
-.scroll-knife::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
+/* =========================================================
+   IMAGES DES COUTEAUX
+   ========================================================= */
+
+.knife-image {
+  position: relative;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    45deg,
-    transparent 20%,
-    rgba(255,255,255,0.6) 50%,
-    transparent 80%
-  );
-  opacity: 0;
-  will-change: transform, opacity;
+  object-fit: contain;
+  z-index: 2;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+  transition: transform 0.3s ease;
 }
+
+.knife-window:hover .knife-image {
+  transform: scale(1.05);
+}
+
+/* =========================================================
+   ANIMATIONS AU SCROLL
+   ========================================================= */
+
+.knife-window {
+  opacity: 0;
+  transition: transform 0.6s ease, opacity 0.6s ease, clip-path 0.5s ease;
+}
+
+.knife-window.visible {
+  opacity: 1;
+}
+
+/* Décalage en cascade pour l'animation */
+.knife-window:nth-child(1).visible { transition-delay: 0.1s; }
+.knife-window:nth-child(2).visible { transition-delay: 0.2s; }
+.knife-window:nth-child(3).visible { transition-delay: 0.3s; }
+.knife-window:nth-child(4).visible { transition-delay: 0.4s; }
+.knife-window:nth-child(5).visible { transition-delay: 0.5s; }
+.knife-window:nth-child(6).visible { transition-delay: 0.6s; }
+.knife-window:nth-child(7).visible { transition-delay: 0.7s; }
 
 /* =========================================================
    RESPONSIVE
    ========================================================= */
 
 @media (max-width: 1024px) {
-  .sequence-text-card {
-    width: calc(50% - 4vw);
-    left: 4vw;
-    padding: 2.4rem 2.8rem;
+  .theme-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 4rem 0;
   }
   
-  .scroll-knife {
-    width: clamp(150px, 20vw, 220px);
+  .theme-text-left {
+    margin-left: 1rem;
   }
+  
+  .theme-text-right {
+    margin-right: 1rem;
+  }
+  
+  .cuisine-grid {
+    width: 550px;
+    height: 480px;
+  }
+  
+  .table-grid,
+  .outdoor-grid {
+    width: 420px;
+    height: 380px;
+  }
+  
+  /* Ajustement des tailles de background pour responsive */
+  .cuisine-grid .knife-window .knife-bg-window {
+    background-size: 1650px 1440px;
+  }
+  
+  .table-grid .knife-window .knife-bg-window,
+  .outdoor-grid .knife-window .knife-bg-window {
+    background-size: 840px 760px;
+  }
+  
+  .knife-small { width: 220px; }
+  .knife-medium { width: 270px; }
+  .knife-large { width: 340px; }
+  .knife-xlarge { width: 380px; }
 }
 
 @media (max-width: 768px) {
-  .sequence-text-card {
-    width: calc(100% - 4vw);
-    left: 2vw;
-    right: 2vw;
-    padding: 2rem 2.4rem;
+  .theme-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+    padding: 3rem 0;
   }
   
-  .scroll-knife {
-    width: clamp(120px, 25vw, 180px);
+  .theme-text-left,
+  .theme-text-right {
+    order: 1;
+    justify-self: center;
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+    grid-column: 1;
   }
   
-  /* Repositionnement mobile */
-  .scroll-knife[data-path="1"], 
-  .scroll-knife[data-path="3"], 
-  .scroll-knife[data-path="5"], 
-  .scroll-knife[data-path="7"] { 
-    right: 5%; 
+  .theme-knives-left,
+  .theme-knives-right {
+    order: 2;
+    justify-self: center;
+    margin-left: 0;
+    margin-right: 0;
+    grid-column: 1;
   }
   
-  .scroll-knife[data-path="2"], 
-  .scroll-knife[data-path="4"], 
-  .scroll-knife[data-path="6"] { 
-    right: 25%; 
+  .table-theme .theme-content {
+    grid-template-columns: 1fr;
   }
+  
+  .cuisine-grid {
+    width: 320px;
+    height: 300px;
+    gap: 1rem;
+  }
+  
+  .table-grid,
+  .outdoor-grid {
+    width: 280px;
+    height: 240px;
+    gap: 1rem;
+  }
+  
+  /* Ajustement des tailles de background pour mobile */
+  .cuisine-grid .knife-window .knife-bg-window {
+    background-size: 960px 900px;
+  }
+  
+  .table-grid .knife-window .knife-bg-window,
+  .outdoor-grid .knife-window .knife-bg-window {
+    background-size: 560px 480px;
+  }
+  
+  .knife-small { width: 120px; }
+  .knife-medium { width: 140px; }
+  .knife-large { width: 170px; }
+  .knife-xlarge { width: 190px; }
 }
 
 @media (max-width: 480px) {
-  .sequence-text-card {
-    padding: 1.8rem 2rem;
+  .knife-theme-container {
+    min-height: 80vh;
   }
   
-  .sequence-text-card p {
-    font-size: clamp(1.1rem, 4vw, 1.25rem);
+  .theme-content {
+    padding: 2rem 0;
   }
   
-  .scroll-knife {
-    width: clamp(100px, 30vw, 150px);
+  .cuisine-grid {
+    width: 280px;
+    height: 260px;
   }
+  
+  .table-grid,
+  .outdoor-grid {
+    width: 240px;
+    height: 200px;
+  }
+  
+  .knife-small { width: 100px; }
+  .knife-medium { width: 120px; }
+  .knife-large { width: 140px; }
+  .knife-xlarge { width: 160px; }
 }
+
 /* =========================================================
    GLightbox — base minimale
    ========================================================= */

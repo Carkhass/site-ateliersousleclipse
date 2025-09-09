@@ -1,164 +1,149 @@
-class ScrollDrivenParallax {
+// public/scripts/parallax-knives.js
+// Gestion des effets parallax pour la section couteaux - Version simplifiée
+
+class ParallaxKnivesSection {
   constructor() {
-    this.sequences = document.querySelectorAll('.scroll-sequence');
-    this.isScrolling = false;
+    this.themeContainers = document.querySelectorAll('.knife-theme-container');
+    this.knifeWindows = document.querySelectorAll('.knife-window');
+    
+    if (this.themeContainers.length === 0) return;
     
     this.init();
   }
   
   init() {
-    // Utiliser Intersection Observer pour optimiser les performances
-    this.observer = new IntersectionObserver((entries) => {
+    this.setupBackgroundImages();
+    this.setupIntersectionObserver();
+    this.setupScrollListener();
+    
+    // Animation initiale après un délai
+    setTimeout(() => {
+      this.checkVisibleWindows();
+    }, 500);
+  }
+  
+  setupBackgroundImages() {
+    // Configure simplement l'image de fond pour chaque fenêtre
+    this.knifeWindows.forEach(window => {
+      const bgWindow = window.querySelector('.knife-bg-window');
+      const themeContainer = window.closest('.knife-theme-container');
+      const bgImage = themeContainer.dataset.bgImage;
+      
+      if (bgWindow && bgImage) {
+        bgWindow.style.backgroundImage = `url('${bgImage}')`;
+      }
+    });
+  }
+  
+  setupIntersectionObserver() {
+    // Observer pour les animations d'apparition
+    const windowObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          this.updateSequence(entry.target);
+          entry.target.classList.add('visible');
         }
       });
-    }, { threshold: 0, rootMargin: '20%' });
-    
-    this.sequences.forEach(sequence => {
-      this.observer.observe(sequence);
+    }, {
+      threshold: 0.2,
+      rootMargin: '50px'
     });
     
-    // Écouter le scroll avec throttling
-    this.throttledScroll = this.throttle(this.handleScroll.bind(this), 16);
-    window.addEventListener('scroll', this.throttledScroll);
+    this.knifeWindows.forEach(window => {
+      windowObserver.observe(window);
+    });
     
-    // Premier calcul
-    this.handleScroll();
-  }
-  
-  handleScroll() {
-    this.sequences.forEach(sequence => this.updateSequence(sequence));
-  }
-  
-  updateSequence(sequence) {
-    const rect = sequence.getBoundingClientRect();
-    const sequenceHeight = sequence.offsetHeight;
-    const viewportHeight = window.innerHeight;
-    
-    // Progression de 0 à 1 pour cette séquence
-    const progress = Math.max(0, Math.min(1, 
-      (viewportHeight - rect.top) / (viewportHeight + sequenceHeight)
-    ));
-    
-    this.animateBackground(sequence, progress);
-    this.animateTextCard(sequence, progress);
-    this.animateKnives(sequence, progress);
-  }
-  
-  animateBackground(sequence, progress) {
-    const bg = sequence.querySelector('.sequence-bg');
-    if (!bg) return;
-    
-    // Parallaxe du fond : plus lent que le scroll normal
-    const bgOffset = progress * 30; // 30% de mouvement
-    bg.style.transform = `translate(-5%, calc(-5% + ${bgOffset}px))`;
-  }
-  
-  animateTextCard(sequence, progress) {
-    const textCard = sequence.querySelector('.sequence-text-card');
-    if (!textCard) return;
-    
-    // Phase 1 (0-0.3) : Apparition et descente normale
-    // Phase 2 (0.3-0.7) : Ralentissement au centre
-    // Phase 3 (0.7-1) : Accélération et disparition
-    
-    let textProgress;
-    let opacity = 1;
-    
-    if (progress < 0.15) {
-      // Début : invisible
-      textProgress = -20;
-      opacity = 0;
-    } else if (progress < 0.4) {
-      // Descente rapide
-      const localProgress = (progress - 0.15) / 0.25;
-      textProgress = -20 + (localProgress * 60); // De -20vh à +40vh
-      opacity = localProgress;
-    } else if (progress < 0.7) {
-      // Phase stable au centre (ralentissement)
-      const localProgress = (progress - 0.4) / 0.3;
-      textProgress = 40 + (localProgress * 20); // De +40vh à +60vh (lent)
-      opacity = 1;
-    } else {
-      // Sortie rapide
-      const localProgress = (progress - 0.7) / 0.3;
-      textProgress = 60 + (localProgress * 40); // De +60vh à +100vh
-      opacity = 1 - localProgress;
-    }
-    
-    textCard.style.transform = `translateY(${textProgress}vh)`;
-    textCard.style.opacity = opacity;
-  }
-  
-  animateKnives(sequence, progress) {
-    const knives = sequence.querySelectorAll('.scroll-knife');
-    
-    knives.forEach((knife, index) => {
-      const path = parseInt(knife.dataset.path);
-      const rotation = parseInt(knife.dataset.rotation);
-      
-      // Les couteaux apparaissent pendant la phase de ralentissement du texte
-      let knifeProgress;
-      let opacity = 0;
-      let knifeRotation = 0;
-      
-      // Début décalé selon l'index pour éviter les chevauchements
-      const startDelay = 0.45 + (index * 0.05);
-      const endDelay = startDelay + 0.3;
-      
-      if (progress < startDelay) {
-        knifeProgress = -25;
-        opacity = 0;
-      } else if (progress < endDelay) {
-        const localProgress = (progress - startDelay) / 0.3;
-        knifeProgress = -25 + (localProgress * 150); // De bottom -25% à top 125%
-        opacity = localProgress < 0.1 ? localProgress * 10 : 
-                 localProgress > 0.9 ? (1 - localProgress) * 10 : 1;
-        knifeRotation = localProgress * rotation;
-        
-        // Effet de brillance pendant la montée
-        const shine = knife.querySelector('::before') || knife;
-        if (shine && localProgress > 0.3 && localProgress < 0.8) {
-          knife.style.setProperty('--shine-opacity', '1');
-          knife.style.setProperty('--shine-position', `${(localProgress - 0.3) * 200}%`);
+    // Observer pour optimiser les animations parallax
+    this.parallaxObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const container = entry.target;
+        if (entry.isIntersecting) {
+          container.dataset.parallaxActive = 'true';
+        } else {
+          container.dataset.parallaxActive = 'false';
         }
-      } else {
-        knifeProgress = 125;
-        opacity = 0;
-        knifeRotation = rotation;
-      }
-      
-      // Variation horizontale légère pendant la montée
-      const horizontalOffset = Math.sin(progress * Math.PI * 2 + index) * 2;
-      
-      knife.style.transform = `translateY(${knifeProgress}%) translateX(${horizontalOffset}%) rotate(${knifeRotation}deg)`;
-      knife.style.opacity = opacity;
+      });
+    }, {
+      threshold: 0,
+      rootMargin: '100px'
+    });
+    
+    this.themeContainers.forEach(container => {
+      this.parallaxObserver.observe(container);
     });
   }
   
-  throttle(func, delay) {
-    let timeoutId;
-    let lastExecTime = 0;
-    return function (...args) {
-      const currentTime = Date.now();
-      
-      if (currentTime - lastExecTime > delay) {
-        func.apply(this, args);
-        lastExecTime = currentTime;
-      } else {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-          func.apply(this, args);
-          lastExecTime = Date.now();
-        }, delay - (currentTime - lastExecTime));
+  setupScrollListener() {
+    // Animation légère au scroll pour les couteaux visibles
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          this.updateKnifeAnimations();
+          ticking = false;
+        });
+        ticking = true;
       }
     };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+  }
+  
+  updateKnifeAnimations() {
+    // Animation subtile des couteaux au scroll
+    const scrollY = window.scrollY;
+    
+    this.knifeWindows.forEach((window, index) => {
+      if (!window.classList.contains('visible')) return;
+      
+      const container = window.closest('.knife-theme-container');
+      if (container.dataset.parallaxActive !== 'true') return;
+      
+      const rect = window.getBoundingClientRect();
+      const windowCenter = rect.top + rect.height / 2;
+      const viewportCenter = window.innerHeight / 2;
+      
+      // Mouvement de flottement léger
+      const floatAmount = Math.sin((scrollY + index * 100) * 0.003) * 3;
+      
+      // Applique l'animation seulement si la fenêtre est dans une zone raisonnable
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        const currentTransform = window.style.transform;
+        const baseTransform = currentTransform.replace(/translateY\([^)]*\)/g, '');
+        window.style.transform = `${baseTransform} translateY(${floatAmount}px)`;
+      }
+    });
+  }
+  
+  checkVisibleWindows() {
+    // Vérification manuelle pour les éléments déjà visibles au chargement
+    this.knifeWindows.forEach(window => {
+      const rect = window.getBoundingClientRect();
+      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+      
+      if (isVisible && !window.classList.contains('visible')) {
+        setTimeout(() => {
+          window.classList.add('visible');
+        }, Math.random() * 200);
+      }
+    });
+  }
+  
+  // Méthode pour nettoyer les listeners
+  destroy() {
+    if (this.parallaxObserver) {
+      this.parallaxObserver.disconnect();
+    }
+    window.removeEventListener('scroll', this.handleScroll);
   }
 }
 
-// Initialisation au chargement
+// Initialisation au chargement du DOM
 document.addEventListener('DOMContentLoaded', () => {
-  new ScrollDrivenParallax();
+  setTimeout(() => {
+    new ParallaxKnivesSection();
+  }, 100);
 });
+
+// Export pour usage potentiel
+window.ParallaxKnivesSection = ParallaxKnivesSection;

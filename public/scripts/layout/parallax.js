@@ -3,12 +3,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const sectionData = new Map();
 
   // Pré-calcul des données statiques
-  const computeSectionData = () => {
-    sectionData.clear();
-    sections.forEach(section => {
-      const target = section.querySelector("[data-parallax-target]");
-      if (!target) return;
-
+  // Dans parallax.js, remplace cette partie :
+const computeSectionData = () => {
+  sectionData.clear();
+  // Filtrer les sections pour exclure celles de la section 2.5
+  const filteredSections = sections.filter(section => !section.closest('.parallax-excluded'));
+  
+  filteredSections.forEach(section => {
+    const target = section.querySelector("[data-parallax-target]");
+    if (!target) return;
       sectionData.set(section, {
         target,
         speed: parseFloat(section.getAttribute("data-parallax-speed")) || 50,
