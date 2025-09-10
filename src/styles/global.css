@@ -542,70 +542,12 @@ form button[type="submit"]:hover {
   background-color: var(--color-accent-dark);
 }
 
-/* =========================================================
-   SECTION 2 — Slider : position et largeur adaptatives
-   ========================================================= */
-
-@media (min-width: 1024px) {
-  /* Colonne slider : décalage fluide et borné */
-  section.bg-bg.text-text.py-16 .grid > :first-child {
-    /* Plus l'écran est large, plus on décale, mais jamais moins de -8rem ni plus de -18rem */
-    --slider-shift: clamp(-8rem, -12vw, -18rem);
-    transform: translateX(var(--slider-shift));
-  }
-
-  /* Largeur slider : liée au décalage */
-  section.bg-bg.text-text.py-16 .swiper-section2 {
-    /* Largeur de base 108%, +0.4% par rem de décalage (valeur négative → élargit) */
-    width: calc(108% + (var(--slider-shift) * -0.4)) !important;
-  }
-}
-
-@media (min-width: 1024px) {
-  /* Décalage du slider vers la gauche */
-  .slider-col {
-    transform: translateX(-2rem);
-  }
-}
-
-@media (max-width: 1023px) {
-  /* Reset sur mobile/tablette */
-  .slider-col {
-    transform: none !important;
-  }
-}
 
 /* =========================================================
-   12.B. SLIDER SECTION 2 — RESPONSIVE (mobile/tablette)
-   ========================================================= */
-
-@media (max-width: 1023px) {
-  /* Colonne slider : reset position et largeur */
-  section.bg-bg.text-text.py-16 .grid > :first-child {
-    transform: none !important;
-    margin-left: 0 !important;
-    width: 100% !important;
-    box-sizing: border-box;
-  }
-
-  /* Slider : largeur normale et pas de débordement */
-  section.bg-bg.text-text.py-16 .swiper-section2 {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  /* Les slides : s'adaptent à la largeur dispo */
-  section.bg-bg.text-text.py-16 .swiper-slide {
-    width: 100% !important;
-  }
-}
-
-
-/* =========================================================
-   12.C. Section 2 fenêtres parallaxées
+   12.C. SECTION 2.5 COUTEAUX PARALLAX - APPROCHE SIMPLIFIÉE
    ========================================================= */
 /* =========================================================
-   SECTION COUTEAUX PARALLAX - APPROCHE SIMPLIFIÉE
+   SECTION COUTEAUX PARALLAX - VERSION FINALE CORRIGÉE
    ========================================================= */
 
 .parallax-knives-section {
@@ -630,36 +572,36 @@ form button[type="submit"]:hover {
 }
 
 /* =========================================================
-   LAYOUT DU CONTENU - PLUS DÉCALÉ
+   LAYOUT DU CONTENU - PLUS AÉRÉ
    ========================================================= */
 
 .theme-content {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 0.8fr 1.2fr; /* Plus de place pour les fenêtres */
-  gap: 2rem;
+  grid-template-columns: 0.4fr 1.6fr; /* Encore plus d'espace pour les fenêtres */
+  gap: 4rem; /* Plus de gap pour aérer */
   align-items: center;
-  min-height: 70vh;
-  padding: 5rem 0;
+  min-height: 50vh; /* Réduit de 20vh (était 70vh) */
+  padding: 3rem 0; /* Réduit de 2rem (était 5rem) */
 }
 
 .theme-text {
-  max-width: 500px;
+  max-width: 400px; /* Réduit pour prendre moins de place */
 }
 
-/* Texte plus décalé vers les bords */
+/* Texte encore plus à gauche */
 .theme-text-left {
   justify-self: start;
   text-align: left;
-  margin-left: -3rem; /* Plus de décalage */
+  margin-left: 1rem; /* Plus proche du bord */
 }
 
 .theme-text-right {
   justify-self: end;
   text-align: left;
   order: 2;
-  margin-right: -3rem; /* Plus de décalage */
+  margin-right: 1rem; /* Plus proche du bord */
   grid-column: 2;
 }
 
@@ -681,7 +623,7 @@ form button[type="submit"]:hover {
 
 /* Pour les thèmes avec texte à droite, inverser les colonnes */
 .table-theme .theme-content {
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1.6fr 0.4fr;
 }
 
 .table-theme .theme-text-right {
@@ -698,7 +640,7 @@ form button[type="submit"]:hover {
 
 .knives-grid {
   display: grid;
-  gap: 1.5rem;
+  gap: 2.5rem; /* Encore plus d'espace pour aérer */
   justify-items: center;
   align-items: center;
   position: relative;
@@ -708,8 +650,8 @@ form button[type="submit"]:hover {
 .cuisine-grid {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, auto);
-  width: 450px;
-  height: 400px;
+  width: 750px; /* Encore agrandi */
+  height: 500px; /* Réduit en hauteur pour plus horizontal */
 }
 
 .cuisine-grid .knife-window:nth-child(1) { grid-column: 1; grid-row: 1; }
@@ -725,8 +667,8 @@ form button[type="submit"]:hover {
 .outdoor-grid {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, auto);
-  width: 350px;
-  height: 320px;
+  width: 580px; /* Encore agrandi */
+  height: 400px; /* Plus horizontal */
 }
 
 .table-grid .knife-window:nth-child(1) { 
@@ -772,14 +714,15 @@ form button[type="submit"]:hover {
   border-radius: var(--r, 15px);
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.5s ease;
+  transition: all 0.2s ease;
   will-change: transform, clip-path;
   
-  /* Variables pour l'effet parallax de l'exemple */
+  /* Variables pour l'effet parallax - RATIO PLUS HORIZONTAL */
+  --f: 0.08; /* Réduit pour fenêtres plus horizontales */
   --_f: calc(100% * var(--f) / (1 + var(--f)));
   --_a: calc(90deg * var(--f));
   
-  aspect-ratio: calc(1 + var(--f));
+  aspect-ratio: calc(1.6 + var(--f)); /* Plus horizontal pour les couteaux */
   object-fit: cover;
   clip-path: inset(0 var(--_f) 0 0 round var(--r));
   transform: perspective(400px) var(--_t, rotateY(var(--_a)));
@@ -788,27 +731,28 @@ form button[type="submit"]:hover {
 .knife-window:hover {
   clip-path: inset(0 0 0 var(--_f) round var(--r));
   --_t: translateX(calc(-1 * var(--_f))) rotateY(calc(-1 * var(--_a)));
+  transition: all 0.15s ease; /* Animation encore plus rapide au hover */
 }
 
-/* Tailles des fenêtres */
+/* Tailles des fenêtres - ENCORE AGRANDIES ET PLUS HORIZONTALES */
 .knife-small {
-  width: 180px;
+  width: 240px; /* était 260px */
 }
 
 .knife-medium {
-  width: 220px;
+  width: 280px; /* était 320px */
 }
 
 .knife-large {
-  width: 280px;
+  width: 320px; /* était 400px */
 }
 
 .knife-xlarge {
-  width: 320px;
+  width: 360px; /* était 460px */
 }
 
 /* =========================================================
-   FOND DES FENÊTRES - DÉCOUPAGE SIMPLIFIÉ
+   FOND DES FENÊTRES - DÉCOUPAGE DANS L'IMAGE GLOBALE
    ========================================================= */
 
 .knife-bg-window {
@@ -820,9 +764,9 @@ form button[type="submit"]:hover {
   z-index: 1;
   background-repeat: no-repeat;
   
-  /* Effet verre dépoli marqué */
-  filter: blur(4px);
-  backdrop-filter: blur(6px);
+  /* Effet verre dépoli TRÈS RÉDUIT */
+  filter: blur(1px); /* était 2px */
+  backdrop-filter: blur(1px); /* était 3px */
 }
 
 .knife-bg-window::after {
@@ -832,60 +776,60 @@ form button[type="submit"]:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(3px);
+  background: rgba(255, 255, 255, 0.02); /* était 0.05 */
+  backdrop-filter: blur(0.5px); /* était 1px */
 }
 
-/* Positions spécifiques pour chaque fenêtre de chaque grille */
-/* CUISINE */
+/* Positions spécifiques pour chaque fenêtre - NOUVELLES DIMENSIONS */
+/* CUISINE - grille 750x500 */
 .cuisine-grid .knife-window:nth-child(1) .knife-bg-window {
-  background-size: 1350px 1200px; /* 3x la grille */
-  background-position: 0% 0%; /* Top-left */
+  background-size: 2250px 1500px; /* 3x la nouvelle grille 750x500 */
+  background-position: 0% 0%;
 }
 .cuisine-grid .knife-window:nth-child(2) .knife-bg-window {
-  background-size: 1350px 1200px;
-  background-position: 50% 50%; /* Center */
+  background-size: 2250px 1500px;
+  background-position: 50% 50%;
 }
 .cuisine-grid .knife-window:nth-child(3) .knife-bg-window {
-  background-size: 1350px 1200px;
-  background-position: 100% 0%; /* Top-right */
+  background-size: 2250px 1500px;
+  background-position: 100% 0%;
 }
 .cuisine-grid .knife-window:nth-child(4) .knife-bg-window {
-  background-size: 1350px 1200px;
-  background-position: 0% 100%; /* Bottom-left */
+  background-size: 2250px 1500px;
+  background-position: 0% 100%;
 }
 .cuisine-grid .knife-window:nth-child(5) .knife-bg-window {
-  background-size: 1350px 1200px;
-  background-position: 100% 100%; /* Bottom-right */
+  background-size: 2250px 1500px;
+  background-position: 100% 100%;
 }
 .cuisine-grid .knife-window:nth-child(6) .knife-bg-window {
-  background-size: 1350px 1200px;
-  background-position: 50% 0%; /* Top-center */
+  background-size: 2250px 1500px;
+  background-position: 50% 0%;
 }
 .cuisine-grid .knife-window:nth-child(7) .knife-bg-window {
-  background-size: 1350px 1200px;
-  background-position: 50% 100%; /* Bottom-center */
+  background-size: 2250px 1500px;
+  background-position: 50% 100%;
 }
 
-/* TABLE ET OUTDOOR */
+/* TABLE ET OUTDOOR - grille 580x400 */
 .table-grid .knife-window:nth-child(1) .knife-bg-window,
 .outdoor-grid .knife-window:nth-child(1) .knife-bg-window {
-  background-size: 700px 640px; /* 2x la grille */
+  background-size: 1160px 800px; /* 2x la nouvelle grille 580x400 */
   background-position: 0% 0%;
 }
 .table-grid .knife-window:nth-child(2) .knife-bg-window,
 .outdoor-grid .knife-window:nth-child(2) .knife-bg-window {
-  background-size: 700px 640px;
+  background-size: 1160px 800px;
   background-position: 100% 0%;
 }
 .table-grid .knife-window:nth-child(3) .knife-bg-window,
 .outdoor-grid .knife-window:nth-child(3) .knife-bg-window {
-  background-size: 700px 640px;
+  background-size: 1160px 800px;
   background-position: 0% 100%;
 }
 .table-grid .knife-window:nth-child(4) .knife-bg-window,
 .outdoor-grid .knife-window:nth-child(4) .knife-bg-window {
-  background-size: 700px 640px;
+  background-size: 1160px 800px;
   background-position: 100% 100%;
 }
 
@@ -1060,6 +1004,178 @@ form button[type="submit"]:hover {
   .knife-large { width: 140px; }
   .knife-xlarge { width: 160px; }
 }
+/* =========================================================
+   PARALLAX 3D — 
+   ========================================================= */
+
+   /* Conteneur principal centré avec largeur max pour section */
+.container2 {
+  @apply mx-auto px-6;
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.cards { /* carte principale de fond*/
+  background: --color-bg;
+  border-radius: 15px; /* arrondi de la carte principale) */
+  box-shadow: 0px 10px 20px 20px rgba(0,0,0,0.17);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 20px;
+  padding: 60px 60px;
+  perspective: 1800px;
+  text-align: center;
+  transform-origin: 50% 50%;
+  transform-style: preserve-3d;
+  transform: rotateX(11deg) rotateY(16.5deg);
+  width: 100%; /* Supprime min-width fixe */
+  max-width: 1200px; /* Largeur max adaptée */
+  justify-content: center; /* Centre les cartes */
+  justify-self: center;
+}
+
+.card {
+  border-radius: 15px;
+  box-shadow: 5px 5px 20px -5px rgba(0,0,0,0.6);
+  display: inline-block;
+  min-height: 230px; /* hauteur cartes couteau */
+  min-width: 450px; /* largeur cartes couteau */
+  height: auto;
+  overflow: hidden;
+  perspective: 1200px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: translatez(35px);
+  transition: transform 200ms ease-out;
+  text-align: right;
+
+  /* Largeurs responsives */
+  flex: 1 1 300px; /* Grandit/rétrécit, base de 300px */
+  max-width: 400px; /* Max plus raisonnable */
+  
+  &:not(:last-child) {
+    margin-right: 0; /* Supprime car gap s'en charge */
+  }
+}
+
+.card__img {
+  position: absolute;
+  bottom: 8%;
+  left: 5%;
+  max-width: 90%;
+  max-height: 90%;
+  margin: auto; /* centre l'image */
+  /*top: 40px; */
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.9));
+
+  transform: translateX(-50%);
+}
+
+.card__bg {
+  bottom: -50px;
+  left: -50px;
+  position: absolute;
+  right: -50px;
+  top: -50px;
+  transform-origin: 50% 50%;
+  transform: translateZ(-50px);
+  z-index: 0;
+  opacity: 50%;
+}
+
+.card__text {
+  align-items: center;
+  background: linear-gradient(to top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 100%);
+  top: 0;
+  display: flex;
+  flex-direction: column; 
+  height: 70px;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+}
+
+.card__title {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 0 10px;
+  margin-bottom: 3px;
+}
+
+
+.card__one {
+  .card__img {
+  }
+  .card__bg {
+    background: url('/images/cuisine/bg-cui-2.png') center / cover no-repeat;
+  }
+  .card__text {
+  }
+}
+
+.card__two {
+  .card__img {
+
+  }
+  .card__bg {
+    background: url('/images/cuisine/bg-cui-3.png') center / cover no-repeat;
+  }
+  .card__text {
+  }
+}
+
+.card__three {
+  .card__img {
+
+  }
+  .card__bg {
+    background: url('/images/cuisine/bg-cui-4.png') center / cover no-repeat;
+  }
+  .card__text {
+  }
+}
+
+.card__four {
+  .card__img {
+
+  }
+  .card__bg {
+    background: url('/images/cuisine/bg-cui-5.png') center / cover no-repeat;
+  }
+  .card__text {
+  }
+}
+
+.card__five {
+  .card__img {
+
+  }
+  .card__bg {
+    background: url('/images/cuisine/bg.png') center / cover no-repeat;
+  }
+  .card__text {
+  }
+}
+
+.card__six {
+  .card__img {
+    width: 60%;
+    left: 80px;
+  }
+  .card__bg {
+    background: url('/images/cuisine/bg.png') center / cover no-repeat;
+  }
+  .card__text {
+  }
+}
+
+
 
 /* =========================================================
    GLightbox — base minimale
@@ -1420,14 +1536,14 @@ footer img.qr {
 /* =========================================================
    17. CARTE 3D — STRUCTURE & STYLES DE BASE
    ========================================================= */
-
+/*
 .card-3d-wrapper {
   perspective: 1000px;
   width: 100%;
   aspect-ratio: 650 / 1004;
   display: flex;
   align-items: center;
-  animation: floaty 5s ease-in-out infinite; /* flottement léger */
+  animation: floaty 5s ease-in-out infinite; 
 }
 
 .card-3d {
@@ -1460,7 +1576,7 @@ footer img.qr {
   transform: rotateY(180deg);
 }
 
-/* Désactivation de l'animation hintFlip après clic */
+
 .card-3d.clicked {
   animation: none !important;
 }
