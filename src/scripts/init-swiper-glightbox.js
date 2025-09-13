@@ -27,20 +27,24 @@ export function initSwipers(root = document) {
     }
 
     // Slider par défaut
-    new Swiper(el, {
-      modules: [Navigation, Pagination],
-      loop: true,
-      slidesPerView: 1,
-      spaceBetween: 20,
-      navigation: {
-        nextEl: el.querySelector('.swiper-button-next'),
-        prevEl: el.querySelector('.swiper-button-prev')
-      },
-      pagination: {
-        el: el.querySelector('.swiper-pagination'),
-        clickable: true
-      }
-    });
+    new Swiper('.my-knives-swiper', {
+  modules: [Navigation, Pagination],
+  loop: true,
+  slidesPerView: 1,
+  centeredSlides: false,
+  spaceBetween: 20,
+  navigation: {
+    nextEl: '.my-knives-swiper .swiper-button-next',
+    prevEl: '.my-knives-swiper .swiper-button-prev'
+  },
+  pagination: {
+    el: '.swiper-pagination', // pagination externe
+    clickable: true
+  },
+  
+});
+
+
   });
 }
 
