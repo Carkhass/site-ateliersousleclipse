@@ -130,6 +130,7 @@ button:hover, a:hover {
 .container1 {
   @apply mx-auto px-4;
   max-width: 1280px;
+  height: 55vh;
 }
 
 /* Grilles utilitaires 
@@ -261,7 +262,7 @@ header nav a:hover {
   position: fixed;
   top: 5rem;
   right: 1rem;
-  width: 160px;
+  width: 1px;
   background-color: rgba(var(--color-bg-rgb), 0.65);
   backdrop-filter: blur(6px);
   border-radius: 0.75rem;
@@ -358,19 +359,41 @@ header nav a:hover {
   z-index: 2;
 }
 
-/* État initial et mouvement fluide pour hero et poinçon */
-.hero-section [data-parallax-target],
-.poincon-section [data-parallax-target] {
+/* État initial et mouvement fluide pour hero */
+.hero-section [data-parallax-target] {
   transform: translateY(0) scale(1);
   will-change: transform;
   transition: transform 0.4s ease-out;
 }
 
-/* Surcharge premium pour le poinçon */
-.poincon-section [data-parallax-target] {
-  transition: transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1); /* ease-out premium */
+/* === Effet premium poinçon === */
+
+/* Desktop : fond fixe pur CSS */
+@media (min-width: 769px) {
+  .poincon-section {
+    background-image: url('/images/gros-plan-poincon.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+  /* On masque l'image HTML pour éviter le double affichage */
+  .poincon-section > [data-parallax-target] {
+    display: none;
+  }
 }
 
+/* Mobile : fallback image HTML */
+@media (max-width: 768px) {
+  .poincon-section {
+    background: none;
+    height: 45vh; /* ou 40vh si tu veux encore plus compact */
+  }
+  .poincon-section [data-parallax-target] {
+    transform: translateY(0) scale(1);
+    will-change: transform;
+    transition: transform 0.45s cubic-bezier(0.25, 0.1, 0.25, 1); /* ease-out premium */
+  }
+}
 
 /* =========================================================
    9. ANIMATIONS GLOBALES
@@ -583,14 +606,12 @@ form button[type="submit"]:hover {
 
 
 /* =========================================================
-   12.C. SECTION 2.5 COUTEAUX PARALLAX - APPROCHE SIMPLIFIÉE
-   ========================================================= */
-/* =========================================================
-   SECTION COUTEAUX - COMMUN
+   12.C. SECTION 2 PLANCHES THEMATIQUES
    ========================================================= */
 
 /* Section pleine largeur */
 .section-couteaux {
+  overflow-x: hidden;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   padding: 30px;
@@ -623,12 +644,25 @@ form button[type="submit"]:hover {
 }
 
 /* Responsive : sur mobile, slider toujours au-dessus du texte */
-@media (max-width: 1023px) {
+@media (max-width: 1440px) {
   .section-2-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
+
   .section-2-grid > .swiper {
-    order: -1; /* slider en premier */
+    order: -1; /* slider en haut */
+  }
+}
+
+.section-2-grid.slider-right {
+  padding-right: 4rem; /* conserve sur desktop */
+}
+
+/* Dès que la grille passe en 1 colonne → on annule */
+@media (max-width: 1440px) {
+  .section-2-grid.slider-right {
+    padding-right: 0;
+    padding-left: 0; /* optionnel : équilibre visuel */
   }
 }
 
@@ -648,13 +682,29 @@ form button[type="submit"]:hover {
   background: var(--slider-bg) center/cover no-repeat;
 }
 
+@media (max-width: 768px) {
+  .my-knives-swiper {
+    height: 480px;
+  }
+}
+@media (min-width: 769px) and (max-width: 1440px) {
+  .my-knives-swiper {
+    height: 640px;
+  }
+}
+@media (min-width: 1441px) {
+  .my-knives-swiper {
+    height: 840px;
+  }
+}
+
+
 /* Slides */
 .my-knives-swiper .swiper-slide {
   display: flex;
   justify-content: center;
   transition: opacity 0.4s ease;
 }
-
 
 /* Conteneur image */
 .knife-image {
@@ -721,39 +771,140 @@ form button[type="submit"]:hover {
   --slider-bg: url('/images/cuisine/planche-2.png');
   --caption-bg: url('/images/cuisine/papier.png');
 }
-.theme-cuisine .my-knives-swiper img {
-  transform: scale(2) rotate(-10deg) translateX(130px) translateY(40px) ;
+
+/* MOBILE : ≤768px */
+@media (max-width: 768px) {
+  .theme-cuisine .my-knives-swiper img {
+    transform: scale(1) rotate(-10deg) translateX(100px) translateY(-40px);
+  }
+  .theme-cuisine figcaption {
+    transform: scale(0.7) translateX(180px) translateY(-300px);
+  }
 }
-.theme-cuisine figcaption {
-  transform: scale(0.8) translateX(440px);;
+
+/* TABLETTE : 769px à 1440px */
+@media (min-width: 769px) and (max-width: 1440px) {
+  .theme-cuisine .my-knives-swiper img {
+    transform: scale(1.6) translateX(180px) translateY(5px) rotate(-10deg);
+  }
+  .theme-cuisine figcaption {
+    transform: scale(0.8) translateX(380px) translateY(-150px);
+  }
 }
+
+/* INTERMÉDIAIRE : 1441px à 1920px */
+@media (min-width: 1441px) and (max-width: 1920px) {
+  .theme-cuisine .my-knives-swiper img {
+    transform: scale(1.7) translateX(110px) translateY(35px) rotate(-10deg);
+  }
+  .theme-cuisine figcaption {
+    transform: scale(0.9) translateX(300px);
+  }
+}
+
+/* DESKTOP LARGE : >1920px */
+@media (min-width: 1921px) {
+  .theme-cuisine .my-knives-swiper img {
+    transform: scale(2) rotate(-10deg) translateX(130px) translateY(40px);
+  }
+  .theme-cuisine figcaption {
+    transform: scale(0.8) translateX(440px);
+  }
+}
+
 
 /* Thème Table */
 .theme-table {
   --slider-bg: url('/images/table/fond-table7.png');
   --caption-bg: url('/images/table/etiquette-tissu.png');
 }
-.theme-table .my-knives-swiper img {
-  max-width: 500px; /* taille max réduite */
-  transform: scale(1.9) translateX(-180px) translateY(120px) rotate(-60deg);
-}
-.theme-table figcaption {
-  transform: translateX(-380px)  translateY(100px) scale(0.8);
+
+/* MOBILE : ≤768px */
+@media (max-width: 768px) {
+  .theme-table .my-knives-swiper img {
+    transform: scale(0.85) translateX(-160px) translateY(0px) rotate(-60deg);
+  }
+  .theme-table figcaption {
+    transform: scale(0.5) translateX(-340px) translateY(-480px);
+  }
 }
 
+/* TABLETTE : 769px à 1440px */
+@media (min-width: 769px) and (max-width: 1440px) {
+  .theme-table .my-knives-swiper img {
+    transform: scale(1.5) translateX(-170px) translateY(40px) rotate(-60deg);
+  }
+  .theme-table figcaption {
+    transform: scale(0.8) translateX(-380px) translateY(-100px);
+  }
+}
+
+/* INTERMÉDIAIRE : 1441px à 1920px */
+@media (min-width: 1441px) and (max-width: 1920px) {
+  .theme-table .my-knives-swiper img {
+    transform: scale(1.4) translateX(-180px) translateY(160px) rotate(-60deg);
+  }
+  .theme-table figcaption {
+    transform: scale(0.8) translateX(-380px) translateY(80px);
+  }
+}
+
+/* DESKTOP LARGE : >1920px */
+@media (min-width: 1921px) {
+  .theme-table .my-knives-swiper img {
+    transform: scale(1.9) translateX(-160px) translateY(120px) rotate(-60deg) ;
+  }
+  .theme-table figcaption {
+    transform: scale(0.8) translateX(-470px) translateY(100px);
+  }
+}
 
 /* Thème Outdoor */
 .theme-outdoor {
   --slider-bg: url('/images/outdoor/fond outdoor3.png');
   --caption-bg: url('/images/outdoor/etiquette-bois.png');
 }
-.theme-outdoor .my-knives-swiper img {
-  max-width: 500px; /* taille max réduite */
-  transform: scale(1.8) translateX(-190px) translateY(80px) rotate(-20deg); /* optionnel : réduction proportionnelle */
+
+/* MOBILE : ≤768px */
+@media (max-width: 768px) {
+  .theme-outdoor .my-knives-swiper img {
+    transform: scale(0.85)translateX(-140px) translateY(-30px) rotate(-20deg);
+  }
+  .theme-outdoor figcaption {
+    transform: scale(0.7) translateX(-160px) translateY(-260px);
+  }
 }
-.theme-outdoor figcaption {
-  transform: translateX(-300px)  translateY(140px) scale(0.8);
+
+/* TABLETTE : 769px à 1440px */
+@media (min-width: 769px) and (max-width: 1440px) {
+  .theme-outdoor .my-knives-swiper img {
+    transform: scale(1.4) translateX(-170px) translateY(30px) rotate(-20deg);
+  }
+  .theme-outdoor figcaption {
+    transform: scale(0.8) translateX(-300px) translateY(-80px);
+  }
 }
+
+/* INTERMÉDIAIRE : 1441px à 1920px */
+@media (min-width: 1441px) and (max-width: 1920px) {
+  .theme-outdoor .my-knives-swiper img {
+    transform: scale(1.6) rotate(-20deg) translateX(-170px) translateY(60px);
+  }
+  .theme-outdoor figcaption {
+    transform: scale(0.8) translateX(-280px) translateY(120px);
+  }
+}
+
+/* DESKTOP LARGE : >1920px */
+@media (min-width: 1921px) {
+  .theme-outdoor .my-knives-swiper img {
+    transform: scale(1.8) rotate(-20deg) translateX(-190px) translateY(80px);
+  }
+  .theme-outdoor figcaption {
+    transform: scale(0.8) translateX(-300px) translateY(140px);
+  }
+}
+
 .theme-outdoor .my-knives-swiper .swiper-button-prev,
 .theme-outdoor .my-knives-swiper .swiper-button-next {
   color: var(--color-bg);
@@ -873,6 +1024,49 @@ form button[type="submit"]:hover {
   border-radius: 1.8rem;
   display: block;
 }
+/* === Mobile : ≤768px === */
+@media (max-width: 768px) {
+  .embla {
+    width: 100%;
+    --slide-spacing: 0.5rem;
+  }
+  .embla__parallax {
+    height: clamp(200px, 50vh, 400px);
+    border-radius: 1rem;
+  }
+  .embla__parallax__img {
+    max-width: 100%;
+    height: auto;
+  }
+  .embla__dots {
+    position: static;
+    transform: none;
+    justify-content: center;
+    margin-top: 0.75rem;
+  }
+}
+
+/* === Tablette : 769px à 1024px === */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .embla {
+    width: 90vw;
+    --slide-spacing: 0.75rem;
+  }
+  .embla__parallax {
+    height: clamp(250px, 60vh, 600px);
+  }
+}
+
+/* === Desktop large : >1440px === */
+@media (min-width: 1441px) {
+  .embla {
+    width: 75vw;
+    max-width: 1600px; /* limite pour éviter un slider trop large */
+  }
+  .embla__parallax {
+    height: clamp(400px, 70vh, 900px);
+  }
+}
 
 /* =========================================================
    CONTRÔLES & DOTS
@@ -882,13 +1076,15 @@ form button[type="submit"]:hover {
 .embla__controls {
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: center; /* centre le bloc boutons */
+  align-items: center;
 }
 
 /* Boutons flèches centrés */
 .embla__buttons {
   display: flex;
   gap: 1rem;
+  order: 1; /* priorité visuelle au centre */
 }
 
 /* === Boutons flèches === */
@@ -924,11 +1120,12 @@ form button[type="submit"]:hover {
 /* === Dots à droite === */
 .embla__dots {
   position: absolute;
-  right: 0;
+  right: 0.75rem; /* marge à droite */
   top: 50%;
-  transform: translateY(-50%); /* centre verticalement par rapport aux flèches */
+  transform: translateY(-50%);
   display: flex;
   gap: 0.5rem;
+  order: 2;
 }
 
 .embla__dot {
@@ -950,6 +1147,27 @@ form button[type="submit"]:hover {
   background: var(--color-accent);
   box-shadow: inset 0 0 0 2px var(--color-accent-dark);
 }
+
+/* === Mobile : boutons centrés + dots à droite avec marge === */
+@media (max-width: 768px) {
+  .embla__controls {
+    justify-content: center;
+  }
+
+  .embla__buttons {
+    order: 1;
+  }
+
+  .embla__dots {
+    position: absolute;
+    right: 0.75rem; /* marge à droite */
+    top: 50%;
+    transform: translateY(-50%);
+    order: 2;
+    flex-wrap: wrap;
+  }
+}
+
 
 
 /* =========================================================
@@ -1026,6 +1244,11 @@ form button[type="submit"]:hover {
   pointer-events: none;
 }
 
+@media (max-width: 768px) {
+  .hero-section {
+    height: 30vh; /* ou 25vh selon ton ressenti */
+  }
+}
 
 /* =========================================================
    15. SECTION PREMIUM (hors carte 3D)
@@ -1047,8 +1270,9 @@ form button[type="submit"]:hover {
   width: 100%;
   max-width: 320px;
   aspect-ratio: 650 / 1004;
-  animation: floaty 5s ease-in-out infinite;
+  margin: 0 auto;
 }
+
 .card-3d {
   width: 100%;
   height: 100%;
@@ -1058,6 +1282,7 @@ form button[type="submit"]:hover {
   transition: transform 0.45s ease, box-shadow 0.25s ease;
   box-shadow: 0 20px 40px rgba(0,0,0,0.35);
 }
+
 .card-face {
   position: absolute;
   inset: 0;
@@ -1066,11 +1291,13 @@ form button[type="submit"]:hover {
   overflow: hidden;
   background: #fff;
 }
+
 .card-face img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
+
 .card-back {
   transform: rotateY(180deg);
 }
@@ -1078,33 +1305,65 @@ form button[type="submit"]:hover {
 .card-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+  background: radial-gradient(circle at var(--glowX, 50%) var(--glowY, 50%), rgba(255,255,255,0.25) 0%, transparent 70%);
+  filter: blur(8px);
   pointer-events: none;
   transition: opacity 0.3s ease;
 }
 
-
-/* Desktop */
-@media (min-width: 1024px) {
-  .card-3d-wrapper {
-    margin: 0 auto;
-  }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .card-3d-wrapper {
-    max-width: 220px;
-    margin-bottom: 1.5rem;
-  }
-}
-
-/* Animation flottante */
+/* Animation flottante (unique) */
 @keyframes floaty {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }
 }
 
+/* Appliquée uniquement quand idle */
+.card-3d-wrapper.idle {
+  animation: floaty 3s ease-in-out infinite;
+}
+
+/* Invitation au clic sur mobile */
+@media (max-width: 768px) {
+  .card-3d-wrapper {
+    max-width: 220px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hint-flip .card-3d {
+    animation: hintFlip 1s ease-out;
+    transform-style: preserve-3d;
+  }
+
+  @keyframes hintFlip {
+    0%   { transform: rotateY(0deg); }
+    30%  { transform: rotateY(25deg); }
+    60%  { transform: rotateY(-20deg); }
+    100% { transform: rotateY(0deg); }
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .card-3d-wrapper {
+    width: 320px;
+    aspect-ratio: 650 / 1004;
+  }
+}
+
+/* Invitation au clic sur desktop */
+@media (min-width: 769px) {
+  .hint-flip .card-3d {
+    animation: hintFlipDesktop 0.8s ease-out;
+    transform-style: preserve-3d;
+  }
+
+  @keyframes hintFlipDesktop {
+    0%   { transform: rotateY(0deg); }
+    30%  { transform: rotateY(12deg); }
+    60%  { transform: rotateY(-8deg); }
+    100% { transform: rotateY(0deg); }
+  }
+}
 
 
 /* =========================================================
@@ -1153,69 +1412,4 @@ footer img.qr {
     text-align: center;
   }
 }
-
-
-/* =========================================================
-   18. CARTE 3D — COMPORTEMENT DESKTOP
-   ========================================================= */
-@media (min-width: 1024px) {
-  .card-3d-wrapper {
-    display: block !important;
-    opacity: 1 !important;
-    transform: none !important;
-    width: 320px; /* largeur fixe */
-    aspect-ratio: 650 / 1004; /* ratio de ta carte */
-    margin: 0 auto; /* centrer si besoin */
-  }
-  .card-3d {
-    transform: rotateY(0deg) !important;
-  }
-}
-
-/* =========================================================
-   19. CARTE 3D — COMPORTEMENT MOBILE
-   ========================================================= */
-@media (max-width: 768px) {
-  .card-3d-wrapper {
-    max-width: 220px;
-    margin-bottom: 1.5rem;
-  }
-}
-
-/* =========================================================
-   20. ANIMATIONS SPÉCIFIQUES
-   ========================================================= */
-
-/* Flottement permanent */
-@keyframes floaty {
-  0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
-  50% { transform: translateY(-4px) rotateX(0deg) rotateY(0deg); }
-}
-
-/* Invitation au clic sur mobile */
-@media (max-width: 768px) {
-  .hint-flip .card-3d {
-    animation: hintFlip 1s ease-out;
-    transform-style: preserve-3d;
-  }
-
-  @keyframes hintFlip {
-    0%   { transform: rotateY(0deg); }
-    30%  { transform: rotateY(25deg); }
-    60%  { transform: rotateY(-20deg); }
-    100% { transform: rotateY(0deg); }
-  }
-}
-
-/* =========================================================
-   21. OVERRIDES & AJUSTEMENTS FINALS
-   ========================================================= */
-
-/* Correction des marges sur petits écrans 
-@media (max-width: 640px) {
-  .px-4 {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-  }
-} */
 

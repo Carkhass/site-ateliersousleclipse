@@ -1,65 +1,107 @@
 document.addEventListener("DOMContentLoaded", () => {
   const wrapper = document.querySelector(".card-3d-wrapper");
-  if (!wrapper) {
-    console.warn("Carte 3D introuvable dans le DOM");
-    return;
-  }
+  if (!wrapper) return;
 
-  // Sélections scoppées à la carte
   const card = wrapper.querySelector(".card-3d");
-  const frontReflection = wrapper.querySelector(".card-front .card-reflection");
-  const backReflection  = wrapper.querySelector(".card-back .card-reflection");
-  const cardGlow        = wrapper.querySelector(".card-glow"); // <- ciblage direct
+  const cardGlow = wrapper.querySelector(".card-glow");
 
-  if (!card || !frontReflection || !backReflection) {
-    console.warn("Carte 3D : éléments essentiels manquants", {
-      card: !!card,
-      frontReflection: !!frontReflection,
-      backReflection: !!backReflection,
-      cardGlow: !!cardGlow
-    });
-    return;
-  }
+  // ——— Paramètres ———
+  const TILT_MAX_DEG = 10;
+  const CARD_LERP    = 0.38;  // tilt
+  const FLIP_LERP    = 0.46;  // vitesse flip (doublée)
+  const GLOW_TILT_INFLUENCE = 1.5;
+  const IDLE_DELAY   = 3000;  // ms avant idle
+  const INVITE_INTERVAL = 3000; // toutes les 3s
 
+  // ——— État ———
   let isFlipped = false;
   let rx = 0, ry = 0;
+  let targetRx = 0, targetRy = 0;
+  let flipProgress = 0;
+  let hasInteracted = false;
+  let idleTimeout, inviteTimer;
+  let isAnimatingHint = false;
+
   const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+  const lerpTo = (v, target, f) => v + (target - v) * f;
 
-  const applyTransform = () => {
-    const flip = isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)';
-    card.style.transform = `${flip} rotateX(${rx}deg) rotateY(${ry}deg)`;
-
-    // Ombre dynamique
-    const shadowX = ry * -3.2;
-    const shadowY = rx * 3.2;
-    card.style.boxShadow = `${shadowX}px ${shadowY}px 46px rgba(0,0,0,0.4)`;
-
-    // Reflets
-    const refFront = 50 + clamp(ry, -12, 12) * 3;
-    const refBack  = 50 - clamp(ry, -12, 12) * 3;
-    frontReflection.style.setProperty('--reflectX', `${refFront}%`);
-    backReflection.style.setProperty('--reflectX',  `${refBack}%`);
-
-    // Glow (optionnel)
-    if (cardGlow) {
-      cardGlow.style.opacity = isFlipped ? '0' : '1';
+  // ——— Animation principale ———
+  function animate() {
+    // On ne met pas à jour le tilt pendant l'animation d'invitation
+    if (!isAnimatingHint) {
+      rx = lerpTo(rx, targetRx, CARD_LERP);
+      ry = lerpTo(ry, targetRy, CARD_LERP);
     }
-  };
 
-  const setTilt = (e) => {
+    flipProgress = lerpTo(flipProgress, isFlipped ? 1 : 0, FLIP_LERP);
+
+    const flipAngle = flipProgress * 180;
+    card.style.transform = `rotateY(${flipAngle}deg) rotateX(${rx}deg) rotateY(${ry}deg)`;
+
+    card.style.boxShadow = `${ry * -3.2}px ${rx * 3.2}px 46px rgba(0,0,0,0.4)`;
+
+    if (cardGlow) {
+      const glowX = 50 + ry * GLOW_TILT_INFLUENCE;
+      const glowY = 50 - rx * GLOW_TILT_INFLUENCE;
+      cardGlow.style.setProperty('--glowX', `${glowX}%`);
+      cardGlow.style.setProperty('--glowY', `${glowY}%`);
+      cardGlow.style.opacity = 1 - flipProgress;
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  // ——— Tilt manuel ———
+  function setTilt(e) {
+    if (isAnimatingHint) return; // pas de tilt pendant l'invitation
     const rect = wrapper.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top  - rect.height / 2;
-    rx = clamp((-y / rect.height) * 10, -10, 10);
-    ry = clamp(( x / rect.width)  * 10, -10, 10);
-    applyTransform();
-  };
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const nx = (x - rect.width / 2) / (rect.width / 2);
+    const ny = (rect.height / 2 - y) / (rect.height / 2);
+    targetRx = clamp(ny * TILT_MAX_DEG, -TILT_MAX_DEG, TILT_MAX_DEG);
+    targetRy = clamp(nx * TILT_MAX_DEG, -TILT_MAX_DEG, TILT_MAX_DEG);
+  }
 
-  // Événements
-  wrapper.addEventListener("mouseenter", () => { isFlipped = true;  applyTransform(); });
-  wrapper.addEventListener("mouseleave", () => { isFlipped = false; rx = 0; ry = 0; applyTransform(); });
-  wrapper.addEventListener("mousemove", setTilt);
-  wrapper.addEventListener("click", () => { isFlipped = !isFlipped; applyTransform(); });
+  // ——— Idle / floaty ———
+  function setIdle() {
+    if (!hasInteracted) wrapper.classList.add("idle");
+  }
+  function unsetIdle() {
+    wrapper.classList.remove("idle");
+    clearTimeout(idleTimeout);
+    idleTimeout = setTimeout(setIdle, IDLE_DELAY);
+  }
 
-  console.log("Carte 3D initialisée avec succès");
+  // ——— Invitation répétée ———
+  function startInviteLoop() {
+    inviteTimer = setInterval(() => {
+      if (hasInteracted) return;
+      isAnimatingHint = true;
+      wrapper.classList.add("hint-flip");
+      setTimeout(() => {
+        wrapper.classList.remove("hint-flip");
+        isAnimatingHint = false;
+      }, 1000); // durée de l'anim CSS
+    }, INVITE_INTERVAL);
+  }
+
+  function stopInvitations() {
+    hasInteracted = true;
+    wrapper.classList.remove("idle");
+    wrapper.classList.remove("hint-flip");
+    clearInterval(inviteTimer);
+    isAnimatingHint = false;
+  }
+
+  // ——— Événements ———
+  wrapper.addEventListener("mousemove", e => { unsetIdle(); setTilt(e); });
+  wrapper.addEventListener("mouseleave", () => { targetRx = 0; targetRy = 0; });
+  wrapper.addEventListener("click", () => { isFlipped = !isFlipped; stopInvitations(); });
+  wrapper.addEventListener("touchstart", () => { stopInvitations(); unsetIdle(); }, { passive: true });
+
+  // ——— Lancement ———
+  setIdle();
+  startInviteLoop();
+  animate();
 });

@@ -32,12 +32,12 @@ console.log("DEBUG imageList:", imageList);
   <!-- Contenu -->
   <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
     <!-- Titre avec halo + fade-in-up -->
-    <h1 id="hero-title" class="hero-title-glow fade-in-up text-4xl text-white md:text-6xl font-serif mb-8 tracking-wide">
+    <h1 id="hero-title" class="hero-title-glow fade-in-up text-4xl text-accent md:text-6xl font-serif font-bold mb-8 tracking-wide">
       L’art dans la lame
     </h1>
 
     <!-- Sous-titre avec animation lettre par lettre -->
-    <p id="hero-subtitle" class="hero-subtitle text-lg md:text-xl text-accent max-w-2xl mx-auto opacity-0">
+    <p id="hero-subtitle" class="hero-subtitle text-lg md:text-xl text-accent font-bold max-w-2xl mx-auto opacity-0">
       La ligne du <em>hamon</em> reflète l’histoire de l’acier et l’intention de l’artisan.
     </p>
   </div>
@@ -57,7 +57,7 @@ console.log("DEBUG imageList:", imageList);
       tabindex="0"
     />
   </div>
-  <div class="fade-slide-left">
+  <div class="fade-slide-left text-center md:text-left"">
     <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
       Bienvenue à l’atelier sous l’éclipse
     </h2>
@@ -206,7 +206,7 @@ console.log("DEBUG imageList:", imageList);
 <!-- SECTION COUTEAUX - THEME TABLE -->
 <!-- ========================================================= -->
 <section class="section-couteaux theme-table bg-surface">
-  <div class="section-2-grid mx-auto px-4 grid gap-12 items-center lg:grid-cols-[35%_65%]">
+  <div class="section-2-grid slider-right mx-auto px-4 grid gap-12 items-center lg:grid-cols-[35%_65%]">
 
     <!-- Colonne 1 : Texte -->
     <div class="fade-slide-left text-right w-3/4 ml-auto"> 
@@ -438,23 +438,21 @@ console.log("DEBUG imageList:", imageList);
       « Chaque lame raconte une histoire… écrivons la vôtre. »
     </p>
 
-    <div class="flex flex-col md:flex-row gap-3 justify-center fade-slide-up delay-150">
+    <div class="flex flex-wrap md:flex-row gap-3 justify-center fade-slide-up delay-150">
       <a href="/me-connaitre" class="cta-premium px-5 py-2.5 text-white rounded text-sm">Me connaître</a>
       <a href="/galerie" class="cta-premium px-5 py-2.5 text-white rounded text-sm">Voir la galerie</a>
     </div>
 
     <div class="flex flex-col md:flex-row gap-6 justify-center items-center mt-4">
       <!-- Carte 3D -->
-      <div class="card-3d-wrapper">
+      <div class="card-3d-wrapper fade-slide-up delay-300">
         <div class="card-3d">
           <div class="card-face card-front">
             <img src="/images/carte-visite-ateliersousleclipse-recto.jpg" alt="Carte recto" />
-            <div class="card-reflection"></div>
-            <div class="logo-glow" aria-hidden="true"></div>
+            <div class="card-glow fade-slide-up" aria-hidden="true"></div>
           </div>
           <div class="card-face card-back">
             <img src="/images/carte-visite-ateliersousleclipse-verso.jpg" alt="Carte verso" />
-            <div class="card-reflection"></div>
           </div>
         </div>
       </div>
