@@ -87,6 +87,15 @@ body {
   transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
 }
 
+html {
+  word-break: keep-all;
+  overflow-wrap: normal;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  hyphens: none;
+}
+
+
 /* Empêche les débordements horizontaux
 html, body {
   overflow-x: hidden;
@@ -130,7 +139,7 @@ button:hover, a:hover {
 .container1 {
   @apply mx-auto px-4;
   max-width: 1280px;
-  height: 55vh;
+  min-height: 55vh;
 }
 
 /* Grilles utilitaires 
@@ -815,47 +824,47 @@ form button[type="submit"]:hover {
 
 /* Thème Table */
 .theme-table {
-  --slider-bg: url('/images/table/fond-table7.png');
+  --slider-bg: url('/images/table/fond-table5.png');
   --caption-bg: url('/images/table/etiquette-tissu.png');
 }
 
 /* MOBILE : ≤768px */
 @media (max-width: 768px) {
   .theme-table .my-knives-swiper img {
-    transform: scale(0.85) translateX(-160px) translateY(0px) rotate(-60deg);
+    transform: scale(0.60) translateX(-60px) translateY(20px);
   }
   .theme-table figcaption {
-    transform: scale(0.5) translateX(-340px) translateY(-480px);
+    transform: scale(0.4) translateX(-240px) translateY(-1150px);
   }
 }
 
 /* TABLETTE : 769px à 1440px */
 @media (min-width: 769px) and (max-width: 1440px) {
   .theme-table .my-knives-swiper img {
-    transform: scale(1.5) translateX(-170px) translateY(40px) rotate(-60deg);
+    transform: scale(0.93) translateX(-60px) translateY(160px);
   }
   .theme-table figcaption {
-    transform: scale(0.8) translateX(-380px) translateY(-100px);
+    transform: scale(0.5) translateX(-220px) translateY(-850px);
   }
 }
 
 /* INTERMÉDIAIRE : 1441px à 1920px */
 @media (min-width: 1441px) and (max-width: 1920px) {
   .theme-table .my-knives-swiper img {
-    transform: scale(1.4) translateX(-180px) translateY(160px) rotate(-60deg);
+    transform: scale(0.93) translateX(-60px) translateY(260px);
   }
   .theme-table figcaption {
-    transform: scale(0.8) translateX(-380px) translateY(80px);
+    transform: scale(0.6) translateX(-220px) translateY(-550px);
   }
 }
 
 /* DESKTOP LARGE : >1920px */
 @media (min-width: 1921px) {
   .theme-table .my-knives-swiper img {
-    transform: scale(1.9) translateX(-160px) translateY(120px) rotate(-60deg) ;
+    transform: scale(1.25) translateX(-60px) translateY(210px);
   }
   .theme-table figcaption {
-    transform: scale(0.8) translateX(-470px) translateY(100px);
+    transform: scale(0.6) translateX(-360px) translateY(-600px);
   }
 }
 

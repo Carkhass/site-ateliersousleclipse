@@ -1,0 +1,29 @@
+---
+import "../styles/global.css";
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+/* On importe toutes les images du dossier src/assets/slider-section2 */
+const images = import.meta.glob('../assets/slider-section2/*.{jpg,jpeg,png,webp}', { eager: true });
+const imageList = Object.values(images).map((mod) => mod.default.src);
+---
+
+<BaseLayout title="Couteaux">
+  <section class="w-screen min-h-screen flex flex-col items-center justify-center bg-surface px-4 py-12 text-center">
+    <div class="max-w-5xl w-full relative">
+      <img 
+        src="/images/banniere-construction-ateliersousleclipse.jpg" 
+        alt="Page en construction - L'Atelier sous l'éclipse" 
+        class="w-full h-auto rounded-lg shadow-lg"
+        style="filter:
+          drop-shadow(0 0 8px var(--color-accent-dark))
+          drop-shadow(0 0 16px var(--color-accent-light));"
+      />
+    </div>
+    <h1 class="mt-8 text-3xl md:text-4xl font-serif font-bold text-accent">
+      Site en construction&nbsp;!
+    </h1>
+    <p class="mt-4 text-lg text-muted max-w-2xl mx-auto">
+      La galerie de mes couteaux arrive bientôt. Revenez dans quelques jours pour découvrir tous mes modèles.
+    </p>
+  </section>
+</BaseLayout>
