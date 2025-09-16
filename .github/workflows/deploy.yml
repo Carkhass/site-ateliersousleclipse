@@ -19,7 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Installation de Node.js (même version que toi)
+      # 2. Installation de Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -29,23 +29,18 @@ jobs:
       # 3. Installation des dépendances
       - name: Install dependencies
         run: npm ci
+        working-directory: ./site-ateliersousleclipse
 
       # 4. Build du site Astro
-      # Si ton projet est dans un sous-dossier, ajoute "cd mon-dossier &&" devant les commandes
       - name: Build Astro site
         run: npm run build
+        working-directory: ./site-ateliersousleclipse
 
-      # 5. Vérification et debug
+      # 5. Vérification du dossier dist
       - name: Vérifier que dist existe
         run: |
-          echo "📂 Contenu du répertoire courant :"
-          ls -la
-          if [ ! -d "dist" ]; then
-            echo "❌ Le dossier dist n'existe pas, build échoué."
-            exit 1
-          fi
-          echo "✅ Dossier dist trouvé :"
-          ls -la dist
+          echo "📂 Contenu du dossier dist :"
+          ls -la ./site-ateliersousleclipse/dist || (echo "❌ dist introuvable" && exit 1)
 
       # 6. Déploiement SFTP vers OVH
       - name: Deploy via SFTP to OVH
