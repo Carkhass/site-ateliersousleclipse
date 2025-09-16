@@ -3,8 +3,8 @@ name: Build & Deploy Astro to OVH
 on:
   push:
     branches:
-      - main   # Déploiement auto sur push dans main
-  workflow_dispatch: # Permet de lancer manuellement depuis l'onglet Actions
+      - main
+  workflow_dispatch:
 
 concurrency:
   group: deploy-production
@@ -31,13 +31,20 @@ jobs:
         run: npm ci
 
       # 4. Build du site Astro
+      # Si ton projet est dans un sous-dossier, ajoute "cd mon-dossier &&" devant les commandes
       - name: Build Astro site
         run: npm run build
 
-      # 5. Vérification du dossier dist
-      - name: Check build output
+      # 5. Vérification et debug
+      - name: Vérifier que dist existe
         run: |
-          echo "Contenu du dossier dist :"
+          echo "📂 Contenu du répertoire courant :"
+          ls -la
+          if [ ! -d "dist" ]; then
+            echo "❌ Le dossier dist n'existe pas, build échoué."
+            exit 1
+          fi
+          echo "✅ Dossier dist trouvé :"
           ls -la dist
 
       # 6. Déploiement SFTP vers OVH
@@ -48,14 +55,11 @@ jobs:
           username: ${{ secrets.SFTP_USER }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT || 22 }}
-          local_path: ./dist        # Dossier généré par Astro
-          remote_path: /www         # Racine de ton site OVH
+          local_path: ./site-ateliersousleclipse/dist
+          remote_path: /www
           sftp_only: true
-          delete_remote_files: true # Miroir strict
-          exclude: |
-            **/.DS_Store
-            **/Thumbs.db
+          delete_remote_files: true  # Miroir strict
 
-      # 7. Message de confirmation
+      # 7. Confirmation
       - name: Deployment complete
         run: echo "✅ Déploiement terminé sur https://ateliersousleclipse.fr"
