@@ -1,0 +1,61 @@
+name: Build & Deploy Astro to OVH
+
+on:
+  push:
+    branches:
+      - main   # Déploiement auto sur push dans main
+  workflow_dispatch: # Permet de lancer manuellement depuis l'onglet Actions
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Récupération du code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Installation de Node.js (même version que toi)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.18.0'
+          cache: 'npm'
+
+      # 3. Installation des dépendances
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Build du site Astro
+      - name: Build Astro site
+        run: npm run build
+
+      # 5. Vérification du dossier dist
+      - name: Check build output
+        run: |
+          echo "Contenu du dossier dist :"
+          ls -la dist
+
+      # 6. Déploiement SFTP vers OVH
+      - name: Deploy via SFTP to OVH
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          server: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USER }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          port: ${{ secrets.SFTP_PORT || 22 }}
+          local_path: ./dist        # Dossier généré par Astro
+          remote_path: /www         # Racine de ton site OVH
+          sftp_only: true
+          delete_remote_files: true # Miroir strict
+          exclude: |
+            **/.DS_Store
+            **/Thumbs.db
+
+      # 7. Message de confirmation
+      - name: Deployment complete
+        run: echo "✅ Déploiement terminé sur https://ateliersousleclipse.fr"
