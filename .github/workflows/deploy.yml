@@ -6,31 +6,41 @@ on:
       - main
   workflow_dispatch:
 
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Récupération du code
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2. Installation de Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.18.0'
           cache: 'npm'
 
+      # 3. Installation des dépendances
       - name: Install dependencies
         run: npm ci
 
+      # 4. Build du site Astro
       - name: Build Astro site
         run: npm run build
 
+      # 5. Vérification du dossier dist
       - name: Vérifier que dist existe
         run: |
           echo "📂 Contenu du dossier dist :"
           ls -la dist || (echo "❌ dist introuvable" && exit 1)
 
+      # 6. Déploiement SFTP vers OVH
       - name: Deploy via SFTP to OVH
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
@@ -38,10 +48,11 @@ jobs:
           username: ${{ secrets.SFTP_USER }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT || 22 }}
-          local_path: dist
+          local_path: dist/*
           remote_path: /www
           sftp_only: true
           delete_remote_files: true
 
+      # 7. Confirmation
       - name: Deployment complete
         run: echo "✅ Déploiement terminé sur https://ateliersousleclipse.fr"
