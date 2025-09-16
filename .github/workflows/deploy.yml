@@ -26,14 +26,16 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        working-directory: ./site-ateliersousleclipse
 
       - name: Build Astro site
         run: npm run build
+        working-directory: ./site-ateliersousleclipse
 
       - name: Vérifier que dist existe
         run: |
           echo "📂 Contenu du dossier dist :"
-          ls -la ./dist || (echo "❌ dist introuvable" && exit 1)
+          ls -la ./site-ateliersousleclipse/dist || (echo "❌ dist introuvable" && exit 1)
 
       - name: Deploy via SFTP to OVH
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
@@ -42,7 +44,7 @@ jobs:
           username: ${{ secrets.SFTP_USER }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT || 22 }}
-          local_path: ./dist
+          local_path: ./site-ateliersousleclipse/dist
           remote_path: /www
           sftp_only: true
           delete_remote_files: true
