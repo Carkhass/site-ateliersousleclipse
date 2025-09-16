@@ -777,7 +777,7 @@ form button[type="submit"]:hover {
 
 /* Thème Cuisine */
 .theme-cuisine {
-  --slider-bg: url('/images/cuisine/planche-2.png');
+  --slider-bg: url('/images/cuisine/planche-2-ateliersousleclipse.webp');
   --caption-bg: url('/images/cuisine/papier.png');
 }
 
@@ -1232,6 +1232,21 @@ form button[type="submit"]:hover {
     transform: translateY(0);
   }
 }
+
+/* Par défaut, le <br> est masqué */
+.br-mobile {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .br-mobile {
+    display: block;       /* force le retour à la ligne */
+    width: 100%;          /* occupe toute la largeur */
+    height: 0;            /* pas d'espace vertical supplémentaire */
+    line-height: 0;
+  }
+}
+
 
 .hamon-hero {
   position: relative;
