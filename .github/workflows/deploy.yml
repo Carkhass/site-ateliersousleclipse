@@ -50,10 +50,11 @@ jobs:
           username: ${{ secrets.SFTP_USER }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT || 22 }}
-          local_path: ./site-ateliersousleclipse/dist
+          local_path: ./dist
           remote_path: /www
           sftp_only: true
-          delete_remote_files: true  # Miroir strict
+          delete_remote_files: true
+        working-directory: ./site-ateliersousleclipse
 
       # 7. Confirmation
       - name: Deployment complete
