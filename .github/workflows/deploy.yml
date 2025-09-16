@@ -1,14 +1,10 @@
-name: Build & Deploy Astro to OVH
+name: Build & Deploy Astro to OVH (debug)
 
 on:
   push:
     branches:
       - main
   workflow_dispatch:
-
-concurrency:
-  group: deploy-production
-  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -18,24 +14,33 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Étape de debug pour voir l'arborescence réelle
+      - name: Debug paths
+        run: |
+          echo "📂 Répertoire courant :"
+          pwd
+          echo "📂 Contenu immédiat :"
+          ls -la
+          echo "📂 Arborescence complète :"
+          ls -R
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.18.0'
           cache: 'npm'
 
+      # On laisse npm ci et build à la racine pour voir si package.json est là
       - name: Install dependencies
         run: npm ci
-        working-directory: ./site-ateliersousleclipse
 
       - name: Build Astro site
         run: npm run build
-        working-directory: ./site-ateliersousleclipse
 
       - name: Vérifier que dist existe
         run: |
           echo "📂 Contenu du dossier dist :"
-          ls -la ./site-ateliersousleclipse/dist || (echo "❌ dist introuvable" && exit 1)
+          ls -la ./dist || (echo "❌ dist introuvable" && exit 1)
 
       - name: Deploy via SFTP to OVH
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
@@ -44,10 +49,7 @@ jobs:
           username: ${{ secrets.SFTP_USER }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT || 22 }}
-          local_path: ./site-ateliersousleclipse/dist
+          local_path: ./dist
           remote_path: /www
           sftp_only: true
           delete_remote_files: true
-
-      - name: Deployment complete
-        run: echo "✅ Déploiement terminé sur https://ateliersousleclipse.fr"
