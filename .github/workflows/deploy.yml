@@ -54,7 +54,7 @@ jobs:
           remote_path: /www
           sftp_only: true
           delete_remote_files: true
-        working-directory: ./site-ateliersousleclipse
+          working-directory: ./site-ateliersousleclipse
 
       # 7. Confirmation
       - name: Deployment complete
