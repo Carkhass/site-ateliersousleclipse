@@ -5,9 +5,11 @@
 <script src="/scripts/layout/parallax.js" defer></script>
 <script src="/scripts/layout/theme-toggle.js" defer></script>
 
-<!-- Chargement bundlé de init-client.js -->
+<!-- init-client bundlé -->
 <script type="module" is:inline>
-  import '../../scripts/init-client.js';
+  if (typeof window !== 'undefined') {
+    import('../scripts/init-client.js');
+  }
 </script>
 
 <script src="/scripts/layout/header-sticky.js" defer></script>
@@ -15,7 +17,7 @@
 
 <script src="/scripts/carte-3d.js" defer></script>
 
-<!-- Script d’adaptation pour affichage mobile -->
+<!-- Patch mobile -->
 <script is:inline>
   function setVH() {
     document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);

@@ -1,10 +1,13 @@
 // src/scripts/init-client.js
-import { initSwipers, initLightbox } from './init-swiper-glightbox.js';
+
+import { initSwiper, initLightbox } from './init-swiper-glightbox.js';
 import { observeCarousels } from './observer-carousels.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+  if (typeof window === 'undefined') return; // Sécurité SSR
+
   // Swipers statiques (ex: section 2)
-  initSwipers();
+  initSwiper();
 
   // Lightbox global (prend les liens actuels, Embla reconfirmera après sa propre init)
   initLightbox();
