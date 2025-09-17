@@ -7,9 +7,8 @@
 
 <!-- init-client bundlé -->
 <script type="module" is:inline>
-  if (typeof window !== 'undefined') {
-    import('../scripts/init-client.js');
-  }
+  import initClient from '../scripts/init-client.js';
+  initClient();
 </script>
 
 <script src="/scripts/layout/header-sticky.js" defer></script>

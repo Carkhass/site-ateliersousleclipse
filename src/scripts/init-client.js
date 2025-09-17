@@ -1,22 +1,25 @@
 // src/scripts/init-client.js
 
-import { initSwiper, initLightbox } from './init-swiper-glightbox.js';
-import { observeCarousels } from './observer-carousels.js';
-
-document.addEventListener('DOMContentLoaded', () => {
+export default function initClient() {
   if (typeof window === 'undefined') return; // Sécurité SSR
 
-  // Swipers statiques (ex: section 2)
-  initSwiper();
+  // Swipers statiques + Lightbox (import dynamique)
+  import('./init-swiper-glightbox.js').then(({ initSwiper, initLightbox }) => {
+    if (typeof initSwiper === 'function') initSwiper();
+    if (typeof initLightbox === 'function') initLightbox();
+  }).catch(err => {
+    console.error('Erreur lors du chargement de Swiper/GLightbox :', err);
+  });
 
-  // Lightbox global (prend les liens actuels, Embla reconfirmera après sa propre init)
-  initLightbox();
+  // Carrousels dynamiques
+  import('./observer-carousels.js').then(({ observeCarousels }) => {
+    if (typeof observeCarousels === 'function') observeCarousels();
+  }).catch(err => {
+    console.error('Erreur lors du chargement des carrousels dynamiques :', err);
+  });
 
-  // Initialisation au moment opportun des carrousels dynamiques
-  observeCarousels();
-
-  // Si reveal-on-scroll expose observeNewElements, on l'appelle
+  // Relancer l'observation des nouveaux éléments si dispo
   if (typeof window.observeNewElements === 'function') {
     window.observeNewElements();
   }
-});
+}
