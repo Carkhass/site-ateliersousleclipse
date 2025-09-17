@@ -938,6 +938,78 @@ form button[type="submit"]:hover {
   }
 }
 
+/* =========================================================
+   PATCH MOBILE PREMIUM ≤414px
+   ========================================================= */
+
+/* Cuisine */
+@media (max-width: 414px) {
+  .theme-cuisine .my-knives-swiper {
+    max-height: calc(var(--vh) * 60);
+    overflow: hidden;
+  }
+  .theme-cuisine .my-knives-swiper img {
+    /* Ancien : scale(1) rotate(-10deg) translateX(100px) translateY(-40px) */
+    transform: scale(1) rotate(-10deg) translateX(24%) translateY(-8%);
+  }
+  .theme-cuisine figcaption {
+    /* Ancien : scale(0.7) translateX(180px) translateY(-300px) */
+    transform: scale(0.7) translateX(44%) translateY(-60%);
+  }
+}
+
+/* Table */
+@media (max-width: 414px) {
+  .theme-table .my-knives-swiper {
+    max-height: calc(var(--vh) * 60);
+    overflow: hidden;
+  }
+  .theme-table .my-knives-swiper img {
+    /* Ancien : scale(0.60) translateX(-60px) translateY(20px) */
+    transform: scale(0.60) translateX(-14%) translateY(4%);
+  }
+  .theme-table figcaption {
+    /* Ancien : scale(0.4) translateX(-240px) translateY(-1150px) */
+    transform: scale(0.4) translateX(-58%) translateY(-240%);
+  }
+}
+
+/* Outdoor */
+@media (max-width: 414px) {
+  .theme-outdoor .my-knives-swiper {
+    max-height: calc(var(--vh) * 60);
+    overflow: hidden;
+  }
+  .theme-outdoor .my-knives-swiper img {
+    /* Ancien : scale(0.85) translateX(-140px) translateY(-30px) rotate(-20deg) */
+    transform: scale(0.85) translateX(-34%) translateY(-6%) rotate(-20deg);
+  }
+  .theme-outdoor figcaption {
+    /* Ancien : scale(0.7) translateX(-160px) translateY(-260px) */
+    transform: scale(0.7) translateX(-39%) translateY(-52%);
+  }
+}
+
+/* Commun sliders mobile */
+@media (max-width: 414px) {
+  .my-knives-swiper,
+  .my-knives-swiper .swiper-slide {
+    height: auto !important;
+    aspect-ratio: 3 / 4;
+    max-height: calc(var(--vh) * 60);
+  }
+  .my-knives-swiper img {
+    width: 100%;
+    height: auto;
+    max-height: calc(var(--vh) * 60);
+    object-fit: contain;
+  }
+  .my-knives-swiper .slide-content {
+    transform: none !important;
+  }
+}
+
+
 
 /* =========================================================
    GLightbox — base minimale

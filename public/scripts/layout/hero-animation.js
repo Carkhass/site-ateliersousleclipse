@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const letters = el.querySelectorAll('.letter');
       // Trouve l'index où couper (ex: après "acier")
       // Ici, on coupe après le 38e caractère (à ajuster selon ton texte)
-      const cutIndex = 47;
+      const cutIndex = 35;
       if (letters[cutIndex]) {
         const br = document.createElement('br');
         br.style.display = 'block';
