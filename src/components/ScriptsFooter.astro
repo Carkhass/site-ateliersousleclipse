@@ -12,3 +12,12 @@
 <script src="/scripts/layout/hero-animation.js" defer></script>
 
 <script src="/scripts/carte-3d.js" defer></script>
+
+<script is:inline>
+  function setVH() {
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+  }
+  window.addEventListener('resize', setVH);
+  window.addEventListener('orientationchange', setVH);
+  setVH();
+</script>

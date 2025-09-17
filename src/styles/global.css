@@ -139,7 +139,7 @@ button:hover, a:hover {
 .container1 {
   @apply mx-auto px-4;
   max-width: 1280px;
-  min-height: 55vh;
+  min-height: calc(var(--vh) * 55);
 }
 
 /* Grilles utilitaires 
@@ -395,7 +395,7 @@ header nav a:hover {
 @media (max-width: 768px) {
   .poincon-section {
     background: none;
-    height: 45vh; /* ou 40vh si tu veux encore plus compact */
+    height: calc(var(--vh) * 45);
   }
   .poincon-section [data-parallax-target] {
     transform: translateY(0) scale(1);
@@ -691,16 +691,13 @@ form button[type="submit"]:hover {
   background: var(--slider-bg) center/cover no-repeat;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 414px) {
   .my-knives-swiper {
-    height: 480px;
+    height: auto;
+    max-height: calc(var(--vh) * 60);
   }
 }
-@media (min-width: 769px) and (max-width: 1440px) {
-  .my-knives-swiper {
-    height: 640px;
-  }
-}
+
 @media (min-width: 1441px) {
   .my-knives-swiper {
     height: 840px;
@@ -920,6 +917,28 @@ form button[type="submit"]:hover {
 }
 
 
+@media (max-width: 414px) {
+  .my-knives-swiper,
+  .my-knives-swiper .swiper-slide {
+    height: auto !important;
+    aspect-ratio: 3 / 4; /* ratio harmonieux */
+    max-height: calc(var(--vh) * 60);
+  }
+
+  .my-knives-swiper img {
+    width: 100%;
+    height: auto;
+    max-height: calc(var(--vh) * 60);
+    object-fit: contain;
+  }
+
+  /* Supprimer les transform figés en px */
+  .my-knives-swiper .slide-content {
+    transform: none !important;
+  }
+}
+
+
 /* =========================================================
    GLightbox — base minimale
    ========================================================= */
@@ -1011,7 +1030,7 @@ form button[type="submit"]:hover {
 
 .embla__parallax {
   border-radius: 1.8rem;
-  height: clamp(300px, 70vh, 900px); /* hauteur responsive */
+  height: clamp(300px, calc(var(--vh) * 70), 900px);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -1040,7 +1059,7 @@ form button[type="submit"]:hover {
     --slide-spacing: 0.5rem;
   }
   .embla__parallax {
-    height: clamp(200px, 50vh, 400px);
+    height: clamp(200px, calc(var(--vh) * 50), 400px);
     border-radius: 1rem;
   }
   .embla__parallax__img {
@@ -1184,6 +1203,7 @@ form button[type="submit"]:hover {
    ========================================================= */
 
 .hero-section {
+  height: calc(var(--vh) * 40);
   background-size: contain; /* ou cover si tu veux recadrer */
   background-position: center;
 }
@@ -1270,13 +1290,27 @@ form button[type="submit"]:hover {
 
 @media (max-width: 768px) {
   .hero-section {
-    height: 30vh; /* ou 25vh selon ton ressenti */
+    height: calc(var(--vh) * 30); /* ou garder 40vh si desktop OK */
+  }
+}
+
+@media (max-width: 414px) {
+  .hero-section {
+    height: calc(var(--vh) * 40); /* 40% de la hauteur visible */
+    min-height: 240px; /* sécurité */
+    background-size: cover;
+    background-position: center;
   }
 }
 
 /* =========================================================
    15. SECTION PREMIUM (hors carte 3D)
    ========================================================= */
+
+.premium-section {
+  min-height: calc(var(--vh) * 80);
+  height: auto; /* pour laisser respirer si contenu plus grand */
+}
 
 /* SECTION PREMIUM */
 .premium-section .cta-premium {
@@ -1390,6 +1424,29 @@ form button[type="submit"]:hover {
 }
 
 
+@media (max-width: 414px) {
+  .premium-section {
+    height: auto;
+    min-height: calc(var(--vh) * 80); /* 80% de la hauteur visible */
+    padding-bottom: 2rem; /* espace pour éviter que le footer ne mange le contenu */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .premium-section form {
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  .premium-section button {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
+
 /* =========================================================
    16. EFFETS VISUELS SPÉCIFIQUES
    ========================================================= */
@@ -1437,3 +1494,28 @@ footer img.qr {
   }
 }
 
+/* =========================================================
+   XX. ADAPTATIONS GENERALES (MOBILE ETC)
+   ========================================================= */
+
+/* ============================
+   1. Variables hauteur mobile
+   ============================ */
+:root {
+  --vh: 1vh; /* fallback */
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --vh: 1dvh;
+  }
+}
+
+/* ============================
+   5. Sécurité overflow
+   ============================ */
+@media (max-width: 414px) {
+  body {
+    overflow-x: hidden;
+  }
+}
