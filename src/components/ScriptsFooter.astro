@@ -1,12 +1,12 @@
 <script src="/scripts/reveal-on-scroll.js" defer></script>
 <script src="/scripts/text-slide-fade-anim.js" defer></script>
 
-
 <script src="/scripts/layout/menu-mobile.js" defer></script>
 <script src="/scripts/layout/parallax.js" defer></script>
 <script src="/scripts/layout/theme-toggle.js" defer></script>
 
-<script type="module">
+<!-- Chargement bundlé de init-client.js -->
+<script type="module" is:inline>
   import '../../scripts/init-client.js';
 </script>
 
@@ -15,7 +15,7 @@
 
 <script src="/scripts/carte-3d.js" defer></script>
 
-<!-- script d'adaptation pour affichage mobile -->
+<!-- Script d’adaptation pour affichage mobile -->
 <script is:inline>
   function setVH() {
     document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
