@@ -6,13 +6,16 @@
 <script src="/scripts/layout/parallax.js" defer></script>
 <script src="/scripts/layout/theme-toggle.js" defer></script>
 
-<script type="module" src="/src/scripts/init-client.js"></script>
+<script type="module">
+  import '../scripts/init-client.js';
+</script>
 
 <script src="/scripts/layout/header-sticky.js" defer></script>
 <script src="/scripts/layout/hero-animation.js" defer></script>
 
 <script src="/scripts/carte-3d.js" defer></script>
 
+<!-- script d'adaptation pour affichage mobile -->
 <script is:inline>
   function setVH() {
     document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
