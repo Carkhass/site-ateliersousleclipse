@@ -7,15 +7,13 @@ const TWEEN_FACTOR_BASE = 0.2;
 let tweenFactor = 0;
 let tweenNodes = [];
 
-const setTweenNodes = (emblaApi) => {
-  tweenNodes = emblaApi.slideNodes().map((slideNode) =>
+const setTweenNodes = (emblaApi) =>
+  (tweenNodes = emblaApi.slideNodes().map((slideNode) =>
     slideNode.querySelector('.embla__parallax__layer')
-  );
-};
+  ));
 
-const setTweenFactor = (emblaApi) => {
-  tweenFactor = TWEEN_FACTOR_BASE * (emblaApi.scrollSnapList().length || 1);
-};
+const setTweenFactor = (emblaApi) =>
+  (tweenFactor = TWEEN_FACTOR_BASE * (emblaApi.scrollSnapList().length || 1));
 
 const tweenParallax = (emblaApi, eventName) => {
   const engine = emblaApi.internalEngine();
@@ -188,7 +186,7 @@ export function initEmbla(root = document) {
       setTimeout(() => { embla.reInit && embla.reInit(); updateButtonsState(); }, 10);
     }
 
-    // Window-level rechecks and mark inited after stabilization
+    // Window-level rechecks and resilient ready-mark logic
     function ensureReadyAndUpdate() {
       try { embla.reInit && embla.reInit(); } catch (e) {}
       setTweenNodes(embla);
@@ -197,18 +195,59 @@ export function initEmbla(root = document) {
       updateButtonsState();
     }
 
-    window.addEventListener('load', () => setTimeout(ensureReadyAndUpdate, 50));
+    // retry logic to mark node as initialised only when stabilized
+    let readyChecks = 0;
+    const MAX_READY_CHECKS = 8; // ~ 8 * READY_CHECK_INTERVAL ms total window
+    const READY_CHECK_INTERVAL = 200;
+
+    function tryMarkReady() {
+      try {
+        // prefer Embla's reported state: if embla canScroll methods exist and there is at least 1 snap, consider ready
+        const snaps = (embla && embla.scrollSnapList && embla.scrollSnapList()) || [];
+        const canQuery = typeof embla.canScrollPrev === 'function' && typeof embla.canScrollNext === 'function';
+        const hasButtons = !!prevBtn || !!nextBtn;
+
+        // update once more before deciding
+        ensureReadyAndUpdate();
+
+        const anySnap = snaps.length > 0;
+        const looksReady = anySnap && (!hasButtons || canQuery);
+
+        if (looksReady || readyChecks >= MAX_READY_CHECKS) {
+          // final cleanup and mark
+          try { embla.reInit && embla.reInit(); } catch (e) {}
+          updateButtonsState();
+          if (emblaNode.dataset) emblaNode.dataset.emblaInit = 'true';
+        } else {
+          readyChecks++;
+          setTimeout(tryMarkReady, READY_CHECK_INTERVAL);
+        }
+      } catch (e) {
+        // on unexpected error, still ensure we eventually mark (avoid infinite loop)
+        readyChecks++;
+        if (readyChecks >= MAX_READY_CHECKS && emblaNode.dataset) emblaNode.dataset.emblaInit = 'true';
+        else setTimeout(tryMarkReady, READY_CHECK_INTERVAL);
+      }
+    }
+
+    // Attach window-level listeners to try to stabilise later (images, layout, page show)
+    window.addEventListener('load', () => {
+      setTimeout(() => { ensureReadyAndUpdate(); tryMarkReady(); }, 60);
+    });
+
+    // handle resize with debounced recheck
     let resizeTimer;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => ensureReadyAndUpdate(), 140);
+      resizeTimer = setTimeout(() => { ensureReadyAndUpdate(); tryMarkReady(); }, 150);
     });
 
-    // Mark as initialised only after a small stabilization window
-    setTimeout(() => {
-      try { embla.reInit && embla.reInit(); } catch (e) {}
-      updateButtonsState();
-      if (emblaNode.dataset) emblaNode.dataset.emblaInit = 'true';
-    }, 160);
+    // also handle pageshow (bfcache / back navigation)
+    window.addEventListener('pageshow', (ev) => {
+      setTimeout(() => { ensureReadyAndUpdate(); tryMarkReady(); }, 60);
+    });
+
+    // start initial check windowed slightly later to cover slow image loads/layout
+    setTimeout(tryMarkReady, 140);
   });
 }
