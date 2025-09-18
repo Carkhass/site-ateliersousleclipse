@@ -1,3 +1,4 @@
+// public/scripts/animations/reveal-on-scroll.js
 (() => {
   // Sélecteurs d'animations à observer
   // On attrape toutes les variantes fade-slide-* automatiquement

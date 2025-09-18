@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import BaseLayout from '../layouts/BaseLayout.astro';
+import indexUrl from '../scripts/page-index-entry.js?url';
 
 /* On importe toutes les images du dossier src/assets/slider-section2 */
 const images = import.meta.glob('../assets/slider-section2/*.{jpg,jpeg,png,webp}', { eager: true });

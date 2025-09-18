@@ -1,3 +1,11 @@
+/**
+ * // public/scripts/layout/hero-animation.js
+ * Anime le titre et le sous-titre du hero au chargement de la page.
+ * - Fade-in du titre avec halo
+ * - Animation lettre par lettre du sous-titre
+ * - Insertion d'un saut de ligne sur mobile après un index précis
+ */
+
 document.addEventListener("DOMContentLoaded", () => {
   const title = document.getElementById('hero-title');
   const subtitle = document.getElementById('hero-subtitle');
@@ -43,8 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (window.innerWidth <= 1024) {
       const letters = el.querySelectorAll('.letter');
       // Trouve l'index où couper (ex: après "acier")
-      // Ici, on coupe après le 36e caractère (à ajuster selon ton texte)
-      const cutIndex = 36;
+      // Ici, on coupe après le 38e caractère (à ajuster selon ton texte)
+      const cutIndex = 47;
       if (letters[cutIndex]) {
         const br = document.createElement('br');
         br.style.display = 'block';

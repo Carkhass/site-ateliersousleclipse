@@ -1,11 +1,8 @@
 ---
 import "../styles/global.css";
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-/* On importe toutes les images du dossier src/assets/slider-section2 */
-const images = import.meta.glob('../assets/slider-section2/*.{jpg,jpeg,png,webp}', { eager: true });
-const imageList = Object.values(images).map((mod) => mod.default.src);
 ---
+
 
 <BaseLayout title="Accueil">
 

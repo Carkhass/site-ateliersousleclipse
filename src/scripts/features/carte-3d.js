@@ -1,33 +1,33 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const wrapper = document.querySelector(".card-3d-wrapper");
+// public/scripts/features/carte-3d.js
+
+document.addEventListener('DOMContentLoaded', () => {
+  const wrapper = document.querySelector('.card-3d-wrapper');
   if (!wrapper) return;
 
-  const card = wrapper.querySelector(".card-3d");
-  const cardGlow = wrapper.querySelector(".card-glow");
+  const card = wrapper.querySelector('.card-3d');
+  const cardGlow = wrapper.querySelector('.card-glow');
+  if (!card) return;
 
-  // ——— Paramètres ———
   const TILT_MAX_DEG = 10;
-  const CARD_LERP    = 0.38;  // tilt
-  const FLIP_LERP    = 0.46;  // vitesse flip (doublée)
+  const CARD_LERP = 0.38;
+  const FLIP_LERP = 0.46;
   const GLOW_TILT_INFLUENCE = 1.5;
-  const IDLE_DELAY   = 3000;  // ms avant idle
-  const INVITE_INTERVAL = 3000; // toutes les 3s
+  const IDLE_DELAY = 3000;
+  const INVITE_INTERVAL = 3000;
 
-  // ——— État ———
   let isFlipped = false;
   let rx = 0, ry = 0;
   let targetRx = 0, targetRy = 0;
   let flipProgress = 0;
   let hasInteracted = false;
-  let idleTimeout, inviteTimer;
+  let idleTimeout;
+  let inviteTimer;
   let isAnimatingHint = false;
 
   const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
   const lerpTo = (v, target, f) => v + (target - v) * f;
 
-  // ——— Animation principale ———
   function animate() {
-    // On ne met pas à jour le tilt pendant l'animation d'invitation
     if (!isAnimatingHint) {
       rx = lerpTo(rx, targetRx, CARD_LERP);
       ry = lerpTo(ry, targetRy, CARD_LERP);
@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const flipAngle = flipProgress * 180;
     card.style.transform = `rotateY(${flipAngle}deg) rotateX(${rx}deg) rotateY(${ry}deg)`;
-
     card.style.boxShadow = `${ry * -3.2}px ${rx * 3.2}px 46px rgba(0,0,0,0.4)`;
 
     if (cardGlow) {
@@ -45,15 +44,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const glowY = 50 - rx * GLOW_TILT_INFLUENCE;
       cardGlow.style.setProperty('--glowX', `${glowX}%`);
       cardGlow.style.setProperty('--glowY', `${glowY}%`);
-      cardGlow.style.opacity = 1 - flipProgress;
+      cardGlow.style.opacity = String(1 - flipProgress);
     }
 
     requestAnimationFrame(animate);
   }
 
-  // ——— Tilt manuel ———
   function setTilt(e) {
-    if (isAnimatingHint) return; // pas de tilt pendant l'invitation
+    if (isAnimatingHint) return;
     const rect = wrapper.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -63,44 +61,55 @@ document.addEventListener("DOMContentLoaded", () => {
     targetRy = clamp(nx * TILT_MAX_DEG, -TILT_MAX_DEG, TILT_MAX_DEG);
   }
 
-  // ——— Idle / floaty ———
   function setIdle() {
-    if (!hasInteracted) wrapper.classList.add("idle");
+    if (!hasInteracted) wrapper.classList.add('idle');
   }
   function unsetIdle() {
-    wrapper.classList.remove("idle");
+    wrapper.classList.remove('idle');
     clearTimeout(idleTimeout);
     idleTimeout = setTimeout(setIdle, IDLE_DELAY);
   }
 
-  // ——— Invitation répétée ———
   function startInviteLoop() {
     inviteTimer = setInterval(() => {
       if (hasInteracted) return;
       isAnimatingHint = true;
-      wrapper.classList.add("hint-flip");
+      wrapper.classList.add('hint-flip');
       setTimeout(() => {
-        wrapper.classList.remove("hint-flip");
+        wrapper.classList.remove('hint-flip');
         isAnimatingHint = false;
-      }, 1000); // durée de l'anim CSS
+      }, 1000);
     }, INVITE_INTERVAL);
   }
 
   function stopInvitations() {
     hasInteracted = true;
-    wrapper.classList.remove("idle");
-    wrapper.classList.remove("hint-flip");
+    wrapper.classList.remove('idle', 'hint-flip');
     clearInterval(inviteTimer);
     isAnimatingHint = false;
   }
 
-  // ——— Événements ———
-  wrapper.addEventListener("mousemove", e => { unsetIdle(); setTilt(e); });
-  wrapper.addEventListener("mouseleave", () => { targetRx = 0; targetRy = 0; });
-  wrapper.addEventListener("click", () => { isFlipped = !isFlipped; stopInvitations(); });
-  wrapper.addEventListener("touchstart", () => { stopInvitations(); unsetIdle(); }, { passive: true });
+  wrapper.addEventListener('mousemove', (e) => {
+    unsetIdle();
+    setTilt(e);
+  });
+  wrapper.addEventListener('mouseleave', () => {
+    targetRx = 0;
+    targetRy = 0;
+  });
+  wrapper.addEventListener('click', () => {
+    isFlipped = !isFlipped;
+    stopInvitations();
+  });
+  wrapper.addEventListener(
+    'touchstart',
+    () => {
+      stopInvitations();
+      unsetIdle();
+    },
+    { passive: true }
+  );
 
-  // ——— Lancement ———
   setIdle();
   startInviteLoop();
   animate();
