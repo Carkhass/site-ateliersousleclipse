@@ -59,13 +59,50 @@ window.addEventListener('load', () => {
   }, 80);
 });
 
-// gentle global heal for odd prod timing
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    try { initEmblaFn && initEmblaFn(); } catch (e) {}
-  }, 220);
-  // final sanity after slightly longer window
-  setTimeout(() => {
-    try { initEmblaFn && initEmblaFn(); } catch (e) {}
-  }, 800);
-});
+// Gentle global heal to recover Embla on cold loads / odd deployment timing
+// Runs a couple of retries after load to ensure Embla instances stabilize.
+(function emblaHeal() {
+  if (typeof window === 'undefined') return;
+
+  const HEAL_SHORT = 220; // first gentle retry
+  const HEAL_LONG = 800;  // final sanity retry
+  const MAX_ATTEMPTS = 3;
+
+  const attemptInit = (attempt = 1) => {
+    try {
+      // call the imported function if available, otherwise try the global (legacy)
+      if (typeof initEmblaFn === 'function') {
+        initEmblaFn(document);
+      } else if (typeof window.initEmbla === 'function') {
+        window.initEmbla(document);
+      }
+    } catch (e) {
+      console.warn('emblaHeal attempt error', e);
+    }
+
+    // if still no instances, schedule another try (bounded)
+    const count = (window._emblaAPIs || []).length;
+    if (count === 0 && attempt < MAX_ATTEMPTS) {
+      setTimeout(() => attemptInit(attempt + 1), 350);
+    }
+  };
+
+  window.addEventListener('load', () => {
+    setTimeout(() => attemptInit(1), HEAL_SHORT);
+    setTimeout(() => attemptInit(1), HEAL_LONG);
+  });
+
+  // also try on pageshow (bfcache) and after a short interaction burst
+  window.addEventListener('pageshow', (ev) => {
+    setTimeout(() => attemptInit(1), HEAL_SHORT);
+  });
+
+  // small safety: if user interacts (scroll/click) soon after load, retry once
+  const onUserInteraction = () => {
+    setTimeout(() => attemptInit(1), 120);
+    window.removeEventListener('scroll', onUserInteraction);
+    window.removeEventListener('click', onUserInteraction);
+  };
+  window.addEventListener('scroll', onUserInteraction, { passive: true });
+  window.addEventListener('click', onUserInteraction);
+})();
