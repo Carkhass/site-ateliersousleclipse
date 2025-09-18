@@ -58,3 +58,14 @@ window.addEventListener('load', () => {
     try { initEmblaFn && initEmblaFn(); } catch (e) {}
   }, 80);
 });
+
+// gentle global heal for odd prod timing
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    try { initEmblaFn && initEmblaFn(); } catch (e) {}
+  }, 220);
+  // final sanity after slightly longer window
+  setTimeout(() => {
+    try { initEmblaFn && initEmblaFn(); } catch (e) {}
+  }, 800);
+});
