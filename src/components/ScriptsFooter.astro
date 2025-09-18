@@ -1,19 +1,38 @@
 ---
 /*
   ScriptsFooter.astro
-  Point d'injection client : bundle entry-client.js via Astro/Vite
-  (Recommandé pour production : unique source src/scripts, pas de public/scripts JS)
-*/
----
-<script type="module" src="/scripts/entry-client.js" defer></script>
-<link rel="stylesheet" href="/scripts/entry-client.css" />
 
-<!-- Patch mobile (inline safe) -->
+  Injecte proprement le point d'entrée client selon l'environnement.
+
+  - En dev (vite) : charge directement le module depuis /src pour garantir que
+    Vite serve le code source et éviter les fichiers statiques obsolètes.
+  - En production : pointe vers /scripts/entry-client.js et /scripts/entry-client.css.
+    Adapte ton pipeline de build pour copier l'asset build vers public/scripts/
+    si tu souhaites conserver ces chemins en prod.
+
+  Remarque :
+  - import.meta.env.DEV est fourni par Vite (true en dev).
+  - Si tu utilises une autre variable d'environnement pour Astro, ajuste si besoin.
+*/
+const isDev = Boolean(import.meta.env && import.meta.env.DEV);
+const jsDevSrc = '/src/scripts/entry-client.js';
+const cssDevHref = '/src/scripts/entry-client.css';
+const jsProdSrc = '/scripts/entry-client.js';
+const cssProdHref = '/scripts/entry-client.css';
+const jsSrc = isDev ? jsDevSrc : jsProdSrc;
+const cssHref = isDev ? cssDevHref : cssProdHref;
+---
+<!-- ScriptsFooter: charge le module client et la feuille de style associée -->
+<script type="module" src={jsSrc}></script>
+
+<!-- Patch mobile (inline safe) : calcule la variable --vh -->
 <script is:inline>
-  function setVH() {
-    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
-  }
-  window.addEventListener('resize', setVH);
-  window.addEventListener('orientationchange', setVH);
-  setVH();
+  (function setVH() {
+    function update() {
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    }
+    window.addEventListener('resize', update, { passive: true });
+    window.addEventListener('orientationchange', update, { passive: true });
+    update();
+  })();
 </script>

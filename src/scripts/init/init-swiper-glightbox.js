@@ -1,79 +1,45 @@
-// public/scripts/init/init-swiper-glightbox.js
-// Init Swiper and GLightbox
-(function () {
-  // Try to access Swiper from global or dynamic import
-  function getSwiperModule() {
-    if (typeof window !== 'undefined' && window.Swiper) {
-      return Promise.resolve({ default: window.Swiper });
+// src/scripts/init/init-swiper-glightbox.js
+// Initialisation centralisée pour Swiper et GLightbox
+import Swiper from 'swiper/bundle';
+import 'swiper/css/bundle';
+import GLightbox from 'glightbox';
+
+// Fonction d'initialisation exportée nommément
+export function initSwipers(root = document) {
+  const rootEl = (root instanceof Element) ? root : document;
+  // Exemple générique : initialise tous les .swiper dans le scope donné
+  const swiperNodes = rootEl.querySelectorAll('.swiper');
+  swiperNodes.forEach((node) => {
+    // Eviter double init : marque dataset
+    if (node.dataset && node.dataset.swiperInit === 'true') return;
+    if (node.dataset) node.dataset.swiperInit = 'true';
+
+    // Configuration simple — adapte selon tes besoins
+    const container = node.querySelector('.swiper-container') || node;
+    const options = {
+      loop: true,
+      slidesPerView: 1,
+      // ajouter tes options personnalisées ici
+    };
+
+    try {
+      // eslint-disable-next-line no-new
+      new Swiper(container, options);
+    } catch (e) {
+      console.warn('Swiper init failed for node', node, e);
     }
-    // Try dynamic import and let the promise reject if not available
-    return import('swiper/bundle').catch(() => {
-      console.warn('swiper dynamic import failed; ensure swiper is bundled or available globally.');
-      return Promise.reject(new Error('swiper not available'));
-    });
+  });
+
+  // Lightbox init (global)
+  try {
+    if (!window.GLightbox) {
+      window.GLightbox = GLightbox && (GLightbox.default || GLightbox);
+    }
+    if (typeof window.GLightbox === 'function') {
+      // create a global instance if needed
+      window._glightboxInstance = window._glightboxInstance || window.GLightbox({ selector: '.glightbox' });
+    }
+  } catch (e) {
+    console.warn('GLightbox init error', e);
   }
-
-  function initSwiper() {
-    if (typeof window === 'undefined') return;
-    return getSwiperModule()
-      .then((mod) => {
-        const Swiper = mod.default || mod;
-        const swiperElements = document.querySelectorAll('.swiper');
-        swiperElements.forEach((swiperEl) => {
-          const nextEl = swiperEl.querySelector('.swiper-button-next');
-          const prevEl = swiperEl.querySelector('.swiper-button-prev');
-          const paginationEl = swiperEl.querySelector('.swiper-pagination');
-
-          const options = {
-            loop: true,
-            slidesPerView: 1,
-            spaceBetween: 10,
-            navigation: {
-              nextEl: nextEl,
-              prevEl: prevEl
-            },
-            pagination: {
-              el: paginationEl,
-              clickable: true
-            }
-          };
-          // eslint-disable-next-line no-new
-          new Swiper(swiperEl, options);
-        });
-      })
-      .catch((err) => {
-        console.warn('initSwiper skipped: ', err);
-      });
-  }
-
-  function initLightbox() {
-    if (typeof window === 'undefined') return;
-    // Try dynamic import of glightbox; will reject if not available
-    import('glightbox')
-      .then((mod) => {
-        const GLightbox = mod.default || mod;
-        GLightbox({
-          selector: '.embla-spotlight, .hamon-photo',
-          touchNavigation: true,
-          loop: true,
-          openEffect: 'fade',
-          closeEffect: 'fade',
-          slideEffect: 'slide',
-          slideDuration: 420,
-          skin: 'hamon'
-        });
-      })
-      .catch((err) => {
-        console.warn('GLightbox dynamic import failed; ensure GLightbox is available.', err);
-      });
-  }
-
-  function initSwiperAndLightbox() {
-    initSwiper();
-    initLightbox();
-  }
-
-  window.initSwiper = initSwiper;
-  window.initLightbox = initLightbox;
-  window.initSwiperAndLightbox = initSwiperAndLightbox;
-})();
+}

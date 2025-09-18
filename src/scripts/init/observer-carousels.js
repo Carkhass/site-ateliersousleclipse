@@ -1,46 +1,34 @@
-// public/scripts/init/observer-carousels.js
-(function () {
-  function observeCarousels() {
-    const EMBLA_SELECTOR = '.embla';
-    const SWIPER_SELECTOR = '.swiper';
+// src/scripts/init/observer-carousels.js
+// Rôle: initialiser Embla/Swiper au moment opportun (visibles dans le viewport),
+// pour éviter les calculs sur éléments masqués.
 
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
+import { initEmbla } from './init-embla.js';
+import { initSwipers } from './init-swiper-glightbox.js';
 
-        const el = entry.target;
+export function observeCarousels() {
+  const EMBLA_SELECTOR = '.embla';
+  const SWIPER_SELECTOR = '.swiper';
 
-        if (el.matches(EMBLA_SELECTOR)) {
-          if (window.initEmbla) {
-            window.initEmbla(el);
-          } else {
-            // fallback: try to import and then init
-            import('./init-embla.js')
-              .then(() => {
-                window.initEmbla && window.initEmbla(el);
-              })
-              .catch(() => {});
-          }
-        }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
 
-        if (el.matches(SWIPER_SELECTOR)) {
-          if (window.initSwiper) {
-            window.initSwiper();
-          } else {
-            import('./init-swiper-glightbox.js')
-              .then(() => {
-                window.initSwiper && window.initSwiper();
-              })
-              .catch(() => {});
-          }
-        }
+      const el = entry.target;
 
-        obs.unobserve(el);
-      });
-    }, { threshold: 0.2 });
+      // Embla: init ciblée
+      if (el.matches(EMBLA_SELECTOR)) {
+        initEmbla(el); // init uniquement ce carousel
+      }
 
-    document.querySelectorAll(`${EMBLA_SELECTOR}, ${SWIPER_SELECTOR}`).forEach((el) => observer.observe(el));
-  }
+      // Swiper: si besoin d'instancier dynamiquement (optionnel)
+      if (el.matches(SWIPER_SELECTOR)) {
+        initSwipers(el); // init ciblée (fonction supporte root optionnel)
+      }
 
-  window.observeCarousels = observeCarousels;
-})();
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.2 });
+
+  // Observer tous les carrousels présents
+  document.querySelectorAll(`${EMBLA_SELECTOR}, ${SWIPER_SELECTOR}`).forEach(el => observer.observe(el));
+}
