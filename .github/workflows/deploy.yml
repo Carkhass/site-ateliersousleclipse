@@ -34,6 +34,18 @@ jobs:
       - name: Build Astro site
         run: npm run build
 
+      - name: Inspect dist for debug marker
+        run: |
+         echo "Files in dist:"
+         ls -la dist
+         echo "Searching for init-embla marker in dist..."
+         grep -R --line-number "
+
+         \[init-embla\]
+
+         " dist || echo "marker not found"
+
+
       # 5. Vérification du dossier dist
       - name: Vérifier que dist existe
         run: |
