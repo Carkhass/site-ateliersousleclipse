@@ -6,15 +6,10 @@ export default defineConfig({
   integrations: [tailwind()],
   vite: {
     resolve: {
-      alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url))
-      }
+      alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) }
     },
     build: {
-      assetsInlineLimit: 0,
-      rollupOptions: {
-        manualChunks: undefined, // pas de découpage
-      }
+      assetsInlineLimit: 0
     }
   }
 });

@@ -1,9 +1,12 @@
 // public/scripts/animations/reveal-on-scroll.js
+// Sélecteurs d'animations à observer
+// On attrape toutes les variantes fade-slide-* automatiquement
+// src/scripts/animations/reveal-on-scroll.js
 (() => {
-  // Sélecteurs d'animations à observer
-  // On attrape toutes les variantes fade-slide-* automatiquement
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
   const animationSelectors = [
-    '[class*="fade-slide-"]', // left, right, up, down...
+    '[class*="fade-slide-"]',
     '.fade-in',
     '.slide-up',
     '.reveal-on-scroll',
@@ -22,69 +25,69 @@
     });
   };
 
-  const revealObserver = new IntersectionObserver(onIntersect, observerOptions);
+  const revealObserver = typeof IntersectionObserver !== 'undefined'
+    ? new IntersectionObserver(onIntersect, observerOptions)
+    : null;
 
-  function observeNewElements(root = document) {
-    root.querySelectorAll(animationSelectors.join(',')).forEach(el => {
+  function observeNewElements(root) {
+    const container = root && root.querySelectorAll ? root : document;
+    container.querySelectorAll(animationSelectors.join(',')).forEach(el => {
       if (!observedElements.has(el)) {
         observedElements.add(el);
-        revealObserver.observe(el);
+        if (revealObserver) {
+          revealObserver.observe(el);
+        } else {
+          el.classList.add('visible');
+        }
       }
     });
   }
 
-  // Révèle immédiatement ce qui est déjà dans le viewport
-  function revealIfInViewport(root = document) {
-    root.querySelectorAll(animationSelectors.join(',')).forEach(el => {
+  function revealIfInViewport(root) {
+    const container = root && root.querySelectorAll ? root : document;
+    container.querySelectorAll(animationSelectors.join(',')).forEach(el => {
       if (el.classList.contains('visible')) return;
       const r = el.getBoundingClientRect();
       const inView = r.top < (window.innerHeight || document.documentElement.clientHeight) && r.bottom > 0;
       if (inView) {
-        setTimeout(() => {
-          el.classList.add('visible');
-        }, 100);
+        setTimeout(() => el.classList.add('visible'), 100);
       }
     });
   }
 
-  // Premier scan au chargement
   document.addEventListener('DOMContentLoaded', () => {
     observeNewElements();
     revealIfInViewport();
 
-    // --- PATCH : forcer la carte 3D visible sur desktop si déjà dans le viewport ---
     if (window.innerWidth >= 1024) {
       const cardWrapper = document.querySelector('.premium-section .card-3d-wrapper.fade-slide-up');
       if (cardWrapper) {
         const r = cardWrapper.getBoundingClientRect();
-        const inView = r.top < window.innerHeight && r.bottom > 0;
-        if (inView) {
-          setTimeout(() => {
-            cardWrapper.classList.add('visible');
-          }, 150);
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          setTimeout(() => cardWrapper.classList.add('visible'), 150);
         }
       }
     }
-    // -------------------------------------------------------------------------------
   });
 
-  // Surveille le DOM pour détecter de nouveaux éléments
-  const mutationObserver = new MutationObserver(mutations => {
-    mutations.forEach(mutation => {
-      mutation.addedNodes.forEach(node => {
-        if (node.nodeType === 1) {
-          observeNewElements(node);
-          revealIfInViewport(node);
-        }
+  if (typeof MutationObserver !== 'undefined') {
+    const mutationObserver = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        mutation.addedNodes.forEach(node => {
+          if (node.nodeType === 1) {
+            observeNewElements(node);
+            revealIfInViewport(node);
+          }
+        });
       });
     });
-  });
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+  } else {
+    setInterval(() => {
+      observeNewElements();
+      revealIfInViewport();
+    }, 800);
+  }
 
-  mutationObserver.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
-
-  // Expose la fonction si besoin ailleurs
   window.observeNewElements = observeNewElements;
 })();

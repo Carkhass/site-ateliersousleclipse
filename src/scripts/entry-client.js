@@ -1,26 +1,14 @@
 // src/scripts/entry-client.js
-// Point d'entrée client bundlé par Vite. Import des librairies npm puis initialisation des modules.
+// Point d’entrée client bundlé par Vite/Astro, safe SSR
 
-import EmblaCarousel from 'embla-carousel';
-window.EmblaCarousel = window.EmblaCarousel || EmblaCarousel;
-import Swiper from 'swiper/bundle';
-import 'swiper/css/bundle';
-import GLightbox from 'glightbox';
 import '../styles/global.css';
 
-/* expose uniquement les libs externes si besoin (pas les inits) */
-if (typeof window !== 'undefined') {
-  window.EmblaCarousel = EmblaCarousel && (EmblaCarousel.default || EmblaCarousel);
-  window.Swiper = Swiper && (Swiper.default || Swiper);
-  window.GLightbox = GLightbox && (GLightbox.default || GLightbox);
-}
-
-/* imports des modules d'initialisation */
+// Imports sûrs côté serveur (pas d'accès direct à window/document)
 import { observeCarousels as observeCarouselsFn } from './init/observer-carousels.js';
 import { initEmbla as initEmblaFn } from './init/init-embla.js';
-import { initSwipers as initSwipersFn } from './init/init-swiper-glightbox.js';
+import { initSwipers as initSwipersFn, initLightbox as initLightboxFn } from './init/init-swiper-glightbox.js';
 
-/* autres imports non critiques */
+// Imports de scripts internes qui ne cassent pas en SSR
 import './animations/reveal-on-scroll.js';
 import './animations/text-slide-fade-anim.js';
 import './features/carte-3d.js';
@@ -30,7 +18,20 @@ import './layout/menu-mobile.js';
 import './layout/parallax.js';
 import './layout/theme-toggle.js';
 
-/* Fallback robuste pour s'assurer que tous les .embla sont initialisés */
+// Lazy‑load des libs externes qui accèdent au DOM
+if (typeof window !== 'undefined') {
+  Promise.all([
+    import('embla-carousel'),
+    import('swiper/bundle'),
+    import('glightbox')
+  ]).then(([{ default: EmblaCarousel }, { default: Swiper }, { default: GLightbox }]) => {
+    window.EmblaCarousel = EmblaCarousel;
+    window.Swiper = Swiper;
+    window.GLightbox = GLightbox;
+  }).catch(err => console.error('Erreur import libs externes', err));
+}
+
+// Fallback robuste pour s'assurer que tous les .embla sont initialisés
 function ensureInitAllEmbla() {
   if (!initEmblaFn) return;
   document.querySelectorAll('.embla').forEach((el, i) => {
@@ -41,31 +42,30 @@ function ensureInitAllEmbla() {
   });
 }
 
-/* Démarrage contrôlé : on invoque directement les fonctions importées */
+// Démarrage contrôlé
 document.addEventListener('DOMContentLoaded', () => {
-  try { observeCarouselsFn && observeCarouselsFn(); } catch (e) { console.warn('observeCarousels error', e); }
+  try { observeCarouselsFn?.(); } catch (e) { console.warn('observeCarousels error', e); }
 
-  // fallback: attempt to init any embla that may have been missed by the observer
+  // fallback: init forcé après un court délai
   setTimeout(() => {
-    try { initEmblaFn && initEmblaFn(); } catch (e) { console.warn('initEmbla error', e); }
-    try { initSwipersFn && initSwipersFn(); } catch (e) { console.warn('initSwipers error', e); }
+    try { initEmblaFn?.(); } catch (e) { console.warn('initEmbla error', e); }
+    try { initSwipersFn?.(); } catch (e) { console.warn('initSwipers error', e); }
+    try { initLightboxFn?.(); } catch (e) { console.warn('initLightbox error', e); }
   }, 120);
 });
 
-/* sécurité supplémentaire sur load */
+// Sécurité supplémentaire sur load
 window.addEventListener('load', () => {
   setTimeout(() => {
-    try { initEmblaFn && initEmblaFn(); } catch (e) {}
+    try { initEmblaFn?.(); } catch (e) {}
   }, 80);
 });
 
-// Embla recovery + diagnostics (paste near the other heal code / end of file)
+// Embla recovery + diagnostics
 (function emblaRecoveryAndDiag() {
   if (typeof window === 'undefined') return;
 
-  const LOG = (...args) => {
-    try { console.debug('[embla-recover]', ...args); } catch (e) {}
-  };
+  const LOG = (...args) => { try { console.debug('[embla-recover]', ...args); } catch (e) {} };
 
   const tryInitAll = () => {
     try {
@@ -86,15 +86,14 @@ window.addEventListener('load', () => {
   const repairButtonsForce = () => {
     const prev = document.querySelectorAll('.embla__button--prev');
     const next = document.querySelectorAll('.embla__button--next');
-    const allBtns = [...prev, ...next];
-    allBtns.forEach(btn => {
+    [...prev, ...next].forEach(btn => {
       try {
         btn.removeAttribute('disabled');
         btn.disabled = false;
         btn.classList.remove('is-disabled');
       } catch (e) {}
     });
-    LOG('force-removed disabled on', allBtns.length, 'buttons');
+    LOG('force-removed disabled on', prev.length + next.length, 'buttons');
   };
 
   const reinitPerNodeIfNeeded = () => {
@@ -102,7 +101,6 @@ window.addEventListener('load', () => {
     nodes.forEach((node, i) => {
       const marked = node.dataset && node.dataset.emblaInit === 'true';
       if (marked) {
-        // If marked but we have no exposed instances, try to re-init just that node
         try {
           LOG(`node[${i}] marked inited=true — attempting targeted initEmbla(node)`);
           if (typeof initEmblaFn === 'function') initEmblaFn(node);
@@ -123,45 +121,37 @@ window.addEventListener('load', () => {
     attempts.count++;
     LOG('attemptCycle', attempts.count, 'window._emblaAPIs length:', (window._emblaAPIs||[]).length);
 
-    // 1) Try calling init globally
     tryInitAll();
 
-    // 2) Short delay then check if instances exist
     setTimeout(() => {
       const count = (window._emblaAPIs || []).length;
       if (count > 0) {
         LOG('Embla instances present after attempt', attempts.count, 'count=', count);
-        // Ensure buttons cleared
         repairButtonsForce();
         return;
       }
 
-      // 3) If no instances, try re-init per node
       LOG('No global instances found — trying per-node reinit');
       reinitPerNodeIfNeeded();
 
-      // 4) After another short delay, force-enable buttons if still no instances
       setTimeout(() => {
         const c2 = (window._emblaAPIs || []).length;
         LOG('post per-node reinit, _emblaAPIs length=', c2);
         if (c2 === 0) {
-          // As a last resort, un-disable buttons so UI is usable (user-visible fix)
           repairButtonsForce();
         }
       }, 220);
     }, 220);
 
     if (attempts.count < attempts.max) {
-      setTimeout(attemptCycle, 520 * attempts.count); // backoff-ish
+      setTimeout(attemptCycle, 520 * attempts.count);
     } else {
       LOG('attemptCycle completed max attempts');
     }
   };
 
-  // Run on load/pageshow and as fallback after some interaction
   window.addEventListener('load', () => setTimeout(attemptCycle, 180));
   window.addEventListener('pageshow', () => setTimeout(attemptCycle, 180));
-  // user interaction trigger (one-shot)
   const onUser = () => {
     setTimeout(attemptCycle, 120);
     window.removeEventListener('scroll', onUser);

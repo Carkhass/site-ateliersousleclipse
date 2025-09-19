@@ -1,15 +1,14 @@
 /**
- * // public/scripts/layout/menu-mobile.js
  * Gère l'ouverture et la fermeture du menu mobile avec overlay.
  * Ferme automatiquement le menu lors d'un clic sur un lien ou sur l'overlay.
  */
+// src/scripts/layout/menu-mobile.js
+(() => {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
-
-(function () {
   const menuToggle = document.getElementById('menu-toggle');
   const menu = document.querySelector('.menu-mobile');
   const overlay = document.querySelector('.menu-overlay');
-
   if (!menuToggle || !menu || !overlay) return;
 
   function openMenu() {
@@ -30,16 +29,12 @@
   }
 
   menuToggle.addEventListener('click', () => {
-    if (menu.classList.contains('open')) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
+    if (menu.classList.contains('open')) closeMenu();
+    else openMenu();
   });
 
   overlay.addEventListener('click', closeMenu);
-
-  menu.querySelectorAll('a').forEach((link) => {
+  menu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', closeMenu);
   });
 })();

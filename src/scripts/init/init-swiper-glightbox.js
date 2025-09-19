@@ -1,45 +1,59 @@
 // src/scripts/init/init-swiper-glightbox.js
-// Initialisation centralisée pour Swiper et GLightbox
-import Swiper from 'swiper/bundle';
-import 'swiper/css/bundle';
-import GLightbox from 'glightbox';
+export async function initSwipers(root) {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
-// Fonction d'initialisation exportée nommément
-export function initSwipers(root = document) {
-  const rootEl = (root instanceof Element) ? root : document;
-  // Exemple générique : initialise tous les .swiper dans le scope donné
-  const swiperNodes = rootEl.querySelectorAll('.swiper');
-  swiperNodes.forEach((node) => {
-    // Eviter double init : marque dataset
-    if (node.dataset && node.dataset.swiperInit === 'true') return;
-    if (node.dataset) node.dataset.swiperInit = 'true';
+  const container = root && root.querySelectorAll ? root : document;
 
-    // Configuration simple — adapte selon tes besoins
-    const container = node.querySelector('.swiper-container') || node;
-    const options = {
+  const { default: Swiper } = await import('swiper');
+  const { Navigation, Pagination, EffectFade, Autoplay } = await import('swiper/modules');
+
+  const swiperEls = container.querySelectorAll('.swiper');
+  swiperEls.forEach((el) => {
+    if (el.dataset.swiperInit === 'true') return;
+    el.dataset.swiperInit = 'true';
+
+    if (el.classList.contains('swiper-section2')) {
+      new Swiper(el, {
+        modules: [EffectFade, Autoplay],
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
+        loop: true,
+        autoplay: { delay: 3500, disableOnInteraction: false },
+        speed: 1600
+      });
+      return;
+    }
+
+    new Swiper(el, {
+      modules: [Navigation, Pagination],
       loop: true,
       slidesPerView: 1,
-      // ajouter tes options personnalisées ici
-    };
-
-    try {
-      // eslint-disable-next-line no-new
-      new Swiper(container, options);
-    } catch (e) {
-      console.warn('Swiper init failed for node', node, e);
-    }
+      centeredSlides: false,
+      spaceBetween: 20,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      }
+    });
   });
+}
 
-  // Lightbox init (global)
-  try {
-    if (!window.GLightbox) {
-      window.GLightbox = GLightbox && (GLightbox.default || GLightbox);
-    }
-    if (typeof window.GLightbox === 'function') {
-      // create a global instance if needed
-      window._glightboxInstance = window._glightboxInstance || window.GLightbox({ selector: '.glightbox' });
-    }
-  } catch (e) {
-    console.warn('GLightbox init error', e);
-  }
+export async function initLightbox() {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+  const { default: GLightbox } = await import('glightbox');
+  GLightbox({
+    selector: '.embla-spotlight, .hamon-photo',
+    touchNavigation: true,
+    loop: true,
+    openEffect: 'fade',
+    closeEffect: 'fade',
+    slideEffect: 'slide',
+    slideDuration: 420,
+    skin: 'hamon'
+  });
 }

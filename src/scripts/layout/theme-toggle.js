@@ -1,9 +1,8 @@
 /**
- // public/scripts/layout/theme-toggle.js
  * Gère le basculement entre thème clair et sombre.
  * Sauvegarde la préférence dans localStorage.
  */
-
+// src/scripts/layout/theme-toggle.js
 (function () {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
@@ -16,12 +15,12 @@
       rootHtml.classList.toggle('dark', saved === 'dark');
     }
   } catch (e) {
-    // localStorage may be unavailable in some contexts; fail silently
+    // localStorage peut être indisponible (mode privé, etc.)
   }
 
   if (!btnTheme) return;
 
-  // Initialize button text based on current state
+  // Initialise le texte du bouton selon l'état actuel
   btnTheme.textContent = rootHtml.classList.contains('dark') ? '☀️' : '🌙';
 
   btnTheme.addEventListener('click', () => {

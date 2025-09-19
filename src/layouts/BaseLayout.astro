@@ -1,8 +1,10 @@
 ---
 import "../styles/global.css";
-import ScriptsFooter from '../components/ScriptsFooter.astro';
+import '@/scripts/entry-client.js'; // point d’entrée unique côté client
+const { title = "Atelier sous l’Eclipse" } = Astro.props;
 ---
 
+<!DOCTYPE html>
 <html lang="fr" class="transition-colors duration-300 no-js">
   <head>
     <meta charset="UTF-8" />
