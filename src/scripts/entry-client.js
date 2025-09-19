@@ -59,50 +59,114 @@ window.addEventListener('load', () => {
   }, 80);
 });
 
-// Gentle global heal to recover Embla on cold loads / odd deployment timing
-// Runs a couple of retries after load to ensure Embla instances stabilize.
-(function emblaHeal() {
+// Embla recovery + diagnostics (paste near the other heal code / end of file)
+(function emblaRecoveryAndDiag() {
   if (typeof window === 'undefined') return;
 
-  const HEAL_SHORT = 220; // first gentle retry
-  const HEAL_LONG = 800;  // final sanity retry
-  const MAX_ATTEMPTS = 3;
+  const LOG = (...args) => {
+    try { console.debug('[embla-recover]', ...args); } catch (e) {}
+  };
 
-  const attemptInit = (attempt = 1) => {
+  const tryInitAll = () => {
     try {
-      // call the imported function if available, otherwise try the global (legacy)
       if (typeof initEmblaFn === 'function') {
+        LOG('calling initEmblaFn(document)');
         initEmblaFn(document);
       } else if (typeof window.initEmbla === 'function') {
+        LOG('calling window.initEmbla(document)');
         window.initEmbla(document);
+      } else {
+        LOG('no initEmbla function available');
       }
     } catch (e) {
-      console.warn('emblaHeal attempt error', e);
-    }
-
-    // if still no instances, schedule another try (bounded)
-    const count = (window._emblaAPIs || []).length;
-    if (count === 0 && attempt < MAX_ATTEMPTS) {
-      setTimeout(() => attemptInit(attempt + 1), 350);
+      console.warn('[embla-recover] init call failed', e);
     }
   };
 
-  window.addEventListener('load', () => {
-    setTimeout(() => attemptInit(1), HEAL_SHORT);
-    setTimeout(() => attemptInit(1), HEAL_LONG);
-  });
-
-  // also try on pageshow (bfcache) and after a short interaction burst
-  window.addEventListener('pageshow', (ev) => {
-    setTimeout(() => attemptInit(1), HEAL_SHORT);
-  });
-
-  // small safety: if user interacts (scroll/click) soon after load, retry once
-  const onUserInteraction = () => {
-    setTimeout(() => attemptInit(1), 120);
-    window.removeEventListener('scroll', onUserInteraction);
-    window.removeEventListener('click', onUserInteraction);
+  const repairButtonsForce = () => {
+    const prev = document.querySelectorAll('.embla__button--prev');
+    const next = document.querySelectorAll('.embla__button--next');
+    const allBtns = [...prev, ...next];
+    allBtns.forEach(btn => {
+      try {
+        btn.removeAttribute('disabled');
+        btn.disabled = false;
+        btn.classList.remove('is-disabled');
+      } catch (e) {}
+    });
+    LOG('force-removed disabled on', allBtns.length, 'buttons');
   };
-  window.addEventListener('scroll', onUserInteraction, { passive: true });
-  window.addEventListener('click', onUserInteraction);
+
+  const reinitPerNodeIfNeeded = () => {
+    const nodes = Array.from(document.querySelectorAll('.embla'));
+    nodes.forEach((node, i) => {
+      const marked = node.dataset && node.dataset.emblaInit === 'true';
+      if (marked) {
+        // If marked but we have no exposed instances, try to re-init just that node
+        try {
+          LOG(`node[${i}] marked inited=true — attempting targeted initEmbla(node)`);
+          if (typeof initEmblaFn === 'function') initEmblaFn(node);
+          else if (typeof window.initEmbla === 'function') window.initEmbla(node);
+        } catch (e) {
+          console.warn('[embla-recover] targeted init failed for node', i, e);
+        }
+      } else {
+        LOG(`node[${i}] not marked inited (will try init)`);
+        tryInitAll();
+      }
+    });
+  };
+
+  const attempts = { count: 0, max: 4 };
+
+  const attemptCycle = () => {
+    attempts.count++;
+    LOG('attemptCycle', attempts.count, 'window._emblaAPIs length:', (window._emblaAPIs||[]).length);
+
+    // 1) Try calling init globally
+    tryInitAll();
+
+    // 2) Short delay then check if instances exist
+    setTimeout(() => {
+      const count = (window._emblaAPIs || []).length;
+      if (count > 0) {
+        LOG('Embla instances present after attempt', attempts.count, 'count=', count);
+        // Ensure buttons cleared
+        repairButtonsForce();
+        return;
+      }
+
+      // 3) If no instances, try re-init per node
+      LOG('No global instances found — trying per-node reinit');
+      reinitPerNodeIfNeeded();
+
+      // 4) After another short delay, force-enable buttons if still no instances
+      setTimeout(() => {
+        const c2 = (window._emblaAPIs || []).length;
+        LOG('post per-node reinit, _emblaAPIs length=', c2);
+        if (c2 === 0) {
+          // As a last resort, un-disable buttons so UI is usable (user-visible fix)
+          repairButtonsForce();
+        }
+      }, 220);
+    }, 220);
+
+    if (attempts.count < attempts.max) {
+      setTimeout(attemptCycle, 520 * attempts.count); // backoff-ish
+    } else {
+      LOG('attemptCycle completed max attempts');
+    }
+  };
+
+  // Run on load/pageshow and as fallback after some interaction
+  window.addEventListener('load', () => setTimeout(attemptCycle, 180));
+  window.addEventListener('pageshow', () => setTimeout(attemptCycle, 180));
+  // user interaction trigger (one-shot)
+  const onUser = () => {
+    setTimeout(attemptCycle, 120);
+    window.removeEventListener('scroll', onUser);
+    window.removeEventListener('click', onUser);
+  };
+  window.addEventListener('scroll', onUser, { passive: true });
+  window.addEventListener('click', onUser);
 })();
