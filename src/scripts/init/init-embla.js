@@ -73,9 +73,17 @@ export function initEmbla(root = document) {
       return;
     }
 
-    // Expose instance for debug/control (dev only)
-    window._emblaAPIs = window._emblaAPIs || [];
-    window._emblaAPIs.push(embla);
+    // juste après la création de l'instance `embla = EmblaCarousel(...)` et avant setTweenNodes
+    try {
+      // expose instance for debug/control (dev + prod diagnostics)
+      window._emblaAPIs = window._emblaAPIs || [];
+      console.debug('[init-embla] before push, _emblaAPIs length =', (window._emblaAPIs||[]).length);
+      window._emblaAPIs.push(embla);
+      console.debug('[init-embla] pushed embla instance', { embla, _emblaAPIs_len: (window._emblaAPIs||[]).length });
+    } catch (e) {
+      console.error('[init-embla] push to window._emblaAPIs failed', e);
+    }
+
 
     // Parallax setup
     setTweenNodes(embla);
