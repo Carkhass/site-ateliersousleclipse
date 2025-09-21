@@ -1,0 +1,12 @@
+<script>
+  import EmblaCarousel from 'embla-carousel';
+  import { initEmbla } from '../scripts/init/init-embla.js';
+
+  if (typeof window !== 'undefined') {
+    // On cible le premier carousel trouvé dans la page
+    const root = document.querySelector('.embla');
+    if (root) {
+      initEmbla(root, EmblaCarousel);
+    }
+  }
+</script>

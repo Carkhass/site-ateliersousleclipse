@@ -1,8 +1,9 @@
-// public/scripts/animations/reveal-on-scroll.js
-// Sélecteurs d'animations à observer
-// On attrape toutes les variantes fade-slide-* automatiquement
 // src/scripts/animations/reveal-on-scroll.js
-(() => {
+// Gère toutes les animations d'apparition au scroll
+// - Couvre .fade-slide-*, .fade-in, .slide-up, .reveal-on-scroll, .animate-on-scroll
+// - Intègre explicitement .fade-in-up et .fade-in-delay (ancien text-slide-fade-anim)
+// - IntersectionObserver + fallback + MutationObserver
+export function initRevealOnScroll() {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
   const animationSelectors = [
@@ -10,7 +11,9 @@
     '.fade-in',
     '.slide-up',
     '.reveal-on-scroll',
-    '.animate-on-scroll'
+    '.animate-on-scroll',
+    '.fade-in-up',
+    '.fade-in-delay'
   ];
 
   const observedElements = new Set();
@@ -59,6 +62,7 @@
     observeNewElements();
     revealIfInViewport();
 
+    // Cas particulier conservé: carte 3D premium sur desktop
     if (window.innerWidth >= 1024) {
       const cardWrapper = document.querySelector('.premium-section .card-3d-wrapper.fade-slide-up');
       if (cardWrapper) {
@@ -88,6 +92,4 @@
       revealIfInViewport();
     }, 800);
   }
-
-  window.observeNewElements = observeNewElements;
-})();
+}

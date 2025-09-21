@@ -3,7 +3,7 @@
  * Sauvegarde la préférence dans localStorage.
  */
 // src/scripts/layout/theme-toggle.js
-(function () {
+export function initThemeToggle() {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
   const rootHtml = document.documentElement;
@@ -15,12 +15,12 @@
       rootHtml.classList.toggle('dark', saved === 'dark');
     }
   } catch (e) {
-    // localStorage peut être indisponible (mode privé, etc.)
+    // localStorage peut être indisponible
   }
 
   if (!btnTheme) return;
 
-  // Initialise le texte du bouton selon l'état actuel
+  // Initialise le texte du bouton
   btnTheme.textContent = rootHtml.classList.contains('dark') ? '☀️' : '🌙';
 
   btnTheme.addEventListener('click', () => {
@@ -30,4 +30,4 @@
     } catch (e) {}
     btnTheme.textContent = isDark ? '☀️' : '🌙';
   });
-})();
+}

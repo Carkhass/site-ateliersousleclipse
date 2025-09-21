@@ -1,10 +1,8 @@
-// Rôle: initialiser Embla/Swiper au moment opportun (visibles dans le viewport),
-// pour éviter les calculs sur éléments masqués.
 // src/scripts/init/observer-carousels.js
 import { initEmbla } from './init-embla.js';
 import { initSwipers } from './init-swiper-glightbox.js';
 
-export function observeCarousels() {
+export function initObserverCarousels() {
   if (typeof window === 'undefined' || typeof document === 'undefined' || typeof IntersectionObserver === 'undefined') return;
 
   const EMBLA_SELECTOR = '.embla';

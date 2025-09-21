@@ -3,7 +3,7 @@
  * Ferme automatiquement le menu lors d'un clic sur un lien ou sur l'overlay.
  */
 // src/scripts/layout/menu-mobile.js
-(() => {
+export function initMenuMobile() {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
   const menuToggle = document.getElementById('menu-toggle');
@@ -23,9 +23,7 @@
     menu.classList.add('closing');
     overlay.classList.remove('active');
     menuToggle.classList.remove('active');
-    setTimeout(() => {
-      menu.classList.remove('closing');
-    }, 300);
+    setTimeout(() => menu.classList.remove('closing'), 300);
   }
 
   menuToggle.addEventListener('click', () => {
@@ -37,4 +35,4 @@
   menu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', closeMenu);
   });
-})();
+}

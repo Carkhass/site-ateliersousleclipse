@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@astrojs/tailwind": "^5.1.5",
-    "astro": "^5.13.3",
+    "astro": "^5.13.9",
     "autoprefixer": "^10.4.21",
     "embla-carousel": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",

@@ -1,8 +1,6 @@
 ---
-import "../styles/global.css";
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
-
 
 <BaseLayout title="Accueil">
 
@@ -340,6 +338,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </div>
 </section>
 
+<script>
+  import { initSwipers, initLightbox } from '../scripts/init/init-swiper-glightbox.js';
+
+  if (typeof window !== 'undefined') {
+    // Initialise tous les sliders Swiper présents dans la page
+    initSwipers();
+
+    // Initialise la lightbox sur les images ciblées
+    initLightbox();
+  }
+</script>
+
+
 
 <!-- ========================================================= -->
 <!-- SECTION 3 : Inspiration + Galerie hamon (Embla Carousel)  -->
@@ -403,18 +414,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   </div>
 
 </section>
+<script>
+  import EmblaCarousel from 'embla-carousel';
+  import { initEmbla } from '../scripts/init/init-embla.js';
+
+  if (typeof window !== 'undefined') {
+    document.querySelectorAll('.embla').forEach((root) => {
+      initEmbla(root, EmblaCarousel);
+    });
+  }
+</script>
 
 
 <!-- ========================================================= -->
 <!-- BLOC PREMIUM FINAL AVEC IMAGE, CITATION, ANIMATIONS & CARTE 3D -->
 <!-- ========================================================= -->
-<section class="parallax-section premium-section relative w-full flex items-center justify-center text-center text-white overflow-hidden"
+<section 
+  class="parallax-section premium-section relative w-full flex items-center justify-center text-center text-white overflow-hidden"
   data-parallax-speed="120"
   data-parallax-zoom="1.05"
-  data-parallax-zoom-strength="0.2">
-
+  data-parallax-zoom-strength="0.2"
+>
   <!-- Calque parallaxe : uniquement l'image -->
-  <div class="absolute inset-0" data-parallax-target>
+  <div class="absolute inset-0" data-parallax-target 
+       style="transform: translateY(0px) scale(1); will-change: transform;">
     <img 
       src="/images/packaging-ateliersousleclipse.jpg"
       alt="Emballage artisanal d’un couteau"
@@ -425,7 +448,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- Overlay sombre -->
   <div class="absolute inset-0 bg-black/45 backdrop-blur-[2px]"></div>
 
-  <!-- Contenu interactif (hors calque transformé) -->
+  <!-- Contenu interactif -->
   <div class="relative z-10 px-4 max-w-6xl w-full space-y-6">
     <p class="text-xl md:text-2xl font-serif italic fade-slide-up">
       « Chaque lame raconte une histoire… écrivons la vôtre. »
@@ -464,6 +487,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </section>
 
 
+<script>
+  import { initParallax } from '../scripts/layout/parallax.js';
+  import { initHeroAnimation } from '../scripts/layout/hero-animation.js';
 
+  if (typeof window !== 'undefined') {
+    initParallax();
+    initHeroAnimation();
+  }
+</script>
 
 </BaseLayout
