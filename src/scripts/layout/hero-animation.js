@@ -43,7 +43,7 @@ export function initHeroAnimation() {
 
     if (window.innerWidth <= 1024) {
       const letters = el.querySelectorAll('.letter');
-      const cutIndex = 47;
+      const cutIndex = 37;
       if (letters[cutIndex]) {
         const br = document.createElement('br');
         br.style.display = 'block';
