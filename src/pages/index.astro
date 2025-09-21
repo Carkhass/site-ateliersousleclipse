@@ -490,10 +490,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <script>
   import { initParallax } from '../scripts/layout/parallax.js';
   import { initHeroAnimation } from '../scripts/layout/hero-animation.js';
+  import { initCarte3D } from '../scripts/features/carte-3d.js';
 
   if (typeof window !== 'undefined') {
     initParallax();
     initHeroAnimation();
+    initCarte3D();
   }
 </script>
 
