@@ -380,7 +380,7 @@ header nav a:hover {
 /* Desktop : fond fixe pur CSS */
 @media (min-width: 769px) {
   .poincon-section {
-    background-image: url('/images/gros-plan-poincon.jpg');
+    background-image: url('/images/gros-plan-poincon.webp');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -821,7 +821,7 @@ form button[type="submit"]:hover {
 
 /* Thème Table */
 .theme-table {
-  --slider-bg: url('/images/table/fond-table5.png');
+  --slider-bg: url('/images/table/fond-table5.webp');
   --caption-bg: url('/images/table/etiquette-tissu.png');
 }
 
@@ -867,7 +867,7 @@ form button[type="submit"]:hover {
 
 /* Thème Outdoor */
 .theme-outdoor {
-  --slider-bg: url('/images/outdoor/fond outdoor3.png');
+  --slider-bg: url('/images/outdoor/fond outdoor3.webp');
   --caption-bg: url('/images/outdoor/etiquette-bois.png');
 }
 
