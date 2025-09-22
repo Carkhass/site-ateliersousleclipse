@@ -628,66 +628,43 @@ form button[type="submit"]:hover {
 /* Grille commune */
 .section-2-grid {
   display: grid;
-  gap: 3rem;
+  gap: 2rem;
   align-items: center;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-/* Dispositions desktop */
-.section-2-grid.slider-left,
-.lg\:grid-cols-
+/* Variantes d’alternance */
+.section-2-grid--left { grid-template-columns: 65% 35%; }
+.section-2-grid--right { grid-template-columns: 35% 65%; }
 
-\[65\%\_35\%\]
-
- {
-  grid-template-columns: 65% 35%;
-}
-
-.section-2-grid.slider-right,
-.lg\:grid-cols-
-
-\[35\%\_65\%\]
-
- {
-  grid-template-columns: 35% 65%;
-}
-
-/* Responsive : sur mobile, slider toujours au-dessus du texte */
-@media (max-width: 1440px) {
-  .section-2-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .section-2-grid > .swiper {
-    order: -1; /* slider en haut */
-  }
-}
-
-.section-2-grid.slider-right {
-  padding-right: 4rem; /* conserve sur desktop */
-}
-
-/* Dès que la grille passe en 1 colonne → on annule */
-@media (max-width: 1440px) {
-  .section-2-grid.slider-right {
+/* Mobile: 1 colonne, pas de compression latérale */
+@media (max-width: 768px) {
+  .section-2-grid,
+  .section-2-grid--left,
+  .section-2-grid--right {
+    grid-template-columns: 1fr;
+    padding-left: 0;
     padding-right: 0;
-    padding-left: 0; /* optionnel : équilibre visuel */
+  }
+  .my-knives-swiper {
+    border-radius: 0;
+    width: 100vw;
   }
 }
+
 
 /* =========================================================
    SLIDER COMMUN
    ========================================================= */
 .my-knives-swiper {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   width: 100%;
-  height: 840px; /* hauteur totale slider+fond */
+  aspect-ratio: 16/9; /* à ajuster selon le vrai ratio du fond */
   border-radius: 20px;
-  padding: 20px 0;
   box-shadow: 0 8px 20px rgba(0,0,0,0.6);
   background: var(--slider-bg) center/cover no-repeat;
+  overflow: hidden;
 }
 
 @media (max-width: 414px) {
@@ -703,16 +680,17 @@ form button[type="submit"]:hover {
   }
 }
 
-
 /* Slides */
 .my-knives-swiper .swiper-slide {
-  display: flex;
-  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
   transition: opacity 0.4s ease;
 }
 
 /* Conteneur image */
 .knife-image {
+  position: absolute;
   transition: transform 0.4s ease;
 }
 
@@ -727,16 +705,14 @@ form button[type="submit"]:hover {
 .my-knives-swiper img {
   filter: drop-shadow(0 5px 10px rgba(0,0,0,0.9));
   display: block;
-  max-width: 520px;
-  width: 100%;
   height: auto;
+  max-width: none; /* on lève la limite fixe */
 }
-
 
 /* Légende */
 .my-knives-swiper figcaption {
-  margin-top: 0.75rem;
-  margin-bottom: 2rem;
+  position: absolute;
+  margin: 0;
   font-family: var(--font-serif);
   font-weight: 600;
   font-size: 2rem;
@@ -767,245 +743,113 @@ form button[type="submit"]:hover {
   color: var(--color-bg);
 }
 
+
 /* =========================================================
    VARIABLES PAR THÈME
    ========================================================= */
 
-/* Thème Cuisine */
+/* -------------------------
+   Thème Cuisine (refactor)
+   ------------------------- */
 .theme-cuisine {
   --slider-bg: url('/images/cuisine/planche-2-ateliersousleclipse.webp');
   --caption-bg: url('/images/cuisine/papier.png');
+
+  /* Couteau */
+  --knife-x: 70%;
+  --knife-y: 42%;
+  --knife-scale: 0.6;
+  --knife-rotate: -14deg;
+
+  /* Légende */
+  --caption-x: 70%;
+  --caption-y: 75%;
+  --caption-scale: 0.8;
 }
 
-/* MOBILE : ≤768px */
-@media (max-width: 768px) {
-  .theme-cuisine .my-knives-swiper img {
-    transform: scale(1) rotate(-10deg) translateX(100px) translateY(-40px);
-  }
-  .theme-cuisine figcaption {
-    transform: scale(0.7) translateX(180px) translateY(-300px);
-  }
+/* Application des variables */
+.theme-cuisine .knife-image {
+  top: var(--knife-y);
+  left: var(--knife-x);
+  transform: translate(-50%, -50%) scale(var(--knife-scale)) rotate(var(--knife-rotate));
+}
+.theme-cuisine .knife-image img {
+  width: var(--knife-width);
+}
+.theme-cuisine figcaption {
+  top: var(--caption-y);
+  left: var(--caption-x);
+  transform: translate(-50%, -50%) scale(var(--caption-scale));
 }
 
-/* TABLETTE : 769px à 1440px */
-@media (min-width: 769px) and (max-width: 1440px) {
-  .theme-cuisine .my-knives-swiper img {
-    transform: scale(1.6) translateX(180px) translateY(5px) rotate(-10deg);
-  }
-  .theme-cuisine figcaption {
-    transform: scale(0.8) translateX(380px) translateY(-150px);
-  }
-}
-
-/* INTERMÉDIAIRE : 1441px à 1920px */
-@media (min-width: 1441px) and (max-width: 1920px) {
-  .theme-cuisine .my-knives-swiper img {
-    transform: scale(1.7) translateX(110px) translateY(35px) rotate(-10deg);
-  }
-  .theme-cuisine figcaption {
-    transform: scale(0.9) translateX(300px);
-  }
-}
-
-/* DESKTOP LARGE : >1920px */
-@media (min-width: 1921px) {
-  .theme-cuisine .my-knives-swiper img {
-    transform: scale(2) rotate(-10deg) translateX(130px) translateY(40px);
-  }
-  .theme-cuisine figcaption {
-    transform: scale(0.8) translateX(440px);
+/* Ajustements mobiles si besoin */
+@media (max-width: 414px) {
+  .theme-cuisine {
+    --knife-width: 34%;
+    --knife-y: 40%;
+    --caption-y: 72%;
   }
 }
 
 
-/* Thème Table */
+/* -------------------------
+   Thème Table (placeholder)
+   ------------------------- */
 .theme-table {
   --slider-bg: url('/images/table/fond-table5.webp');
   --caption-bg: url('/images/table/etiquette-tissu.png');
+
+  /* TODO: définir les variables comme pour Cuisine */
+  --knife-x: 45%;
+  --knife-y: 65%;
+  --knife-scale: 0.43;
+  --knife-rotate: 0deg;
+
+  --caption-x: 35%;
+  --caption-y: 30%;
+  --caption-scale: 0.7;
+}
+.theme-table .knife-image {
+  top: var(--knife-y);
+  left: var(--knife-x);
+  transform: translate(-50%, -50%) scale(var(--knife-scale)) rotate(var(--knife-rotate));
+}
+.theme-table .knife-image img { width: var(--knife-width); }
+.theme-table figcaption {
+  top: var(--caption-y);
+  left: var(--caption-x);
+  transform: translate(-50%, -50%) scale(var(--caption-scale));
 }
 
-/* MOBILE : ≤768px */
-@media (max-width: 768px) {
-  .theme-table .my-knives-swiper img {
-    transform: scale(0.60) translateX(-60px) translateY(20px);
-  }
-  .theme-table figcaption {
-    transform: scale(0.4) translateX(-240px) translateY(-1150px);
-  }
-}
 
-/* TABLETTE : 769px à 1440px */
-@media (min-width: 769px) and (max-width: 1440px) {
-  .theme-table .my-knives-swiper img {
-    transform: scale(0.93) translateX(-60px) translateY(160px);
-  }
-  .theme-table figcaption {
-    transform: scale(0.5) translateX(-220px) translateY(-850px);
-  }
-}
-
-/* INTERMÉDIAIRE : 1441px à 1920px */
-@media (min-width: 1441px) and (max-width: 1920px) {
-  .theme-table .my-knives-swiper img {
-    transform: scale(0.93) translateX(-60px) translateY(260px);
-  }
-  .theme-table figcaption {
-    transform: scale(0.6) translateX(-220px) translateY(-550px);
-  }
-}
-
-/* DESKTOP LARGE : >1920px */
-@media (min-width: 1921px) {
-  .theme-table .my-knives-swiper img {
-    transform: scale(1.25) translateX(-60px) translateY(210px);
-  }
-  .theme-table figcaption {
-    transform: scale(0.6) translateX(-360px) translateY(-600px);
-  }
-}
-
-/* Thème Outdoor */
+/* -------------------------
+   Thème Outdoor (placeholder)
+   ------------------------- */
 .theme-outdoor {
   --slider-bg: url('/images/outdoor/fond outdoor3.webp');
   --caption-bg: url('/images/outdoor/etiquette-bois.png');
+
+  /* TODO: définir les variables comme pour Cuisine */
+  --knife-x: 50%;
+  --knife-y: 50%;
+  --knife-scale: 1;
+  --knife-rotate: 0deg;
+  --knife-width: 30%;
+
+  --caption-x: 50%;
+  --caption-y: 70%;
+  --caption-scale: 0.8;
 }
-
-/* MOBILE : ≤768px */
-@media (max-width: 768px) {
-  .theme-outdoor .my-knives-swiper img {
-    transform: scale(0.85)translateX(-140px) translateY(-30px) rotate(-20deg);
-  }
-  .theme-outdoor figcaption {
-    transform: scale(0.7) translateX(-160px) translateY(-260px);
-  }
+.theme-outdoor .knife-image {
+  top: var(--knife-y);
+  left: var(--knife-x);
+  transform: translate(-50%, -50%) scale(var(--knife-scale)) rotate(var(--knife-rotate));
 }
-
-/* TABLETTE : 769px à 1440px */
-@media (min-width: 769px) and (max-width: 1440px) {
-  .theme-outdoor .my-knives-swiper img {
-    transform: scale(1.4) translateX(-170px) translateY(30px) rotate(-20deg);
-  }
-  .theme-outdoor figcaption {
-    transform: scale(0.8) translateX(-300px) translateY(-80px);
-  }
-}
-
-/* INTERMÉDIAIRE : 1441px à 1920px */
-@media (min-width: 1441px) and (max-width: 1920px) {
-  .theme-outdoor .my-knives-swiper img {
-    transform: scale(1.6) rotate(-20deg) translateX(-170px) translateY(60px);
-  }
-  .theme-outdoor figcaption {
-    transform: scale(0.8) translateX(-280px) translateY(120px);
-  }
-}
-
-/* DESKTOP LARGE : >1920px */
-@media (min-width: 1921px) {
-  .theme-outdoor .my-knives-swiper img {
-    transform: scale(1.8) rotate(-20deg) translateX(-190px) translateY(80px);
-  }
-  .theme-outdoor figcaption {
-    transform: scale(0.8) translateX(-300px) translateY(140px);
-  }
-}
-
-.theme-outdoor .my-knives-swiper .swiper-button-prev,
-.theme-outdoor .my-knives-swiper .swiper-button-next {
-  color: var(--color-bg);
-}
-
-
-@media (max-width: 414px) {
-  .my-knives-swiper,
-  .my-knives-swiper .swiper-slide {
-    height: auto !important;
-    aspect-ratio: 3 / 4; /* ratio harmonieux */
-    max-height: calc(var(--vh) * 60);
-  }
-
-  .my-knives-swiper img {
-    width: 100%;
-    height: auto;
-    max-height: calc(var(--vh) * 60);
-    object-fit: contain;
-  }
-
-  /* Supprimer les transform figés en px */
-  .my-knives-swiper .slide-content {
-    transform: none !important;
-  }
-}
-
-/* =========================================================
-   PATCH MOBILE PREMIUM ≤414px
-   ========================================================= */
-
-/* Cuisine */
-@media (max-width: 414px) {
-  .theme-cuisine .my-knives-swiper {
-    max-height: calc(var(--vh) * 60);
-    overflow: hidden;
-  }
-  .theme-cuisine .my-knives-swiper img {
-    /* Ancien : scale(1) rotate(-10deg) translateX(100px) translateY(-40px) */
-    transform: scale(1) rotate(-10deg) translateX(24%) translateY(-8%);
-  }
-  .theme-cuisine figcaption {
-    /* Ancien : scale(0.7) translateX(180px) translateY(-300px) */
-    transform: scale(0.7) translateX(44%) translateY(-60%);
-  }
-}
-
-/* Table */
-@media (max-width: 414px) {
-  .theme-table .my-knives-swiper {
-    max-height: calc(var(--vh) * 60);
-    overflow: hidden;
-  }
-  .theme-table .my-knives-swiper img {
-    /* Ancien : scale(0.60) translateX(-60px) translateY(20px) */
-    transform: scale(0.60) translateX(-14%) translateY(4%);
-  }
-  .theme-table figcaption {
-    /* Ancien : scale(0.4) translateX(-240px) translateY(-1150px) */
-    transform: scale(0.4) translateX(-58%) translateY(-240%);
-  }
-}
-
-/* Outdoor */
-@media (max-width: 414px) {
-  .theme-outdoor .my-knives-swiper {
-    max-height: calc(var(--vh) * 60);
-    overflow: hidden;
-  }
-  .theme-outdoor .my-knives-swiper img {
-    /* Ancien : scale(0.85) translateX(-140px) translateY(-30px) rotate(-20deg) */
-    transform: scale(0.85) translateX(-34%) translateY(-6%) rotate(-20deg);
-  }
-  .theme-outdoor figcaption {
-    /* Ancien : scale(0.7) translateX(-160px) translateY(-260px) */
-    transform: scale(0.7) translateX(-39%) translateY(-52%);
-  }
-}
-
-/* Commun sliders mobile */
-@media (max-width: 414px) {
-  .my-knives-swiper,
-  .my-knives-swiper .swiper-slide {
-    height: auto !important;
-    aspect-ratio: 3 / 4;
-    max-height: calc(var(--vh) * 60);
-  }
-  .my-knives-swiper img {
-    width: 100%;
-    height: auto;
-    max-height: calc(var(--vh) * 60);
-    object-fit: contain;
-  }
-  .my-knives-swiper .slide-content {
-    transform: none !important;
-  }
+.theme-outdoor .knife-image img { width: var(--knife-width); }
+.theme-outdoor figcaption {
+  top: var(--caption-y);
+  left: var(--caption-x);
+  transform: translate(-50%, -50%) scale(var(--caption-scale));
 }
 
 
