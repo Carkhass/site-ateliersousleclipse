@@ -631,25 +631,68 @@ form button[type="submit"]:hover {
   gap: 2rem;
   align-items: center;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding-inline: 0; /* pas de padding global, géré par section */
 }
 
 /* Variantes d’alternance */
 .section-2-grid--left { grid-template-columns: 65% 35%; }
-.section-2-grid--right { grid-template-columns: 35% 65%; }
+.section-2-grid--right { 
+  grid-template-columns: 35% calc(65% - 30px);
+  padding-right: 30px; /* marge symétrique côté droit */
+}
 
-/* Mobile: 1 colonne, pas de compression latérale */
+/* Sliders dans la grille */
+.section-2-grid .my-knives-swiper {
+  margin: 0;
+  width: auto;       /* largeur naturelle */
+  max-width: 100%;   /* sécurité */
+}
+
+/* Cuisine / Outdoor → slider aligné à droite de la colonne */
+.section-2-grid--left .my-knives-swiper {
+  justify-self: end;
+}
+
+/* Respiration côté droit uniquement pour Table */
+.section-2-grid--right .my-knives-swiper {
+  justify-self: start;   /* collé au texte */
+  margin-right: 30px;    /* ✅ marge côté bord écran */
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
 @media (max-width: 768px) {
+  .section-couteaux {
+    padding: 0; 
+    padding-top: 30px;   /* respiration en haut */
+    padding-bottom: 40px;/* respiration en bas */
+  }
+
   .section-2-grid,
   .section-2-grid--left,
   .section-2-grid--right {
     grid-template-columns: 1fr;
-    padding-left: 0;
-    padding-right: 0;
+    padding-inline: 0; /* supprime le padding desktop */
   }
-  .my-knives-swiper {
-    border-radius: 0;
+
+  /* Slider toujours en premier */
+  .section-2-grid .my-knives-swiper {
+    order: 1;
     width: 100vw;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  /* Texte toujours en dessous */
+  .section-2-grid > div:not(.my-knives-swiper) {
+    order: 2;
+  }
+
+  /* Annule le padding droit spécifique en mobile */
+  .section-2-grid--right {
+    padding-right: 0;
   }
 }
 
@@ -659,7 +702,6 @@ form button[type="submit"]:hover {
    ========================================================= */
 .my-knives-swiper {
   position: relative;
-  width: 100%;
   aspect-ratio: 16/9; /* à ajuster selon le vrai ratio du fond */
   border-radius: 20px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.6);
@@ -674,16 +716,10 @@ form button[type="submit"]:hover {
   }
 }
 
-@media (min-width: 1441px) {
-  .my-knives-swiper {
-    height: 840px;
-  }
-}
-
 /* Slides */
 .my-knives-swiper .swiper-slide {
   position: relative;
-  width: 100%;
+  /* width: 100%; ❌ supprimé pour éviter le collage */
   height: 100%;
   transition: opacity 0.4s ease;
 }
@@ -692,6 +728,11 @@ form button[type="submit"]:hover {
 .knife-image {
   position: absolute;
   transition: transform 0.4s ease;
+}
+.knife-image img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* Figure et image */
@@ -709,27 +750,36 @@ form button[type="submit"]:hover {
   max-width: none; /* on lève la limite fixe */
 }
 
-/* Légende */
+/* Étiquette (figcaption) */
 .my-knives-swiper figcaption {
   position: absolute;
   margin: 0;
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 2rem;
   text-align: center;
   color: var(--color-accent);
-  display: flex;
+  display: inline-flex;          /* largeur suit le texte */
   align-items: center;
   justify-content: center;
-  min-width: 200px;
-  min-height: 100px;
-  padding: 0.6rem 1.5rem;
+  white-space: nowrap;           /* pas de retour à la ligne */
+  
+  /* Hauteur homogène */
+  font-size: clamp(0.9rem, 1.2vw, 1.6rem);
+  padding: 0.5em 1.5em;          /* padding en em → suit la police */
+  line-height: 1;
+
   background-image: var(--caption-bg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 6px;
   filter: drop-shadow(0 2px 6px rgba(0,0,0,0.9));
+
+  /* Position pilotée par variables */
+  top: var(--caption-y);
+  left: var(--caption-x);
+  transform: translate(-50%, -50%);
+  width: auto;                   /* largeur auto → suit le texte */
 }
 
 /* Pagination interne */
@@ -742,6 +792,7 @@ form button[type="submit"]:hover {
 .my-knives-swiper .swiper-button-next {
   color: var(--color-bg);
 }
+
 
 
 /* =========================================================
@@ -758,98 +809,117 @@ form button[type="submit"]:hover {
   /* Couteau */
   --knife-x: 70%;
   --knife-y: 42%;
-  --knife-scale: 0.6;
-  --knife-rotate: -14deg;
+  --knife-rotate: -20deg;
+  --knife-width: 65%;
 
-  /* Légende */
-  --caption-x: 70%;
+  /* Étiquette */
+  --caption-x: 75%;
   --caption-y: 75%;
-  --caption-scale: 0.8;
 }
 
 /* Application des variables */
 .theme-cuisine .knife-image {
+  position: absolute;
   top: var(--knife-y);
   left: var(--knife-x);
-  transform: translate(-50%, -50%) scale(var(--knife-scale)) rotate(var(--knife-rotate));
-}
-.theme-cuisine .knife-image img {
   width: var(--knife-width);
-}
-.theme-cuisine figcaption {
-  top: var(--caption-y);
-  left: var(--caption-x);
-  transform: translate(-50%, -50%) scale(var(--caption-scale));
+  transform: translate(-50%, -50%) rotate(var(--knife-rotate));
+  z-index: 2;
 }
 
 /* Ajustements mobiles si besoin */
 @media (max-width: 414px) {
   .theme-cuisine {
-    --knife-width: 34%;
+    --knife-width: 60%;
     --knife-y: 40%;
     --caption-y: 72%;
   }
+
+  .theme-cuisine figcaption {
+    font-size: clamp(0.7rem, 2.5vw, 1.2rem); /* police adaptée mobile */
+  }
 }
 
-
 /* -------------------------
-   Thème Table (placeholder)
+   Thème Table (refactor)
    ------------------------- */
 .theme-table {
   --slider-bg: url('/images/table/fond-table5.webp');
   --caption-bg: url('/images/table/etiquette-tissu.png');
 
-  /* TODO: définir les variables comme pour Cuisine */
+  /* Couteau */
   --knife-x: 45%;
   --knife-y: 65%;
-  --knife-scale: 0.43;
   --knife-rotate: 0deg;
+  --knife-width: 43%;   /* ancien scale(0.43) → largeur en % */
 
-  --caption-x: 35%;
-  --caption-y: 30%;
-  --caption-scale: 0.7;
+  /* Étiquette */
+  --caption-x: 42%;
+  --caption-y: 27%;
 }
+
 .theme-table .knife-image {
+  position: absolute;
   top: var(--knife-y);
   left: var(--knife-x);
-  transform: translate(-50%, -50%) scale(var(--knife-scale)) rotate(var(--knife-rotate));
+  width: var(--knife-width);
+  transform: translate(-50%, -50%) rotate(var(--knife-rotate));
+  z-index: 2;
 }
-.theme-table .knife-image img { width: var(--knife-width); }
-.theme-table figcaption {
-  top: var(--caption-y);
-  left: var(--caption-x);
-  transform: translate(-50%, -50%) scale(var(--caption-scale));
+
+/* Ajustements mobiles */
+@media (max-width: 414px) {
+  .theme-table {
+    --knife-width: 40%;
+    --knife-y: 64%;
+    --caption-y: 28%;
+    --caption-x: 42%;
+  }
+
+  .theme-table figcaption {
+    font-size: clamp(0.6rem, 2.5vw, 1.2rem);
+  }
 }
 
 
 /* -------------------------
-   Thème Outdoor (placeholder)
+   Thème Outdoor (refactor)
    ------------------------- */
 .theme-outdoor {
   --slider-bg: url('/images/outdoor/fond outdoor3.webp');
   --caption-bg: url('/images/outdoor/etiquette-bois.png');
 
-  /* TODO: définir les variables comme pour Cuisine */
-  --knife-x: 50%;
-  --knife-y: 50%;
-  --knife-scale: 1;
+  /* Couteau */
+  --knife-x: 33%;
+  --knife-y: 55%;
   --knife-rotate: 0deg;
-  --knife-width: 30%;
+  --knife-width: 55%;   /* ancien scale(1) → largeur en % */
 
+  /* Étiquette */
   --caption-x: 50%;
   --caption-y: 70%;
-  --caption-scale: 0.8;
 }
+
 .theme-outdoor .knife-image {
+  position: absolute;
   top: var(--knife-y);
   left: var(--knife-x);
-  transform: translate(-50%, -50%) scale(var(--knife-scale)) rotate(var(--knife-rotate));
+  width: var(--knife-width);
+  transform: translate(-50%, -50%) rotate(var(--knife-rotate));
+  z-index: 2;
 }
-.theme-outdoor .knife-image img { width: var(--knife-width); }
-.theme-outdoor figcaption {
-  top: var(--caption-y);
-  left: var(--caption-x);
-  transform: translate(-50%, -50%) scale(var(--caption-scale));
+
+/* Ajustements mobiles */
+@media (max-width: 414px) {
+  .theme-outdoor {
+    --knife-width: 24%;
+    --knife-y: 48%;
+    --caption-y: 68%;
+  }
+
+  .theme-outdoor figcaption {
+    font-size: clamp(0.7rem, 2.5vw, 1.2rem);
+  }
 }
 
 
