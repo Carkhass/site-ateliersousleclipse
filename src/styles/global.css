@@ -1303,7 +1303,7 @@ form button[type="submit"]:hover {
 
 @media (max-width: 414px) {
   .hero-section {
-    height: calc(var(--vh) * 40); /* 40% de la hauteur visible */
+    height: calc(var(--vh) * 20); /* 40% de la hauteur visible */
     min-height: 240px; /* sécurité */
     background-size: cover;
     background-position: center;
