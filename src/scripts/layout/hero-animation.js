@@ -38,7 +38,7 @@ export function initHeroAnimation() {
     let delay = 0;
     el.querySelectorAll('.letter').forEach(span => {
       span.style.animationDelay = `${delay}s`;
-      delay += 0.03;
+      delay += 0.02;
     });
 
     if (window.innerWidth <= 1024) {
@@ -56,8 +56,8 @@ export function initHeroAnimation() {
     el.style.opacity = 1;
   };
 
-  const fadeInDuration = 600;
-  const extraDelay = 100;
+  const fadeInDuration = 100;
+  const extraDelay = 0;
   setTimeout(() => {
     animateSubtitle(subtitle);
   }, fadeInDuration + extraDelay);

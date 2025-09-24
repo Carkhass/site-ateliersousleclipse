@@ -172,6 +172,85 @@ main {
   padding-top: 5rem; /* Compense la hauteur du header fixe */
 }
 
+/* Hero bien centré */
+#hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* centre horizontalement */
+  justify-content: center; /* centre verticalement */
+  text-align: center;
+}
+
+#hero-logo-anchor,
+#hero-title-anchor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+#hero-logo,
+#hero-title {
+  display: block;
+  margin: 0 auto;
+  /* plus de transition:none !important ici */
+  will-change: transform;
+}
+
+
+/* États visuels (appliqués par JS) */
+#hero-logo.in-hero { width: 5rem; height: 5rem; }
+#hero-logo.in-header { width: 3rem; height: 3rem; }
+
+#hero-title.in-hero {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+#hero-title.in-header {
+  font-size: 1.25rem;
+  text-align: left !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Ghosts: par défaut cachés, ne s’affichent QUE quand l’élément voyage */
+.ghost {
+  visibility: hidden;
+  pointer-events: none;
+  display: none; /* important: évite le décalage à gauche au chargement */
+}
+#hero-logo-ghost { width: 5rem; height: 5rem; }
+#hero-title-ghost { font-size: clamp(2rem, 6vw, 3.5rem); }
+
+/* Header brand neutre */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+#header-logo-placeholder,
+#header-title-placeholder {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+#header-logo-placeholder:empty,
+#header-title-placeholder:empty {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Performance hints */
+#hero-logo, #hero-title { will-change: transform; }
+
+
+
+
+
+
 /* État visuel du header au scroll */
 #site-header.scrolled {
   background-color: rgba(var(--color-bg-rgb), 0.65);
@@ -1206,7 +1285,7 @@ form button[type="submit"]:hover {
    ========================================================= */
 
 .hero-section {
-  height: calc(var(--vh) * 40);
+  height: calc(var(--vh) * 30);
   background-size: contain; /* ou cover si tu veux recadrer */
   background-position: center;
 }
@@ -1221,26 +1300,6 @@ form button[type="submit"]:hover {
   margin: 1rem auto 0;
 }
 
-/* Hero fade */
-#hero-title {
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-#hero-title.fade-out {
-  opacity: 0;
-  transform: translateY(-20px) scale(0.9);
-}
-
-/* Animation scale du header title */
-#header-title {
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  transform: scale(0.9);
-}
-#header-title.fade-in {
-  opacity: 1 !important;
-  transform: scale(1);
-}
-
-
 /* --- Style spécifique des lettres du sous-titre du hero --- */
 .hero-subtitle .letter {
   /* On peut surcharger ici si on veut un style différent du global */
@@ -1251,7 +1310,7 @@ form button[type="submit"]:hover {
   opacity: 0;
   transform: translateY(8px); /* léger mouvement vers le haut */
   display: inline-block;
-  animation: fadeInUpLetter 0.4s ease-out forwards;
+  animation: fadeInUpLetter 0.1s ease-out forwards;
 }
 
 @keyframes fadeInUpLetter {

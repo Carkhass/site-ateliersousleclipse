@@ -1,8 +1,5 @@
 // src/scripts/animations/reveal-on-scroll.js
 // Gère toutes les animations d'apparition au scroll
-// - Couvre .fade-slide-*, .fade-in, .slide-up, .reveal-on-scroll, .animate-on-scroll
-// - Intègre explicitement .fade-in-up et .fade-in-delay (ancien text-slide-fade-anim)
-// - IntersectionObserver + fallback + MutationObserver
 export function initRevealOnScroll() {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
@@ -53,7 +50,8 @@ export function initRevealOnScroll() {
       const r = el.getBoundingClientRect();
       const inView = r.top < (window.innerHeight || document.documentElement.clientHeight) && r.bottom > 0;
       if (inView) {
-        setTimeout(() => el.classList.add('visible'), 100);
+        // 🔧 Patch : toujours déclencher avec un petit délai pour forcer l'anim
+        setTimeout(() => el.classList.add('visible'), 150);
       }
     });
   }
@@ -72,6 +70,15 @@ export function initRevealOnScroll() {
         }
       }
     }
+
+    // 🔧 Patch spécifique : forcer le logo et le titre du hero à jouer leur anim au chargement
+    const heroEls = [document.getElementById("hero-logo"), document.getElementById("hero-title")];
+    heroEls.forEach(el => {
+      if (el) {
+        el.classList.remove("visible"); // s'assurer qu'ils partent invisibles
+        setTimeout(() => el.classList.add("visible"), 200); // déclenche l'anim
+      }
+    });
   });
 
   if (typeof MutationObserver !== 'undefined') {
