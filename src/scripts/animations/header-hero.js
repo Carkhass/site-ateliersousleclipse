@@ -1,4 +1,3 @@
-// src/scripts/header-hero.js
 export function initHeaderHero() {
   const heroTitle = document.getElementById('hero-title');
   const headerTitle = document.getElementById('header-title');
@@ -7,19 +6,20 @@ export function initHeaderHero() {
     if (!heroTitle || !headerTitle) return;
 
     const heroBottom = heroTitle.getBoundingClientRect().bottom;
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
-    // Même logique desktop & mobile : crossfade
+    // Crossfade desktop & mobile
     if (heroBottom <= 120) {
       // Hero disparaît
       heroTitle.classList.add('fade-out');
+      heroTitle.style.visibility = "hidden"; // 👈 disparaît vraiment du flux
 
-      // Header apparaît
+      // Header apparaît avec scale
       headerTitle.classList.remove('hidden');
       headerTitle.classList.add('fade-in');
     } else {
       // Hero revient
       heroTitle.classList.remove('fade-out');
+      heroTitle.style.visibility = "visible";
 
       // Header disparaît
       headerTitle.classList.add('hidden');

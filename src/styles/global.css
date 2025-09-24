@@ -1230,14 +1230,15 @@ form button[type="submit"]:hover {
   transform: translateY(-20px) scale(0.9);
 }
 
-/* Header fade */
+/* Animation scale du header title */
 #header-title {
-  transition: opacity 0.6s ease;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: scale(0.9);
 }
 #header-title.fade-in {
   opacity: 1 !important;
+  transform: scale(1);
 }
-
 
 
 /* --- Style spécifique des lettres du sous-titre du hero --- */
