@@ -622,7 +622,8 @@ form button[type="submit"]:hover {
   overflow-x: hidden;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  padding: 30px;
+  padding: 30px; /* respiration globale gauche/droite */
+  box-sizing: border-box;
 }
 
 /* Grille commune */
@@ -631,68 +632,71 @@ form button[type="submit"]:hover {
   gap: 2rem;
   align-items: center;
   margin: 0 auto;
-  padding-inline: 0; /* pas de padding global, géré par section */
+  box-sizing: border-box;
 }
 
-/* Variantes d’alternance */
-.section-2-grid--left { grid-template-columns: 65% 35%; }
-.section-2-grid--right { 
-  grid-template-columns: 35% calc(65% - 30px);
-  padding-right: 30px; /* marge symétrique côté droit */
+/* Dispositions desktop via tes classes Tailwind:
+   - Cuisine/Outdoor: lg:grid-cols-[65%_35%]
+   - Table:           lg:grid-cols-[35%_65%]
+*/
+
+/* Respiration côté bord pour la section Table (slider à droite) */
+.section-2-grid.slider-right {
+  padding-right: 50px; /* marge côté droit du viewport */
 }
 
-/* Sliders dans la grille */
-.section-2-grid .my-knives-swiper {
-  margin: 0;
-  width: auto;       /* largeur naturelle */
-  max-width: 100%;   /* sécurité */
+/* Sliders comme items de grille: alignements cohérents */
+.section-2-grid:not(.slider-right) .my-knives-swiper {
+  justify-self: end;    /* Cuisine/Outdoor: slider à gauche → collé au texte */
 }
 
-/* Cuisine / Outdoor → slider aligné à droite de la colonne */
-.section-2-grid--left .my-knives-swiper {
-  justify-self: end;
+.section-2-grid.slider-right .my-knives-swiper {
+  justify-self: start;  /* Table: slider à droite → collé au texte */
 }
-
-/* Respiration côté droit uniquement pour Table */
-.section-2-grid--right .my-knives-swiper {
-  justify-self: start;   /* collé au texte */
-  margin-right: 30px;    /* ✅ marge côté bord écran */
-}
-
 
 /* =========================================================
    MOBILE
    ========================================================= */
 @media (max-width: 768px) {
   .section-couteaux {
-    padding: 0; 
-    padding-top: 30px;   /* respiration en haut */
-    padding-bottom: 40px;/* respiration en bas */
+    padding: 0;
+    padding-top: 30px;
+    padding-bottom: 40px;
   }
 
-  .section-2-grid,
-  .section-2-grid--left,
-  .section-2-grid--right {
+  .section-2-grid {
     grid-template-columns: 1fr;
-    padding-inline: 0; /* supprime le padding desktop */
+    padding-left: 0;
+    padding-right: 0;
   }
 
-  /* Slider toujours en premier */
+  /* Slider toujours en premier, pleine largeur */
   .section-2-grid .my-knives-swiper {
     order: 1;
     width: 100vw;
     margin: 0;
     border-radius: 0;
+    justify-self: stretch;
   }
 
-  /* Texte toujours en dessous */
+  /* Texte ensuite */
   .section-2-grid > div:not(.my-knives-swiper) {
     order: 2;
   }
 
   /* Annule le padding droit spécifique en mobile */
-  .section-2-grid--right {
+  .section-2-grid.slider-right {
     padding-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-couteaux .fade-slide-left,
+  .section-couteaux .fade-slide-right {
+    text-align: center;   /* centre le texte */
+    margin-left: auto;    /* neutralise ml-auto */
+    margin-right: auto;   /* neutralise mr-auto */
+    width: 100%;          /* prend toute la largeur */
   }
 }
 
@@ -701,8 +705,9 @@ form button[type="submit"]:hover {
    SLIDER COMMUN
    ========================================================= */
 .my-knives-swiper {
+  width: 100%; /* indispensable pour Swiper */
   position: relative;
-  aspect-ratio: 16/9; /* à ajuster selon le vrai ratio du fond */
+  aspect-ratio: 16/9; /* ajuste si besoin */
   border-radius: 20px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.6);
   background: var(--slider-bg) center/cover no-repeat;
@@ -716,10 +721,9 @@ form button[type="submit"]:hover {
   }
 }
 
-/* Slides */
+/* Slides (on laisse Swiper gérer la largeur inline) */
 .my-knives-swiper .swiper-slide {
   position: relative;
-  /* width: 100%; ❌ supprimé pour éviter le collage */
   height: 100%;
   transition: opacity 0.4s ease;
 }
@@ -747,7 +751,7 @@ form button[type="submit"]:hover {
   filter: drop-shadow(0 5px 10px rgba(0,0,0,0.9));
   display: block;
   height: auto;
-  max-width: none; /* on lève la limite fixe */
+  max-width: none;
 }
 
 /* Étiquette (figcaption) */
@@ -758,14 +762,13 @@ form button[type="submit"]:hover {
   font-weight: 600;
   text-align: center;
   color: var(--color-accent);
-  display: inline-flex;          /* largeur suit le texte */
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  white-space: nowrap;           /* pas de retour à la ligne */
+  white-space: nowrap;
   
-  /* Hauteur homogène */
   font-size: clamp(0.9rem, 1.2vw, 1.6rem);
-  padding: 0.5em 1.5em;          /* padding en em → suit la police */
+  padding: 0.5em 1.5em;
   line-height: 1;
 
   background-image: var(--caption-bg);
@@ -775,99 +778,121 @@ form button[type="submit"]:hover {
   border-radius: 6px;
   filter: drop-shadow(0 2px 6px rgba(0,0,0,0.9));
 
-  /* Position pilotée par variables */
   top: var(--caption-y);
   left: var(--caption-x);
   transform: translate(-50%, -50%);
-  width: auto;                   /* largeur auto → suit le texte */
+  width: auto;
 }
 
 /* Pagination interne */
-.my-knives-swiper .swiper-pagination {
-  bottom: 10px;
+/* Style des bullets inactifs */
+.my-knives-swiper .swiper-pagination-bullet {
+  background-color: var(--color-accent); /* couleur de ta palette */
+  opacity: 0.4;                          /* un peu plus discret */
+  width: 10px;                           /* taille personnalisée */
+  height: 10px;
+  border-radius: 50%;                    /* rond parfait */
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
+/* Bullet actif */
+.my-knives-swiper .swiper-pagination-bullet-active {
+  background-color: var(--color-accent); /* même couleur mais mise en avant */
+  opacity: 1;
+  transform: scale(1.2);                 /* léger zoom pour le distinguer */
+}
+/* Hover / focus sur les bullets */
+.my-knives-swiper .swiper-pagination-bullet:hover,
+.my-knives-swiper .swiper-pagination-bullet:focus {
+  opacity: 0.8;
+  transform: scale(1.1);
+  box-shadow: 0 0 6px rgba(0,0,0,0.5);
+}
+
 
 /* Flèches */
 .my-knives-swiper .swiper-button-prev,
 .my-knives-swiper .swiper-button-next {
-  color: var(--color-bg);
+  color: var(--color-bg); /* on garde cette couleur pour la lisibilité */
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.9));
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
 }
 
+/* Hover / focus */
+.my-knives-swiper .swiper-button-prev:hover,
+.my-knives-swiper .swiper-button-next:hover,
+.my-knives-swiper .swiper-button-prev:focus,
+.my-knives-swiper .swiper-button-next:focus {
+  transform: scale(1.2); /* léger zoom */
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.9)); /* halo plus marqué */
+}
 
+/* État actif (clic) */
+.my-knives-swiper .swiper-button-prev:active,
+.my-knives-swiper .swiper-button-next:active {
+  transform: scale(1.1); /* petit rebond */
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,1));
+}
 
 /* =========================================================
    VARIABLES PAR THÈME
    ========================================================= */
 
 /* -------------------------
-   Thème Cuisine (refactor)
+   Thème Cuisine
    ------------------------- */
 .theme-cuisine {
   --slider-bg: url('/images/cuisine/planche-2-ateliersousleclipse.webp');
   --caption-bg: url('/images/cuisine/papier.png');
 
-  /* Couteau */
   --knife-x: 70%;
   --knife-y: 42%;
   --knife-rotate: -20deg;
   --knife-width: 65%;
 
-  /* Étiquette */
   --caption-x: 75%;
   --caption-y: 75%;
 }
-
-/* Application des variables */
 .theme-cuisine .knife-image {
-  position: absolute;
   top: var(--knife-y);
   left: var(--knife-x);
   width: var(--knife-width);
   transform: translate(-50%, -50%) rotate(var(--knife-rotate));
   z-index: 2;
 }
-
-/* Ajustements mobiles si besoin */
 @media (max-width: 414px) {
   .theme-cuisine {
     --knife-width: 60%;
     --knife-y: 40%;
     --caption-y: 72%;
   }
-
   .theme-cuisine figcaption {
-    font-size: clamp(0.7rem, 2.5vw, 1.2rem); /* police adaptée mobile */
+    font-size: clamp(0.7rem, 2.5vw, 1.2rem);
   }
 }
 
 /* -------------------------
-   Thème Table (refactor)
+   Thème Table
    ------------------------- */
 .theme-table {
   --slider-bg: url('/images/table/fond-table5.webp');
   --caption-bg: url('/images/table/etiquette-tissu.png');
 
-  /* Couteau */
   --knife-x: 45%;
   --knife-y: 65%;
   --knife-rotate: 0deg;
-  --knife-width: 43%;   /* ancien scale(0.43) → largeur en % */
+  --knife-width: 43%;
 
-  /* Étiquette */
   --caption-x: 42%;
   --caption-y: 27%;
 }
-
 .theme-table .knife-image {
-  position: absolute;
   top: var(--knife-y);
   left: var(--knife-x);
   width: var(--knife-width);
   transform: translate(-50%, -50%) rotate(var(--knife-rotate));
   z-index: 2;
 }
-
-/* Ajustements mobiles */
 @media (max-width: 414px) {
   .theme-table {
     --knife-width: 40%;
@@ -875,53 +900,43 @@ form button[type="submit"]:hover {
     --caption-y: 28%;
     --caption-x: 42%;
   }
-
   .theme-table figcaption {
     font-size: clamp(0.6rem, 2.5vw, 1.2rem);
   }
 }
 
-
 /* -------------------------
-   Thème Outdoor (refactor)
+   Thème Outdoor
    ------------------------- */
 .theme-outdoor {
   --slider-bg: url('/images/outdoor/fond outdoor3.webp');
   --caption-bg: url('/images/outdoor/etiquette-bois.png');
 
-  /* Couteau */
   --knife-x: 33%;
   --knife-y: 55%;
   --knife-rotate: 0deg;
-  --knife-width: 55%;   /* ancien scale(1) → largeur en % */
+  --knife-width: 55%;
 
-  /* Étiquette */
   --caption-x: 50%;
   --caption-y: 70%;
 }
-
 .theme-outdoor .knife-image {
-  position: absolute;
   top: var(--knife-y);
   left: var(--knife-x);
   width: var(--knife-width);
   transform: translate(-50%, -50%) rotate(var(--knife-rotate));
   z-index: 2;
 }
-
-/* Ajustements mobiles */
 @media (max-width: 414px) {
   .theme-outdoor {
     --knife-width: 24%;
     --knife-y: 48%;
     --caption-y: 68%;
   }
-
   .theme-outdoor figcaption {
     font-size: clamp(0.7rem, 2.5vw, 1.2rem);
   }
 }
-
 
 
 /* =========================================================
@@ -1015,7 +1030,7 @@ form button[type="submit"]:hover {
 
 .embla__parallax {
   border-radius: 1.8rem;
-  height: clamp(300px, calc(var(--vh) * 70), 900px);
+  height: clamp(300px, 70vh, 900px); /* hauteur responsive */
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -1044,7 +1059,7 @@ form button[type="submit"]:hover {
     --slide-spacing: 0.5rem;
   }
   .embla__parallax {
-    height: clamp(200px, calc(var(--vh) * 50), 400px);
+    height: clamp(100px, 50vh, 200px);
     border-radius: 1rem;
   }
   .embla__parallax__img {
@@ -1172,15 +1187,9 @@ form button[type="submit"]:hover {
   }
 
   .embla__dots {
-    position: absolute;
-    right: 0.75rem; /* marge à droite */
-    top: 50%;
-    transform: translateY(-50%);
-    order: 2;
-    flex-wrap: wrap;
+    display: none !important; /* masque totalement les dots */
   }
 }
-
 
 
 /* =========================================================
@@ -1251,7 +1260,6 @@ form button[type="submit"]:hover {
     line-height: 0;
   }
 }
-
 
 .hamon-hero {
   position: relative;
@@ -1471,9 +1479,11 @@ footer img.qr {
   transform: translateX(-50%) scale(1);
 }
 
+/* alignement central texte mobile */
 @media (max-width: 768px) {
   .section-centrale,
   .section-2,
+  .section-couteaux,
   .inspiration-section {
     text-align: center;
   }
