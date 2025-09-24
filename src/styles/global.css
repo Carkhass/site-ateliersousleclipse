@@ -1,5 +1,4 @@
 /* Import police principale */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 @import 'swiper/css';
 @import 'swiper/css/navigation';
 @import 'swiper/css/pagination';
@@ -14,6 +13,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'DaggerSquare';
+  src: url('/fonts/daggersquare/daggersquare.woff2') format('woff2'),
+       url('/fonts/daggersquare/daggersquare.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 
 /* =========================================================
    2. VARIABLES DE THÈME
@@ -1212,20 +1221,24 @@ form button[type="submit"]:hover {
   margin: 1rem auto 0;
 }
 
-/* --- Halo du titre héros --- */
-.hero-title-glow {
-  filter:
-    drop-shadow(0 0 8px var(--color-accent-dark))
-    drop-shadow(0 0 16px var(--color-accent-light));
-  transition: filter 0.4s ease;
+/* Hero fade */
+#hero-title {
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+#hero-title.fade-out {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.9);
 }
 
-.hero-title-glow.active {
-  filter:
-    drop-shadow(0 0 12px var(--color-accent-dark))
-    drop-shadow(0 0 24px var(--color-accent-light))
-    drop-shadow(0 0 36px rgba(168, 50, 50, 0.5));
+/* Header fade */
+#header-title {
+  transition: opacity 0.6s ease;
 }
+#header-title.fade-in {
+  opacity: 1 !important;
+}
+
+
 
 /* --- Style spécifique des lettres du sous-titre du hero --- */
 .hero-subtitle .letter {
@@ -1295,6 +1308,30 @@ form button[type="submit"]:hover {
     background-position: center;
   }
 }
+
+/* Desktop sticky transform */
+@media (min-width: 769px) {
+  #hero-title.sticky-transform {
+    position: fixed;
+    transition: transform 0.6s ease, font-size 0.6s ease, color 0.6s ease;
+    color: var(--color-text);
+    font-size: 1.25rem;
+  }
+}
+
+
+/* Mobile clone + fade */
+@media (max-width: 768px) {
+  #hero-title.fade-out {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+    transition: all 0.5s ease;
+  }
+  #header-title.fade-in {
+    opacity: 1 !important;
+  }
+}
+
 
 /* =========================================================
    15. SECTION PREMIUM (hors carte 3D)

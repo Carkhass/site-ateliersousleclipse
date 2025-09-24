@@ -14,27 +14,31 @@ const { title = "Atelier sous l’Eclipse" } = Astro.props;
 
   <body class="flex flex-col min-h-screen font-sans bg-bg text-text">
     <header id="site-header" class="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm transition-all duration-500">
-      <div class="container mx-auto px-4 flex justify-between items-center h-20 relative">
-        <div class="flex items-center space-x-4 header-brand">
-          <img src="/images/logo-eclipse.png" alt="Logo Atelier sous l’éclipse" class="h-12 w-12 logo-glow text-magnify" />
-          <span class="text-magnify text-xl font-bold tracking-wide">L'Atelier sous l’éclipse</span>
-        </div>
-        <nav class="hidden md:flex space-x-3 font-semibold" aria-label="Navigation principale">
-          <a href="/" class="text-magnify hover:text-accent transition-colors">Accueil</a>
-          <a href="/couteaux" class="text-magnify hover:text-accent transition-colors">Couteaux</a>
-          <a href="/me-connaitre" class="text-magnify hover:text-accent transition-colors">Me connaître</a>
-          <a href="/contact" class="text-magnify hover:text-accent transition-colors">Contact</a>
-        </nav>
-        <div class="flex items-center space-x-4">
-          <button id="theme-toggle" class="text-magnify p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Changer le thème">🌙</button>
-          <button id="menu-toggle" class="icon-toggle md:hidden p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Ouvrir le menu">
-            <span class="icon-burger">☰</span>
-            <span class="icon-close">✕</span>
-          </button>
-        </div>
-        <span id="header-accent"></span>
-      </div>
-    </header>
+  <div class="container mx-auto px-4 flex justify-between items-center h-20 relative">
+    <div class="flex items-center space-x-4 header-brand">
+      <img src="/images/logo-eclipse.png" alt="Logo Atelier sous l’éclipse" class="h-12 w-12 logo-glow text-magnify" />
+      <!-- Placeholder pour mobile -->
+      <span id="header-title" class="hidden md:inline-block font-brand text-lg font-bold tracking-wide opacity-0 transition-opacity duration-500">
+        L’Atelier sous l’éclipse
+      </span>
+    </div>
+    <nav class="hidden md:flex space-x-3 font-semibold" aria-label="Navigation principale">
+      <a href="/" class="text-magnify hover:text-accent transition-colors">Accueil</a>
+      <a href="/couteaux" class="text-magnify hover:text-accent transition-colors">Couteaux</a>
+      <a href="/me-connaitre" class="text-magnify hover:text-accent transition-colors">Me connaître</a>
+      <a href="/contact" class="text-magnify hover:text-accent transition-colors">Contact</a>
+    </nav>
+    <div class="flex items-center space-x-4">
+      <button id="theme-toggle" class="text-magnify p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Changer le thème">🌙</button>
+      <button id="menu-toggle" class="icon-toggle md:hidden p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Ouvrir le menu">
+        <span class="icon-burger">☰</span>
+        <span class="icon-close">✕</span>
+      </button>
+    </div>
+    <span id="header-accent"></span>
+  </div>
+</header>
+
 
     <div class="menu-overlay"></div>
 
@@ -44,6 +48,36 @@ const { title = "Atelier sous l’Eclipse" } = Astro.props;
       <a href="/me-connaitre" class="hover:text-accent">Me connaître</a>
       <a href="/contact" class="hover:text-accent">Contact</a>
     </nav>
+
+<!-- ========================================================= -->
+<!-- HERO -->
+<!-- ========================================================= -->
+<section 
+  class="hero-section parallax-section hamon-hero relative w-screen flex items-center justify-center overflow-hidden h-screen" 
+  data-parallax-speed="50"
+  data-parallax-zoom="1"
+  data-parallax-zoom-strength="0"
+>
+  <!-- Image de fond avec effet parallaxe -->
+  <div class="absolute inset-0" data-parallax-target style="transform: translateY(0px) scale(1); will-change: transform;">
+    <img src="/images/hero-hamon.png" alt="Ligne du hamon sur lame" class="w-full h-full object-cover" />
+  </div>
+
+  <!-- Contenu -->
+  <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
+    <!-- Titre avec halo + fade-in-up -->
+    <h1 id="hero-title" class="fade-in-up text-4xl md:text-6xl font-brand mb-8 tracking-wide transition-all duration-700">
+      L’Atelier sous l'éclipse
+    </h1>
+
+    <!-- Sous-titre avec animation lettre par lettre -->
+    <p id="hero-subtitle" class="hero-subtitle text-lg md:text-xl text-accent font-bold max-w-none mx-auto opacity-0">
+      La ligne du <em>hamon</em> reflète l’histoire de l’acier et l’intention de l’artisan.
+    </p>
+  </div>
+</section>
+
+
 
     <main class="flex-1">
       <slot />
@@ -74,6 +108,7 @@ const { title = "Atelier sous l’Eclipse" } = Astro.props;
   import { initHeaderSticky } from '../scripts/layout/header-sticky.js';
   import { initMenuMobile } from '../scripts/layout/menu-mobile.js';
   import { initThemeToggle } from '../scripts/layout/theme-toggle.js';
+  import { initHeaderHero } from '../scripts/animations/header-hero.js';
 
   if (typeof window !== 'undefined') {
     initRevealOnScroll();
@@ -81,6 +116,7 @@ const { title = "Atelier sous l’Eclipse" } = Astro.props;
     initHeaderSticky();
     initMenuMobile();
     initThemeToggle();
+    initHeaderHero();
   }
 </script>
 

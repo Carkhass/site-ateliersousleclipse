@@ -5,36 +5,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Accueil">
 
 
-<!-- ========================================================= -->
-<!-- HERO -->
-<!-- ========================================================= -->
-<section 
-  class="hero-section parallax-section hamon-hero relative w-screen flex items-center justify-center overflow-hidden" 
-  data-parallax-speed="50"
-  data-parallax-zoom="1"
-  data-parallax-zoom-strength="0"
->
-  <!-- Image de fond avec effet parallaxe -->
-  <div class="absolute inset-0" data-parallax-target style="transform: translateY(0px) scale(1); will-change: transform;">
-    <img src="/images/hero-hamon.png" alt="Ligne du hamon sur lame" class="w-full h-full object-cover" />
-  </div>
-
-
-  <!-- Contenu -->
-  <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
-    <!-- Titre avec halo + fade-in-up -->
-    <h1 id="hero-title" class=" fade-in-up text-4xl text-black md:text-6xl font-sans font-bold mb-8 tracking-wide">
-      L’Atelier sous l'éclipse
-    </h1>
-
-    <!-- Sous-titre avec animation lettre par lettre -->
-    <p id="hero-subtitle" class="hero-subtitle text-lg md:text-xl text-accent font-bold max-w-none mx-auto opacity-0">
-      La ligne du <em>hamon</em> reflète l’histoire de l’acier et l’intention de l’artisan.
-    </p>
-  </div>
-</section>
-
-
 
 <!-- ========================================================= -->
 <!-- SECTION CENTRALE                                          -->
