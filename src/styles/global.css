@@ -160,6 +160,10 @@ main {
   padding-top: 5rem; /* Compense la hauteur du header fixe */
 }
 
+#site-header .container {
+  max-width: 1200px; /* plus étroit que le container global */
+}
+
 /* Hero bien centré */
 #hero-content {
   display: flex;
