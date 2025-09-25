@@ -33,6 +33,11 @@ export function initParallax() {
 
     const winH = window.innerHeight;
     const scrollY = window.scrollY;
+    // Si on est tout en haut, on neutralise le décalage
+if (scrollY === 0) {
+  data.target.style.transform = `translateY(0) scale(${data.baseZoom})`;
+  return;
+}
     const progress = (winH - (data.top - scrollY)) / (winH + data.height);
     const translate = (progress - 0.5) * data.speed;
 
@@ -70,4 +75,9 @@ export function initParallax() {
   sections.forEach(section => observer.observe(section));
   window.addEventListener("resize", computeSectionData);
   requestAnimationFrame(update);
+
+  // ⚡ Patch : activer la transition après la première frame
+  requestAnimationFrame(() => {
+    sections.forEach(sec => sec.classList.add("parallax-active"));
+  });
 }

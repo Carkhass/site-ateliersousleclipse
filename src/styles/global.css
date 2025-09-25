@@ -151,18 +151,6 @@ button:hover, a:hover {
   min-height: calc(var(--vh) * 55);
 }
 
-/* Grilles utilitaires 
-.grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5rem;
-}
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5rem;
-}*/
-
 /* =========================================================
   7.  HEADER FIXE & NAVIGATION — VERSION OPTIMISÉE
    ========================================================= */
@@ -199,8 +187,8 @@ main {
 
 
 /* États visuels (appliqués par JS) */
-#hero-logo.in-hero { width: 5rem; height: 5rem; }
-#hero-logo.in-header { width: 3rem; height: 3rem; }
+#hero-logo.in-hero { width: 5rem; height: auto; }
+#hero-logo.in-header { width: 3rem; height: auto; }
 
 #hero-title.in-hero {
   font-size: clamp(2rem, 6vw, 3.5rem);
@@ -209,10 +197,13 @@ main {
   margin-right: auto !important;
 }
 #hero-title.in-header {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   text-align: left !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
+  line-height: 1;          /* supprime l’espace vertical inutile */
+  display: flex;
+  align-items: center;     /* centre le texte dans sa box */
 }
 
 /* Ghosts: par défaut cachés, ne s’affichent QUE quand l’élément voyage */
@@ -224,44 +215,84 @@ main {
 #hero-logo-ghost { width: 5rem; height: 5rem; }
 #hero-title-ghost { font-size: clamp(2rem, 6vw, 3.5rem); }
 
-/* Header brand neutre */
-.header-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
+
 #header-logo-placeholder,
 #header-title-placeholder {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  min-width: 0;                  /* pas de largeur au départ */
+  transition: min-width 0.4s ease;
 }
+
+/* Quand le logo/titre arrivent, ton script ajoute .filled */
+#header-logo-placeholder.filled { min-width: 3rem; }
+#header-title-placeholder.filled { min-width: 6rem; }
+
 #header-logo-placeholder:empty,
 #header-title-placeholder:empty {
-  width: 0;
-  height: 0;
+  min-width: 1px;   /* au lieu de width:0 */
+  height: auto;     /* garde la hauteur du header */
   overflow: hidden;
 }
+
 
 /* Performance hints */
 #hero-logo, #hero-title { will-change: transform; }
 
+#header-logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centre horizontalement aussi */
+}
 
 
+#hero-logo.in-header {
+  height: 3rem;     /* fixe la hauteur */
+  width: auto;
+  margin: 0;
+  align-self: center; /* centre verticalement dans le flex */
+  display: block;
+  position: relative;
+}
 
 
+@media (max-width: 768px) {
+  #hero-title.in-header {
+    line-height: 1.2;
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    position: relative;
+  }
+
+  #hero-title.in-hero {
+    font-size: clamp(1.7rem, 5vw, 2rem);
+    margin-bottom: 0.25rem;
+    line-height: 1.1;
+  }
+
+  .hero-section .hero-subtitle {
+    line-height: 1.2;
+    margin-top: 0.25rem;
+    font-size: 0.9rem;
+  }
+
+  #hero-logo.in-header {
+    top: -4px; /* ajustement mobile */
+  }
+}
+
+@media (min-width: 769px) {
+  #hero-logo.in-header {
+    top: -6px; /* ajustement desktop */
+  }
+}
 
 /* État visuel du header au scroll */
 #site-header.scrolled {
   background-color: rgba(var(--color-bg-rgb), 0.65);
   box-shadow: 0 4px 20px rgba(0,0,0,0.35);
 }
-#site-header.scrolled img {
-  transform: scale(1.2);
-}
-#site-header.scrolled span {
-  transform: translateY(-1px);
-}
+
 
 /* Ligne d’accent animée */
 #header-accent {
@@ -289,45 +320,82 @@ main {
   background-position: 100% 50%;
 }
 
-/* Liens de navigation desktop */
+header nav {
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  will-change: transform;
+}
+
+/* État normal (nav centrée) */
+#site-header nav {
+  transform: translateX(0);
+}
+
+/* Quand logo/titre sont dans le header → nav poussée à droite */
+#site-header.nav-shifted nav {
+  transform: translateX(2rem); /* ajuste la valeur selon ton layout */
+}
+
+/* Liens de navigation desktop — visibles mais prêts à animer */
 header nav a {
   color: var(--color-text);
   font-weight: 500;
   padding: 0.5rem 0.75rem;
-  transition: color 0.3s ease;
+  font-size: 1.05rem;
+  opacity: 1;                        /* visibles dès le départ */
+  transform: translateX(-8px);       /* léger décalage vers la gauche */
+  transition:
+    font-size 0.3s ease,
+    color 0.3s ease,
+    transform 0.4s ease,
+    opacity 0.4s ease;
 }
+
 header nav a:hover {
   color: var(--color-accent);
 }
 
-/* Halo du logo — isolé pour perf */
-.logo-glow {
-  will-change: transform, filter;
-  transform: scale(1);
-  transform-origin: center;
-  transition: transform 0.4s ease, filter 0.4s ease;
-  filter:
-    drop-shadow(0 0 6px var(--color-accent-dark))
-    drop-shadow(0 0 12px var(--color-accent-light));
-}
-#site-header.scrolled .logo-glow {
-  filter:
-    drop-shadow(0 0 10px var(--color-accent-dark))
-    drop-shadow(0 0 20px var(--color-accent-light))
-    drop-shadow(0 0 30px rgba(168, 50, 50, 0.5));
-  transform: scale(1.15);
+/* État au scroll */
+#site-header.scrolled nav a {
+  font-size: 0.95rem;
+  opacity: 1;
+  transform: translateX(0);          /* se réalignent */
 }
 
-/* Animation du texte */
+
+
+/* Header container : grand en haut, compact au scroll */
+#site-header .container {
+  height: 5rem;
+  transition: height 0.3s ease;
+}
+#site-header.scrolled .container {
+  height: 4rem;
+}
+
+/* Logo shrink */
+#site-header.scrolled #hero-logo.in-header {
+  height: 2.6rem;
+}
+
+/* Navigation text : grand en haut, petit au scroll */
+header nav a {
+  font-size: 1.05rem;
+  transition: font-size 0.3s ease, color 0.3s ease;
+}
+#site-header.scrolled nav a {
+  font-size: 0.95rem;
+}
+
+/* Text magnify inversé */
 .text-magnify {
-  will-change: transform;
-  transform: scale(1);
+  transform: scale(1.1);
   transform-origin: center;
-  transition: transform 0.4s ease;
+  transition: transform 0.3s ease;
 }
 #site-header.scrolled .text-magnify {
-  transform: scale(1.15);
+  transform: scale(1);
 }
+
 
 /* Conteneur logo + titre — suppression de l’animation sur gap */
 .header-brand {
@@ -421,6 +489,134 @@ header nav a:hover {
 .icon-toggle.active .icon-burger { opacity: 0; transform: rotate(90deg); }
 .icon-toggle.active .icon-close { opacity: 1; transform: rotate(0deg); }
 
+@media (max-width: 768px) {
+  #theme-toggle {
+    padding: 0.25rem;       /* réduit la zone cliquable */
+    font-size: 0.85rem;        /* réduit la taille de l’emoji */
+    line-height: 1;         /* évite qu’il flotte verticalement */
+    width: 20px;            /* optionnel : fixe une boîte carrée */
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+
+/* =========================================================
+   14B. SECTION HÉROS
+   ========================================================= */
+
+.hero-section {
+  height: calc(var(--vh) * 30);
+  background-size: contain; /* ou cover si tu veux recadrer */
+  background-position: center;
+}
+
+.hero-section .hero-subtitle {
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.hero-section .hero-button {
+  display: block;
+  margin: 1rem auto 0;
+}
+
+/* --- Style spécifique des lettres du sous-titre du hero --- */
+.hero-subtitle .letter {
+  /* On peut surcharger ici si on veut un style différent du global */
+}
+
+/* Animation premium : fade-in-up lettre par lettre */
+.letter {
+  opacity: 0;
+  transform: translateY(8px); /* léger mouvement vers le haut */
+  display: inline-block;
+  animation: fadeInUpLetter 0.1s ease-out forwards;
+}
+
+@keyframes fadeInUpLetter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Par défaut, le <br> est masqué */
+.br-mobile {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .br-mobile {
+    display: block;       /* force le retour à la ligne */
+    width: 100%;          /* occupe toute la largeur */
+    height: 0;            /* pas d'espace vertical supplémentaire */
+    line-height: 0;
+  }
+}
+
+.hamon-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.hamon-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Dégradé sur seulement le haut */
+  background: linear-gradient(
+    to bottom,
+    var(--color-bg) 0%,         /* couleur de fond en haut */
+    var(--color-bg) 5%,        /* encore la couleur de fond à 20% */
+    rgba(255, 255, 255, 0) 100% /* totalement transparent ensuite */
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    height: calc(var(--vh) * 30); /* ou garder 40vh si desktop OK */
+  }
+}
+
+@media (max-width: 414px) {
+  .hero-section {
+    height: calc(var(--vh) * 20); /* 40% de la hauteur visible */
+    min-height: 235px; /* sécurité */
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+/* Desktop sticky transform */
+@media (min-width: 769px) {
+  #hero-title.sticky-transform {
+    position: fixed;
+    transition: transform 0.6s ease, font-size 0.6s ease, color 0.6s ease;
+    color: var(--color-text);
+    font-size: 1.25rem;
+  }
+}
+
+
+/* Mobile clone + fade */
+@media (max-width: 768px) {
+  #hero-title.fade-out {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+    transition: all 0.5s ease;
+  }
+  #header-title.fade-in {
+    opacity: 1 !important;
+  }
+}
+
+
+
 
 /* =========================================================
    8. SECTIONS PLEINE LARGEUR & PARALLAX
@@ -438,8 +634,13 @@ header nav a:hover {
 }
 .parallax-section img {
   will-change: transform;
+  transition: none; /* pas de transition au chargement */
+}
+
+.parallax-section.parallax-active img {
   transition: transform 0.2s ease-out;
 }
+
 
 /* Overlay sombre pour lisibilité */
 .parallax-section::before {
@@ -1279,118 +1480,6 @@ form button[type="submit"]:hover {
   }
 }
 
-
-/* =========================================================
-   14B. SECTION HÉROS
-   ========================================================= */
-
-.hero-section {
-  height: calc(var(--vh) * 30);
-  background-size: contain; /* ou cover si tu veux recadrer */
-  background-position: center;
-}
-
-.hero-section .hero-subtitle {
-  padding: 0 1rem;
-  text-align: center;
-}
-
-.hero-section .hero-button {
-  display: block;
-  margin: 1rem auto 0;
-}
-
-/* --- Style spécifique des lettres du sous-titre du hero --- */
-.hero-subtitle .letter {
-  /* On peut surcharger ici si on veut un style différent du global */
-}
-
-/* Animation premium : fade-in-up lettre par lettre */
-.letter {
-  opacity: 0;
-  transform: translateY(8px); /* léger mouvement vers le haut */
-  display: inline-block;
-  animation: fadeInUpLetter 0.1s ease-out forwards;
-}
-
-@keyframes fadeInUpLetter {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Par défaut, le <br> est masqué */
-.br-mobile {
-  display: none;
-}
-
-@media (max-width: 1024px) {
-  .br-mobile {
-    display: block;       /* force le retour à la ligne */
-    width: 100%;          /* occupe toute la largeur */
-    height: 0;            /* pas d'espace vertical supplémentaire */
-    line-height: 0;
-  }
-}
-
-.hamon-hero {
-  position: relative;
-  overflow: hidden;
-}
-
-.hamon-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  /* Dégradé sur seulement le haut */
-  background: linear-gradient(
-    to bottom,
-    var(--color-bg) 0%,         /* couleur de fond en haut */
-    var(--color-bg) 5%,        /* encore la couleur de fond à 20% */
-    rgba(255, 255, 255, 0) 100% /* totalement transparent ensuite */
-  );
-  z-index: 1;
-  pointer-events: none;
-}
-
-@media (max-width: 768px) {
-  .hero-section {
-    height: calc(var(--vh) * 30); /* ou garder 40vh si desktop OK */
-  }
-}
-
-@media (max-width: 414px) {
-  .hero-section {
-    height: calc(var(--vh) * 20); /* 40% de la hauteur visible */
-    min-height: 240px; /* sécurité */
-    background-size: cover;
-    background-position: center;
-  }
-}
-
-/* Desktop sticky transform */
-@media (min-width: 769px) {
-  #hero-title.sticky-transform {
-    position: fixed;
-    transition: transform 0.6s ease, font-size 0.6s ease, color 0.6s ease;
-    color: var(--color-text);
-    font-size: 1.25rem;
-  }
-}
-
-
-/* Mobile clone + fade */
-@media (max-width: 768px) {
-  #hero-title.fade-out {
-    opacity: 0;
-    transform: translateY(-20px) scale(0.9);
-    transition: all 0.5s ease;
-  }
-  #header-title.fade-in {
-    opacity: 1 !important;
-  }
-}
 
 
 /* =========================================================
