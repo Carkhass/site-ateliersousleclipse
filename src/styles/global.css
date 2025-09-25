@@ -181,10 +181,8 @@ main {
 #hero-title {
   display: block;
   margin: 0 auto;
-  /* plus de transition:none !important ici */
   will-change: transform;
 }
-
 
 /* États visuels (appliqués par JS) */
 #hero-logo.in-hero { width: 5rem; height: auto; }
@@ -201,105 +199,78 @@ main {
   text-align: left !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
-  line-height: 1;          /* supprime l’espace vertical inutile */
+  line-height: 1;
   display: flex;
-  align-items: center;     /* centre le texte dans sa box */
+  align-items: center;
 }
 
-/* Ghosts: par défaut cachés, ne s’affichent QUE quand l’élément voyage */
+/* Ghosts */
 .ghost {
   visibility: hidden;
   pointer-events: none;
-  display: none; /* important: évite le décalage à gauche au chargement */
+  display: none;
 }
 #hero-logo-ghost { width: 5rem; height: 5rem; }
 #hero-title-ghost { font-size: clamp(2rem, 6vw, 3.5rem); }
 
-
+/* Placeholders */
 #header-logo-placeholder,
 #header-title-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 0;                  /* pas de largeur au départ */
+  min-width: 0;
   transition: min-width 0.4s ease;
 }
-
-/* Quand le logo/titre arrivent, ton script ajoute .filled */
 #header-logo-placeholder.filled { min-width: 3rem; }
 #header-title-placeholder.filled { min-width: 6rem; }
-
 #header-logo-placeholder:empty,
 #header-title-placeholder:empty {
-  min-width: 1px;   /* au lieu de width:0 */
-  height: auto;     /* garde la hauteur du header */
+  min-width: 1px;
+  height: auto;
   overflow: hidden;
 }
 
-
-/* Performance hints */
-#hero-logo, #hero-title { will-change: transform; }
-
-#header-logo-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* centre horizontalement aussi */
-}
-
-
+/* Logo en header */
 #hero-logo.in-header {
-  height: 3rem;     /* fixe la hauteur */
+  height: 3rem;
   width: auto;
   margin: 0;
-  align-self: center; /* centre verticalement dans le flex */
+  align-self: center;
   display: block;
   position: relative;
 }
 
-
+/* Responsive ajustements */
 @media (max-width: 768px) {
   #hero-title.in-header {
     line-height: 1.2;
     font-size: clamp(1rem, 4vw, 1.5rem);
     position: relative;
   }
-
   #hero-title.in-hero {
     font-size: clamp(1.7rem, 5vw, 2rem);
     margin-bottom: 0.25rem;
     line-height: 1.1;
   }
-
   .hero-section .hero-subtitle {
     line-height: 1.2;
     margin-top: 0.25rem;
     font-size: 0.9rem;
   }
-
-  #hero-logo.in-header {
-    top: -4px; /* ajustement mobile */
-  }
 }
 
-@media (min-width: 769px) {
-  #hero-logo.in-header {
-    top: -6px; /* ajustement desktop */
-  }
-}
 
-/* État visuel du header au scroll */
+/* Header au scroll */
 #site-header.scrolled {
   background-color: rgba(var(--color-bg-rgb), 0.65);
   box-shadow: 0 4px 20px rgba(0,0,0,0.35);
 }
 
-
 /* Ligne d’accent animée */
 #header-accent {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0; left: 0; right: 0;
   height: 4px;
   background: linear-gradient(
     90deg,
@@ -320,71 +291,57 @@ main {
   background-position: 100% 50%;
 }
 
+/* Nav container */
 header nav {
   transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
   will-change: transform;
 }
+#site-header nav { transform: translateX(0); }
+#site-header.nav-shifted nav { transform: translateX(2rem); }
 
-/* État normal (nav centrée) */
-#site-header nav {
-  transform: translateX(0);
-}
-
-/* Quand logo/titre sont dans le header → nav poussée à droite */
-#site-header.nav-shifted nav {
-  transform: translateX(2rem); /* ajuste la valeur selon ton layout */
-}
-
-/* Liens de navigation desktop — visibles mais prêts à animer */
+/* Liens de navigation desktop */
 header nav a {
   color: var(--color-text);
   font-weight: 500;
   padding: 0.5rem 0.75rem;
   font-size: 1.05rem;
-  opacity: 1;                        /* visibles dès le départ */
-  transform: translateX(-8px);       /* léger décalage vers la gauche */
+  opacity: 1;
+  transform: translateX(-8px);
   transition:
     font-size 0.3s ease,
     color 0.3s ease,
     transform 0.4s ease,
     opacity 0.4s ease;
 }
-
+/* Hover normal (header non scrollé) */
 header nav a:hover {
   color: var(--color-accent);
+  transform: scale(1.2);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              color 0.3s ease;
 }
 
-/* État au scroll */
 #site-header.scrolled nav a {
   font-size: 0.95rem;
-  opacity: 1;
-  transform: translateX(0);          /* se réalignent */
+  transform: translateX(0);
+}
+#site-header.scrolled nav a:hover {
+  color: var(--color-accent);
+  transform: translateX(0) scale(1.2);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              color 0.3s ease;
 }
 
 
-
-/* Header container : grand en haut, compact au scroll */
+/* Header container shrink */
 #site-header .container {
   height: 5rem;
   transition: height 0.3s ease;
 }
-#site-header.scrolled .container {
-  height: 4rem;
-}
+#site-header.scrolled .container { height: 4rem; }
 
 /* Logo shrink */
-#site-header.scrolled #hero-logo.in-header {
-  height: 2.6rem;
-}
-
-/* Navigation text : grand en haut, petit au scroll */
-header nav a {
-  font-size: 1.05rem;
-  transition: font-size 0.3s ease, color 0.3s ease;
-}
-#site-header.scrolled nav a {
-  font-size: 0.95rem;
-}
+#site-header.scrolled #hero-logo.in-header { height: 2.6rem; }
 
 /* Text magnify inversé */
 .text-magnify {
@@ -392,16 +349,13 @@ header nav a {
   transform-origin: center;
   transition: transform 0.3s ease;
 }
-#site-header.scrolled .text-magnify {
-  transform: scale(1);
-}
+#site-header.scrolled .text-magnify { transform: scale(1); }
 
-
-/* Conteneur logo + titre — suppression de l’animation sur gap */
+/* Conteneur logo + titre */
 .header-brand {
   display: flex;
   align-items: center;
-  gap: 1rem; /* fixe */
+  gap: 1rem;
 }
 #site-header.scrolled .header-brand > * {
   transform: translateX(0.25rem);
@@ -418,9 +372,8 @@ header nav a {
   transition: opacity 0.3s ease;
   z-index: 90;
 }
-.menu-overlay.active {
-  pointer-events: auto;
-}
+.menu-overlay.active { pointer-events: auto; }
+
 
 /* Menu mobile */
 .menu-mobile {
