@@ -99,9 +99,24 @@ const { title = "Atelier sous l’Eclipse" } = Astro.props;
       <slot />
     </main>
 
-    <footer class="bg-surface text-muted text-center p-6 mt-auto relative overflow-visible">
-      <p>&copy; {new Date().getFullYear()} Atelier sous l’éclipse — Tous droits réservés.</p>
-      <!-- ... -->
+    <!-- Footer -->
+    <footer class="bg-surface text-muted text-center p-1 mt-auto relative overflow-visible">
+      <div class="flex justify-center space-x-6 mt-4">
+        <div class="relative group overflow-visible">
+          <a href="https://www.instagram.com/ateliersousleclipse?igsh=MXI3bTMwMnc0bTZ6Zw==" aria-label="Instagram" class="hover:text-accent hover:scale-110 transition-transform" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-10 h-10"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.75-2.25a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0z"/></svg>
+          </a>
+          <img src="/images/qr-code-INSTA-2.0.png" alt="QR code Instagram" class="qr absolute top-[-170px] left-1/2 -translate-x-1/2 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-transform duration-300 bg-white p-1 z-[9999] pointer-events-none" />
+        </div>
+
+        <div class="relative group overflow-visible">
+          <a href="https://www.facebook.com/AtelierSousEclipse/" aria-label="Facebook" class="hover:text-accent hover:scale-110 transition-transform" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-10 h-10"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-2.9h2v-2.2c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2v2h2.3L15 14.9h-2v7A10 10 0 0 0 22 12"/></svg>
+          </a>
+          <img src="/images/qr-code-FB-2.0.png" alt="QR code Facebook" class="qr absolute top-[-170px] left-1/2 -translate-x-1/2 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-transform duration-300 bg-white p-1 z-[9999] pointer-events-none" />
+        </div>
+      </div>
+      <p class="mt-2">&copy; {new Date().getFullYear()} Atelier sous l’éclipse — Tous droits réservés.</p>
     </footer>
   </body>
 
