@@ -189,7 +189,7 @@ main {
 }
 
 /* États visuels (appliqués par JS) */
-#hero-logo.in-hero { width: 5rem; height: auto; }
+#hero-logo.in-hero { width: 10rem; height: auto; }
 #hero-logo.in-header { width: 3rem; height: auto; }
 
 #hero-title.in-hero {
@@ -257,6 +257,7 @@ main {
     margin-bottom: 0.25rem;
     line-height: 1.1;
   }
+  #hero-logo.in-hero { width: 7rem; height: auto; }
   .hero-section .hero-subtitle {
     line-height: 1.2;
     margin-top: 0.25rem;
@@ -1175,12 +1176,12 @@ form button[type="submit"]:hover {
 }
 @media (max-width: 414px) {
   .theme-outdoor {
-    --knife-width: 24%;
+    --knife-width: 55%;
     --knife-y: 48%;
-    --caption-y: 68%;
+    --caption-y: 10%;
   }
   .theme-outdoor figcaption {
-    font-size: clamp(0.7rem, 2.5vw, 1.2rem);
+    font-size: clamp(0.6rem, 2.5vw, 1.2rem);
   }
 }
 
