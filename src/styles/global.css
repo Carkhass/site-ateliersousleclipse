@@ -58,7 +58,7 @@
   --color-muted: #b8a8a0;
 
   /* 🔥 Rouge Sombre dark */
-  --color-accent: #dd2929;
+  --color-accent: #7a1e1e;
   --color-accent-light: #a83232;
   --color-accent-dark: #5c0f0f;
 
@@ -1155,16 +1155,16 @@ form button[type="submit"]:hover {
    Thème Outdoor
    ------------------------- */
 .theme-outdoor {
-  --slider-bg: url('/images/outdoor/fond outdoor3.webp');
+  --slider-bg: url('/images/outdoor/fondoutdoor-1.webp');
   --caption-bg: url('/images/outdoor/etiquette-bois.png');
 
-  --knife-x: 33%;
+  --knife-x: 23%;
   --knife-y: 55%;
-  --knife-rotate: 0deg;
+  --knife-rotate: -40deg;
   --knife-width: 55%;
 
-  --caption-x: 50%;
-  --caption-y: 70%;
+  --caption-x: 15%;
+  --caption-y: 10%;
 }
 .theme-outdoor .knife-image {
   top: var(--knife-y);
