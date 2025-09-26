@@ -1,6 +1,11 @@
 ---
 import "../styles/global.css";
-const { title = "Atelier sous l’Eclipse" } = Astro.props;
+const {
+  title = "Atelier sous l’Eclipse",
+  description = "Couteaux artisanaux faits main en France",
+  ogImage = "/images/og-home.jpg",
+  url = "https://ateliersousleclipse.fr/"
+} = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -10,6 +15,22 @@ const { title = "Atelier sous l’Eclipse" } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <meta name="description" content={description} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="fr_FR" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
   </head>
 
   <body class="flex flex-col min-h-screen font-sans bg-bg text-text">

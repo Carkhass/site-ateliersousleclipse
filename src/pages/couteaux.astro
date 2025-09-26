@@ -5,7 +5,13 @@ const images = import.meta.glob('../assets/slider-section2/*.{jpg,jpeg,png,webp}
 const imageList = Object.values(images).map((mod) => mod.default.src);
 ---
 
-<BaseLayout title="Couteaux">
+<BaseLayout 
+  title="Couteaux artisanaux – Galerie des créations | Atelier sous l’éclipse"
+  description="Parcourez la galerie de couteaux artisanaux de l’Atelier sous l’éclipse : modèles de cuisine et de table, pièces uniques en acier et bois précieux, fabriquées à la main."
+  ogImage="/images/og-couteaux.jpg"   <!-- provisoire, tu peux mettre /images/og-default.jpg en attendant -->
+  url="https://www.latelier-sous-leclipse.fr/couteaux"
+>
+
   <section class="w-screen min-h-screen flex flex-col items-center justify-center bg-surface px-4 py-12 text-center">
     <div class="max-w-5xl w-full relative">
       <img 
