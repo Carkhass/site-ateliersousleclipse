@@ -1445,7 +1445,7 @@ form button[type="submit"]:hover {
    ========================================================= */
 
 .premium-section {
-  min-height: calc(var(--vh) * 80);
+  min-height: calc(var(--vh) * 50);
   height: auto; /* pour laisser respirer si contenu plus grand */
 }
 
@@ -1559,12 +1559,18 @@ form button[type="submit"]:hover {
     100% { transform: rotateY(0deg); }
   }
 }
+@media (min-width: 768px) {
+  .card-3d-wrapper {
+    margin: 0; /* supprime l’auto-centering */
+  }
+}
+
 
 
 @media (max-width: 414px) {
   .premium-section {
     height: auto;
-    min-height: calc(var(--vh) * 80); /* 80% de la hauteur visible */
+    min-height: calc(var(--vh) * 70); /* 80% de la hauteur visible */
     padding-bottom: 2rem; /* espace pour éviter que le footer ne mange le contenu */
     display: flex;
     flex-direction: column;

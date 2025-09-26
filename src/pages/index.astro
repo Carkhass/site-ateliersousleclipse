@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Accueil">
+<BaseLayout title="Accueil Atelier sous l'éclipse">
 
 
 
@@ -401,7 +401,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <!-- BLOC PREMIUM FINAL AVEC IMAGE, CITATION, ANIMATIONS & CARTE 3D -->
 <!-- ========================================================= -->
 <section 
-  class="parallax-section premium-section relative w-full flex items-center justify-center text-center text-white overflow-hidden"
+  class="parallax-section premium-section relative w-full text-center text-white overflow-hidden py-12 md:py-16"
   data-parallax-speed="120"
   data-parallax-zoom="1.05"
   data-parallax-zoom-strength="0.2"
@@ -420,8 +420,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <div class="absolute inset-0 bg-black/45 backdrop-blur-[2px]"></div>
 
   <!-- Contenu interactif -->
-  <div class="relative z-10 px-4 max-w-6xl w-full space-y-6">
-    <p class="text-xl md:text-2xl font-serif italic fade-slide-up">
+  <div class="relative z-10 px-4 max-w-6xl w-full space-y-6 mx-auto">
+    <p class="text-2xl md:text-3xl font-serif italic fade-slide-up">
       « Chaque lame raconte une histoire… écrivons la vôtre. »
     </p>
 
@@ -430,9 +430,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <a href="/galerie" class="cta-premium px-5 py-2.5 text-white rounded text-sm">Voir la galerie</a>
     </div>
 
-    <div class="flex flex-col md:flex-row gap-3 justify-center items-center mt-4">
+    <!-- Passage en GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 justify-items-center mt-4 items-stretch">
       <!-- Carte 3D -->
-      <div class="card-3d-wrapper fade-slide-up delay-300">
+      <div class="card-3d-wrapper fade-slide-up delay-300 md:justify-self-end">
         <div class="card-3d">
           <div class="card-face card-front">
             <img src="/images/carte-visite-ateliersousleclipse-recto.jpg" alt="Carte recto" />
@@ -445,29 +446,55 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
 
       <!-- Formulaire -->
-      <form action="/contact" method="POST" class="bg-black/30 p-4 rounded-lg space-y-3 w-full max-w-xs md:max-w-md fade-slide-up delay-450">
-        <div class="space-y-3">
-          <input type="text" name="nom" placeholder="Votre nom" class="w-full p-2.5 rounded bg-white/90 text-black text-sm" required>
-          <input type="email" name="email" placeholder="Votre email" class="w-full p-2.5 rounded bg-white/90 text-black text-sm" required>
-          <textarea name="message" rows="3" placeholder="Votre message..." class="w-full p-2.5 rounded bg-white/90 text-black text-sm" required></textarea>
+      <form id="contact-form" action="/contact.php" method="POST" 
+            class="bg-black/30 p-4 rounded-lg w-full max-w-xs h-full flex flex-col fade-slide-up delay-450 justify-self-start">
+        <div class="space-y-3 flex-grow flex flex-col">
+          <input type="text" name="nom" placeholder="Votre nom" 
+                 class="w-full p-2.5 rounded bg-white/90 text-black text-sm" required>
+          <input type="email" name="email" placeholder="Votre email" 
+                 class="w-full p-2.5 rounded bg-white/90 text-black text-sm" required>
+          <!-- Textarea qui s’étire -->
+          <textarea name="message" placeholder="Votre message..." 
+                    class="w-full p-2.5 rounded bg-white/90 text-black text-sm resize-none flex-grow" required></textarea>
         </div>
-        <button type="submit" class="cta-premium w-full px-5 py-2.5 rounded text-white text-sm">Envoyer</button>
+        <button type="submit" 
+                class="cta-premium w-full px-5 py-2.5 rounded text-white text-sm mt-3">
+          Envoyer
+        </button>
       </form>
     </div>
   </div>
 </section>
 
 
+<!-- Popup Merci -->
+<div id="merci-popup" 
+     class="hidden fixed inset-0 flex items-center justify-center bg-black/70 z-50">
+  <div class="bg-surface p-6 rounded-lg shadow-lg transform scale-95 opacity-0 transition-all duration-300 text-center max-w-sm">
+    <img src="/images/merci-ateliersousleclipse2.webp" 
+         alt="Merci Atelier sous l’éclipse" 
+         class="mx-auto mb-4 w-80 h-auto rounded opacity-0 scale-90 transition-all duration-500" 
+         id="merci-image"/>
+    <p class="text-lg font-semibold text-gray-800">Merci pour votre message ! Je reviens vers vous rapidement.</p>
+    <button class="mt-4 px-4 py-2 bg-accent text-white rounded hover:bg-accent-dark transition">
+      Fermer
+    </button>
+  </div>
+</div>
+
+
 <script>
   import { initParallax } from '../scripts/layout/parallax.js';
   import { initHeroAnimation } from '../scripts/layout/hero-animation.js';
   import { initCarte3D } from '../scripts/features/carte-3d.js';
+  import { popupform } from '../scripts/features/popupform.js';
 
   if (typeof window !== 'undefined') {
     initParallax();
     initHeroAnimation();
     initCarte3D();
+    popupform();
   }
 </script>
 
-</BaseLayout
+</BaseLayout>
