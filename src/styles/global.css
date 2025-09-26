@@ -102,8 +102,8 @@ html {
   -webkit-hyphens: none;
   -moz-hyphens: none;
   hyphens: none;
+  scroll-behavior: smooth;
 }
-
 
 /* Empêche les débordements horizontaux
 html, body {
@@ -385,7 +385,7 @@ header nav a:hover {
   position: fixed;
   top: 5rem;
   right: 1rem;
-  width: 1px;
+  width: 38%;
   background-color: rgba(var(--color-bg-rgb), 0.65);
   backdrop-filter: blur(6px);
   border-radius: 0.75rem;
