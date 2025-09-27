@@ -11,27 +11,69 @@ const {
 <!DOCTYPE html>
 <html lang="fr" class="transition-colors duration-300 no-js">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-    <meta name="description" content={description} />
+  <meta name="description" content={description} />
 
-    <!-- Open Graph -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={url} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:locale" content="fr_FR" />
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={url} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:locale" content="fr_FR" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
-  </head>
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <!-- JSON-LD: Organization -->
+  <script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Atelier sous l’éclipse",
+      "url": "https://ateliersousleclipse.fr/",
+      "logo": "https://ateliersousleclipse.fr/images/logo-atelier-eclipse.png",
+      "image": ogImage,
+      "description": description,
+      "sameAs": [
+        "https://www.instagram.com/ateliersousleclipse",
+        "https://www.facebook.com/AtelierSousEclipse"
+      ]
+    })}
+  </script>
+
+  <!-- JSON-LD: Person -->
+  <script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Yann",
+      "jobTitle": "Artisan coutelier",
+      "description": "Artisan coutelier en France, créations de couteaux faits main : aciers haut de gamme, manches en bois précieux, finitions d’exception.",
+      "image": "https://ateliersousleclipse.fr/images/portrait-yann.jpg",
+      "url": "https://ateliersousleclipse.fr/",
+      "sameAs": [
+        "https://www.instagram.com/ateliersousleclipse",
+        "https://www.facebook.com/AtelierSousEclipse"
+      ],
+      "knowsAbout": [
+        "coutellerie artisanale",
+        "trempe sélective",
+        "hamon",
+        "aciers carbone",
+        "bois précieux"
+      ]
+    })}
+  </script>
+</head>
+
 
   <body class="flex flex-col min-h-screen font-sans bg-bg text-text">
     <header id="site-header" class="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm transition-all duration-500">
