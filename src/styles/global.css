@@ -189,7 +189,7 @@ main {
 }
 
 /* États visuels (appliqués par JS) */
-#hero-logo.in-hero { width: 10rem; height: auto; }
+#hero-logo.in-hero { width: 8rem; height: auto; }
 #hero-logo.in-header { width: 3rem; height: auto; }
 
 #hero-title.in-hero {
@@ -211,11 +211,27 @@ main {
 /* Ghosts */
 .ghost {
   visibility: hidden;
+  opacity: 0;
   pointer-events: none;
-  display: none;
+  position: absolute;   /* se superpose à l’élément réel */
+  left: 0; right: 0;    /* occupe la même largeur */
+  margin: 0 auto;
 }
-#hero-logo-ghost { width: 5rem; height: 5rem; }
-#hero-title-ghost { font-size: clamp(2rem, 6vw, 3.5rem); }
+
+#hero-logo-ghost { 
+  width: 10rem; 
+  height: auto; 
+  display: block; 
+}
+#hero-title-ghost {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  text-align: center;
+  margin: 0 auto;
+  line-height: 1.1;
+}
+#hero-logo-anchor { min-height: 5rem; }
+#hero-title-anchor { min-height: 3.5rem; }
+
 
 /* Placeholders */
 #header-logo-placeholder,
@@ -254,14 +270,20 @@ main {
   }
   #hero-title.in-hero {
     font-size: clamp(1.7rem, 5vw, 2rem);
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.15rem;
     line-height: 1.1;
   }
-  #hero-logo.in-hero { width: 7rem; height: auto; }
+  #hero-logo.in-hero { width: 5.5rem; height: auto; }
   .hero-section .hero-subtitle {
     line-height: 1.2;
-    margin-top: 0.25rem;
+    margin-top: 0.15rem;
     font-size: 0.9rem;
+  }
+  #hero-logo-ghost   { width: 5rem; height: auto; }
+  #hero-title-ghost {
+    font-size: clamp(1.7rem, 5vw, 2rem);
+    margin-bottom: 0.15rem;
+    line-height: 1.1;
   }
 }
 
@@ -476,6 +498,16 @@ header nav a:hover {
   text-align: center;
 }
 
+#hero-subtitle {
+  transition: letter-spacing 1600ms ease, transform 1600ms ease;
+}
+
+.hero-detached #hero-subtitle {
+  letter-spacing: 0.08em;
+  transform: translateY(40px);
+}
+
+
 .hero-section .hero-button {
   display: block;
   margin: 1rem auto 0;
@@ -573,6 +605,17 @@ header nav a:hover {
   }
 }
 
+@media (max-width: 768px) {
+  /* On garde la transition sur transform, mais on enlève le letter-spacing */
+  #hero-subtitle {
+    transition: transform 1600ms ease; /* supprime letter-spacing de la transition */
+  }
+
+  .hero-detached #hero-subtitle {
+    letter-spacing: normal; /* annule l’écartement des lettres */
+    transform: translateY(40px); /* on conserve le mouvement vertical */
+  }
+}
 
 
 
@@ -1081,6 +1124,28 @@ form button[type="submit"]:hover {
   filter: drop-shadow(0 2px 6px rgba(0,0,0,1));
 }
 
+@media (max-width: 768px) {
+  .my-knives-swiper .swiper-button-prev,
+  .my-knives-swiper .swiper-button-next {
+    transform: scale(0.7); /* réduit globalement la taille */
+  }
+
+  /* Si tu veux être plus précis sur l’icône générée par Swiper */
+  .my-knives-swiper .swiper-button-prev::after,
+  .my-knives-swiper .swiper-button-next::after {
+    font-size: 20px; /* par défaut c’est souvent 27px */
+  }
+
+  /* Rapprocher les flèches du bord */
+  .my-knives-swiper .swiper-button-prev {
+    left: 5px;
+  }
+  .my-knives-swiper .swiper-button-next {
+    right: 5px;
+  }
+}
+
+
 /* =========================================================
    VARIABLES PAR THÈME
    ========================================================= */
@@ -1109,9 +1174,9 @@ form button[type="submit"]:hover {
 }
 @media (max-width: 414px) {
   .theme-cuisine {
-    --knife-width: 60%;
-    --knife-y: 40%;
-    --caption-y: 72%;
+    --knife-width: 70%;
+    --knife-y: 50%;
+    --caption-y: 80%;
   }
   .theme-cuisine figcaption {
     font-size: clamp(0.7rem, 2.5vw, 1.2rem);
@@ -1122,16 +1187,16 @@ form button[type="submit"]:hover {
    Thème Table
    ------------------------- */
 .theme-table {
-  --slider-bg: url('/images/table/fond-table5.webp');
+  --slider-bg: url('/images/table/fond-table1.webp');
   --caption-bg: url('/images/table/etiquette-tissu.png');
 
-  --knife-x: 45%;
-  --knife-y: 65%;
+  --knife-x: 50%;
+  --knife-y: 53%;
   --knife-rotate: 0deg;
-  --knife-width: 43%;
+  --knife-width: 61%;
 
-  --caption-x: 42%;
-  --caption-y: 27%;
+  --caption-x: 49%;
+  --caption-y: 8%;
 }
 .theme-table .knife-image {
   top: var(--knife-y);
@@ -1142,10 +1207,10 @@ form button[type="submit"]:hover {
 }
 @media (max-width: 414px) {
   .theme-table {
-    --knife-width: 40%;
-    --knife-y: 64%;
-    --caption-y: 28%;
-    --caption-x: 42%;
+    --knife-width: 60%;
+    --knife-y: 53%;
+    --caption-y: 8%;
+    --caption-x: 49%;
   }
   .theme-table figcaption {
     font-size: clamp(0.6rem, 2.5vw, 1.2rem);

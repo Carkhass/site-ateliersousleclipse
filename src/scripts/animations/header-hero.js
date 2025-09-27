@@ -21,10 +21,8 @@ export function initHeaderHero() {
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) {
-        // Hero sorti → logo/titre doivent être dans le header
         if (!inHeader) forceToHeader();
       } else {
-        // Hero visible → logo/titre doivent être dans le hero
         if (inHeader) forceToHero();
       }
     });
@@ -46,6 +44,9 @@ export function initHeaderHero() {
         headerLogoPlaceholder.classList.add("filled");
         headerTitlePlaceholder.classList.add("filled");
 
+        // Ajout du flag pour le lissage du sous-titre
+        document.documentElement.classList.add("hero-detached");
+
         Promise.all([
           flipMove(heroLogo, headerLogoPlaceholder, "in-header"),
           delay(50).then(() => flipMove(heroTitle, headerTitlePlaceholder, "in-header"))
@@ -57,6 +58,9 @@ export function initHeaderHero() {
         headerLogoPlaceholder.classList.remove("filled");
         headerTitlePlaceholder.classList.remove("filled");
 
+        // Retrait du flag
+        document.documentElement.classList.remove("hero-detached");
+
         Promise.all([
           flipMove(heroLogo, heroLogoAnchor, "in-hero"),
           delay(50).then(() => flipMove(heroTitle, heroTitleAnchor, "in-hero"))
@@ -65,7 +69,6 @@ export function initHeaderHero() {
     }
   }
 
-  // --- Garde-fou : forcer cohérence ---
   function forceToHeader() {
     headerLogoPlaceholder.appendChild(heroLogo);
     headerTitlePlaceholder.appendChild(heroTitle);
@@ -76,6 +79,7 @@ export function initHeaderHero() {
     header.classList.add("nav-shifted");
     headerLogoPlaceholder.classList.add("filled");
     headerTitlePlaceholder.classList.add("filled");
+    document.documentElement.classList.add("hero-detached");
     inHeader = true;
   }
 
@@ -89,10 +93,10 @@ export function initHeaderHero() {
     header.classList.remove("nav-shifted");
     headerLogoPlaceholder.classList.remove("filled");
     headerTitlePlaceholder.classList.remove("filled");
+    document.documentElement.classList.remove("hero-detached");
     inHeader = false;
   }
 
-  // --- FLIP pour logo/titre ---
   function flipMove(el, newParent, stateClass) {
     return new Promise((resolve) => {
       el.style.transition = "none";
