@@ -1143,8 +1143,12 @@ form button[type="submit"]:hover {
   .my-knives-swiper .swiper-button-next {
     right: 5px;
   }
-}
 
+  .my-knives-swiper .swiper-pagination-bullet {
+    width: 4px;                           /* taille personnalisée */
+    height: 4px;
+  }
+}
 
 /* =========================================================
    VARIABLES PAR THÈME
@@ -1249,6 +1253,8 @@ form button[type="submit"]:hover {
     font-size: clamp(0.6rem, 2.5vw, 1.2rem);
   }
 }
+
+
 
 
 /* =========================================================
