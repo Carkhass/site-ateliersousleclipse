@@ -407,11 +407,11 @@ header nav a:hover {
   position: fixed;
   top: 5rem;
   right: 1rem;
-  width: 38%;
+  width: 42%;
   background-color: rgba(var(--color-bg-rgb), 0.65);
   backdrop-filter: blur(6px);
   border-radius: 0.75rem;
-  box-shadow: -4px 0 20px rgba(0,0,0,0.35);
+  box-shadow: -4px 0 20px rgba(0,0,0,0.55);
   padding: 2rem 1.5rem;
   z-index: 100;
   opacity: 0;
