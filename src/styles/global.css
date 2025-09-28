@@ -1158,16 +1158,16 @@ form button[type="submit"]:hover {
    Thème Cuisine
    ------------------------- */
 .theme-cuisine {
-  --slider-bg: url('/images/cuisine/planche-2-ateliersousleclipse.webp');
+  --slider-bg: url('/images/cuisine/planche2-ateliersousleclipse.webp');
   --caption-bg: url('/images/cuisine/papier.png');
 
-  --knife-x: 70%;
-  --knife-y: 42%;
-  --knife-rotate: -20deg;
-  --knife-width: 65%;
+  --knife-x: 47%;
+  --knife-y: 62%;
+  --knife-rotate: 1deg;
+  --knife-width: 75%;
 
   --caption-x: 75%;
-  --caption-y: 75%;
+  --caption-y: 90%;
 }
 .theme-cuisine .knife-image {
   top: var(--knife-y);
@@ -1178,8 +1178,9 @@ form button[type="submit"]:hover {
 }
 @media (max-width: 414px) {
   .theme-cuisine {
-    --knife-width: 70%;
-    --knife-y: 50%;
+    --knife-width: 80%;
+    --knife-y: 65%;
+    --caption-x: 80%;
     --caption-y: 80%;
   }
   .theme-cuisine figcaption {
