@@ -1,17 +1,15 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-/* On importe toutes les images du dossier src/assets/slider-section2 */
-const images = import.meta.glob('../assets/slider-section2/*.{jpg,jpeg,png,webp}', { eager: true });
-const imageList = Object.values(images).map((mod) => mod.default.src);
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout 
+<BaseLayout
   title="Couteaux artisanaux – Galerie des créations | Atelier sous l’éclipse"
   description="Parcourez la galerie de couteaux artisanaux de l’Atelier sous l’éclipse : modèles de cuisine et de table, pièces uniques en acier et bois précieux, fabriquées à la main."
-  ogImage="/images/og-couteaux.jpg"   <!-- provisoire, tu peux mettre /images/og-default.jpg en attendant -->
+  ogImage="/images/og-couteaux.jpg"
   url="https://www.latelier-sous-leclipse.fr/couteaux"
+  bodyClass="page-couteaux"
 >
-
+  <!-- =========================
   <section class="w-screen min-h-screen flex flex-col items-center justify-center bg-surface px-4 py-12 text-center">
     <div class="max-w-5xl w-full relative">
       <img 
@@ -30,4 +28,2123 @@ const imageList = Object.values(images).map((mod) => mod.default.src);
       La galerie de mes couteaux arrive bientôt. Revenez dans quelques jours pour découvrir tous mes modèles.
     </p>
   </section>
-</BaseLayout>
+
+================================ -->
+
+<body class="page-couteaux">
+
+<!-- ========================================================= -->
+<!-- STICKY GLOBAL TITLE + MENU GAUCHE -->
+<!-- ========================================================= -->
+ <div id="knife-sticky-sentinel"></div>
+<section id="knife-sticky-header" class="sticky top-[64px] z-40 relative">
+  <!-- Ligne du haut pleine largeur -->
+  <span class="knife-accent knife-accent-top"></span>
+
+  <!-- Container interne, comme dans le header -->
+  <div class="knife-sticky-container max-w-[1200px] mx-auto px-6 py-8 grid grid-cols-[auto_1fr] items-center gap-8 relative">
+    
+    <!-- Menu gauche -->
+    <nav class="knife-nav">
+      <ul class="space-y-3 text-sm font-medium text-[var(--color-muted)]">
+        <li><a href="#cuisine" class="flex items-center gap-2 transition"><span>🍽️</span> Cuisine</a></li>
+        <li><a href="#table" class="flex items-center gap-2 transition"><span>🥂</span> Table</a></li>
+        <li><a href="#outdoor" class="flex items-center gap-2 transition"><span>🏕️</span> Outdoor</a></li>
+      </ul>
+    </nav>
+
+    <!-- Titre centré -->
+    <div class="knife-title absolute left-1/2 translate-x-[-50%] flex flex-col items-center justify-center text-center w-full pointer-events-none">
+      <h2 id="knife-title"
+          class="knife-title-split text-4xl md:text-5xl font-serif font-bold text-[var(--color-accent)]"
+          data-text="Couteaux de cuisine">
+        <span class="knife-title-top">Couteaux de cuisine</span>
+        <span class="knife-title-bottom">Couteaux de cuisine</span>
+      </h2>
+      <p id="knife-subtitle-text" class="knife-subtitle-blur text-lg text-[var(--color-muted)] mt-4 reveal-child">
+        Tranchants, ergonomiques... et sublimes !
+      </p>
+    </div>
+
+    <!-- Ligne du bas intégrée dans le container -->
+    <span class="knife-accent knife-accent-bottom"></span>
+  </div>
+</section>
+
+
+
+
+
+<section id="cuisine" class="knife-section">
+  <div class="knife-trigger h-[1px] opacity-0 pointer-events-none" data-title="Couteaux de cuisine" data-subtitle="Tranchants, ergonomiques... et sublimes !"></div>
+<!-- ========================================================= -->
+<!-- SECTION — GRAND BONAP (gauche) + BONAP (droite) -->
+<!-- ========================================================= -->
+  <section class="knife-gallery py-20">
+    <div class="container-knife-gallery mx-auto grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-12">
+
+      <!-- Bloc gauche : Grand Bon'ap -->
+      <div class="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-start">
+        <!-- Slider principal -->
+        <div>
+          <div
+            class="embla-knife embla-knife-main fade-slide-left rounded-xl shadow-lg overflow-hidden mb-4 bg-[var(--color-surface)]"
+          >
+            <div class="embla-knife-viewport">
+              <div class="embla-knife-container">
+                <div class="embla-knife-slide">
+                  <img
+                    src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon-_med.webp"
+                    data-full="/images/couteaux/grandbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon-.webp"
+                    alt="Couteau artisanal Grand Bonap avec hamon complet – Atelier sous l’éclipse"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="embla-knife-slide">
+                  <img
+                    src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon_med.webp"
+                    data-full="/images/couteaux/grandbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon.webp"
+                    alt="Couteau artisanal Grand Bonap lame hamon poli – Atelier sous l’éclipse"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="embla-knife-slide">
+                  <img
+                    src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-left-hamon_med.webp"
+                    data-full="/images/couteaux/grandbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-left-hamon.webp"
+                    alt="Couteau artisanal Grand Bonap vue gauche lame hamon – Atelier sous l’éclipse"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="embla-knife-slide">
+                  <img
+                    src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-entier_med.webp"
+                    data-full="/images/couteaux/grandbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-entier.webp"
+                    alt="Couteau artisanal Grand Bonap entier avec hamon – Atelier sous l’éclipse"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="embla-knife-slide">
+                  <img
+                    src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-full-hand_med.webp"
+                    data-full="/images/couteaux/grandbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-full-hand.webp"
+                    alt="Couteau artisanal Grand Bonap hamon en main – Atelier sous l’éclipse"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="embla-knife-slide">
+                  <img
+                    src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-hand-full_med.webp"
+                    data-full="/images/couteaux/grandbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-hand-full.webp"
+                    alt="Couteau artisanal Grand Bonap lame hamon tenu en main – Atelier sous l’éclipse"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="embla-knife-slide">
+                  <img
+                    src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-olivier-full_med.webp"
+                    data-full="/images/couteaux/grandbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-olivier-full.webp"
+                    alt="Couteau artisanal Grand Bonap manche en olivier lame hamon – Atelier sous l’éclipse"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="embla-knife-slide">
+                  <img
+                    src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-olivier-hand_med.webp"
+                    data-full="/images/couteaux/grandbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-olivier-hand.webp"
+                    alt="Couteau artisanal Grand Bonap manche olivier présenté en main – Atelier sous l’éclipse"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="embla-knife-slide">
+                  <img
+                    src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-olivier_med.webp"
+                    data-full="/images/couteaux/grandbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-olivier.webp"
+                    alt="Couteau artisanal Grand Bonap lame hamon et manche olivier – Atelier sous l’éclipse"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slider vignettes -->
+          <div class="embla-knife embla-knife-thumbs fade-in-delay">
+            <div class="embla-knife-viewport">
+              <div class="embla-knife-container">
+                <div class="embla-knife-slide">
+                  <button>
+                    <img
+                      src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon-_med.webp"
+                      alt="Vignette couteau artisanal Grand Bonap hamon complet"
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+
+                <div class="embla-knife-slide">
+                  <button>
+                    <img
+                      src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon_med.webp"
+                      alt="Vignette couteau artisanal Grand Bonap lame hamon poli"
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+
+                <div class="embla-knife-slide">
+                  <button>
+                    <img
+                      src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-left-hamon_med.webp"
+                      alt="Vignette couteau artisanal Grand Bonap vue gauche hamon"
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+
+                <div class="embla-knife-slide">
+                  <button>
+                    <img
+                      src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-entier_med.webp"
+                      alt="Vignette couteau artisanal Grand Bonap entier hamon"
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+
+                <div class="embla-knife-slide">
+                  <button>
+                    <img
+                      src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-full-hand_med.webp"
+                      alt="Vignette couteau artisanal Grand Bonap hamon en main"
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+
+                <div class="embla-knife-slide">
+                  <button>
+                    <img
+                      src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-hand-full_med.webp"
+                      alt="Vignette couteau artisanal Grand Bonap lame hamon main"
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+
+                <div class="embla-knife-slide">
+                  <button>
+                    <img
+                      src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-olivier-full_med.webp"
+                      alt="Vignette couteau artisanal Grand Bonap manche olivier hamon"
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+
+                <div class="embla-knife-slide">
+                  <button>
+                    <img
+                      src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-olivier-hand_med.webp"
+                      alt="Vignette couteau artisanal Grand Bonap manche olivier en main"
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+
+                <div class="embla-knife-slide">
+                  <button>
+                    <img
+                      src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-hamon-olivier_med.webp"
+                      alt="Vignette couteau artisanal Grand Bonap lame hamon manche olivier"
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Texte descriptif + specs -->
+        <div class="fade-slide-up space-y-4">
+          <h2 class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child">
+            Grand Bon'ap
+          </h2>
+          <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+            Couteau de cuisine proche d'un couteau de chef mais avec une ligne d'inspiration japonaise.
+            Bien que son utilisation reste variée (légumes, viandes, poissons, fruits…),
+            sa courbe légèrement plus prononcée que le Bon’Ap permet d’en faire un redoutable éminceur.
+
+          </p>
+          <ul class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child">
+            <li><strong>Type :</strong> Couteau de table artisanal</li>
+            <li><strong>Taille :</strong> 23&nbsp;cm</li>
+            <li><strong>Poids :</strong> 95&nbsp;g</li>
+            <li><strong>Épaisseur au dos :</strong> 2.5&nbsp;mm</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Séparateur -->
+      <div class="hidden lg:block w-px bg-[var(--color-muted)]"></div>
+
+      <!-- Bloc droit : Bon'ap -->
+      <div class="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-start">
+        <!-- Slider principal -->
+        <div>
+          <div
+            class="embla-knife embla-knife-main fade-slide-right rounded-xl shadow-lg overflow-hidden mb-4 bg-[var(--color-surface)]"
+          >
+            <div class="embla-knife-viewport">
+              <div class="embla-knife-container">
+                <div class="embla-knife-slide">
+                  <img
+                    src="/images/couteaux/bonap/atelier-sous-leclipse-couteau-artisanal-bonap-cerisier-hamon.webp"
+                    data-full="/images/couteaux/bonap/fullsize/atelier-sous-leclipse-couteau-artisanal-bonap-cerisier-hamon.webp"
+                    alt="Couteau artisanal Bonap manche en cerisier avec hamon – Atelier sous l’éclipse"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="embla-knife-slide">
+                  <img
+                    src="/images/couteaux/bonap/atelier-sous-leclipse-couteau-artisanal-bonap-entier-hamon.webp"
+                    data-full="/images/couteaux/bonap/fullsize/atelier-sous-leclipse-couteau-artisanal-bonap-entier-hamon.webp"
+                    alt="Couteau artisanal Bonap entier lame hamon – Atelier sous l’éclipse"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="embla-knife-slide">
+                  <img
+                    src="/images/couteaux/bonap/atelier-sous-leclipse-couteau-artisanal-bonap-hamon-main.webp"
+                    data-full="/images/couteaux/bonap/fullsize/atelier-sous-leclipse-couteau-artisanal-bonap-hamon-main.webp"
+                    alt="Couteau artisanal Bonap lame hamon présenté en main – Atelier sous l’éclipse"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="embla-knife-slide">
+                  <img
+                    src="/images/couteaux/bonap/atelier-sous-leclipse-couteau-artisanal-bonap-hamon.webp"
+                    data-full="/images/couteaux/bonap/fullsize/atelier-sous-leclipse-couteau-artisanal-bonap-hamon.webp"
+                    alt="Couteau artisanal Bonap lame hamon poli – Atelier sous l’éclipse"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="embla-knife-slide">
+                  <img
+                    src="/images/couteaux/bonap/atelier-sous-leclipse-couteau-artisanal-bonap-morta-hamon.webp"
+                    data-full="/images/couteaux/bonap/fullsize/atelier-sous-leclipse-couteau-artisanal-bonap-morta-hamon.webp"
+                    alt="Couteau artisanal Bonap manche en morta lame hamon – Atelier sous l’éclipse"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div class="embla-knife-slide">
+                  <img
+                    src="/images/couteaux/bonap/atelier-sous-leclipse-couteau-artisanal-bonap-side.webp"
+                    data-full="/images/couteaux/bonap/fullsize/atelier-sous-leclipse-couteau-artisanal-bonap-side.webp"
+                    alt="Couteau artisanal Bonap vue latérale lame hamon – Atelier sous l’éclipse"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slider vignettes -->
+          <div class="embla-knife embla-knife-thumbs fade-in-delay">
+            <div class="embla-knife-viewport">
+              <div class="embla-knife-container">
+                <div class="embla-knife-slide">
+                  <button
+                    ><img
+                      src="/images/couteaux/bonap/atelier-sous-leclipse-couteau-artisanal-bonap-cerisier-hamon.webp"
+                      alt="Vignette couteau artisanal Bonap manche cerisier hamon"
+                      loading="lazy"
+                    /></button>
+                </div>
+                <div class="embla-knife-slide">
+                  <button
+                    ><img
+                      src="/images/couteaux/bonap/atelier-sous-leclipse-couteau-artisanal-bonap-entier-hamon.webp"
+                      alt="Vignette couteau artisanal Bonap entier hamon"
+                      loading="lazy"
+                    /></button>
+                </div>
+                <div class="embla-knife-slide">
+                  <button
+                    ><img
+                      src="/images/couteaux/bonap/atelier-sous-leclipse-couteau-artisanal-bonap-hamon-main.webp"
+                      alt="Vignette couteau artisanal Bonap hamon en main"
+                      loading="lazy"
+                    /></button>
+                </div>
+                <div class="embla-knife-slide">
+                  <button
+                    ><img
+                      src="/images/couteaux/bonap/atelier-sous-leclipse-couteau-artisanal-bonap-hamon.webp"
+                      alt="Vignette couteau artisanal Bonap lame hamon"
+                      loading="lazy"
+                    /></button>
+                </div>
+                <div class="embla-knife-slide">
+                  <button
+                    ><img
+                      src="/images/couteaux/bonap/atelier-sous-leclipse-couteau-artisanal-bonap-morta-hamon.webp"
+                      alt="Vignette couteau artisanal Bonap manche morta hamon"
+                      loading="lazy"
+                    /></button>
+                </div>
+                <div class="embla-knife-slide">
+                  <button
+                    ><img
+                      src="/images/couteaux/bonap/atelier-sous-leclipse-couteau-artisanal-bonap-side.webp"
+                      alt="Vignette couteau artisanal Bonap vue latérale hamon"
+                      loading="lazy"
+                    /></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Texte descriptif + specs -->
+        <div class="fade-slide-up space-y-4">
+          <h2 class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child">
+            Bonap
+          </h2>
+          <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+            Version plus compacte, idéale pour un usage quotidien élégant et
+            précis.
+          </p>
+          <ul class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child">
+            <li><strong>Type :</strong> Couteau de table artisanal</li>
+            <li><strong>Taille :</strong> 20&nbsp;cm</li>
+            <li><strong>Poids :</strong> 80&nbsp;g</li>
+            <li><strong>Épaisseur au dos :</strong> 2&nbsp;mm</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+<!-- ========================================================= -->
+<!-- SECTION — LONG BONAP (gauche) + BABY BONAP (droite) -->
+<!-- ========================================================= -->
+  <section class="knife-gallery bg-surface py-20">
+    <div class="container-knife-gallery mx-auto grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-12">
+
+      <!-- Colonne 1 : Long Bonap -->
+      <div class="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-start">
+        <!-- Slider principal -->
+        <div>
+            <div
+              class="embla-knife embla-knife-main fade-slide-left rounded-xl shadow-lg overflow-hidden mb-4 bg-[var(--color-surface)]"
+            >
+              <div class="embla-knife-viewport">
+                <div class="embla-knife-container">
+                  <div class="embla-knife-slide">
+                    <img
+                      src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-hamon-dentelle_med.webp"
+                      data-full="/images/couteaux/longbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-long-bonap-hamon-dentelle.webp"
+                      alt="Couteau artisanal Long Bonap lame hamon dentelle – Atelier sous l’éclipse"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <div class="embla-knife-slide">
+                    <img
+                      src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-hamon-dentelle-left_med.webp"
+                      data-full="/images/couteaux/longbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-long-bonap-hamon-dentelle-left.webp"
+                      alt="Couteau artisanal Long Bonap lame hamon dentelle vue gauche – Atelier sous l’éclipse"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <div class="embla-knife-slide">
+                    <img
+                      src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-hamon-dentelle-zoom_med.webp"
+                      data-full="/images/couteaux/longbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-long-bonap-hamon-dentelle-zoom.webp"
+                      alt="Couteau artisanal Long Bonap détail lame hamon dentelle – Atelier sous l’éclipse"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <div class="embla-knife-slide">
+                    <img
+                      src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-cocobolo_med.webp"
+                      data-full="/images/couteaux/longbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-long-bonap-cocobolo.webp"
+                      alt="Couteau artisanal Long Bonap manche en cocobolo – Atelier sous l’éclipse"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <div class="embla-knife-slide">
+                    <img
+                      src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-massive-hamon-hand_med.webp"
+                      data-full="/images/couteaux/longbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-long-bonap-massive-hamon-hand.webp"
+                      alt="Couteau artisanal Long Bonap lame massive hamon en main – Atelier sous l’éclipse"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <div class="embla-knife-slide">
+                    <img
+                      src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-massive-hamon-left_med.webp"
+                      data-full="/images/couteaux/longbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-long-bonap-massive-hamon-left.webp"
+                      alt="Couteau artisanal Long Bonap lame massive hamon vue gauche – Atelier sous l’éclipse"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <div class="embla-knife-slide">
+                    <img
+                      src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-massive-hamon-right_med.webp"
+                      data-full="/images/couteaux/longbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-long-bonap-massive-hamon-right.webp"
+                      alt="Couteau artisanal Long Bonap lame massive hamon vue droite – Atelier sous l’éclipse"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <div class="embla-knife-slide">
+                    <img
+                      src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-massive-hamon_med.webp"
+                      data-full="/images/couteaux/longbonap/fullsize/atelier-sous-leclipse-couteau-artisanal-long-bonap-massive-hamon.webp"
+                      alt="Couteau artisanal Long Bonap lame massive hamon – Atelier sous l’éclipse"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slider vignettes -->
+            <div class="embla-knife embla-knife-thumbs fade-in-delay">
+              <div class="embla-knife-viewport">
+                <div class="embla-knife-container">
+                  <div class="embla-knife-slide">
+                    <button
+                      ><img
+                        src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-hamon-dentelle_med.webp"
+                        alt="Vignette couteau artisanal Long Bonap hamon dentelle"
+                        loading="lazy"
+                      /></button>
+                  </div>
+                  <div class="embla-knife-slide">
+                    <button
+                      ><img
+                        src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-hamon-dentelle-left_med.webp"
+                        alt="Vignette couteau artisanal Long Bonap hamon dentelle gauche"
+                        loading="lazy"
+                      /></button>
+                  </div>
+                  <div class="embla-knife-slide">
+                    <button
+                      ><img
+                        src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-hamon-dentelle-zoom_med.webp"
+                        alt="Vignette couteau artisanal Long Bonap détail hamon dentelle"
+                        loading="lazy"
+                      /></button>
+                  </div>
+                  <div class="embla-knife-slide">
+                    <button
+                      ><img
+                        src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-cocobolo_med.webp"
+                        alt="Vignette couteau artisanal Long Bonap manche cocobolo"
+                        loading="lazy"
+                      /></button>
+                  </div>
+                  
+                  <div class="embla-knife-slide">
+                    <button
+                      ><img
+                        src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-massive-hamon-hand_med.webp"
+                        alt="Vignette couteau artisanal Long Bonap massive hamon en main"
+                        loading="lazy"
+                      /></button>
+                  </div>
+                  <div class="embla-knife-slide">
+                    <button
+                      ><img
+                        src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-massive-hamon-left_med.webp"
+                        alt="Vignette couteau artisanal Long Bonap massive hamon gauche"
+                        loading="lazy"
+                      /></button>
+                  </div>
+                  <div class="embla-knife-slide">
+                    <button
+                      ><img
+                        src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-massive-hamon-right_med.webp"
+                        alt="Vignette couteau artisanal Long Bonap massive hamon droite"
+                        loading="lazy"
+                      /></button>
+                  </div>
+                  <div class="embla-knife-slide">
+                    <button
+                      ><img
+                        src="/images/couteaux/longbonap/atelier-sous-leclipse-couteau-artisanal-long-bonap-massive-hamon_med.webp"
+                        alt="Vignette couteau artisanal Long Bonap massive hamon"
+                        loading="lazy"
+                      /></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- Texte descriptif + specs Long Bonap -->
+        <div class="fade-slide-up space-y-4">
+            <h2
+              class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child"
+            >
+              Long Bonap
+            </h2>
+            <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+              Couteau de table allongé et expressif, pensé pour les découpes
+              fluides et la mise en scène des grandes pièces.
+            </p>
+            <ul class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child">
+              <li><strong>Type :</strong> Couteau de table artisanal</li>
+              <li>
+                <strong>Lame :</strong> Hamon dentelle ou hamon massif selon la pièce
+              </li>
+              <li>
+                <strong>Manche :</strong> Cocobolo et autres essences nobles
+              </li>
+              <li>
+                <strong Finition :< strong>
+                  Détails polis et lignes épurées</strong
+                >
+              </li>
+            </ul>
+         </div>
+      </div>
+
+      <!-- Séparateur -->
+      <div class="hidden lg:block w-px bg-[var(--color-muted)]"></div>
+
+      <!-- Colonne 3 : Baby Bonap -->
+      <div class="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-start">
+         <!-- Slider principal -->
+         <div>
+            <div class="embla-knife embla-knife-main fade-slide-right rounded-xl shadow-lg overflow-hidden mb-4 bg-[var(--color-surface)]">
+              <div class="embla-knife-viewport">
+                <div class="embla-knife-container">
+                  <div class="embla-knife-slide">
+                      <img
+                        src="/images/couteaux/babybonap/atelier-sous-leclipse-couteau-artisanal-baby-bonap-side_med.webp"
+                        data-full="/images/couteaux/babybonap/fullsize/atelier-sous-leclipse-couteau-artisanal-baby-bonap-side.webp"
+                        alt="Couteau artisanal Baby Bonap vue latérale – Atelier sous l’éclipse"
+                        loading="lazy"
+                      />
+                  </div>
+
+                  <div class="embla-knife-slide">
+                      <img
+                        src="/images/couteaux/babybonap/atelier-sous-leclipse-couteau-artisanal-baby-bonap-back_med.webp"
+                        data-full="/images/couteaux/babybonap/fullsize/atelier-sous-leclipse-couteau-artisanal-baby-bonap-back.webp"
+                        alt="Couteau artisanal Baby Bonap vue arrière – Atelier sous l’éclipse"
+                        loading="lazy"
+                      />
+                  </div>
+
+                  <div class="embla-knife-slide">
+                      <img
+                        src="/images/couteaux/babybonap/atelier-sous-leclipse-couteau-artisanal-baby-bonap-bois_med.webp"
+                        data-full="/images/couteaux/babybonap/fullsize/atelier-sous-leclipse-couteau-artisanal-baby-bonap-bois.webp"
+                        alt="Couteau artisanal Baby Bonap manche bois – Atelier sous l’éclipse"
+                        loading="lazy"
+                      />
+                  </div>
+
+                  <div class="embla-knife-slide">
+                      <img
+                        src="/images/couteaux/babybonap/atelier-sous-leclipse-couteau-artisanal-baby-bonap-lame_med.webp"
+                        data-full="/images/couteaux/babybonap/fullsize/atelier-sous-leclipse-couteau-artisanal-baby-bonap-lame.webp"
+                        alt="Couteau artisanal Baby Bonap lame acier – Atelier sous l’éclipse"
+                        loading="lazy"
+                      />
+                  </div>
+
+                  <div class="embla-knife-slide">
+                      <img
+                        src="/images/couteaux/babybonap/atelier-sous-leclipse-couteau-artisanal-baby-bonap-manche_med.webp"
+                        data-full="/images/couteaux/babybonap/fullsize/atelier-sous-leclipse-couteau-artisanal-baby-bonap-manche.webp"
+                        alt="Couteau artisanal Baby Bonap manche détaillé – Atelier sous l’éclipse"
+                        loading="lazy"
+                      />
+                  </div>
+                  <div class="embla-knife-slide">
+                      <img
+                        src="/images/couteaux/babybonap/atelier-sous-leclipse-couteau-artisanal-baby-bonap-poincon_med.webp"
+                        data-full="/images/couteaux/babybonap/fullsize/atelier-sous-leclipse-couteau-artisanal-baby-bonap-poincon.webp"
+                        alt="Couteau artisanal Baby Bonap détail poinçon – Atelier sous l’éclipse"
+                        loading="lazy"
+                      />
+                  </div>
+                    
+                </div>
+              </div>
+            </div>
+
+              <!-- Slider vignettes -->
+              <div class="embla-knife embla-knife-thumbs fade-in-delay">
+                <div class="embla-knife-viewport">
+                  <div class="embla-knife-container">
+                    <div class="embla-knife-slide">
+                      <button
+                        ><img
+                          src="/images/couteaux/babybonap/atelier-sous-leclipse-couteau-artisanal-baby-bonap-side_med.webp"
+                          alt="Vignette couteau artisanal Baby Bonap vue latérale"
+                          loading="lazy"
+                        /></button>
+                    </div>
+                    <div class="embla-knife-slide">
+                      <button
+                        ><img
+                          src="/images/couteaux/babybonap/atelier-sous-leclipse-couteau-artisanal-baby-bonap-back_med.webp"
+                          alt="Vignette couteau artisanal Baby Bonap vue arrière"
+                          loading="lazy"
+                        /></button>
+                    </div>
+                    <div class="embla-knife-slide">
+                      <button
+                        ><img
+                          src="/images/couteaux/babybonap/atelier-sous-leclipse-couteau-artisanal-baby-bonap-bois_med.webp"
+                          alt="Vignette couteau artisanal Baby Bonap manche bois"
+                          loading="lazy"
+                        /></button>
+                    </div>
+                    <div class="embla-knife-slide">
+                      <button
+                        ><img
+                          src="/images/couteaux/babybonap/atelier-sous-leclipse-couteau-artisanal-baby-bonap-lame_med.webp"
+                          alt="Vignette couteau artisanal Baby Bonap lame acier"
+                          loading="lazy"
+                        /></button>
+                    </div>
+                    <div class="embla-knife-slide">
+                      <button
+                        ><img
+                          src="/images/couteaux/babybonap/atelier-sous-leclipse-couteau-artisanal-baby-bonap-manche_med.webp"
+                          alt="Vignette couteau artisanal Baby Bonap manche détaillé"
+                          loading="lazy"
+                        /></button>
+                    </div>
+                    <div class="embla-knife-slide">
+                      <button
+                        ><img
+                          src="/images/couteaux/babybonap/atelier-sous-leclipse-couteau-artisanal-baby-bonap-poincon_med.webp"
+                          alt="Vignette couteau artisanal Baby Bonap poinçon"
+                          loading="lazy"
+                        /></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+         </div>
+
+         <!-- Texte descriptif + specs Baby Bonap -->
+         <div class="fade-slide-up space-y-4">
+              <h2
+                class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child"
+              >
+                Baby Bonap
+              </h2>
+              <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+                Version compacte et maniable, idéale pour un usage quotidien
+                raffiné et précis.
+              </p>
+              <ul
+                class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child"
+              >
+                <li><strong>Type :</strong> Couteau de table artisanal</li>
+                <li><strong>Taille :</strong> 17&nbsp;cm</li>
+                <li><strong>Poids :</strong> 65&nbsp;g</li>
+                <li><strong>Épaisseur au dos :</strong> 2&nbsp;mm</li>
+              </ul>
+         </div>
+       </div>
+
+    </div>
+  </section>
+
+
+<!-- ========================================================= -->
+<!-- SECTION — NAKIRI (gauche) + SUJIHIKI (droite) -->
+<!-- ========================================================= -->
+  <section class="knife-gallery py-20">
+  <div class="container-knife-gallery mx-auto grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-12">
+
+    <!-- Colonne 1 : Nakiri -->
+    <div class="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-start">
+
+      <!-- Slider principal -->
+      <div>
+        <div class="embla-knife embla-knife-main fade-slide-left rounded-xl shadow-lg overflow-hidden mb-4 bg-[var(--color-surface)]">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+
+              <!-- 1 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/nakiri/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-noyer-right_med-1.webp"
+                  data-full="/images/couteaux/nakiri/fullsize/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-noyer-right-1.webp"
+                  alt="Couteau artisanal Nakiri manche noyer vue droite – Atelier sous l’éclipse"
+                  data-title="Nakiri — manche noyer vue droite"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 2 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/nakiri/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-zoom-noyer_med-2.webp"
+                  data-full="/images/couteaux/nakiri/fullsize/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-zoom-noyer-2.webp"
+                  alt="Couteau artisanal Nakiri zoom lame hamon noyer – Atelier sous l’éclipse"
+                  data-title="Nakiri — zoom lame hamon noyer"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 3 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/nakiri/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-noyer_med-3.webp"
+                  data-full="/images/couteaux/nakiri/fullsize/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-noyer-3.webp"
+                  alt="Couteau artisanal Nakiri manche noyer – Atelier sous l’éclipse"
+                  data-title="Nakiri — manche noyer"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 4 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/nakiri/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-noyer-hand_med-4.webp"
+                  data-full="/images/couteaux/nakiri/fullsize/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-noyer-hand-4.webp"
+                  alt="Couteau artisanal Nakiri manche noyer en main – Atelier sous l’éclipse"
+                  data-title="Nakiri — manche noyer en main"
+                  loading="lazy"
+                />
+              </div>
+
+                            <!-- 5 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/nakiri/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-left_med-5.webp"
+                  data-full="/images/couteaux/nakiri/fullsize/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-left-5.webp"
+                  alt="Couteau artisanal Nakiri lame hamon vue gauche – Atelier sous l’éclipse"
+                  data-title="Nakiri — lame hamon vue gauche"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 6 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/nakiri/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-hand_med-6.webp"
+                  data-full="/images/couteaux/nakiri/fullsize/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-hand-6.webp"
+                  alt="Couteau artisanal Nakiri lame hamon en main – Atelier sous l’éclipse"
+                  data-title="Nakiri — lame hamon en main"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 7 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/nakiri/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-zoom_med-7.webp"
+                  data-full="/images/couteaux/nakiri/fullsize/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-zoom-7.webp"
+                  alt="Couteau artisanal Nakiri zoom lame hamon – Atelier sous l’éclipse"
+                  data-title="Nakiri — zoom lame hamon"
+                  loading="lazy"
+                />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Slider vignettes -->
+        <div class="embla-knife embla-knife-thumbs fade-in-delay">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/nakiri/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-noyer-right_med-1.webp" alt="Vignette Nakiri manche noyer droite" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/nakiri/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-zoom-noyer_med-2.webp" alt="Vignette Nakiri zoom hamon noyer" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/nakiri/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-noyer_med-3.webp" alt="Vignette Nakiri manche noyer" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/nakiri/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-noyer-hand_med-4.webp" alt="Vignette Nakiri manche noyer en main" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/nakiri/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-left_med-5.webp" alt="Vignette Nakiri lame hamon gauche" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/nakiri/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-hand_med-6.webp" alt="Vignette Nakiri lame hamon en main" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/nakiri/atelier-sous-leclipse-couteau-artisanal-nakiri-hamon-zoom_med-7.webp" alt="Vignette Nakiri zoom hamon" loading="lazy" /></button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Texte descriptif + specs Nakiri -->
+      <div class="fade-slide-up space-y-4">
+        <h2 class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child">Nakiri</h2>
+        <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+          Couteau japonais à lame rectangulaire, pensé pour la coupe nette et précise des légumes.
+        </p>
+        <ul class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child">
+          <li><strong>Type :</strong> Couteau de cuisine artisanal</li>
+          <li><strong>Lame :</strong> Hamon, rectiligne et optimisée pour les légumes</li>
+          <li><strong>Manche :</strong> Noyer et autres essences nobles</li>
+          <li><strong>Particularité :</strong> Tranchant droit pour des découpes verticales</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Colonne 2 : Séparateur -->
+    <div
+      class="hidden lg:block w-px bg-[var(--color-muted)] self-stretch pointer-events-none"
+      role="presentation"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Colonne 3 : Sujihiki -->
+    <div class="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-start">
+
+  <!-- Slider principal -->
+  <div>
+    <div class="embla-knife embla-knife-main fade-slide-right rounded-xl shadow-lg overflow-hidden mb-4 bg-[var(--color-surface)]">
+      <div class="embla-knife-viewport">
+        <div class="embla-knife-container">
+
+          <!-- 1 -->
+          <div class="embla-knife-slide">
+            <img
+              src="/images/couteaux/sujihiki/atelier-sous-leclipse-couteau-artisanal-sujihiki-ebene-med-1.webp"
+              data-full="/images/couteaux/sujihiki/fullsize/atelier-sous-leclipse-couteau-artisanal-sujihiki-ebene-1.webp"
+              alt="Couteau artisanal Sujihiki lame ébène – Atelier sous l’éclipse"
+              data-title="Sujihiki — lame ébène"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- 2 -->
+          <div class="embla-knife-slide">
+            <img
+              src="/images/couteaux/sujihiki/atelier-sous-leclipse-couteau-artisanal-sujihiki-ebene-left-med-2.webp"
+              data-full="/images/couteaux/sujihiki/fullsize/atelier-sous-leclipse-couteau-artisanal-sujihiki-ebene-left-2.webp"
+              alt="Couteau artisanal Sujihiki vue gauche – Atelier sous l’éclipse"
+              data-title="Sujihiki — vue gauche"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- 3 -->
+          <div class="embla-knife-slide">
+            <img
+              src="/images/couteaux/sujihiki/atelier-sous-leclipse-couteau-artisanal-sujihiki-hamon-zoom-med-3.webp"
+              data-full="/images/couteaux/sujihiki/fullsize/atelier-sous-leclipse-couteau-artisanal-sujihiki-hamon-zoom-3.webp"
+              alt="Couteau artisanal Sujihiki zoom hamon – Atelier sous l’éclipse"
+              data-title="Sujihiki — zoom hamon"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- 4 -->
+          <div class="embla-knife-slide">
+            <img
+              src="/images/couteaux/sujihiki/atelier-sous-leclipse-couteau-artisanal-sujihiki-manche-ebene-g10-rouge-med-4.webp"
+              data-full="/images/couteaux/sujihiki/fullsize/atelier-sous-leclipse-couteau-artisanal-sujihiki-manche-ebene-g10-rouge-4.webp"
+              alt="Couteau artisanal Sujihiki manche ébène G10 rouge – Atelier sous l’éclipse"
+              data-title="Sujihiki — manche ébène G10 rouge"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- 5 -->
+          <div class="embla-knife-slide">
+            <img
+              src="/images/couteaux/sujihiki/atelier-sous-leclipse-couteau-artisanal-sujihiki-ebene-g10-med-5.webp"
+              data-full="/images/couteaux/sujihiki/fullsize/atelier-sous-leclipse-couteau-artisanal-sujihiki-ebene-g10-5.webp"
+              alt="Couteau artisanal Sujihiki lame ébène G10 – Atelier sous l’éclipse"
+              data-title="Sujihiki — lame ébène G10"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- 6 -->
+          <div class="embla-knife-slide">
+            <img
+              src="/images/couteaux/sujihiki/atelier-sous-leclipse-couteau-artisanal-sujihiki-ebene-g10-manche-med-6.webp"
+              data-full="/images/couteaux/sujihiki/fullsize/atelier-sous-leclipse-couteau-artisanal-sujihiki-ebene-g10-manche-6.webp"
+              alt="Couteau artisanal Sujihiki manche ébène G10 – Atelier sous l’éclipse"
+              data-title="Sujihiki — manche ébène G10"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- 7 -->
+          <div class="embla-knife-slide">
+            <img
+              src="/images/couteaux/sujihiki/atelier-sous-leclipse-couteau-artisanal-sujihiki-ebene-hand-med-7.webp"
+              data-full="/images/couteaux/sujihiki/fullsize/atelier-sous-leclipse-couteau-artisanal-sujihiki-ebene-hand-7.webp"
+              alt="Couteau artisanal Sujihiki lame en main – Atelier sous l’éclipse"
+              data-title="Sujihiki — lame en main"
+              loading="lazy"
+            />
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Slider vignettes -->
+    <div class="embla-knife embla-knife-thumbs fade-in-delay">
+      <div class="embla-knife-viewport">
+        <div class="embla-knife-container">
+          <div class="embla-knife-slide"><button><img src="/images/couteaux/sujihiki/atelier-sous-leclipse-couteau-artisanal-sujihiki-ebene-med-1.webp" alt="Vignette Sujihiki lame ébène" loading="lazy" /></button></div>
+          <div class="embla-knife-slide"><button><img src="/images/couteaux/sujihiki/atelier-sous-leclipse-couteau-artisanal-sujihiki-ebene-left-med-2.webp" alt="Vignette Sujihiki vue gauche" loading="lazy" /></button></div>
+          <div class="embla-knife-slide"><button><img src="/images/couteaux/sujihiki/atelier-sous-leclipse-couteau-artisanal-sujihiki-hamon-zoom-med-3.webp" alt="Vignette Sujihiki zoom hamon" loading="lazy" /></button></div>
+          <div class="embla-knife-slide"><button><img src="/images/couteaux/sujihiki/atelier-sous-leclipse-couteau-artisanal-sujihiki-manche-ebene-g10-rouge-med-4.webp" alt="Vignette Sujihiki manche ébène G10 rouge" loading="lazy" /></button></div>
+          <div class="embla-knife-slide"><button><img src="/images/couteaux/sujihiki/atelier-sous-leclipse-couteau-artisanal-sujihiki-ebene-g10-med-5.webp" alt="Vignette Sujihiki lame ébène G10" loading="lazy" /></button></div>
+          <div class="embla-knife-slide"><button><img src="/images/couteaux/sujihiki/atelier-sous-leclipse-couteau-artisanal-sujihiki-ebene-g10-manche-med-6.webp" alt="Vignette Sujihiki manche ébène G10" loading="lazy" /></button></div>
+          <div class="embla-knife-slide"><button><img src="/images/couteaux/sujihiki/atelier-sous-leclipse-couteau-artisanal-sujihiki-ebene-hand-med-7.webp" alt="Vignette Sujihiki lame en main" loading="lazy" /></button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Texte descriptif + specs Sujihiki -->
+  <div class="fade-slide-up space-y-4">
+    <h2 class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child">Sujihiki</h2>
+    <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+      Long couteau japonais de découpe, idéal pour trancher viandes et poissons crus avec finesse et précision.
+    </p>
+    <ul class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child">
+      <li><strong>Type :</strong> Couteau de cuisine artisanal</li>
+      <li><strong>Lame :</strong> Longue, fine, optimisée pour la découpe des viandes et poissons</li>
+      <li><strong>Manche :</strong> Ébène, G10 et autres essences nobles</li>
+      <li><strong>Particularité :</strong> Tranchant allongé pour des découpes nettes et régulières</li>
+    </ul>
+  </div>
+</div> <!-- fin colonne Sujihiki -->
+</div> <!-- fin container grid -->
+  </section>
+
+
+<!-- ========================================================= -->
+<!-- SECTION — GYUTO (gauche) + PETTY (droite) -->
+<!-- ========================================================= -->
+  <section class="knife-gallery bg-surface py-20">
+  <div class="container-knife-gallery mx-auto grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-12">
+
+    <!-- Colonne Gyuto -->
+    <div class="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-start">
+
+      <!-- Slider principal -->
+      <div>
+        <div class="embla-knife embla-knife-main fade-slide-left rounded-xl shadow-lg overflow-hidden mb-4 bg-[var(--color-surface)]">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+
+              <!-- 1 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/gyuto/atelier-sous-leclipse-couteau-artisanal-gyuto-hamont-med-1.webp"
+                  data-full="/images/couteaux/gyuto/fullsize/atelier-sous-leclipse-couteau-artisanal-gyuto-hamon-1.webp"
+                  alt="Couteau artisanal Gyuto lame hamon – Atelier sous l’éclipse"
+                  data-title="Gyuto — lame hamon"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 2 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/gyuto/atelier-sous-leclipse-couteau-artisanal-gyuto-hamon-lame-med-2.webp"
+                  data-full="/images/couteaux/gyuto/fullsize/atelier-sous-leclipse-couteau-artisanal-gyuto-hamon-lame-2.webp"
+                  alt="Couteau artisanal Gyuto lame hamon détail – Atelier sous l’éclipse"
+                  data-title="Gyuto — lame hamon détail"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 3 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/gyuto/atelier-sous-leclipse-couteau-artisanal-gyuto-hamon-zoom-med-3.webp"
+                  data-full="/images/couteaux/gyuto/fullsize/atelier-sous-leclipse-couteau-artisanal-gyuto-hamon-zoom-3.webp"
+                  alt="Couteau artisanal Gyuto zoom lame hamon – Atelier sous l’éclipse"
+                  data-title="Gyuto — zoom lame hamon"
+                  loading="lazy"
+                />
+              </div>
+              <!-- 4 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/gyuto/atelier-sous-leclipse-couteau-artisanal-gyuto-entier-hamon-med-4.webp"
+                  data-full="/images/couteaux/gyuto/fullsize/atelier-sous-leclipse-couteau-artisanal-gyuto-entier-hamon-4.webp"
+                  alt="Couteau artisanal Gyuto entier hamon – Atelier sous l’éclipse"
+                  data-title="Gyuto — entier hamon"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 5 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/gyuto/atelier-sous-leclipse-couteau-artisanal-gyuto-hamon-manche-med-5.webp"
+                  data-full="/images/couteaux/gyuto/fullsize/atelier-sous-leclipse-couteau-artisanal-gyuto-hamon-manche-5.webp"
+                  alt="Couteau artisanal Gyuto manche hamon – Atelier sous l’éclipse"
+                  data-title="Gyuto — manche hamon"
+                  loading="lazy"
+                />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Slider vignettes -->
+        <div class="embla-knife embla-knife-thumbs fade-in-delay">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/gyuto/atelier-sous-leclipse-couteau-artisanal-gyuto-hamont-med-1.webp" alt="Vignette Gyuto lame hamon" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/gyuto/atelier-sous-leclipse-couteau-artisanal-gyuto-hamon-lame-med-2.webp" alt="Vignette Gyuto lame hamon détail" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/gyuto/atelier-sous-leclipse-couteau-artisanal-gyuto-hamon-zoom-med-3.webp" alt="Vignette Gyuto zoom hamon" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/gyuto/atelier-sous-leclipse-couteau-artisanal-gyuto-entier-hamon-med-4.webp" alt="Vignette Gyuto entier hamon" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/gyuto/atelier-sous-leclipse-couteau-artisanal-gyuto-hamon-manche-med-5.webp" alt="Vignette Gyuto manche hamon" loading="lazy" /></button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Texte descriptif + specs Gyuto -->
+      <div class="fade-slide-up space-y-4">
+        <h2 class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child">Gyuto</h2>
+        <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+          Le Gyuto est l’équivalent japonais du couteau de chef occidental. Polyvalent, il excelle aussi bien dans la découpe des viandes que des légumes, avec une lame longue et équilibrée.
+        </p>
+        <ul class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child">
+          <li><strong>Type :</strong> Couteau de cuisine artisanal polyvalent</li>
+          <li><strong>Lame :</strong> Hamon, longue et légèrement incurvée</li>
+          <li><strong>Manche :</strong> Bois noble (noyer, ébène…) selon la série</li>
+          <li><strong>Particularité :</strong> Polyvalence et équilibre, idéal pour un usage quotidien</li>
+        </ul>
+      </div>
+    </div> <!-- fin colonne Gyuto -->
+
+    <!-- Colonne séparateur -->
+    <div
+      class="hidden lg:block w-px bg-[var(--color-muted)] self-stretch pointer-events-none"
+      role="presentation"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Colonne Petty -->
+    <div class="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-start">
+
+      <!-- Slider principal -->
+      <div>
+        <div class="embla-knife embla-knife-main fade-slide-right rounded-xl shadow-lg overflow-hidden mb-4 bg-[var(--color-surface)]">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+
+              <!-- 1 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-hamon-wacapou-med-1.webp"
+                  data-full="/images/couteaux/petty/fullsize/atelier-sous-leclipse-couteau-artisanal-petty-hamon-wacapou-1.webp"
+                  alt="Couteau artisanal Petty hamon wacapou – Atelier sous l’éclipse"
+                  data-title="Petty — hamon wacapou"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 2 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-hamon-zoom-wacapou-med-2.webp"
+                  data-full="/images/couteaux/petty/fullsize/atelier-sous-leclipse-couteau-artisanal-petty-hamon-zoom-wacapou-2.webp"
+                  alt="Couteau artisanal Petty zoom hamon wacapou – Atelier sous l’éclipse"
+                  data-title="Petty — zoom hamon wacapou"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 3 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-wacapou-manche-med-3.webp"
+                  data-full="/images/couteaux/petty/fullsize/atelier-sous-leclipse-couteau-artisanal-petty-wacapou-manche-3.webp"
+                  alt="Couteau artisanal Petty manche wacapou – Atelier sous l’éclipse"
+                  data-title="Petty — manche wacapou"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 4 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-cocobolo-hamon-med-4.webp"
+                  data-full="/images/couteaux/petty/fullsize/atelier-sous-leclipse-couteau-artisanal-petty-cocobolo-hamon-4.webp"
+                  alt="Couteau artisanal Petty hamon cocobolo – Atelier sous l’éclipse"
+                  data-title="Petty — hamon cocobolo"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 5 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-hamon-cocobolo-med-5.webp"
+                  data-full="/images/couteaux/petty/fullsize/atelier-sous-leclipse-couteau-artisanal-petty-hamon-cocobolo-5.webp"
+                  alt="Couteau artisanal Petty hamon cocobolo détail – Atelier sous l’éclipse"
+                  data-title="Petty — hamon cocobolo détail"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 6 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-ebene-med-6.webp"
+                  data-full="/images/couteaux/petty/fullsize/atelier-sous-leclipse-couteau-artisanal-petty-ebene-6.webp"
+                  alt="Couteau artisanal Petty lame ébène – Atelier sous l’éclipse"
+                  data-title="Petty — lame ébène"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 7 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-ebene-g10-med-7.webp"
+                  data-full="/images/couteaux/petty/fullsize/atelier-sous-leclipse-couteau-artisanal-petty-ebene-g10-7.webp"
+                  alt="Couteau artisanal Petty lame ébène G10 – Atelier sous l’éclipse"
+                  data-title="Petty — lame ébène G10"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 8 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-hamon-ebene-med-8.webp"
+                  data-full="/images/couteaux/petty/fullsize/atelier-sous-leclipse-couteau-artisanal-petty-hamon-ebene-8.webp"
+                  alt="Couteau artisanal Petty hamon ébène – Atelier sous l’éclipse"
+                  data-title="Petty — hamon ébène"
+                  loading="lazy"
+                />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Slider vignettes -->
+        <div class="embla-knife embla-knife-thumbs fade-in-delay">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-hamon-wacapou-med-1.webp" alt="Vignette Petty hamon wacapou" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-hamon-zoom-wacapou-med-2.webp" alt="Vignette Petty zoom hamon wacapou" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-wacapou-manche-med-3.webp" alt="Vignette Petty manche wacapou" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-cocobolo-hamon-med-4.webp" alt="Vignette Petty hamon cocobolo" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-hamon-cocobolo-med-5.webp" alt="Vignette Petty hamon cocobolo détail" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-ebene-med-6.webp" alt="Vignette Petty lame ébène" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-ebene-g10-med-7.webp" alt="Vignette Petty lame ébène G10" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/petty/atelier-sous-leclipse-couteau-artisanal-petty-hamon-ebene-med-8.webp" alt="Vignette Petty hamon ébène" loading="lazy" /></button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Texte descriptif + specs Petty -->
+      <div class="fade-slide-up space-y-4">
+        <h2 class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child">Petty</h2>
+        <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+          Petit couteau japonais polyvalent, idéal pour les travaux de précision : épluchage, parage, découpe de fruits et herbes.
+          Compact et maniable, il complète parfaitement les grands formats comme le Gyuto.
+        </p>
+        <ul class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child">
+          <li><strong>Type :</strong> Couteau de cuisine artisanal de petite taille</li>
+          <li><strong>Lame :</strong> Hamon, courte et fine pour la précision</li>
+          <li><strong>Manche :</strong> Cocobolo, ébène, wacapou ou G10 selon la série</li>
+          <li><strong>Particularité :</strong> Polyvalence sur les petites découpes et gestes rapides</li>
+        </ul>
+      </div>
+    </div> <!-- fin colonne Petty -->
+
+  </div> <!-- fin container grid -->
+  </section>
+
+
+<!-- ========================================================= -->
+<!-- SECTION — TRANCHEURS (gauche) + LANCES À HUÎTRES (droite) -->
+<!-- ========================================================= -->
+  <section class="knife-gallery py-20">
+  <div class="container-knife-gallery mx-auto grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-12">
+
+    <!-- Colonne Trancheurs -->
+    <div class="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-start">
+
+      <!-- Slider principal -->
+      <div>
+        <div class="embla-knife embla-knife-main fade-slide-left rounded-xl shadow-lg overflow-hidden mb-4 bg-[var(--color-surface)]">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+
+              <!-- 1 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-peuplier-hamon-full-med-1.webp"
+                  data-full="/images/couteaux/trancheur/fullsize/atelier-sous-leclipse-couteau-artisanal-trancheur-peuplier-hamon-full-1.webp"
+                  alt="Trancheur artisanal peuplier hamon entier – Atelier sous l’éclipse"
+                  data-title="Trancheur — peuplier hamon entier"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 2 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-peuplier-med-2.webp"
+                  data-full="/images/couteaux/trancheur/fullsize/atelier-sous-leclipse-couteau-artisanal-trancheur-peuplier-2.webp"
+                  alt="Trancheur artisanal peuplier – Atelier sous l’éclipse"
+                  data-title="Trancheur — peuplier"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 3 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-peuplier-hamon-med-3.webp"
+                  data-full="/images/couteaux/trancheur/fullsize/atelier-sous-leclipse-couteau-artisanal-trancheur-peuplier-hamon-3.webp"
+                  alt="Trancheur artisanal peuplier hamon – Atelier sous l’éclipse"
+                  data-title="Trancheur — peuplier hamon"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 4 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-peuplier-manche-med-4.webp"
+                  data-full="/images/couteaux/trancheur/fullsize/atelier-sous-leclipse-couteau-artisanal-trancheur-peuplier-manche-4.webp"
+                  alt="Trancheur artisanal manche peuplier – Atelier sous l’éclipse"
+                  data-title="Trancheur — manche peuplier"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 5 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-peuplier-hand-hamon-med-5.webp"
+                  data-full="/images/couteaux/trancheur/fullsize/atelier-sous-leclipse-couteau-artisanal-trancheur-peuplier-hand-hamon-5.webp"
+                  alt="Trancheur artisanal peuplier hamon en main – Atelier sous l’éclipse"
+                  data-title="Trancheur — peuplier hamon en main"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 6 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-hamon-hand-med-6.webp"
+                  data-full="/images/couteaux/trancheur/fullsize/atelier-sous-leclipse-couteau-artisanal-trancheur-hamon-hand-6.webp"
+                  alt="Trancheur artisanal hamon en main – Atelier sous l’éclipse"
+                  data-title="Trancheur — hamon en main"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 7 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-cocobolo-full-med-7.webp"
+                  data-full="/images/couteaux/trancheur/fullsize/atelier-sous-leclipse-couteau-artisanal-trancheur-cocobolo-full-7.webp"
+                  alt="Trancheur artisanal cocobolo entier – Atelier sous l’éclipse"
+                  data-title="Trancheur — cocobolo entier"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 8 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-cocobolo-hand-med-8.webp"
+                  data-full="/images/couteaux/trancheur/fullsize/atelier-sous-leclipse-couteau-artisanal-trancheur-cocobolo-hand-8.webp"
+                  alt="Trancheur artisanal cocobolo en main – Atelier sous l’éclipse"
+                  data-title="Trancheur — cocobolo en main"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 9 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-cocobolo-manche-med-9.webp"
+                  data-full="/images/couteaux/trancheur/fullsize/atelier-sous-leclipse-couteau-artisanal-trancheur-cocobolo-manche-9.webp"
+                  alt="Trancheur artisanal manche cocobolo – Atelier sous l’éclipse"
+                  data-title="Trancheur — manche cocobolo"
+                  loading="lazy"
+                />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Slider vignettes -->
+        <div class="embla-knife embla-knife-thumbs fade-in-delay">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-peuplier-hamon-full-med-1.webp" alt="Vignette Trancheur peuplier hamon entier" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-peuplier-med-2.webp" alt="Vignette Trancheur peuplier" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-peuplier-hamon-med-3.webp" alt="Vignette Trancheur peuplier hamon" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-peuplier-manche-med-4.webp" alt="Vignette Trancheur manche peuplier" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-peuplier-hand-hamon-med-5.webp" alt="Vignette Trancheur peuplier hamon en main" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-hamon-hand-med-6.webp" alt="Vignette Trancheur hamon en main" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-cocobolo-full-med-7.webp" alt="Vignette Trancheur cocobolo entier" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-cocobolo-hand-med-8.webp" alt="Vignette Trancheur cocobolo en main" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/trancheur/atelier-sous-leclipse-couteau-artisanal-trancheur-cocobolo-manche-med-9.webp" alt="Vignette Trancheur manche cocobolo" loading="lazy" /></button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Texte descriptif + specs Trancheurs -->
+      <div class="fade-slide-up space-y-4">
+        <h2 class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child">Trancheurs</h2>
+        <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+          Les trancheurs sont conçus pour des découpes nettes et précises, idéals pour les viandes et les pièces de grande taille.
+          Leur lame longue et fine glisse sans effort, tandis que les manches en bois précieux assurent confort et élégance.
+        </p>
+        <ul class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child">
+          <li><strong>Type :</strong> Couteaux trancheurs artisanaux</li>
+          <li><strong>Lame :</strong> Hamon, pleine ou stonewash</li>
+          <li><strong>Manches :</strong> Cocobolo, peuplier et autres essences</li>
+          <li><strong>Particularité :</strong> Découpe fine et régulière, idéale pour les grandes pièces</li>
+        </ul>
+      </div>
+    </div> <!-- fin colonne Trancheurs -->
+
+    <!-- Colonne séparateur -->
+    <div
+      class="hidden lg:block w-px bg-[var(--color-muted)] self-stretch pointer-events-none"
+      role="presentation"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Colonne Lances à huîtres -->
+    <div class="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-start">
+
+      <!-- Slider principal -->
+      <div>
+        <div class="embla-knife embla-knife-main fade-slide-right embla-knife-lancehuitre rounded-xl shadow-lg overflow-hidden mb-4 bg-[var(--color-surface)]">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+
+              <!-- 1 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/lancehuitre/atelier-sous-leclipse-couteau-artisanal-lance-huitre-bois-de-fer-med-1.webp"
+                  data-full="/images/couteaux/lancehuitre/fullsize/atelier-sous-leclipse-couteau-artisanal-lance-huitre-bois-de-fer-1.webp"
+                  alt="Lance à huîtres artisanal bois de fer – Atelier sous l’éclipse"
+                  data-title="Lance à huîtres — bois de fer"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 2 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/lancehuitre/atelier-sous-leclipse-couteau-artisanal-lance-huitre-bois-de-fer-stonewash-med-2.webp"
+                  data-full="/images/couteaux/lancehuitre/fullsize/atelier-sous-leclipse-couteau-artisanal-lance-huitre-bois-de-fer-stonewash-2.webp"
+                  alt="Lance à huîtres artisanal bois de fer stonewash – Atelier sous l’éclipse"
+                  data-title="Lance à huîtres — bois de fer stonewash"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 3 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/lancehuitre/atelier-sous-leclipse-couteau-artisanal-lance-huitre-bois-de-fer-hand-med-3.webp"
+                  data-full="/images/couteaux/lancehuitre/fullsize/atelier-sous-leclipse-couteau-artisanal-lance-huitre-bois-de-fer-hand-3.webp"
+                  alt="Lance à huîtres artisanal bois de fer en main – Atelier sous l’éclipse"
+                  data-title="Lance à huîtres — bois de fer en main"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 4 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/lancehuitre/atelier-sous-leclipse-couteau-artisanal-lance-huitre-acid-stonewash-med-4.webp"
+                  data-full="/images/couteaux/lancehuitre/fullsize/atelier-sous-leclipse-couteau-artisanal-lance-huitre-acid-stonewash-4.webp"
+                  alt="Lance à huîtres artisanal acid stonewash – Atelier sous l’éclipse"
+                  data-title="Lance à huîtres — acid stonewash"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 5 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/lancehuitre/atelier-sous-leclipse-couteau-artisanal-lance-huitre-lame-stonewash-med-5.webp"
+                  data-full="/images/couteaux/lancehuitre/fullsize/atelier-sous-leclipse-couteau-artisanal-lance-huitre-lame-stonewash-5.webp"
+                  alt="Lance à huîtres artisanal lame stonewash – Atelier sous l’éclipse"
+                  data-title="Lance à huîtres — lame stonewash"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 6 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/lancehuitre/atelier-sous-leclipse-couteau-artisanal-lance-huitre-manche-med-6.webp"
+                  data-full="/images/couteaux/lancehuitre/fullsize/atelier-sous-leclipse-couteau-artisanal-lance-huitre-manche-6.webp"
+                  alt="Lance à huîtres artisanal manche – Atelier sous l’éclipse"
+                  data-title="Lance à huîtres — manche"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 7 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/lancehuitre/atelier-sous-leclipse-couteau-artisanal-lance-huitre-hand-acid-stonewash-med-7.webp"
+                  data-full="/images/couteaux/lancehuitre/fullsize/atelier-sous-leclipse-couteau-artisanal-lance-huitre-hand-acid-stonewash-7.webp"
+                  alt="Lance à huîtres artisanal en main acid stonewash – Atelier sous l’éclipse"
+                  data-title="Lance à huîtres — en main acid stonewash"
+                  loading="lazy"
+                />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Slider vignettes -->
+        <div class="embla-knife embla-knife-thumbs fade-in-delay">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/lancehuitre/atelier-sous-leclipse-couteau-artisanal-lance-huitre-bois-de-fer-med-1.webp" alt="Vignette Lance à huîtres bois de fer" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/lancehuitre/atelier-sous-leclipse-couteau-artisanal-lance-huitre-bois-de-fer-stonewash-med-2.webp" alt="Vignette Lance à huîtres bois de fer stonewash" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/lancehuitre/atelier-sous-leclipse-couteau-artisanal-lance-huitre-bois-de-fer-hand-med-3.webp" alt="Vignette Lance à huîtres bois de fer en main" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/lancehuitre/atelier-sous-leclipse-couteau-artisanal-lance-huitre-acid-stonewash-med-4.webp" alt="Vignette Lance à huîtres acid stonewash" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/lancehuitre/atelier-sous-leclipse-couteau-artisanal-lance-huitre-lame-stonewash-med-5.webp" alt="Vignette Lance à huîtres lame stonewash" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/lancehuitre/atelier-sous-leclipse-couteau-artisanal-lance-huitre-manche-med-6.webp" alt="Vignette Lance à huîtres manche" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/lancehuitre/atelier-sous-leclipse-couteau-artisanal-lance-huitre-hand-acid-stonewash-med-7.webp" alt="Vignette Lance à huîtres en main acid stonewash" loading="lazy" /></button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Texte descriptif + specs Lances à huîtres -->
+      <div class="fade-slide-up space-y-4">
+        <h2 class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child">Lances à huîtres</h2>
+        <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+          Forgées pour l’ouverture des huîtres, ces pièces allient robustesse et esthétique. 
+          Chaque lance à huîtres est travaillée à la main, avec des finitions variées et des manches en bois précieux.
+        </p>
+        <ul class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child">
+          <li><strong>Type :</strong> Couteaux à huîtres artisanaux</li>
+          <li><strong>Lame :</strong> Stonewash, acid stonewash ou hamon</li>
+          <li><strong>Manches :</strong> Bois de fer et autres essences nobles</li>
+          <li><strong>Particularité :</strong> Solidité et ergonomie pour une ouverture sûre et efficace</li>
+        </ul>
+      </div>
+    </div> <!-- fin colonne Lances à huîtres -->
+
+  </div> <!-- fin container grid -->
+  </section>
+
+</section>
+
+
+
+<!-- ========================================================= -->
+<!-- INTERTITRE — COUTEAUX DE TABLE -->
+<!-- ========================================================= -->
+<section id="table-title" class="knife-category-title fade-slide-up text-center py-20">
+  <h2 class="text-4xl md:text-5xl font-serif font-bold text-[var(--color-accent)] reveal-child">Couteaux de table</h2>
+  <p class="text-lg text-[var(--color-muted)] mt-4 reveal-child">Fusion entre élégance et efficacité, pour tous les repas.</p>
+</section>
+
+<section id="table" class="knife-section">
+  <div class="knife-trigger h-[1px] opacity-0 pointer-events-none" data-title="Couteaux de table" data-subtitle="Fusion entre élégance et efficacité, pour tous les repas."></div>
+<!-- ========================================================= -->
+<!-- SECTION — TABLE (gauche) + TABLE KIDS (droite) -->
+<!-- ========================================================= -->
+<section class="knife-gallery bg-surface py-20">
+  <div class="container-knife-gallery mx-auto grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-12">
+
+    <!-- Colonne Table -->
+    <div class="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-start">
+
+      <!-- Slider principal -->
+      <div>
+        <div class="embla-knife embla-knife-main fade-slide-left rounded-xl shadow-lg overflow-hidden mb-4 bg-[var(--color-surface)]">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+
+              <!-- 1 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-bicolore-med-1.webp"
+                  data-full="/images/couteaux/table/fullsize/atelier-sous-leclipse-couteau-artisanal-table-bicolore-1.webp"
+                  alt="Couteau de table artisanal bicolore – Atelier sous l’éclipse"
+                  data-title="Table — bicolore"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 2 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-peuplier-med-2.webp"
+                  data-full="/images/couteaux/table/fullsize/atelier-sous-leclipse-couteau-artisanal-table-peuplier-2.webp"
+                  alt="Couteau de table artisanal peuplier – Atelier sous l’éclipse"
+                  data-title="Table — peuplier"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 3 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-hamon-peuplier-med-3.webp"
+                  data-full="/images/couteaux/table/fullsize/atelier-sous-leclipse-couteau-artisanal-table-hamon-peuplier-3.webp"
+                  alt="Couteau de table artisanal hamon peuplier – Atelier sous l’éclipse"
+                  data-title="Table — hamon peuplier"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 4 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-wacapou-med-4.webp"
+                  data-full="/images/couteaux/table/fullsize/atelier-sous-leclipse-couteau-artisanal-table-wacapou-4.webp"
+                  alt="Couteau de table artisanal wacapou – Atelier sous l’éclipse"
+                  data-title="Table — wacapou"
+                  loading="lazy"
+                />
+              </div>
+
+                            <!-- 5 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-ebene-med-5.webp"
+                  data-full="/images/couteaux/table/fullsize/atelier-sous-leclipse-couteau-artisanal-table-ebene-5.webp"
+                  alt="Couteau de table artisanal ébène – Atelier sous l’éclipse"
+                  data-title="Table — ébène"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 6 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-eben-manche-med-6.webp"
+                  data-full="/images/couteaux/table/fullsize/atelier-sous-leclipse-couteau-artisanal-table-eben-manche-6.webp"
+                  alt="Couteau de table artisanal manche ébène – Atelier sous l’éclipse"
+                  data-title="Table — manche ébène"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 7 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-bicolore-hand-med-7.webp"
+                  data-full="/images/couteaux/table/fullsize/atelier-sous-leclipse-couteau-artisanal-table-bicolore-hand-7.webp"
+                  alt="Couteau de table artisanal bicolore en main – Atelier sous l’éclipse"
+                  data-title="Table — bicolore en main"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 8 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-chene-vert-stab-med-8.webp"
+                  data-full="/images/couteaux/table/fullsize/atelier-sous-leclipse-couteau-artisanal-table-chene-vert-stab-8.webp"
+                  alt="Couteau de table artisanal chêne vert stabilisé – Atelier sous l’éclipse"
+                  data-title="Table — chêne vert stabilisé"
+                  loading="lazy"
+                />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Slider vignettes -->
+        <div class="embla-knife embla-knife-thumbs fade-in-delay">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-bicolore-med-1.webp" alt="Vignette Table bicolore" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-peuplier-med-2.webp" alt="Vignette Table peuplier" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-hamon-peuplier-med-3.webp" alt="Vignette Table hamon peuplier" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-wacapou-med-4.webp" alt="Vignette Table wacapou" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-ebene-med-5.webp" alt="Vignette Table ébène" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-eben-manche-med-6.webp" alt="Vignette Table manche ébène" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-bicolore-hand-med-7.webp" alt="Vignette Table bicolore en main" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/table/atelier-sous-leclipse-couteau-artisanal-table-chene-vert-stab-med-8.webp" alt="Vignette Table chêne vert stabilisé" loading="lazy" /></button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Texte descriptif + specs Table -->
+      <div class="fade-slide-up space-y-4">
+        <h2 class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child">Couteaux de table</h2>
+        <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+          Des couteaux de table élégants et raffinés, pensés pour sublimer l’art de la table.
+          Chaque pièce associe confort d’utilisation et esthétique artisanale, avec des essences de bois variées et des finitions uniques.
+        </p>
+        <ul class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child">
+          <li><strong>Type :</strong> Couteaux de table artisanaux</li>
+          <li><strong>Lame :</strong> Acier inox ou hamon, selon la série</li>
+          <li><strong>Manches :</strong> Bicolore, peuplier, wacapou, ébène, chêne vert stabilisé</li>
+          <li><strong>Particularité :</strong> Élégance et diversité des essences pour un service haut de gamme</li>
+        </ul>
+      </div>
+    </div> <!-- fin colonne Table -->
+
+    <!-- Colonne séparateur -->
+    <div
+      class="hidden lg:block w-px bg-[var(--color-muted)] self-stretch pointer-events-none"
+      role="presentation"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Colonne Table Kids -->
+    <div class="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-start">
+
+      <!-- Slider principal -->
+      <div>
+        <div class="embla-knife embla-knife-main fade-slide-right rounded-xl shadow-lg overflow-hidden mb-4 bg-[var(--color-surface)]">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+
+              <!-- 1 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/table-kids/atelier-sous-leclipse-couteau-artisanal-table-kids-side-med-1.webp"
+                  data-full="/images/couteaux/table-kids/fullsize/atelier-sous-leclipse-couteau-artisanal-table-kids-side.webp"
+                  alt="Couteau de table Kids vue latérale – Atelier sous l’éclipse"
+                  data-title="Table Kids — vue latérale"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 2 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/table-kids/atelier-sous-leclipse-couteau-artisanal-table-kids-aubier-cocobolo-med-2.webp"
+                  data-full="/images/couteaux/table-kids/fullsize/atelier-sous-leclipse-couteau-artisanal-table-kids-aubier-cocobolo.webp"
+                  alt="Couteau de table Kids aubier cocobolo – Atelier sous l’éclipse"
+                  data-title="Table Kids — aubier cocobolo"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 3 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/table-kids/atelier-sous-leclipse-couteau-artisanal-table-kids-lame-inox-med-3.webp"
+                  data-full="/images/couteaux/table-kids/fullsize/atelier-sous-leclipse-couteau-artisanal-table-kids-lame-inox.webp"
+                  alt="Couteau de table Kids lame inox – Atelier sous l’éclipse"
+                  data-title="Table Kids — lame inox"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 4 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/table-kids/atelier-sous-leclipse-couteau-artisanal-table-kids-main-med-4.webp"
+                  data-full="/images/couteaux/table-kids/fullsize/atelier-sous-leclipse-couteau-artisanal-table-kids-main.webp"
+                  alt="Couteau de table Kids en main – Atelier sous l’éclipse"
+                  data-title="Table Kids — en main"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 5 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/table-kids/atelier-sous-leclipse-couteau-artisanal-table-kids-main-cocobolo-med-5.webp"
+                  data-full="/images/couteaux/table-kids/fullsize/atelier-sous-leclipse-couteau-artisanal-table-kids-main-cocobolo.webp"
+                  alt="Couteau de table Kids manche cocobolo en main – Atelier sous l’éclipse"
+                  data-title="Table Kids — manche cocobolo en main"
+                  loading="lazy"
+                />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Slider vignettes -->
+        <div class="embla-knife embla-knife-thumbs fade-in-delay">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/table-kids/atelier-sous-leclipse-couteau-artisanal-table-kids-side-med-1.webp" alt="Vignette Table Kids vue latérale" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/table-kids/atelier-sous-leclipse-couteau-artisanal-table-kids-aubier-cocobolo-med-2.webp" alt="Vignette Table Kids aubier cocobolo" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/table-kids/atelier-sous-leclipse-couteau-artisanal-table-kids-lame-inox-med-3.webp" alt="Vignette Table Kids lame inox" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/table-kids/atelier-sous-leclipse-couteau-artisanal-table-kids-main-med-4.webp" alt="Vignette Table Kids en main" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/table-kids/atelier-sous-leclipse-couteau-artisanal-table-kids-main-cocobolo-med-5.webp" alt="Vignette Table Kids manche cocobolo en main" loading="lazy" /></button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Texte descriptif + specs Table Kids -->
+      <div class="fade-slide-up space-y-4">
+        <h2 class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child">Couteaux de table Kids</h2>
+        <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+          Une gamme pensée pour initier les plus jeunes à l’art de la table, avec des formes adaptées et des matériaux nobles.
+          Sécurité, ergonomie et esthétique artisanale se rencontrent pour accompagner les repas en famille.
+        </p>
+        <ul class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child">
+          <li><strong>Type :</strong> Couteaux de table pour enfants</li>
+          <li><strong>Lame :</strong> Inox sécurisée</li>
+          <li><strong>Manches :</strong> Aubier cocobolo, cocobolo, bois divers</li>
+          <li><strong>Particularité :</strong> Adaptés aux petites mains, sûrs et élégants</li>
+        </ul>
+      </div>
+    </div> <!-- fin colonne Table Kids -->
+
+  </div> <!-- fin container grid -->
+</section>
+
+</section>
+
+
+
+<!-- ========================================================= -->
+<!-- INTERTITRE — COUTEAUX OUTDOOR -->
+<!-- ========================================================= -->
+<section id="outdoor-title" class="knife-category-title knife-category-title-bg fade-slide-up text-center py-20">
+  <h2 class="text-4xl md:text-5xl font-serif font-bold text-[var(--color-accent)] reveal-child">Couteaux outdoor</h2>
+  <p class="text-lg text-[var(--color-muted)] mt-4 reveal-child">Robustes et fiables, de bons compagnons à emmener en nature.</p>
+</section>
+
+<section id="outdoor" class="knife-section">
+  <div class="knife-trigger h-[1px] opacity-0 pointer-events-none" data-title="Couteaux outdoor" data-subtitle="Robustes et fiables, de bons compagnons à emmener en nature."></div>
+<!-- ========================================================= -->
+<!-- SECTION — CAMP (gauche) + FIGHTER (droite) -->
+<!-- ========================================================= -->
+<section class="knife-gallery py-20">
+  <div class="container-knife-gallery mx-auto grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-12">
+
+    <!-- Colonne Camp -->
+    <div class="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-start">
+
+      <!-- Slider principal -->
+      <div>
+        <div class="embla-knife embla-knife-main fade-slide-left rounded-xl shadow-lg overflow-hidden mb-4">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+
+              <!-- 1 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-morta-full-med-1.webp"
+                  data-full="/images/couteaux/camp/fullsize/atelier-sous-leclipse-couteau-artisanal-camp-morta-full-1.webp"
+                  alt="Couteau de camp artisanal morta entier – Atelier sous l’éclipse"
+                  data-title="Camp — morta entier"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 2 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-morta-full-left-med-2.webp"
+                  data-full="/images/couteaux/camp/fullsize/atelier-sous-leclipse-couteau-artisanal-camp-morta-full-left-2.webp"
+                  alt="Couteau de camp artisanal morta vue gauche – Atelier sous l’éclipse"
+                  data-title="Camp — morta vue gauche"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 3 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-morta-manche-med-3.webp"
+                  data-full="/images/couteaux/camp/fullsize/atelier-sous-leclipse-couteau-artisanal-camp-morta-manche-3.webp"
+                  alt="Couteau de camp artisanal manche morta – Atelier sous l’éclipse"
+                  data-title="Camp — manche morta"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 4 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-morta-perle-dragonne-med-4.webp"
+                  data-full="/images/couteaux/camp/fullsize/atelier-sous-leclipse-couteau-artisanal-camp-morta-perle-dragonne-4.webp"
+                  alt="Couteau de camp artisanal morta perle dragonne – Atelier sous l’éclipse"
+                  data-title="Camp — morta perle dragonne"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 5 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-morta-poincon-med-5.webp"
+                  data-full="/images/couteaux/camp/fullsize/atelier-sous-leclipse-couteau-artisanal-camp-morta-poincon-5.webp"
+                  alt="Couteau de camp artisanal morta poinçon – Atelier sous l’éclipse"
+                  data-title="Camp — morta poinçon"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 6 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-full-stonewash-med-6.webp"
+                  data-full="/images/couteaux/camp/fullsize/atelier-sous-leclipse-couteau-artisanal-camp-full-stonewash-6.webp"
+                  alt="Couteau de camp artisanal full stonewash – Atelier sous l’éclipse"
+                  data-title="Camp — full stonewash"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 7 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-poincon-stonewash-med-7.webp"
+                  data-full="/images/couteaux/camp/fullsize/atelier-sous-leclipse-couteau-artisanal-camp-poincon-stonewash-7.webp"
+                  alt="Couteau de camp artisanal poinçon stonewash – Atelier sous l’éclipse"
+                  data-title="Camp — poinçon stonewash"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 8 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-corne-full-med-8.webp"
+                  data-full="/images/couteaux/camp/fullsize/atelier-sous-leclipse-couteau-artisanal-camp-corne-full-8.webp"
+                  alt="Couteau de camp artisanal corne entier – Atelier sous l’éclipse"
+                  data-title="Camp — corne entier"
+                  loading="lazy"
+                />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Slider vignettes -->
+        <div class="embla-knife embla-knife-thumbs fade-in-delay">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-morta-full-med-1.webp" alt="Vignette Camp morta entier" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-morta-full-left-med-2.webp" alt="Vignette Camp morta vue gauche" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-morta-manche-med-3.webp" alt="Vignette Camp manche morta" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-morta-perle-dragonne-med-4.webp" alt="Vignette Camp morta perle dragonne" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-morta-poincon-med-5.webp" alt="Vignette Camp morta poinçon" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-full-stonewash-med-6.webp" alt="Vignette Camp full stonewash" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-poincon-stonewash-med-7.webp" alt="Vignette Camp poinçon stonewash" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/camp/atelier-sous-leclipse-couteau-artisanal-camp-corne-full-med-8.webp" alt="Vignette Camp corne entier" loading="lazy" /></button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Texte descriptif + specs Camp -->
+      <div class="fade-slide-up space-y-4">
+        <h2 class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child">Camp</h2>
+        <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+          Conçus pour l’outdoor et les usages intensifs, les couteaux de camp allient robustesse et polyvalence.
+          Forgés pour résister aux conditions exigeantes, ils offrent puissance et fiabilité sur le terrain.
+        </p>
+        <ul class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child">
+          <li><strong>Type :</strong> Couteaux de camp/outdoor</li>
+          <li><strong>Lame :</strong> Stonewash, hamon, corne</li>
+          <li><strong>Manches :</strong> Morta, corne et autres essences</li>
+          <li><strong>Particularité :</strong> Résistance et ergonomie pour les activités extérieures</li>
+        </ul>
+      </div>
+    </div> <!-- fin colonne Camp -->
+
+    <!-- Colonne séparateur -->
+    <div
+      class="hidden lg:block w-px bg-[var(--color-muted)] self-stretch pointer-events-none"
+      role="presentation"
+      aria-hidden="true"
+    ></div>
+
+        <!-- Colonne Fighter -->
+    <div class="grid grid-cols-1 md:grid-cols-[70%_30%] gap-6 items-start">
+
+      <!-- Slider principal -->
+      <div>
+        <div class="embla-knife embla-knife-main fade-slide-right rounded-xl shadow-lg overflow-hidden mb-4 bg-[var(--color-surface)]">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+
+              <!-- 1 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/fighter/atelier-sous-leclipse-couteau-artisanal-fighter-full-stonewash-med-1.webp"
+                  data-full="/images/couteaux/fighter/fullsize/atelier-sous-leclipse-couteau-artisanal-fighter-full-stonewash-1.webp"
+                  alt="Fighter artisanal full stonewash – Atelier sous l’éclipse"
+                  data-title="Fighter — full stonewash"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 2 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/fighter/atelier-sous-leclipse-couteau-artisanal-fighter-acid-stonewash-med-2.webp"
+                  data-full="/images/couteaux/fighter/fullsize/atelier-sous-leclipse-couteau-artisanal-fighter-acid-stonewash-2.webp"
+                  alt="Fighter artisanal acid stonewash – Atelier sous l’éclipse"
+                  data-title="Fighter — acid stonewash"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 3 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/fighter/atelier-sous-leclipse-couteau-artisanal-fighter-grip-poincon-med-3.webp"
+                  data-full="/images/couteaux/fighter/fullsize/atelier-sous-leclipse-couteau-artisanal-fighter-grip-poincon-3.webp"
+                  alt="Fighter artisanal grip poinçon – Atelier sous l’éclipse"
+                  data-title="Fighter — grip poinçon"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 4 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/fighter/atelier-sous-leclipse-couteau-artisanal-fighter-manche-med-4.webp"
+                  data-full="/images/couteaux/fighter/fullsize/atelier-sous-leclipse-couteau-artisanal-fighter-manche-4.webp"
+                  alt="Fighter artisanal manche – Atelier sous l’éclipse"
+                  data-title="Fighter — manche"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 5 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/fighter/atelier-sous-leclipse-couteau-artisanal-fighter-perle-dragonne-med-5.webp"
+                  data-full="/images/couteaux/fighter/fullsize/atelier-sous-leclipse-couteau-artisanal-fighter-perle-dragonne-5.webp"
+                  alt="Fighter artisanal perle dragonne – Atelier sous l’éclipse"
+                  data-title="Fighter — perle dragonne"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 6 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/fighter/atelier-sous-leclipse-couteau-artisanal-fighter-noyer-main-med-6.webp"
+                  data-full="/images/couteaux/fighter/fullsize/atelier-sous-leclipse-couteau-artisanal-fighter-noyer-main-6.webp"
+                  alt="Fighter artisanal noyer en main – Atelier sous l’éclipse"
+                  data-title="Fighter — noyer en main"
+                  loading="lazy"
+                />
+              </div>
+
+              <!-- 7 -->
+              <div class="embla-knife-slide">
+                <img
+                  src="/images/couteaux/fighter/atelier-sous-leclipse-couteau-artisanal-fighter-noyer-stonewash-med-7.webp"
+                  data-full="/images/couteaux/fighter/fullsize/atelier-sous-leclipse-couteau-artisanal-fighter-noyer-stonewash-7.webp"
+                  alt="Fighter artisanal noyer stonewash – Atelier sous l’éclipse"
+                  data-title="Fighter — noyer stonewash"
+                  loading="lazy"
+                />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Slider vignettes -->
+        <div class="embla-knife embla-knife-thumbs fade-in-delay">
+          <div class="embla-knife-viewport">
+            <div class="embla-knife-container">
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/fighter/atelier-sous-leclipse-couteau-artisanal-fighter-full-stonewash-med-1.webp" alt="Vignette Fighter full stonewash" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/fighter/atelier-sous-leclipse-couteau-artisanal-fighter-acid-stonewash-med-2.webp" alt="Vignette Fighter acid stonewash" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/fighter/atelier-sous-leclipse-couteau-artisanal-fighter-grip-poincon-med-3.webp" alt="Vignette Fighter grip poinçon" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/fighter/atelier-sous-leclipse-couteau-artisanal-fighter-manche-med-4.webp" alt="Vignette Fighter manche" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/fighter/atelier-sous-leclipse-couteau-artisanal-fighter-perle-dragonne-med-5.webp" alt="Vignette Fighter perle dragonne" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/fighter/atelier-sous-leclipse-couteau-artisanal-fighter-noyer-main-med-6.webp" alt="Vignette Fighter noyer en main" loading="lazy" /></button></div>
+              <div class="embla-knife-slide"><button><img src="/images/couteaux/fighter/atelier-sous-leclipse-couteau-artisanal-fighter-noyer-stonewash-med-7.webp" alt="Vignette Fighter noyer stonewash" loading="lazy" /></button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Texte descriptif + specs Fighter -->
+      <div class="fade-slide-up space-y-4">
+        <h2 class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child">Fighter</h2>
+        <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+          Inspirés des couteaux de combat, les Fighters sont pensés pour l’outdoor agressif et les situations exigeantes.
+          Leur géométrie évoque le poignard, avec des lignes tendues et une présence affirmée.
+        </p>
+        <ul class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child">
+          <li><strong>Type :</strong> Couteaux de type poignard/outdoor</li>
+          <li><strong>Lame :</strong> Full stonewash, acid stonewash</li>
+          <li><strong>Manches :</strong> Bois de noyer, finitions variées</li>
+          <li><strong>Particularité :</strong> Design agressif, équilibre entre esthétique et efficacité</li>
+        </ul>
+      </div>
+    </div> <!-- fin colonne Fighter -->
+
+  </div> <!-- fin container grid -->
+</section>
+
+</section>
+
+
+
+
+
+
+<script>
+  import {
+    initSwipers,
+    initLightbox,
+  } from "../scripts/init/init-swiper-glightbox.js";
+  import { initEmbla } from "../scripts/init/init-embla.js";
+  import { initKnifeGalleries } from "../scripts/features/show-knife.js";
+  import { initObserverCarousels } from "../scripts/init/observer-carousels.js";
+  import { initStickySectionTitle } from "../scripts/features/sticky-section-title.js";
+
+  if (typeof window !== "undefined") {
+    initSwipers();
+    initEmbla();
+    initLightbox();
+    initKnifeGalleries();
+    initObserverCarousels();
+    initStickySectionTitle();
+  }
+</script>
+  </BaseLayout>

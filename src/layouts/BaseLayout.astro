@@ -75,30 +75,37 @@ const {
 </head>
 
 
-  <body class="flex flex-col min-h-screen font-sans bg-bg text-text">
+  <body class={`flex flex-col min-h-screen font-sans bg-bg text-text ${Astro.props.bodyClass || ''}`}>
     <header id="site-header" class="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm transition-all duration-500">
-      <div class="container mx-auto px-4 flex justify-between items-center h-20 relative">
-        <div class="flex items-center space-x-4 header-brand">
-          <!-- Placeholders pour FLIP (réception dans le header) -->
-          <span id="header-logo-placeholder"></span>
-          <span id="header-title-placeholder"></span>
-        </div>
-        <nav class="hidden md:flex space-x-3 font-semibold" aria-label="Navigation principale">
-          <a href="/" class="text-magnify hover:text-accent transition-colors">Accueil</a>
-          <a href="/couteaux" class="text-magnify hover:text-accent transition-colors">Couteaux</a>
-          <a href="/me-connaitre" class="text-magnify hover:text-accent transition-colors">Me connaître</a>
-          <a href="#contact" class="text-magnify hover:text-accent transition-colors">Contact</a>
-        </nav>
-        <div class="flex items-center space-x-4">
-          <button id="theme-toggle" class="text-magnify p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Changer le thème">🌙</button>
-          <button id="menu-toggle" class="icon-toggle md:hidden p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Ouvrir le menu">
-            <span class="icon-burger">☰</span>
-            <span class="icon-close">✕</span>
-          </button>
-        </div>
-        <span id="header-accent"></span>
-      </div>
-    </header>
+  <div class="container mx-auto px-4 flex justify-between items-center h-20 relative">
+    <div class="flex items-center space-x-4 header-brand">
+      <span id="header-logo-placeholder"></span>
+      <span id="header-title-placeholder"></span>
+    </div>
+    <nav class="hidden md:flex space-x-3 font-semibold main-nav" aria-label="Navigation principale">
+      <a href="/" class="text-magnify hover:text-accent transition-colors">Accueil</a>
+      <a href="/couteaux" class="text-magnify hover:text-accent transition-colors has-subnav">Couteaux</a>
+      <a href="/me-connaitre" class="text-magnify hover:text-accent transition-colors">Me connaître</a>
+      <a href="#contact" class="text-magnify hover:text-accent transition-colors">Contact</a>
+    </nav>
+    <div class="flex items-center space-x-4">
+      <button id="theme-toggle" class="text-magnify p-2 rounded bg-surface text-text hover:text-accent transition-colors">🌙</button>
+      <button id="menu-toggle" class="icon-toggle md:hidden p-2 rounded bg-surface text-text hover:text-accent transition-colors">
+        <span class="icon-burger">☰</span>
+        <span class="icon-close">✕</span>
+      </button>
+    </div>
+    <span id="header-accent"></span>
+  </div>
+
+  <!-- Sous-menu intégré -->
+  <div class="knife-subnav hidden md:flex justify-center gap-8 text-sm font-medium text-[var(--color-muted)]">
+    <a href="#cuisine">🍽️ Cuisine</a>
+    <a href="#table">🥂 Table</a>
+    <a href="#outdoor">🏕️ Outdoor</a>
+  </div>
+</header>
+
 
     <div class="menu-overlay"></div>
 
@@ -162,6 +169,77 @@ const {
       <slot />
     </main>
 
+
+    <!-- ========================================================= -->
+<!-- BLOC PREMIUM FINAL AVEC IMAGE, CITATION, ANIMATIONS & CARTE 3D -->
+<!-- ========================================================= -->
+<section id="contact" 
+  class="parallax-section premium-section relative w-full text-center text-white overflow-hidden py-12 md:py-16"
+  data-parallax-speed="120"
+  data-parallax-zoom="1.05"
+  data-parallax-zoom-strength="0.2"
+>
+  <!-- Calque parallaxe : uniquement l'image -->
+  <div class="absolute inset-0" data-parallax-target 
+       style="transform: translateY(0px) scale(1); will-change: transform;">
+    <img 
+      src="/images/packaging-ateliersousleclipse.webp"
+      alt="Emballage artisanal d’un couteau Atelier sous l'éclipse"
+      class="w-full h-full object-cover object-center"
+    />
+  </div>
+
+  <!-- Overlay sombre -->
+  <div class="absolute inset-0 bg-black/45 backdrop-blur-[2px]"></div>
+
+  <!-- Contenu interactif -->
+  <div class="relative z-10 px-4 max-w-6xl w-full space-y-6 mx-auto">
+    <p class="text-2xl md:text-3xl font-serif italic fade-slide-up">
+      « Chaque lame raconte une histoire… écrivons la vôtre. »
+    </p>
+
+    <div class="flex flex-wrap md:flex-row gap-3 justify-center fade-slide-up delay-150">
+      <a href="/me-connaitre" class="cta-premium px-5 py-2.5 text-white rounded text-sm">Me connaître</a>
+      <a href="/galerie" class="cta-premium px-5 py-2.5 text-white rounded text-sm">Voir la galerie</a>
+    </div>
+
+    <!-- Passage en GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 justify-items-center mt-4 items-stretch">
+      <!-- Carte 3D -->
+      <div class="card-3d-wrapper fade-slide-up delay-300 md:justify-self-end">
+        <div class="card-3d">
+          <div class="card-face card-front">
+            <img src="/images/carte-visite-ateliersousleclipse-recto.jpg" alt="Carte de visite Atelier sous l'éclipse recto" />
+            <div class="card-glow fade-slide-up" aria-hidden="true"></div>
+          </div>
+          <div class="card-face card-back">
+            <img src="/images/carte-visite-ateliersousleclipse-verso.jpg" alt="Carte de visite Atelier sous l'éclipse verso" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulaire -->
+      <form id="contact-form" action="/contact.php" method="POST" 
+            class="bg-black/30 p-4 rounded-lg w-full max-w-xs h-full flex flex-col fade-slide-up delay-450 justify-self-start">
+        <div class="space-y-3 flex-grow flex flex-col">
+          <input type="text" name="nom" placeholder="Votre nom" 
+                 class="w-full p-2.5 rounded bg-white/90 text-black text-sm" required>
+          <input type="email" name="email" placeholder="Votre email" 
+                 class="w-full p-2.5 rounded bg-white/90 text-black text-sm" required>
+          <!-- Textarea qui s’étire -->
+          <textarea name="message" placeholder="Votre message..." 
+                    class="w-full p-2.5 rounded bg-white/90 text-black text-sm resize-none flex-grow" required></textarea>
+        </div>
+        <button type="submit" 
+                class="cta-premium w-full px-5 py-2.5 rounded text-white text-sm mt-3">
+          Envoyer
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
     <!-- Footer -->
     <footer class="bg-surface text-muted text-center p-1 mt-auto relative overflow-visible">
       <div class="flex justify-center space-x-6 mt-4">
@@ -190,7 +268,8 @@ const {
     import { initMenuMobile } from '../scripts/layout/menu-mobile.js';
     import { initThemeToggle } from '../scripts/layout/theme-toggle.js';
     import { initHeaderHero } from '../scripts/animations/header-hero.js';
-
+    import { initCarte3D } from '../scripts/features/carte-3d.js';
+    import { popupform } from '../scripts/features/popupform.js';
     if (typeof window !== 'undefined') {
       initRevealOnScroll();
       initObserverCarousels();
@@ -198,6 +277,8 @@ const {
       initMenuMobile();
       initThemeToggle();
       initHeaderHero();
+      initCarte3D();
+      popupform();
     }
   </script>
 </html>

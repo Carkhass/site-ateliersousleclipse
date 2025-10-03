@@ -294,6 +294,14 @@ main {
   box-shadow: 0 4px 20px rgba(0,0,0,0.35);
 }
 
+/* Neutralise l’ombre et l'accent du header uniquement sur cette page */
+.page-couteaux #site-header.scrolled {
+  box-shadow: none !important;
+}
+.page-couteaux #site-header.scrolled #header-accent {
+  display: none !important;
+}
+
 /* Ligne d’accent animée */
 #header-accent {
   position: absolute;
@@ -481,6 +489,48 @@ header nav a:hover {
     justify-content: center;
   }
 }
+
+
+/* Bloc nav avec sous-menu */
+.nav-with-sub { position: relative; }
+
+/* Sous-menu desktop */
+.knife-subnav {
+  position: absolute;
+  top: 100%; left: 0;
+  display: flex;
+  gap: 1.5rem;
+  background: inherit; /* même fond que le header */
+  backdrop-filter: inherit;
+  border-top: 1px solid var(--color-accent);
+  padding: 0.5rem 1rem;
+
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+/* Hover → ouvre */
+.nav-with-sub:hover .knife-subnav {
+  max-height: 3rem;
+  opacity: 1;
+}
+
+/* Page Couteaux → ouvert par défaut */
+.page-couteaux .nav-with-sub .knife-subnav {
+  max-height: 3rem;
+  opacity: 1;
+}
+
+/* Sous-menu mobile */
+.knife-subnav-mobile a {
+  font-size: 0.95rem;
+  color: var(--color-muted);
+  transition: color 0.3s ease;
+}
+.knife-subnav-mobile a:hover { color: var(--color-accent); }
+
 
 
 /* =========================================================
@@ -1736,3 +1786,253 @@ footer img.qr {
     overflow-x: hidden;
   }
 }
+
+/* =========================================================
+   GALERIE COUTEAUX — EMBLA KNIFE
+   ========================================================= */
+.knife-gallery{
+  padding: 30px;
+}
+
+/* Conteneur principal */
+.embla-knife {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Viewport */
+.embla-knife-viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Container des slides */
+.embla-knife-container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+}
+
+/* Slide */
+.embla-knife-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.embla-knife-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+/* Ratio pour stabiliser la hauteur du slider principal */
+.embla-knife-main {
+  aspect-ratio: 4 / 3; /* Ajuste selon ton rendu préféré */
+  border-radius: 0.75rem;
+  background: #000; /* filet de sécurité */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Vignettes */
+.embla-knife-thumbs {
+  margin-top: 0.75rem;
+}
+
+.embla-knife-thumbs .embla-knife-container {
+  display: flex;
+}
+
+.embla-knife-thumbs .embla-knife-slide {
+  flex: 0 0 auto;
+  width: 90px;
+  height: 68px;
+  margin-right: 10px;
+  cursor: pointer;
+  opacity: 0.6;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: opacity 0.25s, transform 0.25s, box-shadow 0.25s;
+  background: #111;
+}
+
+.embla-knife-thumbs .embla-knife-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* État actif */
+.embla-knife-thumbs .embla-knife-slide.is-selected {
+  opacity: 1;
+  transform: scale(1.05);
+  box-shadow: 0 0 0 2px var(--color-accent, #c00) inset;
+}
+
+/* Ciblage uniquement du slider Lance à huîtres */
+.embla-knife-lancehuitre img {
+  height: 700px;              /* ajuste selon ton design */
+  margin: 0 auto;             /* centre horizontalement */
+  object-fit: cover;        /* ou cover si tu veux remplir */
+  object-position: center center;
+  display: block;
+}
+
+
+/* Sticky title : même rendu que le header */
+#knife-sticky-header {
+  background-color: rgba(var(--color-bg-rgb), 0.65); /* même transparence */
+  backdrop-filter: blur(4px); /* équivalent de backdrop-blur-sm */
+  -webkit-backdrop-filter: blur(4px); /* compatibilité Safari */
+  transition: background-color 0.5s ease, backdrop-filter 0.5s ease;
+}
+
+
+.knife-category-title {
+  background: linear-gradient(to bottom, var(--color-surface), transparent);
+}
+
+.knife-category-title-bg {
+  background: linear-gradient(to top, var(--color-surface), transparent);
+}
+
+.knife-nav {
+  background: rgba(255, 255, 255, 0.85); /* ou var(--color-surface) si tu veux rester ton sur ton */
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--color-muted);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.knife-nav.dark {
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.knife-nav.dark a:hover {
+  color: var(--color-accent);
+}
+
+.knife-heading.compact {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.knife-nav a.active {
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+
+/* ============================= */
+/* STICKY TITLE SPLIT */
+/* ============================= */
+
+.knife-title-split {
+  position: relative;
+  display: inline-block;
+  line-height: 1.2;
+  white-space: nowrap; /* empêche le retour à la ligne */
+}
+
+/* Les deux moitiés superposées */
+.knife-title-top,
+.knife-title-bottom {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: inherit;
+  pointer-events: none;
+}
+
+/* Pseudo-élément pour donner la hauteur du texte */
+.knife-title-split::before {
+  content: attr(data-text);
+  visibility: hidden;
+  display: block;
+}
+
+/* Découpe diagonale par mot */
+.knife-title-top.animate-out .word {
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 55%);
+  animation: cutTopWord 0.6s forwards ease;
+  animation-delay: calc(var(--i) * 80ms);
+}
+.knife-title-bottom.animate-out .word {
+  clip-path: polygon(0 45%, 100% 55%, 100% 100%, 0 100%);
+  animation: cutBottomWord 0.6s forwards ease;
+  animation-delay: calc(var(--i) * 80ms);
+}
+
+@keyframes cutTopWord {
+  to { transform: translate(-10%, -100%) rotate(-3deg); opacity: 0; }
+}
+@keyframes cutBottomWord {
+  to { transform: translate(10%, 100%) rotate(3deg); opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(1.05); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Séquencement par mot */
+.knife-title-top .word,
+.knife-title-bottom .word {
+  display: inline-block;
+}
+
+/* Sous-titre */
+.knife-subtitle-blur {
+  transition: opacity 0.7s ease;
+}
+.knife-subtitle-hidden {
+  opacity: 0;
+}
+
+.knife-accent {
+  position: absolute;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--color-accent) 0%,
+    var(--color-accent-light, var(--color-accent)) 50%,
+    var(--color-accent) 100%
+  );
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 1s ease, background-position 1.6s linear;
+  will-change: transform, background-position;
+  z-index: 10;
+}
+
+/* Ligne du haut → pleine largeur */
+.knife-accent-top {
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+/* Container interne → référence pour la ligne du bas */
+.knife-sticky-container {
+  position: relative; /* nécessaire pour que la ligne du bas se cale dedans */
+}
+
+/* Ligne du bas → limitée au container */
+.knife-accent-bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+}
+
+/* Animation */
+#knife-sticky-header.active .knife-accent {
+  transform: scaleX(1);
+  background-position: 100% 50%;
+}
+
