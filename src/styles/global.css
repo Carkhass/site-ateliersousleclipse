@@ -491,45 +491,7 @@ header nav a:hover {
 }
 
 
-/* Bloc nav avec sous-menu */
-.nav-with-sub { position: relative; }
 
-/* Sous-menu desktop */
-.knife-subnav {
-  position: absolute;
-  top: 100%; left: 0;
-  display: flex;
-  gap: 1.5rem;
-  background: inherit; /* même fond que le header */
-  backdrop-filter: inherit;
-  border-top: 1px solid var(--color-accent);
-  padding: 0.5rem 1rem;
-
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
-}
-
-/* Hover → ouvre */
-.nav-with-sub:hover .knife-subnav {
-  max-height: 3rem;
-  opacity: 1;
-}
-
-/* Page Couteaux → ouvert par défaut */
-.page-couteaux .nav-with-sub .knife-subnav {
-  max-height: 3rem;
-  opacity: 1;
-}
-
-/* Sous-menu mobile */
-.knife-subnav-mobile a {
-  font-size: 0.95rem;
-  color: var(--color-muted);
-  transition: color 0.3s ease;
-}
-.knife-subnav-mobile a:hover { color: var(--color-accent); }
 
 
 
@@ -607,12 +569,6 @@ header nav a:hover {
   position: absolute;
   inset: 0;
   /* Dégradé sur seulement le haut */
-  background: linear-gradient(
-    to bottom,
-    var(--color-bg) 0%,         /* couleur de fond en haut */
-    var(--color-bg) 5%,        /* encore la couleur de fond à 20% */
-    rgba(255, 255, 255, 0) 100% /* totalement transparent ensuite */
-  );
   z-index: 1;
   pointer-events: none;
 }

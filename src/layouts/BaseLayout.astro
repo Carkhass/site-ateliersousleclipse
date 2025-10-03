@@ -77,35 +77,28 @@ const {
 
   <body class={`flex flex-col min-h-screen font-sans bg-bg text-text ${Astro.props.bodyClass || ''}`}>
     <header id="site-header" class="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm transition-all duration-500">
-  <div class="container mx-auto px-4 flex justify-between items-center h-20 relative">
-    <div class="flex items-center space-x-4 header-brand">
-      <span id="header-logo-placeholder"></span>
-      <span id="header-title-placeholder"></span>
-    </div>
-    <nav class="hidden md:flex space-x-3 font-semibold main-nav" aria-label="Navigation principale">
-      <a href="/" class="text-magnify hover:text-accent transition-colors">Accueil</a>
-      <a href="/couteaux" class="text-magnify hover:text-accent transition-colors has-subnav">Couteaux</a>
-      <a href="/me-connaitre" class="text-magnify hover:text-accent transition-colors">Me connaître</a>
-      <a href="#contact" class="text-magnify hover:text-accent transition-colors">Contact</a>
-    </nav>
-    <div class="flex items-center space-x-4">
-      <button id="theme-toggle" class="text-magnify p-2 rounded bg-surface text-text hover:text-accent transition-colors">🌙</button>
-      <button id="menu-toggle" class="icon-toggle md:hidden p-2 rounded bg-surface text-text hover:text-accent transition-colors">
-        <span class="icon-burger">☰</span>
-        <span class="icon-close">✕</span>
-      </button>
-    </div>
-    <span id="header-accent"></span>
-  </div>
-
-  <!-- Sous-menu intégré -->
-  <div class="knife-subnav hidden md:flex justify-center gap-8 text-sm font-medium text-[var(--color-muted)]">
-    <a href="#cuisine">🍽️ Cuisine</a>
-    <a href="#table">🥂 Table</a>
-    <a href="#outdoor">🏕️ Outdoor</a>
-  </div>
-</header>
-
+      <div class="container mx-auto px-4 flex justify-between items-center h-20 relative">
+        <div class="flex items-center space-x-4 header-brand">
+          <!-- Placeholders pour FLIP (réception dans le header) -->
+          <span id="header-logo-placeholder"></span>
+          <span id="header-title-placeholder"></span>
+        </div>
+        <nav class="hidden md:flex space-x-3 font-semibold" aria-label="Navigation principale">
+          <a href="/" class="text-magnify hover:text-accent transition-colors">Accueil</a>
+          <a href="/couteaux" class="text-magnify hover:text-accent transition-colors">Couteaux</a>
+          <a href="/me-connaitre" class="text-magnify hover:text-accent transition-colors">Me connaître</a>
+          <a href="#contact" class="text-magnify hover:text-accent transition-colors">Contact</a>
+        </nav>
+        <div class="flex items-center space-x-4">
+          <button id="theme-toggle" class="text-magnify p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Changer le thème">🌙</button>
+          <button id="menu-toggle" class="icon-toggle md:hidden p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Ouvrir le menu">
+            <span class="icon-burger">☰</span>
+            <span class="icon-close">✕</span>
+          </button>
+        </div>
+        <span id="header-accent"></span>
+      </div>
+    </header>
 
     <div class="menu-overlay"></div>
 
