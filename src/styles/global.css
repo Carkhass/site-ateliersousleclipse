@@ -1760,13 +1760,13 @@ footer img.qr {
 }
 
 /* Embla container */
-.embla-knife { position: relative; width: 100%; overflow: hidden; }
-.embla-knife-viewport { overflow: hidden; width: 100%; }
-.embla-knife-container { display: flex; touch-action: pan-y pinch-zoom; }
-.embla-knife-slide { flex: 0 0 100%; min-width: 0; }
+.embla-knife { position: relative; width: 100%; overflow: hidden; height: 100%; } /* AJOUT: height: 100% */
+.embla-knife-viewport { overflow: hidden; width: 100%; height: 100%; } /* AJOUT: height: 100% */
+.embla-knife-container { display: flex; touch-action: pan-y pinch-zoom; height: 100%; } /* AJOUT: height: 100% */
+.embla-knife-slide { flex: 0 0 100%; min-width: 0; height: 100%; } /* AJOUT: height: 100% */
 .embla-knife-slide img {
   width: 100%;
-  height: auto; /* 👈 fluid au lieu de height:100% */
+  height: 100%; /* MAINTENIR : La hauteur a été corrigée ici précédemment */
   object-fit: cover;
   object-position: center center;
   display: block;
@@ -1774,9 +1774,7 @@ footer img.qr {
 
 /* Slide principal */
 .embla-knife-main {
-  aspect-ratio: 4 / 3;
   width: 100%;
-  max-width: 900px; /* limite sur desktop */
   margin: 0 auto;
   border-radius: 0.75rem;
   background: #000;
