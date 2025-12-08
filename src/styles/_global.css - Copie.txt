@@ -1825,13 +1825,9 @@ footer img.qr {
    MENU FLOTTANT — RESPONSIVE
    ========================================================= */
 .knife-floating-nav {
-  position: absolute;
-  top: 550px;       /* Position par défaut desktop */
-  left: 2rem;       
-  margin-top: 0;
-  width: 220px;     /* Largeur fixe desktop */
-  
-  /* Styles visuels génériques */
+  position: fixed;
+  top: calc(var(--site-header-height, 550px) + 1rem);
+  left: 2rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -1846,69 +1842,12 @@ footer img.qr {
   max-width: 220px;
 }
 
-/* Nouveau bloc pour l'état FIXÉ (Scrollé) — DESKTOP PAR DÉFAUT */
-.knife-floating-nav.is-stuck {
-  position: fixed; 
-  top: calc(var(--site-header-height, 100px) + 1rem); 
-  left: 1rem;
-  margin-top: 0; 
-  width: 200px; /* Largeur fixe desktop maintenue */
-}
-
 /* Sur mobile → menu en haut centré */
 @media (max-width: 768px) {
-  
-  /* Styles du Conteneur Mobile (État initial) */
   .knife-floating-nav {
-    position: absolute; /* Reste absolu pour ne pas décaler la page */
-    top: 580px;          /* Position initiale mobile (si désiré) */
+    position: static;
     margin: 1rem auto;
-    left: auto;         /* Annule left: 2rem */
-    right: auto;        /* Permet le centrage */
-    width: auto;        /* Laisse la largeur obéir à max-width */
-    max-width: 70%;
-    
-    /* Styles pour la taille réduite */
-    box-sizing: border-box; 
-    overflow-x: hidden; 
-    padding: 0.4rem 0.6rem; 
-    gap: 0.4rem;
-  }
-  
-  /* Écrasement CRUCIAL de l'état FIXÉ pour le mobile */
-  .knife-floating-nav.is-stuck {
-    position: fixed; /* Maintient le fixed */
-    top: calc(var(--site-header-height, 100px) + 1rem); /* Laisser le top */
-
-    /* Écrase les règles desktop et centre le menu */
-    width: auto; 
-    left: auto;
-    right: auto;
-    margin: 1rem auto; 
-  }
-  
-  /* Styles des Éléments Internes Mobile */
-
-  /* Titre */
-  .knife-floating-nav .knife-nav-title {
-    font-size: 0.9rem; /* Réduire la taille du titre */
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis;
-  }
-
-  /* Liens */
-  .knife-floating-nav .knife-nav-item {
-    /* Force le lien à prendre 100% de la largeur du conteneur parent contraint (70%) */
-    width: 100%; 
-    
-    /* Gère le texte */
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    
-    font-size: 0.8rem; 
-    line-height: 1.1;
+    max-width: 90%;
   }
 }
 
