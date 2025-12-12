@@ -1755,8 +1755,14 @@ footer img.qr {
 @media (min-width: 768px) {
   .knife-gallery { padding: 2rem; }
 }
+/* Appliquer la largeur maximale et le centrage à partir de 1280px */
 @media (min-width: 1280px) {
-  .knife-gallery { padding: 3rem; }
+  .knife-gallery { 
+    padding: 3rem;
+    max-width: 2000px;
+    margin-left: auto; /* Centrage */
+    margin-right: auto; /* Centrage */
+  }
 }
 
 /* Embla container */
@@ -1812,7 +1818,7 @@ footer img.qr {
 .embla-knife-lancehuitre img {
   width: 100%;
   height: auto;
-  max-height: 500px; /* limite sur desktop */
+  max-height: 680px; /* limite sur desktop */
   margin: 0 auto;
   object-fit: cover;
   object-position: center center;
