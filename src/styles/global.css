@@ -157,8 +157,9 @@ button:hover, a:hover {
 
 /* Structure principale */
 main {
-  padding-top: 5rem; /* Compense la hauteur du header fixe */
+  padding-top: 4rem; /* Compense la hauteur du header fixe */
 }
+
 
 #site-header .container {
   max-width: 1200px; /* plus étroit que le container global */
@@ -287,19 +288,10 @@ main {
   }
 }
 
-
 /* Header au scroll */
 #site-header.scrolled {
   background-color: rgba(var(--color-bg-rgb), 0.65);
   box-shadow: 0 4px 20px rgba(0,0,0,0.35);
-}
-
-/* Neutralise l’ombre et l'accent du header uniquement sur cette page */
-.page-couteaux #site-header.scrolled {
-  box-shadow: none !important;
-}
-.page-couteaux #site-header.scrolled #header-accent {
-  display: none !important;
 }
 
 /* Ligne d’accent animée */
@@ -489,8 +481,6 @@ header nav a:hover {
     justify-content: center;
   }
 }
-
-
 
 
 
