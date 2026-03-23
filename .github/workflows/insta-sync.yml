@@ -1,8 +1,8 @@
-name: Update Instagram Gallery
+name: Update Instagram Gallery (JS Mode)
 on:
   schedule:
-    - cron: '0 */12 * * *' # Toutes les 12h
-  workflow_dispatch: # Bouton manuel
+    - cron: '0 */12 * * *' # S'exécute toutes les 12h
+  workflow_dispatch: # Bouton manuel pour tester
 
 jobs:
   build:
@@ -11,64 +11,55 @@ jobs:
       - name: Checkout du code
         uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          python-version: '3.9'
+          node-version: '18'
 
-      - name: Installation Instaloader
-        run: pip install instaloader
-
-      - name: Récupération Instagram
+      - name: Recupération via ig-scraper
         run: |
-          # On crée les dossiers de destination
-          mkdir -p public/images/insta
           mkdir -p src/data
+          npm install ig-scraper
           
-          # On aspire les 21 derniers posts (uniquement photos pour la stabilité)
-          # On stocke temporairement dans un dossier "temp_insta"
-          instaloader --no-videos --no-metadata-json --no-profile-pic --count 21 --dirname-pattern=temp_insta ateliersousleclipse
-          
-          # Petit script Python "volant" pour transformer les fichiers texte en JSON propre pour Astro
-          python3 - <<EOF
-          import os
-          import json
-          import shutil
+          # Script Node.js pour extraire les données
+          node -e "
+          const scraper = require('ig-scraper');
+          const fs = require('fs');
 
-          posts = []
-          base_dir = 'temp_insta'
-          target_img_dir = 'public/images/insta'
-          
-          # On liste les fichiers JPG et TXT
-          files = sorted([f for f in os.listdir(base_dir) if f.endswith('.jpg')], reverse=True)
-          
-          for img_file in files:
-              base_name = img_file.replace('.jpg', '')
-              txt_file = os.path.join(base_dir, base_name + '.txt')
+          async function getFeed() {
+            try {
+              // On récupère les posts du profil public
+              const posts = await scraper.get_profile_posts('ateliersousleclipse');
               
-              caption = ""
-              if os.path.exists(txt_file):
-                  with open(txt_file, 'r', encoding='utf-8') as f:
-                      caption = f.read()
-              
-              # On déplace l'image vers le dossier public d'Astro
-              shutil.copy(os.path.join(base_dir, img_file), os.path.join(target_img_dir, img_file))
-              
-              posts.append({
-                  "id": base_name,
-                  "url": f"/images/insta/{img_file}",
-                  "caption": caption,
-                  "link": f"https://www.instagram.com/p/{base_name.split('_')[1]}/" if '_' in base_name else "#"
-              })
+              if (!posts || posts.length === 0) {
+                console.error('Aucun post trouvé ou profil bloqué');
+                process.exit(1);
+              }
 
-          with open('src/data/instagram.json', 'w', encoding='utf-8') as f:
-              json.dump(posts, f, ensure-ascii=False, indent=2)
-          EOF
+              const formattedPosts = posts.slice(0, 21).map(post => ({
+                id: post.shortcode,
+                url: post.display_url,
+                caption: post.caption || 'Couteau artisanal - Atelier Sous l\'Éclipse',
+                link: 'https://www.instagram.com/p/' + post.shortcode,
+                timestamp: post.timestamp
+              }));
+
+              fs.writeFileSync('src/data/instagram.json', JSON.stringify(formattedPosts, null, 2));
+              console.log('Fichier instagram.json créé avec ' + formattedPosts.length + ' posts.');
+            } catch (err) {
+              console.error('Erreur lors du scraping :', err);
+              process.exit(1);
+            }
+          }
+
+          getFeed();
+          "
 
       - name: Commit et Push
         run: |
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
-          git add src/data/instagram.json public/images/insta/*.jpg
-          git commit -m "Auto-update Instagram (Instaloader)" || echo "Rien à mettre à jour"
+          # On n'ajoute que le JSON car on utilise les URLs directes d'Instagram ici
+          git add src/data/instagram.json
+          git commit -m "Auto-update Instagram Feed (JS Scraper)" || echo "Pas de changements"
           git push
