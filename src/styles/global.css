@@ -105,6 +105,8 @@ html {
   scroll-behavior: smooth;
 }
 
+
+
 /* Empêche les débordements horizontaux
 html, body {
   overflow-x: hidden;
@@ -157,7 +159,7 @@ button:hover, a:hover {
 
 /* Structure principale */
 main {
-  padding-top: 4rem; /* Compense la hauteur du header fixe */
+  padding-top: 5rem; /* Compense la hauteur du header fixe */
 }
 
 
@@ -292,6 +294,7 @@ main {
 #site-header.scrolled {
   background-color: rgba(var(--color-bg-rgb), 0.65);
   box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+
 }
 
 /* Ligne d’accent animée */
@@ -481,8 +484,6 @@ header nav a:hover {
     justify-content: center;
   }
 }
-
-
 
 
 /* =========================================================
@@ -1325,8 +1326,7 @@ form button[type="submit"]:hover {
   --slide-spacing: 1rem;    /* espace entre slides */
 }
 
-.embla__viewport {
-  overflow: hidden;
+.embla__viewport {  overflow: hidden;
 }
 
 .embla__container {
@@ -1932,3 +1932,5 @@ footer img.qr {
   font-weight: 700;
   transform: translateX(4px);
 }
+
+

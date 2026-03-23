@@ -138,3 +138,4 @@ export function initEmbla(root, EmblaCarousel) {
   setupPrevNextBtns(prevBtn, nextBtn, embla);
   setupDotBtns(embla, dotsNode);
 }
+

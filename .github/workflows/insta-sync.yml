@@ -1,0 +1,31 @@
+name: Update Instagram Gallery
+on:
+  schedule:
+    - cron: '0 */12 * * *' # S'exécute toutes les 12h
+  workflow_dispatch: # Permet de le lancer manuellement pour tester
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/node-setup@v3
+        with:
+          node-version: '18'
+
+      - name: Recupération des photos (Scraper)
+        run: |
+          # Ici on utilise un script léger pour extraire le JSON et les images
+          # On cible ton profil : ateliersousleclipse
+          npx instagram-scraper-t ateliersousleclipse --limit 21 --template "{'id': '{{id}}', 'caption': '{{caption}}', 'url': '{{display_url}}', 'link': '{{shortcode}}'}" --out src/data/instagram.json
+          
+      - name: Commit et Push des changements
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add src/data/instagram.json
+          git commit -m "Auto-update Instagram feed" || echo "Pas de nouveaux posts"
+          git push

@@ -1,0 +1,144 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Couteaux artisanaux – Galerie des créations | Atelier sous l’éclipse"
+  description="Parcourez la galerie de couteaux artisanaux de l’Atelier sous l’éclipse : modèles de cuisine et de table, pièces uniques en acier et bois précieux, fabriquées à la main."
+  ogImage="/images/og-couteaux.jpg"
+  url="https://www.latelier-sous-leclipse.fr/couteaux"
+  bodyClass="page-couteaux"
+>
+
+<body class="page-couteaux"></body>
+
+
+<!-- ========================================================= -->
+<!-- SECTION — GRAND BONAP (gauche) + BONAP (droite) -->
+<!-- ========================================================= -->
+  <section class="knife-gallery py-20">
+    <div class="container-knife-gallery mx-auto grid grid-cols-1 xl:grid-cols-[1fr_auto_1fr] gap-12">
+
+      <!-- Bloc gauche : Grand Bon'ap -->
+      <div class="grid grid-cols-1 gap-6 items-start min-w-0">
+        <!-- Slider principal -->
+        <div class="knife-swiper-container">
+    
+    <div class="swiper swiper-knife-main rounded-xl shadow-lg overflow-hidden mb-4 bg-[var(--color-surface)]">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon-_med.webp" alt="Image 1" />
+                <img src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon-_med.webp" alt="Image 1" />
+                <img src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon-_med.webp" alt="Image 1" />
+                <img src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon-_med.webp" alt="Image 1" />
+                <img src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon-_med.webp" alt="Image 1" />
+            </div>
+            </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+    <div class="swiper swiper-knife-thumbs">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon-_med.webp" alt="Vignette 1" />
+                <img src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon-_med.webp" alt="Vignette 1" />
+                <img src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon-_med.webp" alt="Vignette 1" />
+                <img src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon-_med.webp" alt="Vignette 1" />
+                <img src="/images/couteaux/grandbonap/atelier-sous-leclipse-couteau-artisanal-grand-bonap-full-hamon-_med.webp" alt="Vignette 1" />
+                
+            </div>
+            </div>
+    </div>
+</div>
+
+        <!-- Texte descriptif + specs -->
+        <div class="fade-slide-up space-y-4 min-w-0">
+          <h2 class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child">
+            Grand Bon'Ap
+          </h2>
+          <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+            Couteau de cuisine proche d'un couteau de chef mais avec une ligne d'inspiration japonaise.
+            Bien que son utilisation reste variée (légumes, viandes, poissons, fruits…),
+            sa courbe légèrement plus prononcée que le Bon’Ap permet d’en faire un redoutable éminceur.
+
+          </p>
+          <ul class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child">
+            <li><strong>Type :</strong> Couteau de chef</li>
+            <li><strong>Taille :</strong> ~17&nbsp;cm de tranchant pour ~12&nbsp;cm de manche</li>
+            <li><strong>Poids :</strong> ~150&nbsp;g</li>
+            <li><strong>Épaisseur au dos :</strong> ~2.5&nbsp;mm</li>
+            <li><strong>Acier :</strong> Généralement en C125U (carbone)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Séparateur -->
+      <div class="hidden xl:block w-px bg-[var(--color-muted)]"></div>
+
+      <!-- Bloc droit : Bon'ap -->
+      <div class="grid grid-cols-1 gap-6 items-start min-w-0">
+        <!-- Slider principal -->
+        <div class="knife-swiper-container">
+    
+    <div class="swiper swiper-knife-main rounded-xl shadow-lg overflow-hidden mb-4 bg-[var(--color-surface)]">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="/images/couteaux/grandbonap/image-1.webp" alt="Image 1" />
+            </div>
+            </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+    <div class="swiper swiper-knife-thumbs">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="/images/couteaux/grandbonap/thumb-1.webp" alt="Vignette 1" />
+            </div>
+            </div>
+    </div>
+</div>
+
+        <!-- Texte descriptif + specs -->
+        <div class="fade-slide-up space-y-4 min-w-0">
+          <h2 class="text-3xl font-serif font-bold text-[var(--color-accent)] reveal-child">
+            Bon'Ap
+          </h2>
+          <p class="text-lg text-[var(--color-muted)] leading-relaxed reveal-child">
+            Version plus compacte que le Grand Bon'Ap, c'est le compagnon idéal du quotidien en cuisine.
+          </p>
+          <ul class="knife-specs text-sm text-[var(--color-text)] space-y-1 reveal-child">
+            <li><strong>Type :</strong> Couteau de cuisine utilitaire</li>
+            <li><strong>Taille :</strong> ~12&nbsp;cm de tranchant pour ~11,5&nbsp;cm de manche</li>
+            <li><strong>Poids :</strong> 90&nbsp;g</li>
+            <li><strong>Épaisseur au dos :</strong> ~2.5&nbsp;mm</li>
+            <li><strong>Acier :</strong> Généralement en C125U (carbone)</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+<script>
+  import {
+    initSwipers,
+    initLightbox,
+  } from "../scripts/init/init-swiper-glightbox.js";
+  import { initEmbla } from "../scripts/init/init-embla.js";
+  import { initKnifeGalleries } from "../scripts/features/show-knife.js";
+  import { initObserverCarousels } from "../scripts/init/observer-carousels.js";
+  import { initKnifeFloatingNav } from "../scripts/features/sticky-section-title.js";
+
+  if (typeof window !== "undefined") {
+    initSwipers();
+    initEmbla();
+    initLightbox();
+    initKnifeGalleries();
+    initObserverCarousels();
+    initKnifeFloatingNav();
+  }
+</script>
+  </BaseLayout>
