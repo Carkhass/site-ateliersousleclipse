@@ -1,8 +1,8 @@
 name: Update Instagram Gallery
 on:
   schedule:
-    - cron: '0 */12 * * *' # S'exécute toutes les 12h
-  workflow_dispatch: # Permet de le lancer manuellement pour tester
+    - cron: '0 */12 * * *' # Toutes les 12h
+  workflow_dispatch: # Bouton manuel
 
 jobs:
   build:
@@ -11,21 +11,64 @@ jobs:
       - name: Checkout du code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
-          node-version: '18'
+          python-version: '3.9'
 
-      - name: Recupération des photos (Scraper)
+      - name: Installation Instaloader
+        run: pip install instaloader
+
+      - name: Récupération Instagram
         run: |
-          # Ici on utilise un script léger pour extraire le JSON et les images
-          # On cible ton profil : ateliersousleclipse
-          npx instagram-scraper-t ateliersousleclipse --limit 21 --template "{'id': '{{id}}', 'caption': '{{caption}}', 'url': '{{display_url}}', 'link': '{{shortcode}}'}" --out src/data/instagram.json
+          # On crée les dossiers de destination
+          mkdir -p public/images/insta
+          mkdir -p src/data
           
-      - name: Commit et Push des changements
+          # On aspire les 21 derniers posts (uniquement photos pour la stabilité)
+          # On stocke temporairement dans un dossier "temp_insta"
+          instaloader --no-videos --no-metadata-json --no-profile-pic --count 21 --dirname-pattern=temp_insta ateliersousleclipse
+          
+          # Petit script Python "volant" pour transformer les fichiers texte en JSON propre pour Astro
+          python3 - <<EOF
+          import os
+          import json
+          import shutil
+
+          posts = []
+          base_dir = 'temp_insta'
+          target_img_dir = 'public/images/insta'
+          
+          # On liste les fichiers JPG et TXT
+          files = sorted([f for f in os.listdir(base_dir) if f.endswith('.jpg')], reverse=True)
+          
+          for img_file in files:
+              base_name = img_file.replace('.jpg', '')
+              txt_file = os.path.join(base_dir, base_name + '.txt')
+              
+              caption = ""
+              if os.path.exists(txt_file):
+                  with open(txt_file, 'r', encoding='utf-8') as f:
+                      caption = f.read()
+              
+              # On déplace l'image vers le dossier public d'Astro
+              shutil.copy(os.path.join(base_dir, img_file), os.path.join(target_img_dir, img_file))
+              
+              posts.append({
+                  "id": base_name,
+                  "url": f"/images/insta/{img_file}",
+                  "caption": caption,
+                  "link": f"https://www.instagram.com/p/{base_name.split('_')[1]}/" if '_' in base_name else "#"
+              })
+
+          with open('src/data/instagram.json', 'w', encoding='utf-8') as f:
+              json.dump(posts, f, ensure-ascii=False, indent=2)
+          EOF
+
+      - name: Commit et Push
         run: |
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
-          git add src/data/instagram.json
-          git commit -m "Auto-update Instagram feed" || echo "Pas de nouveaux posts"
+          git add src/data/instagram.json public/images/insta/*.jpg
+          git commit -m "Auto-update Instagram (Instaloader)" || echo "Rien à mettre à jour"
           git push
