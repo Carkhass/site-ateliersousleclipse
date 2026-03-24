@@ -36,10 +36,11 @@ const couteauxDynamiques = tousLesCouteaux.sort((a, b) =>
             style={`transition-delay: ${index * 100}ms`}
           >
             
-            <div class="aspect-square overflow-hidden border-b-4 border-[var(--color-accent)]">
+            {/* CONTENEUR FORMAT PORTRAIT INSTA (4:5) */}
+            <div class="w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] bg-[#1a1a1a]" style="padding-top: 125%;">
               <a 
                 href={couteau.data.image} 
-                class="glightbox-insta block w-full h-full" 
+                class="glightbox-insta absolute top-0 left-0 w-full h-full flex items-center justify-center" 
                 data-gallery="gallery-instagram"
                 data-title={couteau.data.titre}
                 data-description={couteau.data.description}
@@ -48,10 +49,11 @@ const couteauxDynamiques = tousLesCouteaux.sort((a, b) =>
                   src={couteau.data.image} 
                   alt={couteau.data.titre} 
                   width={800}
-                  height={800}
+                  height={1000} {/* On adapte la hauteur pour le ratio 4:5 */}
                   format="webp"
                   quality="mid"
-                  class="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                  {/* object-contain pour voir TOUT le couteau, object-cover pour cropper */}
+                  class="w-full h-full object-contain transition-transform duration-700 hover:scale-105"
                 />
               </a>
             </div>
@@ -61,15 +63,18 @@ const couteauxDynamiques = tousLesCouteaux.sort((a, b) =>
                 {couteau.data.titre}
               </h3>
               
-              <p class="text-lg text-[var(--color-muted)] leading-relaxed mb-8 flex-grow">
-                {couteau.data.description}
+              {/* DESCRIPTION : whitespace-pre-line pour les retours à la ligne */}
+              <p class="text-lg text-[var(--color-muted)] leading-relaxed mb-8 flex-grow whitespace-pre-line">
+                {couteau.data.description.replaceAll('\\n', '\n')}
               </p>
 
               <div class="mt-auto pt-6 border-t border-[var(--color-accent)]/20 flex justify-between items-center">
+                {/* Condition de prix corrigée */}
                 <span class="text-xl font-serif font-bold text-text">
-                  {couteau.data.prix ? `${couteau.data.prix} €` : "Prix sur demande"}
+                  {couteau.data.prix > 0 ? `${couteau.data.prix} €` : "Prix sur demande"}
                 </span>
                 
+                {/* BOUTON ORIGINAL RESTAURÉ */}
                 <a 
                   href={couteau.data.lienInstagram} 
                   target="_blank" 
