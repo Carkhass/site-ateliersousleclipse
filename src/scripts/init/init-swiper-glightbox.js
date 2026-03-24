@@ -104,6 +104,27 @@ export async function initLightbox() {
       lightbox.open();
     });
   });
+
+  // 3) NOUVEAU : Lightbox pour la Galerie Instagram (couteaux2)
+  const instaLightbox = GLightbox({
+    selector: '.glightbox-insta', // On utilise une classe spécifique
+    touchNavigation: true,
+    loop: true,
+    zoomable: false, // 🔥 Désactive le zoom pour permettre la fermeture au clic
+    draggable: true,
+    closeOnBackdropClick: true,
+    openEffect: 'fade',
+    closeEffect: 'fade',
+    skin: 'hamon' // 🔥 Utilise ton CSS existant avec le flou (backdrop-filter)
+  });
+
+  // Ajout du comportement de fermeture au clic sur l'image
+  instaLightbox.on('open', () => {
+    const slides = document.querySelectorAll('.glightbox-insta-container .gslide-image');
+    slides.forEach(slide => {
+      slide.onclick = () => instaLightbox.close();
+    });
+  });
 }
 
 

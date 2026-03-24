@@ -9,13 +9,20 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/react": "^5.0.1",
     "@astrojs/tailwind": "^5.1.5",
+    "@keystatic/astro": "^5.0.6",
+    "@keystatic/core": "^0.5.49",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "astro": "^5.13.9",
     "autoprefixer": "^10.4.21",
     "embla-carousel": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",
     "glightbox": "^3.3.1",
     "postcss": "^8.5.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "swiper": "^11.2.10",
     "tailwindcss": "^3.4.17"
   },
