@@ -4,9 +4,13 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 
 const tousLesCouteaux = await getCollection('couteaux');
-const couteauxDynamiques = tousLesCouteaux.sort((a, b) => 
-  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-);
+
+// Tri : du plus récent (en haut à gauche) au plus ancien
+const couteauxDynamiques = tousLesCouteaux.sort((a, b) => {
+  const dateA = new Date(a.data.date).getTime();
+  const dateB = new Date(b.data.date).getTime();
+  return dateB - dateA; // Inversion ici : B - A pour avoir le plus récent en premier
+});
 ---
 
 <BaseLayout
