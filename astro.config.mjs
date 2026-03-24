@@ -8,7 +8,9 @@ import react from '@astrojs/react';
 export default defineConfig({
   // On repasse en 'static', le mode d'origine de ton site
   output: 'static', 
-  integrations: [tailwind(), keystatic(), react()],
+  integrations: [tailwind(), keystatic({ 
+      admin: process.env.NODE_ENV === 'development' || !!process.env.VERCEL 
+    }), react()],
   vite: {
     resolve: {
       alias: { 
