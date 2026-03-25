@@ -1,7 +1,9 @@
 {
-  "titre": "Butter Bon'ap 😁",
-  "description": "XC100, cocobolo et alisier.\nOuais, maintenant je fais des couteaux à beurre. 😇",
+  "titre": "Butter Bon'ap",
+  "type": "insta",
+  "description": "XC100, cocobolo et alisier.",
   "image": "/images/couteaux/2025-11-28-butter-bon-ap.jpg",
+  "galerie": [],
   "prix": 0,
   "lienInstagram": "https://www.instagram.com/p/DRm5dweDfde/",
   "date": "2025-11-28",

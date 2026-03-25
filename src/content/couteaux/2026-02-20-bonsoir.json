@@ -1,7 +1,9 @@
 {
-  "titre": "Bonsoir 👋",
-  "description": "Grand Bon'ap, C125U, bouleau madré stabilisé teinté bleu et or. Rivets inox.",
+  "titre": "Grand Bon'ap",
+  "type": "insta",
+  "description": "C125U, bouleau madré stabilisé teinté bleu et or. Rivets inox.",
   "image": "/images/couteaux/2026-02-20-bonsoir.jpg",
+  "galerie": [],
   "prix": 0,
   "lienInstagram": "https://www.instagram.com/p/DU_K1unFVzA/",
   "date": "2026-02-20",

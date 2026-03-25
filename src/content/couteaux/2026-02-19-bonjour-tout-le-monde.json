@@ -1,8 +1,10 @@
 {
-  "titre": "Bonjour tout le monde ! 👋",
-  "description": "Un Bon'Ap avec une pointe un peu différente de d'habitude, moins courbe.\nVous aimez cette petite variation ? 😁",
+  "titre": "Bon'Ap \"Kissaki\"",
+  "type": "insta",
+  "description": "C125U, Red heart et rivets inox.\nBon'Apavec une pointe un peu différente de d'habitude, moins courbe, que j'appelle \"Kissaki\"",
   "image": "/images/couteaux/2026-02-19-bonjour-tout-le-monde.jpg",
-  "prix": 0,
+  "galerie": [],
+  "prix": 180,
   "lienInstagram": "https://www.instagram.com/p/DU8oTmOFHI6/",
   "date": "2026-02-19",
   "disponible": true,

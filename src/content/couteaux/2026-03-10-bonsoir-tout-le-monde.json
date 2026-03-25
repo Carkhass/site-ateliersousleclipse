@@ -1,8 +1,10 @@
 {
-  "titre": "Bonsoir tout le monde 👋",
-  "description": "Un Bon'Ap tout simple pour ce soir.\nC125U, ébène de Macassar, rivets inox.",
+  "titre": "Bon'Ap",
+  "type": "insta",
+  "description": "C125U, ébène de Macassar, rivets inox.",
   "image": "/images/couteaux/2026-03-10-bonsoir-tout-le-monde.jpg",
-  "prix": 0,
+  "galerie": [],
+  "prix": 180,
   "lienInstagram": "https://www.instagram.com/p/DVtngTGgtlV/",
   "date": "2026-03-10",
   "disponible": true,

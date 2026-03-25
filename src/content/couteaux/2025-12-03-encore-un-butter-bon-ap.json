@@ -1,8 +1,10 @@
 {
-  "titre": "Encore un Butter Bon'Ap. 🤩",
-  "description": "XC100, koa.\nHamon peu courant, ici on a 3 petits soleils.",
+  "titre": "Butter Bon'Ap.",
+  "type": "insta",
+  "description": "XC100, koa.",
   "image": "/images/couteaux/2025-12-03-encore-un-butter-bon-ap.jpg",
-  "prix": 88,
+  "galerie": [],
+  "prix": null,
   "lienInstagram": "https://www.instagram.com/p/DRzwNrDgmgw/",
   "date": "2025-12-03",
   "disponible": false,

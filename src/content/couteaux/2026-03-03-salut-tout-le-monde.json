@@ -1,7 +1,9 @@
 {
-  "titre": "Salut tout le monde ! 👋",
-  "description": "Ce soir, une lance à huîtres. 😁",
+  "titre": "Lance à huîtres",
+  "type": "insta",
+  "description": "80crv2 finition brossée, wacapou, alisier et bois inconnu.",
   "image": "/images/couteaux/2026-03-03-salut-tout-le-monde.jpg",
+  "galerie": [],
   "prix": 0,
   "lienInstagram": "https://www.instagram.com/p/DVbiqP2AkpK/",
   "date": "2026-03-03",

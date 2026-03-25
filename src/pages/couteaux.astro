@@ -106,7 +106,8 @@ const schemaData = {
               </p>
 
               <div class="mt-auto pt-4 border-t border-black/10 flex justify-between items-center gap-4">
-                <span class="text-xl font-serif font-bold text-[var(--color-text)]">
+                {/* FIX : Utilisation de la couleur stable #7a2a2a au lieu de var(--color-text) */}
+                <span class="text-xl font-serif font-bold text-[#7a2a2a]">
                   {couteau.data.prix > 0 ? `${couteau.data.prix} €` : "Sur commande"}
                 </span>
                 
@@ -213,35 +214,34 @@ const schemaData = {
   }
 
   function initBookingLogic() {
-  const modal = document.getElementById('booking-modal');
-  const openBtns = document.querySelectorAll('.open-booking-modal');
-  const closeBtns = document.querySelectorAll('.close-booking');
-  const refInput = document.getElementById('booking-ref-input');
-  const refDisplay = document.getElementById('booking-ref-display');
-  const messageField = document.getElementById('booking-message');
+    const modal = document.getElementById('booking-modal');
+    const openBtns = document.querySelectorAll('.open-booking-modal');
+    const closeBtns = document.querySelectorAll('.close-booking');
+    const refInput = document.getElementById('booking-ref-input');
+    const refDisplay = document.getElementById('booking-ref-display');
+    const messageField = document.getElementById('booking-message');
 
-  if (!modal) return;
+    if (!modal) return;
 
-  openBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const ref = btn.getAttribute('data-ref');
-      if(refInput) refInput.value = ref;
-      if(refDisplay) refDisplay.textContent = `Modèle : ${ref}`;
-      if(messageField) messageField.value = `Bonjour, je souhaiterais réserver le couteau "${ref}". Pouvez-vous me recontacter ?`;
-      
-      // On ajoute juste la classe, le CSS s'occupe de l'opacité et du scale
-      modal.classList.add('visible-fade');
-      document.body.style.overflow = 'hidden'; 
+    openBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ref = btn.getAttribute('data-ref');
+        if(refInput) refInput.value = ref;
+        if(refDisplay) refDisplay.textContent = `Modèle : ${ref}`;
+        if(messageField) messageField.value = `Bonjour, je souhaiterais réserver le couteau "${ref}". Pouvez-vous me recontacter ?`;
+        
+        modal.classList.add('visible-fade');
+        document.body.style.overflow = 'hidden'; 
+      });
     });
-  });
 
-  closeBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      modal.classList.remove('visible-fade');
-      document.body.style.overflow = '';
+    closeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        modal.classList.remove('visible-fade');
+        document.body.style.overflow = '';
+      });
     });
-  });
-}
+  }
 
   function initPageLightbox() {
     GLightbox({

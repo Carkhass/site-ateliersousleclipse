@@ -1,8 +1,10 @@
 {
-  "titre": "Bonsoir 👋",
-  "description": "Un Petty Tsuki, C125U et un chouette cocobolo. G10 au centre, rivets carbone.\nVous aimez bien ? 🙈",
+  "titre": "Petty Tsuki",
+  "type": "insta",
+  "description": "C125U et un chouette cocobolo. G10 au centre, rivets carbone.",
   "image": "/images/couteaux/2026-03-11-bonsoir.jpg",
-  "prix": 0,
+  "galerie": [],
+  "prix": 180,
   "lienInstagram": "https://www.instagram.com/p/DVwIqvHgv43/",
   "date": "2026-03-11",
   "disponible": true,
