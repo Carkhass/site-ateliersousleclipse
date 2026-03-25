@@ -40,14 +40,13 @@ const couteauxDynamiques = tousLesCouteaux.sort((a, b) => {
             style={`transition-delay: ${index * 100}ms`}
           >
             
-            {/* TAMPON DISPONIBLE (S'affiche uniquement si disponible est strictement vrai) */}
+            {/* TAMPON DISPONIBLE */}
 {(couteau.data.disponible === true || couteau.data.disponible === "true") && (
-  <div class="absolute -top-6 -right-6 z-30 w-32 h-32 pointer-events-none drop-shadow-2xl rotate-12">
+  <div class="absolute -top-16 -right-16 z-50 w-48 h-48 pointer-events-none drop-shadow-2xl rotate-12">
     <img 
       src="/images/tampon-dispo.webp" 
       alt="Couteau disponible" 
       class="w-full h-full object-contain"
-      loading="eager"
     />
   </div>
 )}

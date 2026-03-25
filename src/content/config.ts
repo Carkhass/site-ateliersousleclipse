@@ -1,20 +1,22 @@
 import { defineCollection, z } from 'astro:content';
 
-// 1. On définit la structure (le schéma) de tes couteaux
-// Il doit correspondre aux champs que tu as mis dans Keystatic
 const couteaux = defineCollection({
-  type: 'data', // 'data' car on utilise du JSON (pas du Markdown)
+  type: 'data', 
   schema: z.object({
     titre: z.string(),
     description: z.string(),
     image: z.string(), 
-    prix: z.number().optional().nullable(), // .nullable() aide si le champ est vide
+    // On autorise le nombre, le null ou l'absence de prix
+    prix: z.number().optional().nullable(), 
     lienInstagram: z.string().url(),
     date: z.string(),
+    // AJOUT : On déclare enfin le champ disponible !
+    disponible: z.union([z.boolean(), z.string()]).optional(),
+    // On peut aussi ajouter last_update pour être complet
+    last_update: z.string().optional(),
   }),
 });
 
-// 2. On exporte la collection pour qu'Astro la reconnaisse
 export const collections = {
   'couteaux': couteaux,
 };
