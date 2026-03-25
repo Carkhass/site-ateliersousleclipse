@@ -3,6 +3,7 @@ export function popupform() {
   const forms = document.querySelectorAll('.contact-form');
   const merciPopup = document.getElementById('merci-popup');
   const merciImage = document.getElementById('merci-image');
+  const bookingModal = document.getElementById('booking-modal');
 
   if (forms.length === 0 || !merciPopup) return;
 
@@ -19,18 +20,22 @@ export function popupform() {
         });
 
         if (response.ok) {
-          // 1. Si on est dans une modale (page couteaux), on la ferme d'abord
-          const bookingModal = document.getElementById('booking-modal');
+          // 1. On ferme la modale de réservation immédiatement si elle est ouverte
           if (bookingModal) {
-            bookingModal.classList.add('hidden');
-            bookingModal.classList.remove('flex');
+            // On retire la classe d'animation pour qu'elle disparaisse en dessous
+            bookingModal.classList.remove('visible-fade');
+            // On peut la passer en hidden après un court délai ou directement
+            setTimeout(() => {
+              bookingModal.classList.add('hidden');
+              bookingModal.classList.remove('flex');
+            }, 400);
           }
 
           // 2. On affiche la popup de succès
           merciPopup.classList.remove('hidden');
           merciPopup.classList.add('flex');
 
-          // 3. Petit délai pour l'animation d'entrée
+          // 3. Animation d'entrée de la popup Merci
           setTimeout(() => {
             const content = merciPopup.querySelector('div.relative');
             if (content) {
@@ -49,17 +54,30 @@ export function popupform() {
         }
       } catch (error) {
         console.error("Erreur réseau :", error);
-        // Optionnel : forcer l'affichage en local pour test
-        // showMerci(); 
       }
     });
   });
 
-  // Fermeture de la popup merci
+  // Fermeture de la popup merci et nettoyage final
   merciPopup.addEventListener('click', (e) => {
-    if (e.target.tagName === 'BUTTON' || e.target.classList.contains('absolute')) {
+    const isButton = e.target.closest('button');
+    const isBackdrop = e.target.classList.contains('bg-black/80');
+
+    if (isButton || isBackdrop) {
+      // On cache la popup merci
       merciPopup.classList.add('hidden');
       merciPopup.classList.remove('flex');
+      
+      // Sécurité : on s'assure que la modale de réservation est bien fermée
+      if (bookingModal) {
+        bookingModal.classList.remove('visible-fade');
+        setTimeout(() => {
+            bookingModal.classList.add('hidden');
+            bookingModal.classList.remove('flex');
+        }, 400);
+      }
+
+      // On rend le scroll au site
       document.body.style.overflow = '';
     }
   });
