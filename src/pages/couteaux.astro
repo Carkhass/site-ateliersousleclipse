@@ -133,7 +133,8 @@ const schemaData = {
           <h2 class="text-2xl font-serif font-bold text-[#7a2a2a] mb-1 text-left">Réserver cette pièce</h2>
           <p id="booking-ref-display" class="text-sm text-gray-600 mb-6 italic font-medium text-left"></p>
           
-          <form id="contact-form" action="/contact.php" method="POST" class="space-y-4 text-left">
+          {/* PATCH : Ajout de la class "contact-form" pour intercepter le succès */}
+          <form class="contact-form space-y-4 text-left" action="/contact.php" method="POST">
             <input type="hidden" name="reference_couteau" id="booking-ref-input">
             <input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
             

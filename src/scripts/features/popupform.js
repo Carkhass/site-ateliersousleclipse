@@ -1,65 +1,66 @@
-// src/scripts/features/popupform.js
 export function popupform() {
-  const form = document.getElementById('contact-form');
-  const popup = document.getElementById('merci-popup');
-  const popupContent = popup?.querySelector('div');
+  // On cible toutes les instances du formulaire
+  const forms = document.querySelectorAll('.contact-form');
+  const merciPopup = document.getElementById('merci-popup');
   const merciImage = document.getElementById('merci-image');
-  const closeBtn = popup?.querySelector('button');
-  
-  // On récupère aussi la modale qui contient le formulaire pour la fermer au succès
-  const contactModal = document.getElementById('contact-modal');
 
-  if (!form || !popup || !popupContent || !merciImage || !closeBtn) return;
+  if (forms.length === 0 || !merciPopup) return;
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
+  forms.forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault(); // STOP la redirection vers contact.php
 
-    try {
-      const res = await fetch(form.action, { method: 'POST', body: data });
-      if (res.ok) {
-        // --- LE PATCH ---
-        // On cache la modale du formulaire immédiatement avant le "Merci"
-        if (contactModal) {
-          contactModal.classList.add('hidden');
-          contactModal.classList.remove('flex');
-          // On ne rend pas encore le scroll au body ici car la popup Merci arrive
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+          // 1. Si on est dans une modale (page couteaux), on la ferme d'abord
+          const bookingModal = document.getElementById('booking-modal');
+          if (bookingModal) {
+            bookingModal.classList.add('hidden');
+            bookingModal.classList.remove('flex');
+          }
+
+          // 2. On affiche la popup de succès
+          merciPopup.classList.remove('hidden');
+          merciPopup.classList.add('flex');
+
+          // 3. Petit délai pour l'animation d'entrée
+          setTimeout(() => {
+            const content = merciPopup.querySelector('div.relative');
+            if (content) {
+              content.classList.remove('scale-95', 'opacity-0');
+              content.classList.add('scale-100', 'opacity-100');
+            }
+            if (merciImage) {
+              merciImage.classList.remove('opacity-0', 'scale-90');
+              merciImage.classList.add('opacity-100', 'scale-100');
+            }
+          }, 10);
+
+          form.reset();
+        } else {
+          alert("Une erreur est survenue lors de l'envoi.");
         }
-        
-        form.reset();
-        showMerciPopup();
-      } else {
-        alert("Erreur lors de l'envoi, réessayez.");
+      } catch (error) {
+        console.error("Erreur réseau :", error);
+        // Optionnel : forcer l'affichage en local pour test
+        // showMerci(); 
       }
-    } catch (err) {
-      alert("Impossible de contacter le serveur.");
-    }
+    });
   });
 
-  closeBtn.addEventListener('click', closeMerciPopup);
-
-  function showMerciPopup() {
-    popup.classList.remove('hidden');
-    popup.classList.add('flex'); // Ajouté pour le centrage
-    setTimeout(() => {
-      popupContent.classList.remove('scale-95', 'opacity-0');
-      popupContent.classList.add('scale-100', 'opacity-100');
-      // animation image
-      setTimeout(() => {
-        merciImage.classList.remove('opacity-0', 'scale-90');
-        merciImage.classList.add('opacity-100', 'scale-100');
-      }, 200);
-    }, 50);
-  }
-
-  function closeMerciPopup() {
-    merciImage.classList.add('opacity-0', 'scale-90');
-    popupContent.classList.remove('scale-100', 'opacity-100');
-    popupContent.classList.add('scale-95', 'opacity-0');
-    setTimeout(() => {
-      popup.classList.add('hidden');
-      popup.classList.remove('flex');
-      document.body.style.overflow = ''; // On rend le scroll à la toute fin
-    }, 300);
-  }
+  // Fermeture de la popup merci
+  merciPopup.addEventListener('click', (e) => {
+    if (e.target.tagName === 'BUTTON' || e.target.classList.contains('absolute')) {
+      merciPopup.classList.add('hidden');
+      merciPopup.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+  });
 }

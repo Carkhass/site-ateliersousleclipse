@@ -18,7 +18,6 @@ const {
 
   <meta name="description" content={description} />
 
-  <!-- Open Graph -->
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
@@ -26,13 +25,11 @@ const {
   <meta property="og:image" content={ogImage} />
   <meta property="og:locale" content="fr_FR" />
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
 
-  <!-- JSON-LD: Organization -->
   <script type="application/ld+json">
     {JSON.stringify({
       "@context": "https://schema.org",
@@ -49,7 +46,6 @@ const {
     })}
   </script>
 
-  <!-- JSON-LD: Person -->
   <script type="application/ld+json">
     {JSON.stringify({
       "@context": "https://schema.org",
@@ -79,7 +75,6 @@ const {
     <header id="site-header" class="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm transition-all duration-500">
       <div class="container mx-auto px-4 flex justify-between items-center h-20 relative">
         <div class="flex items-center space-x-4 header-brand">
-          <!-- Placeholders pour FLIP (réception dans le header) -->
           <span id="header-logo-placeholder"></span>
           <span id="header-title-placeholder"></span>
         </div>
@@ -110,62 +105,42 @@ const {
     </nav>
 
     <main class="flex-1">
-      <!-- Sentinel pour déclencher le basculement au bon moment -->
       <div id="hero-sentinel" class="h-[1px] w-full"></div>
 
-<!-- ========================================================= -->
-<!-- HERO -->
-<!-- ========================================================= -->
 <section 
   class="hero-section parallax-section hamon-hero relative w-screen flex items-center justify-center overflow-hidden h-screen" 
   data-parallax-speed="50"
   data-parallax-zoom="1"
   data-parallax-zoom-strength="0"
 >
-  <!-- Image de fond -->
   <div class="absolute inset-0" data-parallax-target>
     <img src="/images/hero-hamon.webp" alt="Ligne du hamon sur lame" class="w-full h-full object-cover" />
   </div>
 
-  <!-- Contenu -->
   <div id="hero-content" class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
-    
-    <!-- Logo -->
     <div id="hero-logo-anchor" class="flex items-center justify-center mb-4">
-      <!-- Élément réel, déjà centré dans le hero -->
       <img id="hero-logo" src="/images/poinçon-large-transparent.png" alt="Logo Atelier sous l’éclipse" class="in-hero reveal fade-in-up" />
-      <!-- Ghost caché -->
       <img id="hero-logo-ghost" src="/images/logo-eclipse.png" alt="" aria-hidden="true" class="ghost ghost-logo" />
     </div>
 
-    <!-- Titre -->
     <div id="hero-title-anchor" class="flex items-center justify-center">
-      <!-- Élément réel, déjà centré dans le hero -->
       <h1 id="hero-title" class="in-hero font-brand tracking-wide transition-all duration-700 reveal fade-in-up">
         L’Atelier sous l’éclipse
       </h1>
-      <!-- Ghost caché -->
       <h1 id="hero-title-ghost" aria-hidden="true" class="ghost ghost-title font-brand" >
         L’Atelier sous l’éclipse
       </h1>
     </div>
 
-    <!-- Sous-titre -->
     <p id="hero-subtitle" class="hero-subtitle text-lg md:text-xl text-accent font-bold max-w-none mx-auto opacity-0 mt-4">
       La ligne du <em>hamon</em> reflète l’histoire de l’acier et l’intention de l’artisan.
     </p>
   </div>
 </section>
 
-
-
       <slot />
     </main>
 
-
-<!-- ========================================================= -->
-<!-- BLOC PREMIUM FINAL AVEC IMAGE, CITATION, ANIMATIONS & CARTE 3D -->
-<!-- ========================================================= -->
 <section id="contact" 
   class="parallax-section premium-section relative w-full text-center text-white overflow-hidden py-12 md:py-16"
   data-parallax-speed="120"
@@ -202,8 +177,7 @@ const {
         </div>
       </div>
 
-      <form id="contact-form" action="/contact.php" method="POST" 
-            class="bg-black/50 backdrop-blur-md p-6 md:p-8 rounded-lg w-full max-w-[350px] flex flex-col fade-slide-up delay-450 justify-self-start border border-white/10 shadow-2xl">
+      <form id="contact-form" class="contact-form bg-black/50 backdrop-blur-md p-6 md:p-8 rounded-lg w-full max-w-[350px] flex flex-col fade-slide-up delay-450 justify-self-start border border-white/10 shadow-2xl" action="/contact.php" method="POST">
         
         <h3 class="text-xl font-serif font-bold text-white mb-6 text-center tracking-wide">
           Contactez-moi !
