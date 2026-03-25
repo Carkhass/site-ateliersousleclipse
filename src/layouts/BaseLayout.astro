@@ -172,7 +172,6 @@ const {
   data-parallax-zoom="1.05"
   data-parallax-zoom-strength="0.2"
 >
-  <!-- Calque parallaxe : uniquement l'image -->
   <div class="absolute inset-0" data-parallax-target 
        style="transform: translateY(0px) scale(1); will-change: transform;">
     <img 
@@ -182,28 +181,20 @@ const {
     />
   </div>
 
-  <!-- Overlay sombre -->
   <div class="absolute inset-0 bg-black/45 backdrop-blur-[2px]"></div>
 
-  <!-- Contenu interactif -->
-  <div class="relative z-10 px-4 max-w-6xl w-full space-y-6 mx-auto">
+  <div class="relative z-10 px-4 max-w-6xl w-full space-y-8 mx-auto">
     <p class="text-2xl md:text-3xl font-serif italic fade-slide-up">
-      « Chaque lame raconte une histoire… écrivons la vôtre. »
+      « Chaque lame raconte une histoire… écrivons la vôtre. »
     </p>
 
-    <div class="flex flex-wrap md:flex-row gap-3 justify-center fade-slide-up delay-150">
-      <a href="/me-connaitre" class="cta-premium px-5 py-2.5 text-white rounded text-sm">Me connaître</a>
-      <a href="/galerie" class="cta-premium px-5 py-2.5 text-white rounded text-sm">Voir la galerie</a>
-    </div>
-
-    <!-- Passage en GRID -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 justify-items-center mt-4 items-stretch">
-      <!-- Carte 3D -->
-      <div class="card-3d-wrapper fade-slide-up delay-300 md:justify-self-end">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 justify-items-center items-stretch max-w-4xl mx-auto">
+      
+      <div class="card-3d-wrapper fade-slide-up delay-300 md:justify-self-end w-full max-w-[320px]">
         <div class="card-3d">
           <div class="card-face card-front">
             <img src="/images/carte-visite-ateliersousleclipse-recto.jpg" alt="Carte de visite Atelier sous l'éclipse recto" />
-            <div class="card-glow fade-slide-up" aria-hidden="true"></div>
+            <div class="card-glow" aria-hidden="true"></div>
           </div>
           <div class="card-face card-back">
             <img src="/images/carte-visite-ateliersousleclipse-verso.jpg" alt="Carte de visite Atelier sous l'éclipse verso" />
@@ -211,29 +202,37 @@ const {
         </div>
       </div>
 
-      <!-- Formulaire -->
       <form id="contact-form" action="/contact.php" method="POST" 
-            class="bg-black/30 p-4 rounded-lg w-full max-w-xs h-full flex flex-col fade-slide-up delay-450 justify-self-start">
-        <div class="space-y-3 flex-grow flex flex-col">
+            class="bg-black/50 backdrop-blur-md p-6 md:p-8 rounded-lg w-full max-w-[350px] flex flex-col fade-slide-up delay-450 justify-self-start border border-white/10 shadow-2xl">
+        
+        <h3 class="text-xl font-serif font-bold text-white mb-6 text-center tracking-wide">
+          Contactez-moi !
+        </h3>
+
+        <div class="space-y-4 flex-grow flex flex-col text-left">
           <input type="text" name="nom" placeholder="Votre nom" 
-                 class="w-full p-2.5 rounded bg-white/90 text-black text-sm" required>
+                 class="w-full p-3 rounded bg-white/10 border border-white/20 text-white placeholder:text-white/50 text-sm outline-none focus:border-accent focus:bg-white/20 transition-all" required>
+          
           <input type="email" name="email" placeholder="Votre email" 
-                 class="w-full p-2.5 rounded bg-white/90 text-black text-sm" required>
-          <!-- Textarea qui s’étire -->
+                 class="w-full p-3 rounded bg-white/10 border border-white/20 text-white placeholder:text-white/50 text-sm outline-none focus:border-accent focus:bg-white/20 transition-all" required>
+          
+          <input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
+          
           <textarea name="message" placeholder="Votre message..." 
-                    class="w-full p-2.5 rounded bg-white/90 text-black text-sm resize-none flex-grow" required></textarea>
+                    class="w-full p-3 rounded bg-white/10 border border-white/20 text-white placeholder:text-white/50 text-sm resize-none flex-grow min-h-[120px] outline-none focus:border-accent focus:bg-white/20 transition-all" required></textarea>
         </div>
+
         <button type="submit" 
-                class="cta-premium w-full px-5 py-2.5 rounded text-white text-sm mt-3">
-          Envoyer
+                class="cta-premium w-full px-5 py-3.5 rounded text-white font-bold text-xs uppercase tracking-[0.2em] mt-6 hover:scale-[1.02] active:scale-95 transition-all shadow-lg">
+          Envoyer le message
         </button>
       </form>
+
     </div>
   </div>
 </section>
 
 
-    <!-- Footer -->
     <footer class="bg-surface text-muted text-center p-1 mt-auto relative overflow-visible">
       <div class="flex justify-center space-x-6 mt-4">
         <div class="relative group overflow-visible">
@@ -250,32 +249,47 @@ const {
           <img src="/images/qr-code-FB-2.0.png" alt="QR code Facebook" class="qr absolute top-[-170px] left-1/2 -translate-x-1/2 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-transform duration-300 bg-white p-1 z-[9999] pointer-events-none" />
         </div>
       </div>
-      <p class="mt-2">&copy; {new Date().getFullYear()} Atelier sous l’éclipse — Tous droits réservés.</p>
+      <p class="mt-2 text-xs">&copy; {new Date().getFullYear()} Atelier sous l’éclipse — Tous droits réservés.</p>
     </footer>
-  </body>
 
-  <script>
-    import { initRevealOnScroll } from '../scripts/animations/reveal-on-scroll.js';
-    import { initObserverCarousels } from '../scripts/init/observer-carousels.js';
-    import { initHeaderSticky } from '../scripts/layout/header-sticky.js';
-    import { initMenuMobile } from '../scripts/layout/menu-mobile.js';
-    import { initThemeToggle } from '../scripts/layout/theme-toggle.js';
-    import { initHeaderHero } from '../scripts/animations/header-hero.js';
-    import { initHeroAnimation } from '../scripts//layout/hero-animation.js';
-    import { initCarte3D } from '../scripts/features/carte-3d.js';
-    import { popupform } from '../scripts/features/popupform.js';
-    import { initBooking } from '../scripts/features/booking.js';
-    if (typeof window !== 'undefined') {
-      initRevealOnScroll();
-      initObserverCarousels();
-      initHeaderSticky();
-      initMenuMobile();
-      initThemeToggle();
-      initHeaderHero();
-      initHeroAnimation()
-      initCarte3D();
-      popupform();
-      initBooking();
-    }
-  </script>
+    <div id="merci-popup" class="fixed inset-0 z-[110] hidden items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black/60 backdrop-blur-md"></div>
+      <div class="relative bg-surface p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center transform transition-all duration-300 scale-95 opacity-0 border border-white/10">
+        <div id="merci-image" class="w-24 h-24 mx-auto mb-4 opacity-0 scale-90 transition-all duration-500">
+          <img src="/images/merci-ateliersousleclipse.webp" alt="Merci" class="w-full h-full object-contain" />
+        </div>
+        <h3 class="text-2xl font-serif font-bold text-accent mb-2">Message envoyé</h3>
+        <p class="text-muted mb-6 text-sm">Merci, j'ai bien reçu votre demande. Je vous répondrai sous l'éclipse très prochainement.</p>
+        <button class="bg-accent text-bg px-8 py-2 rounded-full font-bold hover:bg-white transition-colors text-xs uppercase tracking-widest">
+          Fermer
+        </button>
+      </div>
+    </div>
+
+    <script>
+      import { initRevealOnScroll } from '../scripts/animations/reveal-on-scroll.js';
+      import { initObserverCarousels } from '../scripts/init/observer-carousels.js';
+      import { initHeaderSticky } from '../scripts/layout/header-sticky.js';
+      import { initMenuMobile } from '../scripts/layout/menu-mobile.js';
+      import { initThemeToggle } from '../scripts/layout/theme-toggle.js';
+      import { initHeaderHero } from '../scripts/animations/header-hero.js';
+      import { initHeroAnimation } from '../scripts/layout/hero-animation.js';
+      import { initCarte3D } from '../scripts/features/carte-3d.js';
+      import { popupform } from '../scripts/features/popupform.js';
+      import { initBooking } from '../scripts/features/booking.js';
+
+      if (typeof window !== 'undefined') {
+        initRevealOnScroll();
+        initObserverCarousels();
+        initHeaderSticky();
+        initMenuMobile();
+        initThemeToggle();
+        initHeaderHero();
+        initHeroAnimation();
+        initCarte3D();
+        popupform();
+        initBooking();
+      }
+    </script>
+  </body>
 </html>

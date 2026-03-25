@@ -39,7 +39,9 @@ const schemaData = {
 
   <main class="min-h-screen bg-bg text-text pt-32 pb-20 px-4 md:px-20">
     <header class="text-center mb-16 fade-in">
-      <h1 class="text-4xl md:text-6xl font-serif font-bold text-[var(--color-accent)] mb-6">Les Créations</h1>
+      <h1 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
+        Les Créations
+      </h1>
       <div class="flex flex-wrap justify-center gap-4 mt-8 no-select">
         <button class="filter-btn active" data-filter="all">Tout voir</button>
         <button class="filter-btn" data-filter="dispo">📦 Disponibles</button>
@@ -50,7 +52,6 @@ const schemaData = {
     <div id="knife-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
       {couteauxTries.map((couteau) => {
         const estDispo = couteau.data.disponible === true || couteau.data.disponible === "true";
-        const contactHref = `#contact?ref=${encodeURIComponent(couteau.data.titre)}`;
 
         return (
           <article 
@@ -77,7 +78,7 @@ const schemaData = {
               </a>
             )}
 
-            {/* IMAGE + LIEN LIGHTBOX AVEC FORÇAGE RATIO */}
+            {/* IMAGE + LIEN LIGHTBOX */}
             <div class="w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] bg-[#1a1a1a] rounded-t-sm" style="padding-top: 125%;">
               <a 
                 href={couteau.data.image} 
@@ -97,7 +98,9 @@ const schemaData = {
             </div>
 
             <div class="p-8 flex flex-col flex-grow bg-[#f0e8dd]">
-              <h3 class="text-2xl font-serif font-bold text-[#7a2a2a] mb-4">{couteau.data.titre}</h3>
+              <h3 class="text-xl md:text-2xl font-serif font-bold text-[#7a2a2a] mb-4">
+                {couteau.data.titre}
+              </h3>
               <p class="text-base text-gray-700 leading-relaxed mb-8 line-clamp-3">
                 {couteau.data.description ? couteau.data.description.replace(/\\n/g, '\n') : "Couteau artisanal fait main."}
               </p>
@@ -107,14 +110,52 @@ const schemaData = {
                   {couteau.data.prix > 0 ? `${couteau.data.prix} €` : "Sur commande"}
                 </span>
                 
-                <a href={contactHref} class={`px-5 py-2.5 rounded font-bold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md ${estDispo ? 'bg-[var(--color-accent)] text-[var(--color-bg)] hover:bg-[var(--color-accent-light)]' : 'border-2 border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-[var(--color-bg)]'}`}>
+                {/* BOUTON DÉCLENCHEUR MODALE */}
+                <button 
+                  class={`open-booking-modal px-5 py-2.5 rounded font-bold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md ${estDispo ? 'bg-[var(--color-accent)] text-[var(--color-bg)] hover:bg-[var(--color-accent-light)]' : 'border-2 border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-[var(--color-bg)]'}`}
+                  data-ref={couteau.data.titre}
+                >
                   {estDispo ? 'Réserver' : 'Demander'}
-                </a>
+                </button>
               </div>
             </div>
           </article>
         );
       })}
+    </div>
+
+    {/* MODALE DE RÉSERVATION UNIQUE */}
+    <div id="booking-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-booking"></div>
+      <div class="relative bg-[#f0e8dd] w-full max-w-lg rounded-xl shadow-2xl overflow-hidden border-2 border-[var(--color-accent)]">
+        <button class="absolute top-4 right-4 text-2xl text-[#7a2a2a] close-booking hover:scale-110 transition-transform">×</button>
+        <div class="p-8">
+          <h2 class="text-2xl font-serif font-bold text-[#7a2a2a] mb-1 text-left">Réserver cette pièce</h2>
+          <p id="booking-ref-display" class="text-sm text-gray-600 mb-6 italic font-medium text-left"></p>
+          
+          <form id="contact-form" action="/contact.php" method="POST" class="space-y-4 text-left">
+            <input type="hidden" name="reference_couteau" id="booking-ref-input">
+            <input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
+            
+            <div>
+              <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1 ml-1">Nom Complet</label>
+              <input type="text" name="nom" required class="w-full p-3 border border-black/10 rounded-lg bg-white/50 focus:border-[var(--color-accent)] outline-none text-black">
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1 ml-1">Votre Email</label>
+              <input type="email" name="email" required class="w-full p-3 border border-black/10 rounded-lg bg-white/50 focus:border-[var(--color-accent)] outline-none text-black">
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1 ml-1">Votre Message</label>
+              <textarea id="booking-message" name="message" rows="4" class="w-full p-3 border border-black/10 rounded-lg bg-white/50 focus:border-[var(--color-accent)] outline-none text-black resize-none"></textarea>
+            </div>
+            
+            <button type="submit" class="w-full bg-[var(--color-accent)] text-white py-4 rounded-lg font-bold hover:bg-[#7a2a2a] transition-all shadow-lg active:scale-[0.98]">
+              Confirmer la demande
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   </main>
 </BaseLayout>
@@ -126,11 +167,9 @@ const schemaData = {
   
   .knife-card.hidden { display: none !important; opacity: 0; }
   
-  /* Animations */
   .fade-in-up { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
   .fade-in-up.visible { opacity: 1; transform: translateY(0); }
 
-  /* --- FIX RADICAL POUR LE CROP LIGHTBOX --- */
   :global(.glightbox-container .gslide-image) {
     max-height: 82vh !important;
     display: flex !important;
@@ -143,12 +182,13 @@ const schemaData = {
     max-height: 82vh !important;
     width: auto !important;
     height: auto !important;
-    object-fit: contain !important; /* Empeche le crop */
+    object-fit: contain !important;
   }
 </style>
 
 <script>
   import { initRevealOnScroll } from '../scripts/animations/reveal-on-scroll.js';
+  import { popupform } from '../scripts/features/popupform.js';
   import GLightbox from 'glightbox';
   import 'glightbox/dist/css/glightbox.min.css';
 
@@ -172,6 +212,38 @@ const schemaData = {
     });
   }
 
+  function initBookingLogic() {
+    const modal = document.getElementById('booking-modal');
+    const openBtns = document.querySelectorAll('.open-booking-modal');
+    const closeBtns = document.querySelectorAll('.close-booking');
+    const refInput = document.getElementById('booking-ref-input');
+    const refDisplay = document.getElementById('booking-ref-display');
+    const messageField = document.getElementById('booking-message');
+
+    if (!modal) return;
+
+    openBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ref = btn.getAttribute('data-ref');
+        if(refInput) refInput.value = ref;
+        if(refDisplay) refDisplay.textContent = `Modèle : ${ref}`;
+        if(messageField) messageField.value = `Bonjour, je souhaiterais réserver le couteau "${ref}". Pouvez-vous me recontacter ?`;
+        
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden'; 
+      });
+    });
+
+    closeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
   function initPageLightbox() {
     GLightbox({
       selector: '.glightbox-insta',
@@ -186,8 +258,10 @@ const schemaData = {
 
   function setupPage() {
     initFilters();
+    initBookingLogic();
     initRevealOnScroll();
     initPageLightbox();
+    popupform(); // Initialise le gestionnaire d'envoi et de succès
   }
 
   document.addEventListener('astro:page-load', setupPage);
