@@ -40,18 +40,17 @@ const couteauxDynamiques = tousLesCouteaux.sort((a, b) => {
             style={`transition-delay: ${index * 100}ms`}
           >
             
-            {/* TAMPON DISPONIBLE (S'affiche uniquement si disponible est true) */}
-            {couteau.data.disponible && (
-              <div class="absolute -top-4 -right-4 z-20 w-24 h-24 pointer-events-none drop-shadow-xl rotate-12 hover:rotate-0 transition-transform duration-300">
-                <Image 
-                  src="/images/tampon-dispo.webp" 
-                  alt="Couteau disponible" 
-                  width={150} 
-                  height={150} 
-                  class="w-full h-full object-contain"
-                />
-              </div>
-            )}
+            {/* TAMPON DISPONIBLE (S'affiche uniquement si disponible est strictement vrai) */}
+{(couteau.data.disponible === true || couteau.data.disponible === "true") && (
+  <div class="absolute -top-6 -right-6 z-30 w-32 h-32 pointer-events-none drop-shadow-2xl rotate-12">
+    <img 
+      src="/images/tampon-dispo.webp" 
+      alt="Couteau disponible" 
+      class="w-full h-full object-contain"
+      loading="eager"
+    />
+  </div>
+)}
             
             {/* CONTENEUR FORMAT PORTRAIT INSTA (4:5) */}
             <div class="w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] bg-[#1a1a1a] rounded-t-sm" style="padding-top: 125%;">
