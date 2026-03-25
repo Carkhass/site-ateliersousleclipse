@@ -1,5 +1,4 @@
 // src/scripts/animations/reveal-on-scroll.js
-// Gère toutes les animations d'apparition au scroll
 export function initRevealOnScroll() {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
@@ -14,7 +13,14 @@ export function initRevealOnScroll() {
   ];
 
   const observedElements = new Set();
-  const observerOptions = { threshold: 0.1 };
+  
+  // 🔧 OPTIMISATION 1 : rootMargin à 50px
+  // L'animation se déclenche 50px AVANT que l'élément n'entre dans l'écran. 
+  // C'est beaucoup plus fluide pour l'utilisateur.
+  const observerOptions = { 
+    threshold: 0.05,
+    rootMargin: '0px 0px 50px 0px' 
+  };
 
   const onIntersect = (entries, obs) => {
     entries.forEach(entry => {
@@ -30,7 +36,7 @@ export function initRevealOnScroll() {
     : null;
 
   function observeNewElements(root) {
-    const container = root && root.querySelectorAll ? root : document;
+    const container = (root && root.querySelectorAll) ? root : document;
     container.querySelectorAll(animationSelectors.join(',')).forEach(el => {
       if (!observedElements.has(el)) {
         observedElements.add(el);
@@ -44,43 +50,40 @@ export function initRevealOnScroll() {
   }
 
   function revealIfInViewport(root) {
-    const container = root && root.querySelectorAll ? root : document;
+    const container = (root && root.querySelectorAll) ? root : document;
     container.querySelectorAll(animationSelectors.join(',')).forEach(el => {
       if (el.classList.contains('visible')) return;
       const r = el.getBoundingClientRect();
+      // 🔧 OPTIMISATION 2 : Déclenchement dès que le haut est visible (r.top < innerHeight)
       const inView = r.top < (window.innerHeight || document.documentElement.clientHeight) && r.bottom > 0;
       if (inView) {
-        // 🔧 Patch : toujours déclencher avec un petit délai pour forcer l'anim
-        setTimeout(() => el.classList.add('visible'), 150);
+        // Suppression du délai de 150ms pour plus de réactivité
+        el.classList.add('visible');
       }
     });
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  // Initialisation au chargement
+  const handleInitialLoad = () => {
     observeNewElements();
     revealIfInViewport();
 
-    // Cas particulier conservé: carte 3D premium sur desktop
-    if (window.innerWidth >= 1024) {
-      const cardWrapper = document.querySelector('.premium-section .card-3d-wrapper.fade-slide-up');
-      if (cardWrapper) {
-        const r = cardWrapper.getBoundingClientRect();
-        if (r.top < window.innerHeight && r.bottom > 0) {
-          setTimeout(() => cardWrapper.classList.add('visible'), 150);
-        }
-      }
-    }
-
-    // 🔧 Patch spécifique : forcer le logo et le titre du hero à jouer leur anim au chargement
+    // Patch spécifique Hero (Logo & Titre)
     const heroEls = [document.getElementById("hero-logo"), document.getElementById("hero-title")];
     heroEls.forEach(el => {
       if (el) {
-        el.classList.remove("visible"); // s'assurer qu'ils partent invisibles
-        setTimeout(() => el.classList.add("visible"), 200); // déclenche l'anim
+        el.classList.add("visible");
       }
     });
-  });
+  };
 
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', handleInitialLoad);
+  } else {
+    handleInitialLoad();
+  }
+
+  // MutationObserver pour les éléments chargés dynamiquement
   if (typeof MutationObserver !== 'undefined') {
     const mutationObserver = new MutationObserver(mutations => {
       mutations.forEach(mutation => {
@@ -93,10 +96,5 @@ export function initRevealOnScroll() {
       });
     });
     mutationObserver.observe(document.body, { childList: true, subtree: true });
-  } else {
-    setInterval(() => {
-      observeNewElements();
-      revealIfInViewport();
-    }, 800);
   }
 }
