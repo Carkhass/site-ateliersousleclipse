@@ -133,7 +133,6 @@ const schemaData = {
           <h2 class="text-2xl font-serif font-bold text-[#7a2a2a] mb-1 text-left">Réserver cette pièce</h2>
           <p id="booking-ref-display" class="text-sm text-gray-600 mb-6 italic font-medium text-left"></p>
           
-          {/* PATCH : Ajout de la class "contact-form" pour intercepter le succès */}
           <form class="contact-form space-y-4 text-left" action="/contact.php" method="POST">
             <input type="hidden" name="reference_couteau" id="booking-ref-input">
             <input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
@@ -214,36 +213,35 @@ const schemaData = {
   }
 
   function initBookingLogic() {
-    const modal = document.getElementById('booking-modal');
-    const openBtns = document.querySelectorAll('.open-booking-modal');
-    const closeBtns = document.querySelectorAll('.close-booking');
-    const refInput = document.getElementById('booking-ref-input');
-    const refDisplay = document.getElementById('booking-ref-display');
-    const messageField = document.getElementById('booking-message');
+  const modal = document.getElementById('booking-modal');
+  const openBtns = document.querySelectorAll('.open-booking-modal');
+  const closeBtns = document.querySelectorAll('.close-booking');
+  const refInput = document.getElementById('booking-ref-input');
+  const refDisplay = document.getElementById('booking-ref-display');
+  const messageField = document.getElementById('booking-message');
 
-    if (!modal) return;
+  if (!modal) return;
 
-    openBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const ref = btn.getAttribute('data-ref');
-        if(refInput) refInput.value = ref;
-        if(refDisplay) refDisplay.textContent = `Modèle : ${ref}`;
-        if(messageField) messageField.value = `Bonjour, je souhaiterais réserver le couteau "${ref}". Pouvez-vous me recontacter ?`;
-        
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        document.body.style.overflow = 'hidden'; 
-      });
+  openBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const ref = btn.getAttribute('data-ref');
+      if(refInput) refInput.value = ref;
+      if(refDisplay) refDisplay.textContent = `Modèle : ${ref}`;
+      if(messageField) messageField.value = `Bonjour, je souhaiterais réserver le couteau "${ref}". Pouvez-vous me recontacter ?`;
+      
+      // On ajoute juste la classe, le CSS s'occupe de l'opacité et du scale
+      modal.classList.add('visible-fade');
+      document.body.style.overflow = 'hidden'; 
     });
+  });
 
-    closeBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-        document.body.style.overflow = '';
-      });
+  closeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      modal.classList.remove('visible-fade');
+      document.body.style.overflow = '';
     });
-  }
+  });
+}
 
   function initPageLightbox() {
     GLightbox({
@@ -262,7 +260,7 @@ const schemaData = {
     initBookingLogic();
     initRevealOnScroll();
     initPageLightbox();
-    popupform(); // Initialise le gestionnaire d'envoi et de succès
+    popupform(); 
   }
 
   document.addEventListener('astro:page-load', setupPage);

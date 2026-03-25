@@ -892,6 +892,28 @@ form button[type="submit"]:active {
   transform: scale(0.98);
 }
 
+/* Animation de la modale de réservation */
+#booking-modal {
+  transition: opacity 0.4s ease, visibility 0.4s;
+  opacity: 0;
+  visibility: hidden; /* Remplace le display:none pour permettre l'animation */
+  display: flex !important; /* On la laisse en flex tout le temps */
+}
+
+#booking-modal.visible-fade {
+  opacity: 1;
+  visibility: visible;
+}
+
+#booking-modal .relative {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(0.95);
+}
+
+#booking-modal.visible-fade .relative {
+  transform: scale(1);
+}
+
 
 /* =========================================================
    12.C. SECTION 2 PLANCHES THEMATIQUES
