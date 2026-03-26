@@ -37,7 +37,7 @@ const schemaData = {
 >
   <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
 
-  <main class="min-h-screen bg-bg text-text pt-32 pb-20 px-4 md:px-20">
+  <main class="min-h-screen bg-bg text-text pt-32 pb-20 px-4 md:px-20 overflow-x-hidden">
     <header class="text-center mb-12 fade-in max-w-4xl mx-auto">
       <h1 class="text-3xl md:text-5xl font-serif font-bold mb-8 text-accent reveal-child">
         Les Créations
@@ -82,7 +82,8 @@ const schemaData = {
             data-dispo={String(estDispo)}
           >
             {estDispo && (
-              <div class="absolute -top-12 -right-12 z-40 w-40 h-40 pointer-events-none drop-shadow-2xl rotate-12">
+              /* PATCH : Ajustement des dimensions et positions pour éviter le débordement hors écran */
+              <div class="tampon-container absolute -top-8 -right-8 md:-top-12 md:-right-12 z-40 w-32 h-32 md:w-40 md:h-40 pointer-events-none drop-shadow-2xl rotate-12">
                 <img src="/images/tampon-dispo.webp" alt="Disponible" class="w-full h-full object-contain" />
               </div>
             )}
@@ -201,6 +202,14 @@ const schemaData = {
   @media (max-width: 640px) {
     .flex-wrap { @apply justify-center gap-2; }
     .filter-btn { @apply px-4 py-1.5 text-xs; }
+    
+    /* PATCH : On s'assure que le tampon ne dépasse pas du tout de l'écran mobile */
+    .tampon-container {
+      right: -0.5rem !important;
+      top: -1.5rem !important;
+      width: 80px !important;
+      height: 80px !important;
+    }
   }
   .knife-card.hidden { display: none !important; }
   .fade-in-up { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
