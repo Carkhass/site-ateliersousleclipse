@@ -6,14 +6,14 @@ export function popupform() {
   if (forms.length === 0 || !merciPopup) return;
 
   forms.forEach(form => {
-    // ANTI-DOUBLON : Si le formulaire a déjà été initialisé, on ne fait rien
+    // ANTI-DOUBLON : On ne met qu'un seul écouteur par formulaire
     if (form.dataset.initialized === 'true') return;
+    form.dataset.initialized = 'true';
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      e.stopImmediatePropagation(); // Bloque les autres scripts éventuels
+      e.stopImmediatePropagation();
 
-      // VERROU DE BOUTON : Évite le double-clic rapide de l'utilisateur
       const submitBtn = form.querySelector('[type="submit"]');
       if (submitBtn) submitBtn.disabled = true;
 
@@ -26,42 +26,57 @@ export function popupform() {
         });
 
         if (response.ok) {
-          // Fermeture modale booking
+          // 1. Fermer la modale de réservation si elle est ouverte
           if (bookingModal) {
-            bookingModal.classList.remove('visible-fade');
-            setTimeout(() => {
-              bookingModal.classList.add('hidden');
-            }, 400);
+            bookingModal.classList.add('hidden');
+            bookingModal.classList.remove('flex', 'visible-fade');
           }
 
-          // Affichage popup merci
+          // 2. Afficher la popup Merci (Le conteneur parent)
           merciPopup.classList.remove('hidden');
           merciPopup.classList.add('flex');
 
-          // Reset du formulaire
+          // 3. Animation du contenu (On force l'opacité à 100)
+          const content = merciPopup.querySelector('div.relative');
+          const merciImage = document.getElementById('merci-image');
+
+          setTimeout(() => {
+            if (content) {
+              content.classList.remove('scale-95', 'opacity-0');
+              content.classList.add('scale-100', 'opacity-100');
+            }
+            if (merciImage) {
+              merciImage.classList.remove('opacity-0', 'scale-90');
+              merciImage.classList.add('opacity-100', 'scale-100');
+            }
+          }, 50);
+
           form.reset();
+          // On bloque le scroll pour que l'utilisateur lise la popup
+          document.body.style.overflow = 'hidden';
+
         } else {
           alert("Une erreur est survenue lors de l'envoi.");
         }
       } catch (error) {
         console.error("Erreur réseau :", error);
       } finally {
-        // On réactive le bouton après la réponse (succès ou erreur)
         if (submitBtn) submitBtn.disabled = false;
       }
     });
-
-    // On marque le formulaire comme initialisé
-    form.dataset.initialized = 'true';
   });
 
-  // Gestion du clic sur la popup merci (une seule fois pour le document suffirait)
-  // mais on garde ta logique en ajoutant une vérification
+  // GESTION DE LA FERMETURE (Clic sur bouton ou fond noir)
   if (!merciPopup.dataset.listener) {
     merciPopup.addEventListener('click', (e) => {
-      if (e.target.closest('button') || e.target.classList.contains('bg-black/80')) {
+      const isButton = e.target.closest('button');
+      const isBackdrop = e.target === merciPopup || e.target.classList.contains('bg-black/60');
+
+      if (isButton || isBackdrop) {
         merciPopup.classList.add('hidden');
         merciPopup.classList.remove('flex');
+        
+        // On rend le scroll au site
         document.body.style.overflow = '';
       }
     });

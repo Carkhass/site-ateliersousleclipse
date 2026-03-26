@@ -224,22 +224,16 @@ const schemaData = {
 <script>
   import { initFilters } from '../scripts/features/knife-filters.js';
   import { initBookingLogic } from '../scripts/features/booking-modal.js';
-  import { popupform } from '../scripts/features/popupform.js';
   import GLightbox from 'glightbox';
   import 'glightbox/dist/css/glightbox.min.css';
 
   let lightboxInstance = null;
 
   function setupPage() {
-    // 1. Initialisation des fonctions (elles doivent être robustes aux doubles appels)
     initFilters();
     initBookingLogic();
-    popupform();
 
-    // 2. Gestion propre de la Lightbox
-    if (lightboxInstance) { 
-      lightboxInstance.destroy(); 
-    }
+    if (lightboxInstance) { lightboxInstance.destroy(); }
 
     lightboxInstance = GLightbox({
       selector: '.glightbox-insta',
@@ -251,6 +245,5 @@ const schemaData = {
     });
   }
 
-  // Utilise UNIQUEMENT astro:page-load pour Astro, c'est le plus fiable
   document.addEventListener('astro:page-load', setupPage);
 </script>

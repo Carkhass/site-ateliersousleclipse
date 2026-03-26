@@ -229,11 +229,11 @@ const {
     <div id="merci-popup" class="fixed inset-0 z-[110] hidden items-center justify-center p-4">
       <div class="absolute inset-0 bg-black/60 backdrop-blur-md"></div>
       <div class="relative bg-surface p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center transform transition-all duration-300 scale-95 opacity-0 border border-white/10">
-        <div id="merci-image" class="w-24 h-24 mx-auto mb-4 opacity-0 scale-90 transition-all duration-500">
+        <div id="merci-image" class="w-32 h-32 mx-auto mb-4 opacity-0 scale-90 transition-all duration-500">
           <img src="/images/merci-ateliersousleclipse2.webp" alt="Merci" class="w-full h-full object-contain" />
         </div>
         <h3 class="text-2xl font-serif font-bold text-accent mb-2">Message envoyé</h3>
-        <p class="text-muted mb-6 text-sm">Merci pour votre requête ! Je vous répondrai dans les meilleurs délais.</p>
+        <p class="text-muted mb-6 text-sm">Merci pour votre contact ! Je vous répondrai dans les meilleurs délais.</p>
         <button class="bg-accent text-bg px-8 py-2 rounded-full font-bold hover:bg-white transition-colors text-xs uppercase tracking-widest">
           Fermer
         </button>
@@ -241,29 +241,35 @@ const {
     </div>
 
     <script>
-      import { initRevealOnScroll } from '../scripts/animations/reveal-on-scroll.js';
-      import { initObserverCarousels } from '../scripts/init/observer-carousels.js';
-      import { initHeaderSticky } from '../scripts/layout/header-sticky.js';
-      import { initMenuMobile } from '../scripts/layout/menu-mobile.js';
-      import { initThemeToggle } from '../scripts/layout/theme-toggle.js';
-      import { initHeaderHero } from '../scripts/animations/header-hero.js';
-      import { initHeroAnimation } from '../scripts/layout/hero-animation.js';
-      import { initCarte3D } from '../scripts/features/carte-3d.js';
-      import { popupform } from '../scripts/features/popupform.js';
-      import { initBooking } from '../scripts/features/booking.js';
+  import { initRevealOnScroll } from '../scripts/animations/reveal-on-scroll.js';
+  import { initObserverCarousels } from '../scripts/init/observer-carousels.js';
+  import { initHeaderSticky } from '../scripts/layout/header-sticky.js';
+  import { initMenuMobile } from '../scripts/layout/menu-mobile.js';
+  import { initThemeToggle } from '../scripts/layout/theme-toggle.js';
+  import { initHeaderHero } from '../scripts/animations/header-hero.js';
+  import { initHeroAnimation } from '../scripts/layout/hero-animation.js';
+  import { initCarte3D } from '../scripts/features/carte-3d.js';
+  import { popupform } from '../scripts/features/popupform.js';
+  import { initBooking } from '../scripts/features/booking.js';
 
-      if (typeof window !== 'undefined') {
-        initRevealOnScroll();
-        initObserverCarousels();
-        initHeaderSticky();
-        initMenuMobile();
-        initThemeToggle();
-        initHeaderHero();
-        initHeroAnimation();
-        initCarte3D();
-        popupform();
-        initBooking();
-      }
-    </script>
+  function setupGlobal() {
+    initRevealOnScroll();
+    initObserverCarousels();
+    initHeaderSticky();
+    initMenuMobile();
+    initThemeToggle();
+    initHeaderHero();
+    initHeroAnimation();
+    initCarte3D();
+    popupform(); // Initialisation unique ici
+    initBooking();
+  }
+
+  // Pour Astro (navigation fluide)
+  document.addEventListener('astro:page-load', setupGlobal);
+
+  // Sécurité pour le premier chargement
+  if (document.readyState === 'complete') { setupGlobal(); }
+</script>
   </body>
 </html>
