@@ -231,11 +231,15 @@ const schemaData = {
   let lightboxInstance = null;
 
   function setupPage() {
+    // 1. Initialisation des fonctions (elles doivent être robustes aux doubles appels)
     initFilters();
     initBookingLogic();
     popupform();
 
-    if (lightboxInstance) { lightboxInstance.destroy(); }
+    // 2. Gestion propre de la Lightbox
+    if (lightboxInstance) { 
+      lightboxInstance.destroy(); 
+    }
 
     lightboxInstance = GLightbox({
       selector: '.glightbox-insta',
@@ -247,7 +251,6 @@ const schemaData = {
     });
   }
 
+  // Utilise UNIQUEMENT astro:page-load pour Astro, c'est le plus fiable
   document.addEventListener('astro:page-load', setupPage);
-  if (document.readyState === 'complete') { setupPage(); } 
-  else { window.addEventListener('load', setupPage); }
 </script>
