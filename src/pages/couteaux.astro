@@ -171,23 +171,23 @@ const schemaData = {
   import 'glightbox/dist/css/glightbox.min.css';
 
   function initPage() {
-    // Initialisations standard
     initFilters();
-    popupform();
+    popupform(); // Initialise le traitement des formulaires (dont le message "Merci")
+    
     GLightbox({ selector: '.glightbox-insta', skin: 'hamon' });
 
     const modal = document.getElementById('booking-modal');
     if (!modal) return;
 
-    // GESTIONNAIRE D'ÉVÉNEMENTS CENTRALISÉ (Délégation sur window)
+    // GESTIONNAIRE D'ÉVÉNEMENTS
     window.onclick = (e) => {
       const target = e.target as HTMLElement;
       
-      // 1. Détection clic OUVERTURE
+      // 1. Détection clic OUVERTURE (Seulement si c'est notre bouton de réservation)
       const trigger = target.closest('.trigger-booking-global');
       if (trigger) {
+        // On ne bloque l'événement QUE ICI
         e.preventDefault();
-        e.stopPropagation(); // Sécurité supplémentaire
 
         const ref = trigger.getAttribute('data-ref');
         const isDispo = trigger.getAttribute('data-dispo') === 'true';
@@ -204,18 +204,23 @@ const schemaData = {
       }
 
       // 2. Détection clic FERMETURE (Overlay ou Croix)
-      if (target.classList.contains('modal-closer') || target.closest('.modal-closer')) {
+      if (target.classList.contains('modal-closer') || target.closest('.close-x-btn')) {
         document.body.classList.remove('active-modal');
+        // Optionnel : Si le message de succès est affiché, on peut recharger la page proprement
+        if (document.querySelector('.form-success-message')) {
+            window.location.reload();
+        }
       }
     };
 
     // Fermeture avec la touche Échap
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') document.body.classList.remove('active-modal');
+      if (e.key === 'Escape' && document.body.classList.contains('active-modal')) {
+        document.body.classList.remove('active-modal');
+      }
     });
   }
 
   document.addEventListener('astro:page-load', initPage);
-  // Secours pour le premier chargement sans navigation Astro
   document.addEventListener('DOMContentLoaded', initPage);
 </script>
