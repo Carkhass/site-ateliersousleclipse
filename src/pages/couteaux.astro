@@ -39,19 +39,14 @@ const schemaData = {
 
   <main class="min-h-screen bg-bg text-text pt-32 pb-20 px-4 md:px-20 overflow-x-hidden">
     <header class="text-center mb-12 fade-in max-w-4xl mx-auto">
-      <h1 class="text-3xl md:text-5xl font-serif font-bold mb-8 text-accent reveal-child">
+      <h1 class="text-3xl md:text-5xl font-serif font-bold mb-8 text-accent">
         Les Créations
       </h1>
       
-      <div class="space-y-4 px-4">
-        <p class="text-lg text-muted leading-relaxed reveal-child">
+      <div class="space-y-4 px-4 text-lg text-muted leading-relaxed">
+        <p>
           Vous trouverez ici les couteaux entièrement façonnés à la main par mes soins, à 
-          <span class="font-serif italic text-accent">l'Atelier sous l'Éclipse</span>. 
-          Les photos des couteaux sur commande sont à titre d'exemple.
-        </p>
-        <p class="text-lg text-muted leading-relaxed reveal-child">
-          Chaque couteau, chaque <i class="font-serif italic text-accent">Hamon</i> est différent. 
-          Pour les matières des manches, me contacter pour connaître les essences à ma disposition pour votre commande !
+          <span class="font-serif italic text-accent">l'Atelier sous l'Éclipse</span>.
         </p>
       </div>
 
@@ -66,184 +61,161 @@ const schemaData = {
     <div id="knife-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
       {couteauxTries.map((couteau) => {
         const estDispo = couteau.data.disponible === true || couteau.data.disponible === "true";
-        const estVideo = couteau.data.titre.toLowerCase().includes("en vidéo");
-        
-        let typeFiltre = 'insta';
-        if (estVideo) {
-          typeFiltre = 'video';
-        } else if (couteau.data.type) {
-          typeFiltre = couteau.data.type;
-        }
+        const typeFiltre = couteau.data.titre.toLowerCase().includes("en vidéo") ? 'video' : (couteau.data.type || 'insta');
 
         return (
           <article 
-            class="knife-card fade-in-up relative flex flex-col h-full bg-surface shadow-lg rounded-lg border-4 border-transparent hover:border-[var(--color-accent)] transition-all duration-500 group"
+            class="knife-card fade-in-up relative flex flex-col h-full bg-surface shadow-lg rounded-lg border-4 border-transparent hover:border-[var(--color-accent)] transition-all duration-500"
             data-type={typeFiltre}
             data-dispo={String(estDispo)}
           >
             {estDispo && (
-              /* PATCH : Ajustement des dimensions et positions pour éviter le débordement hors écran */
-              <div class="tampon-container absolute -top-8 -right-8 md:-top-12 md:-right-12 z-40 w-32 h-32 md:w-40 md:h-40 pointer-events-none drop-shadow-2xl rotate-12">
+              <div class="tampon-container absolute -top-8 -right-8 z-40 w-32 h-32 pointer-events-none drop-shadow-2xl rotate-12">
                 <img src="/images/tampon-dispo.webp" alt="Disponible" class="w-full h-full object-contain" />
               </div>
             )}
 
             <div class="w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] bg-[#1a1a1a] rounded-t-sm" style="padding-top: 125%;">
-              <a 
-                href={estVideo ? couteau.data.lienInstagram : couteau.data.image} 
-                target={estVideo ? "_blank" : "_self"}
-                rel={estVideo ? "noopener noreferrer" : ""}
-                class={`absolute top-0 left-0 w-full h-full flex items-center justify-center ${estVideo ? '' : 'glightbox-insta'}`}
-                data-title={couteau.data.titre}
-                data-glightbox={estVideo ? "" : "width: auto; height: 82vh; zoomable: false;"}
-              >
-                {estVideo && (
-                  <div class="absolute inset-x-0 bottom-6 z-10 flex items-center justify-center drop-shadow-md pointer-events-none group-hover:scale-110 transition-transform duration-300">
-                    <img src="/images/play-button.webp" alt="Lancer la vidéo" class="w-16 h-16 object-contain" />
-                  </div>
-                )}
-
-                <Image 
-                  src={couteau.data.image} 
-                  alt={`Couteau artisanal : ${couteau.data.titre}`} 
-                  width={500} 
-                  height={625} 
-                  format="webp" 
-                  class="w-full h-full object-contain transition-transform duration-700 hover:scale-105" 
-                />
+              <a href={couteau.data.image} class="absolute top-0 left-0 w-full h-full flex items-center justify-center glightbox-insta" data-title={couteau.data.titre}>
+                <Image src={couteau.data.image} alt={couteau.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain transition-transform duration-700 hover:scale-105" />
               </a>
             </div>
 
             <div class="p-8 flex flex-col flex-grow bg-[#f0e8dd]">
-              <h3 class="text-xl md:text-2xl font-serif font-bold text-[#7a2a2a] mb-4">
-                {couteau.data.titre}
-              </h3>
-              <p class="text-base text-gray-700 leading-relaxed mb-8 line-clamp-3">
-                {couteau.data.description ? couteau.data.description.replace(/\\n/g, '\n') : "Couteau artisanal fait main."}
-              </p>
+              <h3 class="text-xl md:text-2xl font-serif font-bold text-[#7a2a2a] mb-4">{couteau.data.titre}</h3>
+              <p class="text-base text-gray-700 leading-relaxed mb-8 line-clamp-3">{couteau.data.description || "Couteau artisanal fait main."}</p>
 
               <div class="mt-auto pt-4 border-t border-black/10 flex justify-between items-center gap-4">
-                <span class="text-xl font-serif font-bold text-[#7a2a2a]">
-                  {couteau.data.prix > 0 ? `${couteau.data.prix} €` : "Sur commande"}
-                </span>
+                <span class="text-xl font-serif font-bold text-[#7a2a2a]">{couteau.data.prix > 0 ? `${couteau.data.prix} €` : "Sur commande"}</span>
                 
-                <button 
-                  class={`open-booking-modal px-5 py-2.5 rounded font-bold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md ${estDispo ? 'bg-[var(--color-accent)] text-[var(--color-bg)] hover:bg-[var(--color-accent-light)]' : 'border-2 border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-[var(--color-bg)]'}`}
+                {/* VERSION "FORCE BRUTE" : Indépendante de GLightbox et robuste aux filtres */}
+                <span 
+                  role="button"
+                  tabindex="0"
+                  class="trigger-booking-global cursor-pointer px-5 py-2.5 rounded font-bold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md bg-[var(--color-accent)] text-[var(--color-bg)] hover:bg-[#7a2a2a]"
+                  style={!estDispo ? "background-color: transparent; border: 2px solid var(--color-accent); color: var(--color-accent);" : ""}
                   data-ref={couteau.data.titre}
                   data-dispo={String(estDispo)}
                 >
                   {estDispo ? 'Réserver' : 'Demander'}
-                </button>
+                </span>
               </div>
             </div>
           </article>
         );
       })}
     </div>
+  </main>
 
-    {/* MODALE DYNAMIQUE (RÉSERVATION OU COMMANDE) */}
-    <div id="booking-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
-      <div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-booking"></div>
-      <div class="relative bg-[#f0e8dd] w-full max-w-lg rounded-xl shadow-2xl overflow-hidden border-2 border-[var(--color-accent)]">
-        <button class="absolute top-4 right-4 text-2xl text-[#7a2a2a] close-booking hover:scale-110 transition-transform">×</button>
-        <div class="p-8">
-          <h2 id="booking-title" class="text-2xl font-serif font-bold text-[#7a2a2a] mb-1 text-left"></h2>
-          <p id="booking-ref-display" class="text-sm text-gray-600 mb-6 italic font-medium text-left"></p>
+  <div id="booking-modal">
+    <div class="modal-overlay modal-closer"></div>
+    <div class="modal-content">
+      <button type="button" class="modal-closer close-x-btn">&times;</button>
+      <div class="p-2">
+        <h2 id="modal-title" class="text-2xl font-serif font-bold text-[#7a2a2a] mb-1"></h2>
+        <p id="modal-ref" class="text-sm text-gray-600 mb-6 italic font-medium"></p>
+        
+        <form action="/contact.php" method="POST" class="contact-form space-y-4 text-left">
+          <input type="hidden" name="reference_couteau" id="modal-input-ref">
+          <input type="text" name="website" style="display:none !important" tabindex="-1">
           
-          <form class="contact-form space-y-4 text-left" action="/contact.php" method="POST">
-            <input type="hidden" name="reference_couteau" id="booking-ref-input">
-            <input type="text" name="website" style="display:none !important" tabindex="-1" autocomplete="off">
-            
-            <div>
-              <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1 ml-1">Nom Complet</label>
-              <input type="text" name="nom" required class="w-full p-3 border border-black/10 rounded-lg bg-white/50 focus:border-[var(--color-accent)] outline-none text-black">
-            </div>
-            <div>
-              <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1 ml-1">Votre Email</label>
-              <input type="email" name="email" required class="w-full p-3 border border-black/10 rounded-lg bg-white/50 focus:border-[var(--color-accent)] outline-none text-black">
-            </div>
-            <div>
-              <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1 ml-1">Votre Message</label>
-              <textarea id="booking-message" name="message" rows="5" class="w-full p-3 border border-black/10 rounded-lg bg-white/50 focus:border-[var(--color-accent)] outline-none text-black resize-none"></textarea>
-            </div>
-            
-            <button type="submit" id="booking-submit-btn" class="w-full bg-[var(--color-accent)] text-white py-4 rounded-lg font-bold hover:bg-[#7a2a2a] transition-all shadow-lg active:scale-[0.98]">
-              Envoyer la demande
-            </button>
-          </form>
-        </div>
+          <div>
+            <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1 ml-1">Nom Complet</label>
+            <input type="text" name="nom" required class="w-full p-3 border border-black/10 rounded-lg bg-white/50 text-black outline-none focus:border-[var(--color-accent)]">
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1 ml-1">Votre Email</label>
+            <input type="email" name="email" required class="w-full p-3 border border-black/10 rounded-lg bg-white/50 text-black outline-none focus:border-[var(--color-accent)]">
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1 ml-1">Votre Message</label>
+            <textarea id="modal-msg" name="message" rows="4" class="w-full p-3 border border-black/10 rounded-lg bg-white/50 text-black outline-none focus:border-[var(--color-accent)] resize-none"></textarea>
+          </div>
+          
+          <button type="submit" class="w-full bg-[var(--color-accent)] text-white py-4 rounded-lg font-bold hover:bg-[#7a2a2a] transition-all shadow-lg active:scale-[0.98]">
+            Envoyer la demande
+          </button>
+        </form>
       </div>
     </div>
-  </main>
+  </div>
 </BaseLayout>
 
-<style>
-  .no-select { @apply py-4; }
-  .filter-btn {
-    @apply px-6 py-2 border-2 rounded-full transition-all duration-300 
-           font-serif italic text-sm md:text-base bg-white/40 backdrop-blur-sm;
-    border-color: rgba(122, 42, 42, 0.2); 
-    color: #4a4a4a;
+<style is:global>
+  /* --- CONFIGURATION DE LA MODALE --- */
+  body.active-modal { overflow: hidden; }
+  body.active-modal #booking-modal {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
-  .filter-btn:hover {
-    @apply shadow-sm;
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-    background-color: white;
-    transform: translateY(-2px);
-  }
-  .filter-btn.active {
-    @apply shadow-lg;
-    background-color: var(--color-accent);
-    color: white;
-    border-color: var(--color-accent);
-    transform: translateY(0);
-  }
-  @media (max-width: 640px) {
-    .flex-wrap { @apply justify-center gap-2; }
-    .filter-btn { @apply px-4 py-1.5 text-xs; }
-    
-    /* PATCH : On s'assure que le tampon ne dépasse pas du tout de l'écran mobile */
-    .tampon-container {
-      right: -0.5rem !important;
-      top: -1.5rem !important;
-      width: 80px !important;
-      height: 80px !important;
-    }
-  }
+  #booking-modal { display: none; position: fixed !important; inset: 0 !important; z-index: 100000 !important; align-items: center; justify-content: center; padding: 16px; }
+  .modal-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px); }
+  .modal-content { position: relative; background: #f0e8dd; width: 100%; max-width: 500px; padding: 32px; border-radius: 12px; border: 2px solid var(--color-accent); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); animation: modal-pop 0.3s ease-out; }
+  @keyframes modal-pop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+  .close-x-btn { position: absolute; top: 10px; right: 16px; font-size: 36px; line-height: 1; color: #7a2a2a; background: none; border: none; cursor: pointer; transition: transform 0.2s; }
+  .close-x-btn:hover { transform: scale(1.1); }
+
+  /* --- FILTRES & CARTES --- */
+  .filter-btn { @apply px-6 py-2 border-2 rounded-full transition-all font-serif italic text-sm; border-color: rgba(122, 42, 42, 0.2); color: #4a4a4a; }
+  .filter-btn.active { background-color: var(--color-accent); color: white; border-color: var(--color-accent); @apply shadow-lg; }
   .knife-card.hidden { display: none !important; }
   .fade-in-up { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
   .fade-in-up.visible { opacity: 1; transform: translateY(0); }
-
-  :global(.glightbox-container .gslide-image img) {
-    max-height: 82vh !important;
-    object-fit: contain !important;
-  }
 </style>
 
 <script>
   import { initFilters } from '../scripts/features/knife-filters.js';
-  import { initBookingLogic } from '../scripts/features/booking-modal.js';
+  import { popupform } from '../scripts/features/popupform.js';
   import GLightbox from 'glightbox';
   import 'glightbox/dist/css/glightbox.min.css';
 
-  let lightboxInstance = null;
-
-  function setupPage() {
+  function initPage() {
+    // Initialisations standard
     initFilters();
-    initBookingLogic();
+    popupform();
+    GLightbox({ selector: '.glightbox-insta', skin: 'hamon' });
 
-    if (lightboxInstance) { lightboxInstance.destroy(); }
+    const modal = document.getElementById('booking-modal');
+    if (!modal) return;
 
-    lightboxInstance = GLightbox({
-      selector: '.glightbox-insta',
-      skin: 'hamon',
-      closeOnBackdropClick: true,
-      loop: true,
-      openEffect: 'fade',
-      closeEffect: 'fade'
+    // GESTIONNAIRE D'ÉVÉNEMENTS CENTRALISÉ (Délégation sur window)
+    window.onclick = (e) => {
+      const target = e.target as HTMLElement;
+      
+      // 1. Détection clic OUVERTURE
+      const trigger = target.closest('.trigger-booking-global');
+      if (trigger) {
+        e.preventDefault();
+        e.stopPropagation(); // Sécurité supplémentaire
+
+        const ref = trigger.getAttribute('data-ref');
+        const isDispo = trigger.getAttribute('data-dispo') === 'true';
+
+        (document.getElementById('modal-title') as HTMLElement).innerText = isDispo ? "Réserver ce couteau" : "Demander une création";
+        (document.getElementById('modal-ref') as HTMLElement).innerText = "Référence : " + ref;
+        (document.getElementById('modal-input-ref') as HTMLInputElement).value = ref || '';
+        (document.getElementById('modal-msg') as HTMLTextAreaElement).value = isDispo 
+          ? `Bonjour Yann,\n\nJe souhaiterais réserver le couteau "${ref}". Est-il encore disponible ?`
+          : `Bonjour Yann,\n\nJe suis intéressé par le modèle "${ref}" pour une création personnalisée.`;
+
+        document.body.classList.add('active-modal');
+        return;
+      }
+
+      // 2. Détection clic FERMETURE (Overlay ou Croix)
+      if (target.classList.contains('modal-closer') || target.closest('.modal-closer')) {
+        document.body.classList.remove('active-modal');
+      }
+    };
+
+    // Fermeture avec la touche Échap
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') document.body.classList.remove('active-modal');
     });
   }
 
-  document.addEventListener('astro:page-load', setupPage);
+  document.addEventListener('astro:page-load', initPage);
+  // Secours pour le premier chargement sans navigation Astro
+  document.addEventListener('DOMContentLoaded', initPage);
 </script>
