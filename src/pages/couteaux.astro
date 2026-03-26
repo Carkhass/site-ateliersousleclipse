@@ -115,7 +115,7 @@ const schemaData = {
         <h2 id="modal-title" class="text-2xl font-serif font-bold text-[#7a2a2a] mb-1"></h2>
         <p id="modal-ref" class="text-sm text-gray-600 mb-6 italic font-medium"></p>
         
-        <form action="/contact.php" method="POST" class="contact-form space-y-4 text-left">
+        <form action="https://ateliersousleclipse.fr/contact.php" method="POST" class="contact-form space-y-4 text-left">
           <input type="hidden" name="reference_couteau" id="modal-input-ref">
           <input type="text" name="website" style="display:none !important" tabindex="-1">
           
@@ -172,23 +172,16 @@ const schemaData = {
 
   function initPage() {
     initFilters();
-    popupform(); // Initialise le traitement des formulaires (dont le message "Merci")
-    
+    popupform();
     GLightbox({ selector: '.glightbox-insta', skin: 'hamon' });
 
-    const modal = document.getElementById('booking-modal');
-    if (!modal) return;
-
-    // GESTIONNAIRE D'ÉVÉNEMENTS
+    // GESTIONNAIRE D'ÉVÉNEMENTS CENTRALISÉ
     window.onclick = (e) => {
       const target = e.target as HTMLElement;
       
-      // 1. Détection clic OUVERTURE (Seulement si c'est notre bouton de réservation)
+      // 1. OUVERTURE
       const trigger = target.closest('.trigger-booking-global');
       if (trigger) {
-        // On ne bloque l'événement QUE ICI
-        e.preventDefault();
-
         const ref = trigger.getAttribute('data-ref');
         const isDispo = trigger.getAttribute('data-dispo') === 'true';
 
@@ -203,20 +196,27 @@ const schemaData = {
         return;
       }
 
-      // 2. Détection clic FERMETURE (Overlay ou Croix)
-      if (target.classList.contains('modal-closer') || target.closest('.close-x-btn')) {
+      // 2. FERMETURE MODALE SAISIE
+      if (target.classList.contains('modal-overlay') || target.closest('.close-x-btn')) {
         document.body.classList.remove('active-modal');
-        // Optionnel : Si le message de succès est affiché, on peut recharger la page proprement
-        if (document.querySelector('.form-success-message')) {
-            window.location.reload();
+      }
+
+      // 3. FERMETURE POPUP MERCI (Ajout crucial)
+      // On détecte si on clique sur le bouton de fermeture du Merci ou sur le fond du Merci
+      const merciPopup = document.getElementById('merci-popup');
+      if (merciPopup && !merciPopup.classList.contains('hidden')) {
+        if (target.closest('.close-merci') || target === merciPopup) {
+           merciPopup.classList.add('hidden');
+           merciPopup.classList.remove('flex');
+           document.body.classList.remove('active-modal'); // On libère le scroll au cas où
         }
       }
     };
 
-    // Fermeture avec la touche Échap
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && document.body.classList.contains('active-modal')) {
+      if (e.key === 'Escape') {
         document.body.classList.remove('active-modal');
+        document.getElementById('merci-popup')?.classList.add('hidden');
       }
     });
   }
