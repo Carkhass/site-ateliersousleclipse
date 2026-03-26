@@ -1116,22 +1116,38 @@ form button[type="submit"]:active {
 }
 
 
-/* Flèches */
+/* --- NOUVELLES FLÈCHES ARTISANALES SWIPER --- */
 .my-knives-swiper .swiper-button-prev,
 .my-knives-swiper .swiper-button-next {
-  color: var(--color-bg); /* on garde cette couleur pour la lisibilité */
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.9));
-  transition: transform 0.3s ease, filter 0.3s ease;
+  width: 88px; /* Ajuste selon la taille réelle de tes webp */
+  height: 88px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
   cursor: pointer;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8));
 }
 
-/* Hover / focus */
+/* On cache l'icône texte de Swiper */
+.my-knives-swiper .swiper-button-prev::after,
+.my-knives-swiper .swiper-button-next::after {
+  content: "" !important;
+}
+
+.my-knives-swiper .swiper-button-prev {
+  background-image: url('/images/nav-gauche.webp');
+}
+
+.my-knives-swiper .swiper-button-next {
+  background-image: url('/images/nav-droite.webp');
+}
+
+/* Animation au survol identique à ton style actuel */
 .my-knives-swiper .swiper-button-prev:hover,
-.my-knives-swiper .swiper-button-next:hover,
-.my-knives-swiper .swiper-button-prev:focus,
-.my-knives-swiper .swiper-button-next:focus {
-  transform: scale(1.2); /* léger zoom */
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.9)); /* halo plus marqué */
+.my-knives-swiper .swiper-button-next:hover {
+  transform: scale(1.2);
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.9));
 }
 
 /* État actif (clic) */
@@ -1449,98 +1465,109 @@ form button[type="submit"]:active {
    CONTRÔLES & DOTS
    ========================================================= */
 
-/* === Contrôles sous le slider === */
-.embla__controls {
-  position: relative;
-  display: flex;
-  justify-content: center; /* centre le bloc boutons */
-  align-items: center;
+/* On cible les deux classes générées par Embla pour être sûr */
+.embla__button, 
+.embla__button--prev, 
+.embla__button--next {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important; /* Pour contourner les opacités à 0 d'Embla */
+  background-color: transparent !important;
+  background-size: contain !important; /* Force l'image à remplir le carré */
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: 4rem !important;  /* La taille du carré rouge */
+  height: 4rem !important;
+  padding: 0 !important;
+  color: transparent !important; /* Cache tout texte résiduel */
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)) !important;
+  
+  /* On s'assure qu'aucun z-index ne la cache */
+  z-index: 10 !important; 
 }
 
-/* Boutons flèches centrés */
-.embla__buttons {
-  display: flex;
-  gap: 1rem;
-  order: 1; /* priorité visuelle au centre */
+/* --- BOUTON GAUCHE (PRÉCÉDENT) --- */
+.embla__button--prev, 
+[aria-label="Précédent"] {
+  background-image: url('/images/nav-gauche.webp') !important;
 }
 
-/* === Boutons flèches === */
-.embla__button {
-  background: var(--color-accent);
-  color: var(--color-bg);
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
-  cursor: pointer;
-  border: none;
-  border: 2px solid var(--color-accent-dark);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-  transition: background 0.3s ease, transform 0.2s ease;
+/* --- BOUTON DROITE (SUIVANT) --- */
+.embla__button--next, 
+[aria-label="Suivant"] {
+  background-image: url('/images/nav-droite.webp') !important;
 }
 
-.embla__button:hover {
-  background: var(--color-accent-light);
-  transform: scale(1.1);
+/* Effets Hover & État Désactivé */
+.embla__button:hover:not(:disabled) {
+  transform: scale(1.15) !important;
+  opacity: 0.8 !important;
+  background-color: transparent !important;
 }
 
 .embla__button:disabled {
-  background: var(--color-muted);
-  border-color: var(--color-muted);
-  cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.15 !important; /* Très transparent */
+  filter: grayscale(1) !important;
+  cursor: not-allowed !important;
+  
 }
 
-/* === Dots à droite === */
-.embla__dots {
-  position: absolute;
-  right: 0.75rem; /* marge à droite */
-  top: 50%;
-  transform: translateY(-50%);
+/* =========================================================
+   ALIGNEMENT VERTICAL (BOUTONS EN HAUT, DOTS EN BAS)
+   ========================================================= */
+
+.embla__controls {
   display: flex;
-  gap: 0.5rem;
-  order: 2;
+  flex-direction: column; /* Aligne les éléments l'un sous l'autre */
+  align-items: center;    /* Centre tout horizontalement */
+  gap: 1.5rem;            /* Espace entre la ligne des boutons et les dots */
+  margin-top: 2rem;
+  width: 100%;
 }
 
+.embla__buttons {
+  display: flex;
+  gap: 3rem;              /* Espace entre tes deux flèches G & Y */
+  justify-content: center;
+  align-items: center;
+}
+
+.embla__dots {
+  /* On enlève le position absolute pour qu'ils reviennent au centre */
+  position: static; 
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  align-items: center;
+}
+
+/* On affine un peu la taille des dots pour qu'ils ne volent pas la vedette aux boutons */
 .embla__dot {
   background: transparent;
   border: none;
   cursor: pointer;
-  width: 1rem;
-  height: 1rem;
+  width: 0.7rem;
+  height: 0.7rem;
   border-radius: 50%;
-  box-shadow: inset 0 0 0 2px var(--color-accent);
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.embla__dot:hover {
-  background: var(--color-accent-light);
+  box-shadow: inset 0 0 0 1.5px var(--color-accent);
+  transition: all 0.3s ease;
 }
 
 .embla__dot--selected {
   background: var(--color-accent);
-  box-shadow: inset 0 0 0 2px var(--color-accent-dark);
+  transform: scale(1.1);
 }
-
-/* === Mobile : boutons centrés + dots à droite avec marge === */
+/* === Mobile === */
 @media (max-width: 768px) {
-  .embla__controls {
-    justify-content: center;
-  }
-
-  .embla__buttons {
-    order: 1;
-  }
-
   .embla__dots {
-    display: none !important; /* masque totalement les dots */
+    display: none !important;
+  }
+  .embla__buttons {
+    gap: 3rem; /* On écarte un peu plus pour les pouces */
   }
 }
-
-
 
 /* =========================================================
    15. SECTION PREMIUM (hors carte 3D)
@@ -1827,6 +1854,19 @@ body.active-modal #booking-modal {
   border: none; 
   cursor: pointer; 
   transition: transform 0.2s; 
+}
+
+/* Dans ton bloc <style> ou ton fichier CSS */
+.trigger-booking-global {
+  position: relative !important;
+  z-index: 60 !important; /* Doit être supérieur au z-[50] de l'image */
+  pointer-events: auto !important;
+  isolation: isolate;
+}
+
+/* Optionnel : Assure-toi que le conteneur parent n'écrase pas tout */
+.knife-card {
+  isolation: isolate; /* Crée un nouveau contexte de rendu propre à chaque carte */
 }
 
 /* =========================================================

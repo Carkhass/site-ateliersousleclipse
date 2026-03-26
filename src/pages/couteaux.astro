@@ -101,7 +101,7 @@ const schemaData = {
                   href={urlInsta} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  class="absolute inset-0 z-[50] flex items-center justify-center group cursor-pointer pointer-events-auto"
+                  class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center group cursor-pointer pointer-events-auto"
                 >
                   <Image 
                     src={couteau.data.image} 
@@ -122,7 +122,7 @@ const schemaData = {
               ) : (
                 <a 
                   href={couteau.data.image} 
-                  class="absolute inset-0 z-[50] flex items-center justify-center glightbox-insta cursor-pointer pointer-events-auto" 
+                  class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center glightbox-insta cursor-pointer pointer-events-auto" 
                   data-title={couteau.data.titre}
                 >
                   <Image src={couteau.data.image} alt={couteau.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain transition-transform duration-700 hover:scale-105" />
@@ -149,20 +149,22 @@ const schemaData = {
 
               <p class="text-base text-gray-700 leading-relaxed mb-8 line-clamp-3">{couteau.data.description || "Couteau artisanal fait main."}</p>
 
-              <div class="mt-auto pt-4 border-t border-black/10 flex justify-between items-center gap-4">
-                <span class="text-xl font-serif font-bold text-[#7a2a2a]">{couteau.data.prix > 0 ? `${couteau.data.prix} €` : "Sur commande"}</span>
-                
-                <span 
-                  role="button"
-                  tabindex="0"
-                  class="trigger-booking-global cursor-pointer px-5 py-2.5 rounded font-bold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md bg-[var(--color-accent)] text-[var(--color-bg)] hover:bg-[#7a2a2a]"
-                  style={!estDispo ? "background-color: transparent; border: 2px solid var(--color-accent); color: var(--color-accent);" : ""}
-                  data-ref={couteau.data.titre}
-                  data-dispo={String(estDispo)}
-                >
-                  {estDispo ? 'Réserver' : 'Demander'}
-                </span>
-              </div>
+              <div class="mt-auto pt-4 border-t border-black/10 flex justify-between items-center gap-4 relative z-[60]"> 
+  <span class="text-xl font-serif font-bold text-[#7a2a2a]">
+    {couteau.data.prix > 0 ? `${couteau.data.prix} €` : "Sur commande"}
+  </span>
+  
+  <span 
+    role="button"
+    tabindex="0"
+    class="trigger-booking-global cursor-pointer px-5 py-2.5 rounded font-bold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md bg-[var(--color-accent)] text-[var(--color-bg)] hover:bg-[#7a2a2a] hover:scale-105"
+    style={!estDispo ? "background-color: transparent; border: 2px solid var(--color-accent); color: var(--color-accent);" : ""}
+    data-ref={couteau.data.titre}
+    data-dispo={String(estDispo)}
+  >
+    {estDispo ? 'Réserver' : 'Demander'}
+  </span>
+</div>
             </div>
           </article>
         );
@@ -170,7 +172,33 @@ const schemaData = {
     </div>
   </main>
   
-  {/* ... (Reste du code modal inchangé) */}
+<div id="booking-modal" class="fixed inset-0 z-[999] items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm modal-overlay"></div>
+    
+    <div class="relative bg-[#f0e8dd] w-full max-w-lg rounded-xl shadow-2xl border border-[#7a2a2a]/20 overflow-hidden transform transition-all">
+      <button class="close-x-btn absolute top-4 right-4 text-[#7a2a2a] hover:rotate-90 transition-transform text-2xl z-10">✕</button>
+      
+      <div class="p-8">
+        <h2 id="modal-title" class="text-3xl font-serif font-bold text-[#7a2a2a] mb-2">Réserver ce couteau</h2>
+        <p id="modal-ref" class="text-sm font-bold uppercase tracking-widest text-[#7a2a2a]/60 mb-6 italic">Référence : </p>
+        
+        <form class="space-y-4" action="/contact.php" method="POST">
+          <input type="hidden" id="modal-input-ref" name="ref_couteau">
+          
+          <div class="grid grid-cols-2 gap-4">
+            <input type="text" name="nom" placeholder="Votre nom" class="bg-white/50 border border-[#7a2a2a]/20 p-3 rounded outline-none focus:border-[#7a2a2a]" required>
+            <input type="email" name="email" placeholder="Votre email" class="bg-white/50 border border-[#7a2a2a]/20 p-3 rounded outline-none focus:border-[#7a2a2a]" required>
+          </div>
+          
+          <textarea id="modal-msg" name="message" rows="5" class="w-full bg-white/50 border border-[#7a2a2a]/20 p-3 rounded outline-none focus:border-[#7a2a2a] resize-none" required></textarea>
+          
+          <button type="submit" class="w-full bg-[#7a2a2a] text-[#f0e8dd] font-bold py-4 rounded hover:bg-black transition-colors uppercase tracking-widest shadow-lg">
+            Envoyer la demande
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
 </BaseLayout>
 
 <style>

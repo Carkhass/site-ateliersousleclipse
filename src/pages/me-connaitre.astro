@@ -2,9 +2,13 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from 'astro:assets';
 
-// --- DEFINITION DES CHEMINS D'IMAGES ---
+// --- DÉFINITION DES CHEMINS D'IMAGES ---
 const photoYann = "/images/portrait-yann.webp"; 
-// ... tes autres constantes
+const photoHamon = "/images/ligne-trempe.webp";
+const photoManche = "/images/manche-bois-cocobolo.webp";
+const photoBoisEchantillon = "/images/echantillons-bois.webp"; // Vérifie le nom du fichier
+const photoG10Echantillon = "/images/manche-g10-ebene.webp";   // Vérifie le nom du fichier
+const photoBerserk = "/images/berserk-inspiration.webp";   // Vérifie le nom du fichier
 
 const personSchema = {
   "@context": "https://schema.org",
@@ -34,9 +38,9 @@ const personSchema = {
           <h1 class="text-3xl md:text-4xl font-serif font-bold text-[var(--color-accent)] mb-8 tracking-tight reveal-child">
             L'artisan derrière l'Atelier <span class="sr-only"> : Yann, artisan coutelier à Reyrieux</span>
           </h1>
-          <div class="space-y-6 text-lg leading-relaxed text-gray-700">
+          <div class="space-y-6 text-lg leading-relaxed text-muted reveal-child">
             <p>
-              Je m’appelle <strong>Yann</strong>. Installé à Reyrieux (01) juste au Nord de Lyon, mon parcours n'a pas commencé dans le fracas de l'enclume, mais dans le milieu immatériel de l'informatique. Informaticien de formation, j'ai passé ma jeunesse à explorer le virtuel avant de comprendre que j'avais aussi besoin de réalisations concrètes, tangibles.
+              Je m’appelle <span class="font-serif text-accent font-bold">Yann</span>. Installé à Reyrieux (01) juste au Nord de Lyon, mon parcours n'a pas commencé dans le fracas de l'enclume, mais dans le milieu immatériel de l'informatique. Informaticien de formation, j'ai passé ma jeunesse à explorer le virtuel avant de comprendre que j'avais aussi besoin de réalisations concrètes, tangibles.
             </p>
             <p>
               C’est en 2017 que tout bascule. Poussé par ma curiosité, ma gourmandise (j'aime cuisiner et j'aime encore plus le faire avec de bons outils), je chine une vieille forge à charbon et une enclume. À Trévoux, mon lieu de résidence à ce moment là, dans mon petit atelier, j'ai commencé à dompter le feu pour donner vie à mes premières lames. Ce qui n'était qu'un bricolage est devenu une quête de créativité brute.
@@ -75,9 +79,9 @@ const personSchema = {
             <h2 class="text-3xl md:text-4xl font-serif font-bold text-[var(--color-accent)] mb-8 tracking-tight reveal-child">
               Sobriété & Efficacité
             </h2>
-            <div class="space-y-6 text-[#f0e8dd]/95 text-lg leading-relaxed antialiased">
+            <div class="space-y-6 text-lg text-muted leading-relaxed mt-4 reveal-child">
               <p>Mon design puise ses racines dans la coutellerie japonaises. J'admire chez les forgerons nippons cette capacité à marier une efficacité redoutable à une esthétique dépouillée.</p>
-              <p>Ma spécialité ? La <strong>trempe sélective</strong>. Cette technique permet de créer le <em>Hamon</em>, cette ligne de vie sur l'acier, témoin d'un équilibre entre dureté et souplesse.</p>
+              <p>Ma spécialité ? La <em>trempe sélective</em>. Cette technique permet de créer le <span class="font-serif text-accent font-bold">Hamon</span>, cette ligne de vie sur l'acier, témoin d'un équilibre entre dureté et souplesse.</p>
             </div>
           </div>
         </div>
@@ -91,7 +95,7 @@ const personSchema = {
            <h2 class="text-3xl md:text-4xl font-serif font-bold text-[var(--color-accent)] mb-8 tracking-tight reveal-child">
              Matières & Équilibre
            </h2>
-           <div class="space-y-6 text-lg text-gray-700 leading-relaxed mt-4 antialiased">
+           <div class="space-y-6 text-lg text-muted leading-relaxed mt-4 antialiased reveal-child">
              <p>Le choix du manche est crucial. Je travaille principalement des bois nobles, choisis pour leur veinage et leur densité.</p>
              <p>Pour des projets plus modernes, j'intègre des composites comme le G10, appréciés pour leur robustesse inaltérable.</p>
            </div>
@@ -121,9 +125,9 @@ const personSchema = {
             <h2 class="text-3xl md:text-4xl font-serif font-bold mb-8 tracking-tight text-[var(--color-accent)] reveal-child">
               Pourquoi "Sous l'Éclipse" ?
             </h2>
-            <div class="space-y-6 text-lg text-gray-700 leading-relaxed italic border-l-2 border-[var(--color-accent)]/20 pl-6 antialiased">
+            <div class="space-y-6 text-lg text-muted leading-relaxed italic border-l-2 border-accent/20 pl-6 antialiased reveal-child">
               <p>
-                Le nom de l'atelier est un hommage à <strong>Berserk</strong>, manga créé par Kentaro Miura, malheureusement décédé le 6 mai 2021.
+                Le nom de l'atelier est un hommage à <span class="font-serif text-accent font-bold">Berserk</span>, manga créé par Kentaro Miura, malheureusement décédé le 6 mai 2021.
               </p>
               <p>
                 Berserk est un récit d’une rare intensité et d’une profondeur insondable, racontant l’épopée d’un guerrier mercenaire contre le destin et la causalité. Malheureusement inachevée, l’histoire ne connaîtra pas la fin qu’elle mérite, mais les 41 tomes existants suffisent pour se rendre compte que Kentaro Miura a écrit et dessiné cette œuvre à l’encre de son âme. 
