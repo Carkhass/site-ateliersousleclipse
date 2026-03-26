@@ -115,7 +115,7 @@ const schemaData = {
         <h2 id="modal-title" class="text-2xl font-serif font-bold text-[#7a2a2a] mb-1"></h2>
         <p id="modal-ref" class="text-sm text-gray-600 mb-6 italic font-medium"></p>
         
-        <form action=/contact.php" method="POST" class="contact-form space-y-4 text-left">
+        <form action="/contact.php" method="POST" class="contact-form space-y-4 text-left">
           <input type="hidden" name="reference_couteau" id="modal-input-ref">
           <input type="text" name="website" style="display:none !important" tabindex="-1">
           
@@ -166,20 +166,20 @@ const schemaData = {
 
 <script>
   import { initFilters } from '../scripts/features/knife-filters.js';
-  import { popupform } from '../scripts/features/popupform.js';
   import GLightbox from 'glightbox';
   import 'glightbox/dist/css/glightbox.min.css';
 
   function initPage() {
     initFilters();
-    popupform();
     GLightbox({ selector: '.glightbox-insta', skin: 'hamon' });
 
-    // GESTIONNAIRE D'ÉVÉNEMENTS CENTRALISÉ
+    const bookingModal = document.getElementById('booking-modal');
+    const merciPopup = document.getElementById('merci-popup');
+
     window.onclick = (e) => {
       const target = e.target as HTMLElement;
       
-      // 1. OUVERTURE
+      // 1. OUVERTURE MODALE RÉSERVATION
       const trigger = target.closest('.trigger-booking-global');
       if (trigger) {
         const ref = trigger.getAttribute('data-ref');
@@ -196,27 +196,38 @@ const schemaData = {
         return;
       }
 
-      // 2. FERMETURE MODALE SAISIE
+      // 2. FERMETURE MODALE SAISIE (Croix ou fond sombre)
       if (target.classList.contains('modal-overlay') || target.closest('.close-x-btn')) {
         document.body.classList.remove('active-modal');
       }
 
-      // 3. FERMETURE POPUP MERCI (Ajout crucial)
-      // On détecte si on clique sur le bouton de fermeture du Merci ou sur le fond du Merci
-      const merciPopup = document.getElementById('merci-popup');
+      // 3. FERMETURE POPUP MERCI (Bouton ou fond du merci)
       if (merciPopup && !merciPopup.classList.contains('hidden')) {
         if (target.closest('.close-merci') || target === merciPopup) {
            merciPopup.classList.add('hidden');
            merciPopup.classList.remove('flex');
-           document.body.classList.remove('active-modal'); // On libère le scroll au cas où
+           document.body.classList.remove('active-modal');
         }
       }
     };
 
+    // Synchronisation avec popupform.js
+    // Quand on clique sur envoyer, on prépare le terrain pour le "Merci"
+    const form = bookingModal?.querySelector('form');
+    if (form) {
+      form.addEventListener('submit', () => {
+        // On attend un tout petit peu pour laisser le fetch partir
+        // puis on ferme la modale de saisie pour que le "Merci" apparaisse
+        setTimeout(() => {
+          document.body.classList.remove('active-modal');
+        }, 100);
+      });
+    }
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         document.body.classList.remove('active-modal');
-        document.getElementById('merci-popup')?.classList.add('hidden');
+        merciPopup?.classList.add('hidden');
       }
     });
   }
