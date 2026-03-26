@@ -38,26 +38,48 @@ const schemaData = {
   <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
 
   <main class="min-h-screen bg-bg text-text pt-32 pb-20 px-4 md:px-20">
-    <header class="text-center mb-16 fade-in">
-      <h1 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
+    <header class="text-center mb-12 fade-in max-w-4xl mx-auto">
+      <h1 class="text-3xl md:text-5xl font-serif font-bold mb-8 text-accent reveal-child">
         Les Créations
       </h1>
-      <div class="flex flex-wrap justify-center gap-4 mt-8 no-select">
-        <button class="filter-btn active" data-filter="all">Tout voir</button>
+      
+      <div class="space-y-4 px-4">
+        <p class="text-lg text-muted leading-relaxed reveal-child">
+          Vous trouverez ici les couteaux entièrement façonnés à la main par mes soins, à 
+          <span class="font-serif italic text-accent">l'Atelier sous l'Éclipse</span>. 
+          Les photos des couteaux sur commande sont à titre d'exemple.
+        </p>
+        <p class="text-lg text-muted leading-relaxed reveal-child">
+          Chaque couteau, chaque <i class="font-serif italic text-accent">Hamon</i> est différent. 
+          Pour les matières des manches, me contacter pour connaître les essences à ma disposition pour votre commande !
+        </p>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-4 mt-10 no-select">
+        <button class="filter-btn active" data-filter="all">Photos</button>
         <button class="filter-btn" data-filter="dispo">📦 Disponibles</button>
         <button class="filter-btn" data-filter="modele">⚒️ Les Modèles</button>
+        <button class="filter-btn" data-filter="video">🎬 Vidéos</button>
       </div>
     </header>
 
     <div id="knife-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
       {couteauxTries.map((couteau) => {
         const estDispo = couteau.data.disponible === true || couteau.data.disponible === "true";
+        const estVideo = couteau.data.titre.toLowerCase().includes("en vidéo");
+        
+        let typeFiltre = 'insta';
+        if (estVideo) {
+          typeFiltre = 'video';
+        } else if (couteau.data.type) {
+          typeFiltre = couteau.data.type;
+        }
 
         return (
           <article 
-            class="knife-card fade-in-up relative flex flex-col h-full bg-surface shadow-lg rounded-lg border-4 border-transparent hover:border-[var(--color-accent)] transition-all duration-500"
-            data-type={couteau.data.type || 'insta'}
-            data-dispo={String(couteau.data.disponible)}
+            class="knife-card fade-in-up relative flex flex-col h-full bg-surface shadow-lg rounded-lg border-4 border-transparent hover:border-[var(--color-accent)] transition-all duration-500 group"
+            data-type={typeFiltre}
+            data-dispo={String(estDispo)}
           >
             {estDispo && (
               <div class="absolute -top-12 -right-12 z-40 w-40 h-40 pointer-events-none drop-shadow-2xl rotate-12">
@@ -65,27 +87,21 @@ const schemaData = {
               </div>
             )}
 
-            {/* ICÔNE INSTAGRAM */}
-            {couteau.data.lienInstagram && (
-              <a 
-                href={couteau.data.lienInstagram} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="absolute top-4 left-4 z-50 w-10 h-10 bg-black/60 backdrop-blur-sm p-2 rounded-full border border-white/20 hover:scale-110 hover:bg-[var(--color-accent)] transition-all duration-300 shadow-md flex items-center justify-center text-white" 
-                title="Voir sur Instagram"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.75-2.25a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0z"/></svg>
-              </a>
-            )}
-
-            {/* IMAGE + LIEN LIGHTBOX */}
             <div class="w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] bg-[#1a1a1a] rounded-t-sm" style="padding-top: 125%;">
               <a 
-                href={couteau.data.image} 
-                class="glightbox-insta absolute top-0 left-0 w-full h-full flex items-center justify-center" 
+                href={estVideo ? couteau.data.lienInstagram : couteau.data.image} 
+                target={estVideo ? "_blank" : "_self"}
+                rel={estVideo ? "noopener noreferrer" : ""}
+                class={`absolute top-0 left-0 w-full h-full flex items-center justify-center ${estVideo ? '' : 'glightbox-insta'}`}
                 data-title={couteau.data.titre}
-                data-glightbox="width: auto; height: 82vh; zoomable: false;"
+                data-glightbox={estVideo ? "" : "width: auto; height: 82vh; zoomable: false;"}
               >
+                {estVideo && (
+                  <div class="absolute inset-x-0 bottom-6 z-10 flex items-center justify-center drop-shadow-md pointer-events-none group-hover:scale-110 transition-transform duration-300">
+                    <img src="/images/play-button.webp" alt="Lancer la vidéo" class="w-16 h-16 object-contain" />
+                  </div>
+                )}
+
                 <Image 
                   src={couteau.data.image} 
                   alt={`Couteau artisanal : ${couteau.data.titre}`} 
@@ -106,15 +122,14 @@ const schemaData = {
               </p>
 
               <div class="mt-auto pt-4 border-t border-black/10 flex justify-between items-center gap-4">
-                {/* FIX : Utilisation de la couleur stable #7a2a2a au lieu de var(--color-text) */}
                 <span class="text-xl font-serif font-bold text-[#7a2a2a]">
                   {couteau.data.prix > 0 ? `${couteau.data.prix} €` : "Sur commande"}
                 </span>
                 
-                {/* BOUTON DÉCLENCHEUR MODALE */}
                 <button 
                   class={`open-booking-modal px-5 py-2.5 rounded font-bold text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md ${estDispo ? 'bg-[var(--color-accent)] text-[var(--color-bg)] hover:bg-[var(--color-accent-light)]' : 'border-2 border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-[var(--color-bg)]'}`}
                   data-ref={couteau.data.titre}
+                  data-dispo={String(estDispo)}
                 >
                   {estDispo ? 'Réserver' : 'Demander'}
                 </button>
@@ -125,13 +140,13 @@ const schemaData = {
       })}
     </div>
 
-    {/* MODALE DE RÉSERVATION UNIQUE */}
+    {/* MODALE DYNAMIQUE (RÉSERVATION OU COMMANDE) */}
     <div id="booking-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
       <div class="absolute inset-0 bg-black/80 backdrop-blur-sm close-booking"></div>
       <div class="relative bg-[#f0e8dd] w-full max-w-lg rounded-xl shadow-2xl overflow-hidden border-2 border-[var(--color-accent)]">
         <button class="absolute top-4 right-4 text-2xl text-[#7a2a2a] close-booking hover:scale-110 transition-transform">×</button>
         <div class="p-8">
-          <h2 class="text-2xl font-serif font-bold text-[#7a2a2a] mb-1 text-left">Réserver cette pièce</h2>
+          <h2 id="booking-title" class="text-2xl font-serif font-bold text-[#7a2a2a] mb-1 text-left"></h2>
           <p id="booking-ref-display" class="text-sm text-gray-600 mb-6 italic font-medium text-left"></p>
           
           <form class="contact-form space-y-4 text-left" action="/contact.php" method="POST">
@@ -148,11 +163,11 @@ const schemaData = {
             </div>
             <div>
               <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1 ml-1">Votre Message</label>
-              <textarea id="booking-message" name="message" rows="4" class="w-full p-3 border border-black/10 rounded-lg bg-white/50 focus:border-[var(--color-accent)] outline-none text-black resize-none"></textarea>
+              <textarea id="booking-message" name="message" rows="5" class="w-full p-3 border border-black/10 rounded-lg bg-white/50 focus:border-[var(--color-accent)] outline-none text-black resize-none"></textarea>
             </div>
             
-            <button type="submit" class="w-full bg-[var(--color-accent)] text-white py-4 rounded-lg font-bold hover:bg-[#7a2a2a] transition-all shadow-lg active:scale-[0.98]">
-              Confirmer la demande
+            <button type="submit" id="booking-submit-btn" class="w-full bg-[var(--color-accent)] text-white py-4 rounded-lg font-bold hover:bg-[#7a2a2a] transition-all shadow-lg active:scale-[0.98]">
+              Envoyer la demande
             </button>
           </form>
         </div>
@@ -162,107 +177,68 @@ const schemaData = {
 </BaseLayout>
 
 <style>
-  .filter-btn { @apply px-6 py-2 border-2 rounded-full transition-all duration-300 font-serif italic text-[var(--color-muted)]; border-color: rgba(255, 255, 255, 0.1); }
-  .filter-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
-  .filter-btn.active { background-color: var(--color-accent); color: white; border-color: var(--color-accent); }
-  
-  .knife-card.hidden { display: none !important; opacity: 0; }
-  
+  .no-select { @apply py-4; }
+  .filter-btn {
+    @apply px-6 py-2 border-2 rounded-full transition-all duration-300 
+           font-serif italic text-sm md:text-base bg-white/40 backdrop-blur-sm;
+    border-color: rgba(122, 42, 42, 0.2); 
+    color: #4a4a4a;
+  }
+  .filter-btn:hover {
+    @apply shadow-sm;
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    background-color: white;
+    transform: translateY(-2px);
+  }
+  .filter-btn.active {
+    @apply shadow-lg;
+    background-color: var(--color-accent);
+    color: white;
+    border-color: var(--color-accent);
+    transform: translateY(0);
+  }
+  @media (max-width: 640px) {
+    .flex-wrap { @apply justify-center gap-2; }
+    .filter-btn { @apply px-4 py-1.5 text-xs; }
+  }
+  .knife-card.hidden { display: none !important; }
   .fade-in-up { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
   .fade-in-up.visible { opacity: 1; transform: translateY(0); }
 
-  :global(.glightbox-container .gslide-image) {
-    max-height: 82vh !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: transparent !important;
-  }
-
   :global(.glightbox-container .gslide-image img) {
     max-height: 82vh !important;
-    width: auto !important;
-    height: auto !important;
     object-fit: contain !important;
   }
 </style>
 
 <script>
-  import { initRevealOnScroll } from '../scripts/animations/reveal-on-scroll.js';
+  import { initFilters } from '../scripts/features/knife-filters.js';
+  import { initBookingLogic } from '../scripts/features/booking-modal.js';
   import { popupform } from '../scripts/features/popupform.js';
   import GLightbox from 'glightbox';
   import 'glightbox/dist/css/glightbox.min.css';
 
-  function initFilters() {
-    const buttons = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.knife-card');
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.getAttribute('data-filter');
-        cards.forEach(card => {
-          const type = card.getAttribute('data-type');
-          const isDispo = card.getAttribute('data-dispo') === 'true';
-          if (filter === 'all') card.classList.remove('hidden');
-          else if (filter === 'dispo') isDispo ? card.classList.remove('hidden') : card.classList.add('hidden');
-          else if (filter === 'modele') type === 'modele' ? card.classList.remove('hidden') : card.classList.add('hidden');
-        });
-        initRevealOnScroll();
-      });
-    });
-  }
-
-  function initBookingLogic() {
-    const modal = document.getElementById('booking-modal');
-    const openBtns = document.querySelectorAll('.open-booking-modal');
-    const closeBtns = document.querySelectorAll('.close-booking');
-    const refInput = document.getElementById('booking-ref-input');
-    const refDisplay = document.getElementById('booking-ref-display');
-    const messageField = document.getElementById('booking-message');
-
-    if (!modal) return;
-
-    openBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const ref = btn.getAttribute('data-ref');
-        if(refInput) refInput.value = ref;
-        if(refDisplay) refDisplay.textContent = `Modèle : ${ref}`;
-        if(messageField) messageField.value = `Bonjour, je souhaiterais réserver le couteau "${ref}". Pouvez-vous me recontacter ?`;
-        
-        modal.classList.add('visible-fade');
-        document.body.style.overflow = 'hidden'; 
-      });
-    });
-
-    closeBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        modal.classList.remove('visible-fade');
-        document.body.style.overflow = '';
-      });
-    });
-  }
-
-  function initPageLightbox() {
-    GLightbox({
-      selector: '.glightbox-insta',
-      skin: 'hamon',
-      touchNavigation: true,
-      loop: true,
-      openEffect: 'fade',
-      closeEffect: 'fade',
-      closeOnBackdropClick: true
-    });
-  }
+  let lightboxInstance = null;
 
   function setupPage() {
     initFilters();
     initBookingLogic();
-    initRevealOnScroll();
-    initPageLightbox();
-    popupform(); 
+    popupform();
+
+    if (lightboxInstance) { lightboxInstance.destroy(); }
+
+    lightboxInstance = GLightbox({
+      selector: '.glightbox-insta',
+      skin: 'hamon',
+      closeOnBackdropClick: true,
+      loop: true,
+      openEffect: 'fade',
+      closeEffect: 'fade'
+    });
   }
 
   document.addEventListener('astro:page-load', setupPage);
-  setupPage();
+  if (document.readyState === 'complete') { setupPage(); } 
+  else { window.addEventListener('load', setupPage); }
 </script>
