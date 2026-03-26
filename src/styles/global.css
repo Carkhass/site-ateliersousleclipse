@@ -127,7 +127,9 @@ img {
 button, a {
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
 }
-button:hover, a:hover {
+
+/* On limite le translateY aux liens simples pour ne pas gêner les échelles (scale) des gros boutons */
+a:not(.cta-premium):hover, button:not(.cta-premium):hover {
   transform: translateY(-1px);
 }
 
@@ -136,9 +138,12 @@ button:hover, a:hover {
   background-color: var(--color-accent);
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   transition: all 0.3s ease;
+  color: #fff; /* Sécurité pour la lisibilité */
 }
+
 .cta-premium:hover {
-  background-color: #8c2f2f;
+  /* Utilisation de ta variable light définie en section 2 */
+  background-color: var(--color-accent-light);
   box-shadow: 0 6px 14px rgba(0,0,0,0.25);
 }
 
@@ -146,12 +151,12 @@ button:hover, a:hover {
    6. LAYOUTS GÉNÉRAUX
    ========================================================= */
 
-/* Conteneur principal centré avec largeur max pour section 1 */
+/* Conteneur principal centré avec largeur max pour section 1 
 .container1 {
   @apply mx-auto px-4;
   max-width: 1280px;
   min-height: calc(var(--vh) * 55);
-}
+} 
 
 /* =========================================================
   7.  HEADER FIXE & NAVIGATION — VERSION OPTIMISÉE
@@ -487,7 +492,7 @@ header nav a:hover {
 
 
 /* =========================================================
-   14B. SECTION HÉROS
+   8. SECTION HÉROS
    ========================================================= */
 
 .hero-section {
@@ -617,7 +622,7 @@ header nav a:hover {
 
 
 /* =========================================================
-   8. SECTIONS PLEINE LARGEUR & PARALLAX
+   9. SECTIONS PLEINE LARGEUR & PARALLAX
    ========================================================= */
 
 .section-fullwidth {
@@ -691,7 +696,7 @@ header nav a:hover {
 }
 
 /* =========================================================
-   9. ANIMATIONS GLOBALES
+   10. ANIMATIONS GLOBALES
    ========================================================= */
 
 /* --- Fade-in-up générique --- */
@@ -834,7 +839,7 @@ header nav a:hover {
 
 
 /* =========================================================
-   10. BOUTONS & LIENS SPÉCIFIQUES
+   11. BOUTONS & LIENS SPÉCIFIQUES
    ========================================================= */
 
 /* Bouton clair */
@@ -866,7 +871,7 @@ header nav a:hover {
 }
 
 /* =========================================================
-   11. FORMULAIRES (Nettoyé pour laisser place au Premium)
+   12. FORMULAIRES (Nettoyé pour laisser place au Premium)
    ========================================================= */
 
 /* On ne garde que les propriétés structurelles de base */
@@ -1271,7 +1276,7 @@ form button[type="submit"]:active {
 
 
 /* =========================================================
-   GLightbox — base minimale
+   GLightbox — Thème Hamon (Patch Anti-Crop)
    ========================================================= */
 .glightbox-container {
   z-index: 9999 !important;
@@ -1282,26 +1287,31 @@ form button[type="submit"]:active {
   z-index: 10000;
 }
 
+/* On passe en overflow visible et on augmente la hauteur max */
 .glightbox-hamon .gslide-image {
-  overflow: hidden;
-  max-height: 78vh;
+  overflow: visible !important; 
+  max-height: 85vh !important;
   border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* L'image s'adapte sans jamais être rognée (contain) */
 .glightbox-hamon .gslide-image img {
-  object-fit: contain;
-  background: #000;
-  max-height: 78vh;
-  width: auto;
-  height: auto;
+  object-fit: contain !important;
+  background: transparent; /* Fond transparent pour éviter l'effet "boîte noire" */
+  max-height: 85vh !important;
+  width: auto !important;
+  height: auto !important;
   will-change: transform;
   transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
   transform: translate3d(0,0,0) scale(1);
 }
 
 .glightbox-hamon .goverlay {
-  background: rgba(0, 0, 0, 0.38) !important;
-  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.45) !important;
+  backdrop-filter: blur(8px); /* Flou légèrement accentué pour le premium */
 }
 
 .glightbox-hamon .gbtn {
@@ -1315,11 +1325,13 @@ form button[type="submit"]:active {
   color: #fff;
   transition: transform 0.15s ease, background 0.15s ease;
 }
+
 .glightbox-hamon .gbtn:hover {
   transform: scale(1.06);
   background: rgba(0,0,0,0.5);
 }
 
+/* Animation Ken Burns conservée */
 .glightbox-hamon .gslide-image img.glb-ken {
   animation: glb-kenburns 9s ease-out forwards;
 }
@@ -1329,6 +1341,13 @@ form button[type="submit"]:active {
   to   { transform: scale(1.06); }
 }
 
+/* Patch mobile pour éviter les barres de navigation qui mangent l'image */
+@media (max-width: 768px) {
+  .glightbox-hamon .gslide-image img {
+    max-height: 80vh !important;
+    max-width: 92vw !important;
+  }
+}
 
 /* =========================================================
    EMBLA CAROUSEL — 75% ÉCRAN, CENTRÉ, SLIDES LARGEUR NATIVE
@@ -1750,202 +1769,86 @@ footer img.qr {
 
 
 /* =========================================================
-   GALERIE COUTEAUX — EMBLA KNIFE (responsive)
+   MODALE DE RÉSERVATION & CONTACT (GLOBAL) PAGE COUTEAUX
    ========================================================= */
-
-/* Galerie */
-.knife-gallery {
-  padding: 1rem;
-}
-@media (min-width: 768px) {
-  .knife-gallery { padding: 2rem; }
-}
-/* Appliquer la largeur maximale et le centrage à partir de 1280px */
-@media (min-width: 1280px) {
-  .knife-gallery { 
-    padding: 3rem;
-    max-width: 2000px;
-    margin-left: auto; /* Centrage */
-    margin-right: auto; /* Centrage */
-  }
+body.active-modal { 
+  overflow: hidden; 
 }
 
-/* Embla container */
-.embla-knife { position: relative; width: 100%; overflow: hidden; height: 100%; } /* AJOUT: height: 100% */
-.embla-knife-viewport { overflow: hidden; width: 100%; height: 100%; } /* AJOUT: height: 100% */
-.embla-knife-container { display: flex; touch-action: pan-y pinch-zoom; height: 100%; } /* AJOUT: height: 100% */
-.embla-knife-slide { flex: 0 0 100%; min-width: 0; height: 100%; } /* AJOUT: height: 100% */
-.embla-knife-slide img {
-  width: 100%;
-  height: 100%; /* MAINTENIR : La hauteur a été corrigée ici précédemment */
-  object-fit: cover;
-  object-position: center center;
-  display: block;
+#booking-modal { 
+  display: none; 
+  position: fixed !important; 
+  inset: 0 !important; 
+  z-index: 100000 !important; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 16px; 
 }
 
-/* Slide principal */
-.embla-knife-main {
-  width: 100%;
-  margin: 0 auto;
-  border-radius: 0.75rem;
-  background: #000;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+/* État actif piloté par le JS */
+body.active-modal #booking-modal {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
-/* Thumbnails */
-.embla-knife-thumbs { margin-top: 0.75rem; }
-.embla-knife-thumbs .embla-knife-container { display: flex; flex-wrap: nowrap; }
-.embla-knife-thumbs .embla-knife-slide {
-  flex: 0 0 auto;
-  width: 22vw;          /* proportionnel sur mobile */
-  max-width: 90px;      /* limite sur desktop */
-  aspect-ratio: 4 / 3;
-  margin-right: 0.5rem;
-  cursor: pointer;
-  opacity: 0.6;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  transition: opacity 0.25s, transform 0.25s, box-shadow 0.25s;
-  background: #111;
-}
-.embla-knife-thumbs .embla-knife-slide img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-.embla-knife-thumbs .embla-knife-slide.is-selected {
-  opacity: 1;
-  transform: scale(1.05);
-  box-shadow: 0 0 0 2px var(--color-accent, #c00) inset;
+.modal-overlay { 
+  position: absolute; 
+  inset: 0; 
+  background: rgba(0, 0, 0, 0.85); 
+  backdrop-filter: blur(4px); 
 }
 
-/* Cas spéciaux (ex. lance-huîtres) */
-.embla-knife-lancehuitre img {
-  width: 100%;
-  height: auto;
-  max-height: 680px; /* limite sur desktop */
-  margin: 0 auto;
-  object-fit: cover;
-  object-position: center center;
-  display: block;
+.modal-content { 
+  position: relative; 
+  background: #f0e8dd; 
+  width: 100%; 
+  max-width: 500px; 
+  padding: 32px; 
+  border-radius: 12px; 
+  border: 2px solid var(--color-accent); 
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
+  animation: modal-pop 0.3s ease-out; 
+}
+
+@keyframes modal-pop { 
+  from { opacity: 0; transform: scale(0.95); } 
+  to { opacity: 1; transform: scale(1); } 
+}
+
+.close-x-btn { 
+  position: absolute; 
+  top: 10px; 
+  right: 16px; 
+  font-size: 36px; 
+  line-height: 1; 
+  color: #7a2a2a; 
+  background: none; 
+  border: none; 
+  cursor: pointer; 
+  transition: transform 0.2s; 
 }
 
 /* =========================================================
-   MENU FLOTTANT — RESPONSIVE
+   SYSTÈME DE FILTRES (BOUTONS) PAGE COUTEAUX
    ========================================================= */
-.knife-floating-nav {
-  position: absolute;
-  top: 550px;       /* Position par défaut desktop */
-  left: 2rem;       
-  margin-top: 0;
-  width: 220px;     /* Largeur fixe desktop */
-  
-  /* Styles visuels génériques */
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  background-color: rgba(var(--color-bg-rgb), 0.75);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border: 1px solid var(--color-accent);
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-  z-index: 100;
-  max-width: 220px;
+.filter-btn { 
+  @apply px-6 py-2 border-2 rounded-full transition-all font-serif italic text-sm; 
+  border-color: rgba(122, 42, 42, 0.2); 
+  color: #4a4a4a; 
 }
 
-/* Nouveau bloc pour l'état FIXÉ (Scrollé) — DESKTOP PAR DÉFAUT */
-.knife-floating-nav.is-stuck {
-  position: fixed; 
-  top: calc(var(--site-header-height, 100px) + 1rem); 
-  left: 1rem;
-  margin-top: 0; 
-  width: 200px; /* Largeur fixe desktop maintenue */
+.filter-btn.active { 
+  background-color: var(--color-accent); 
+  color: white; 
+  border-color: var(--color-accent); 
+  @apply shadow-lg; 
 }
 
-/* Sur mobile → menu en haut centré */
-@media (max-width: 768px) {
-  
-  /* Styles du Conteneur Mobile (État initial) */
-  .knife-floating-nav {
-    position: absolute; /* Reste absolu pour ne pas décaler la page */
-    top: 580px;          /* Position initiale mobile (si désiré) */
-    margin: 1rem auto;
-    left: auto;         /* Annule left: 2rem */
-    right: auto;        /* Permet le centrage */
-    width: auto;        /* Laisse la largeur obéir à max-width */
-    max-width: 70%;
-    
-    /* Styles pour la taille réduite */
-    box-sizing: border-box; 
-    overflow-x: hidden; 
-    padding: 0.4rem 0.6rem; 
-    gap: 0.4rem;
-  }
-  
-  /* Écrasement CRUCIAL de l'état FIXÉ pour le mobile */
-  .knife-floating-nav.is-stuck {
-    position: fixed; /* Maintient le fixed */
-    top: calc(var(--site-header-height, 100px) + 1rem); /* Laisser le top */
-
-    /* Écrase les règles desktop et centre le menu */
-    width: auto; 
-    left: auto;
-    right: auto;
-    margin: 1rem auto; 
-  }
-  
-  /* Styles des Éléments Internes Mobile */
-
-  /* Titre */
-  .knife-floating-nav .knife-nav-title {
-    font-size: 0.9rem; /* Réduire la taille du titre */
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis;
-  }
-
-  /* Liens */
-  .knife-floating-nav .knife-nav-item {
-    /* Force le lien à prendre 100% de la largeur du conteneur parent contraint (70%) */
-    width: 100%; 
-    
-    /* Gère le texte */
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    
-    font-size: 0.8rem; 
-    line-height: 1.1;
-  }
+.knife-card.hidden { 
+  display: none !important; 
 }
 
-/* Items */
-.knife-nav-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--color-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.group:hover img {
+  opacity: 1 !important;
 }
-.knife-nav-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-.knife-nav-item {
-  text-decoration: none;
-  font-family: var(--font-serif, serif);
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--color-muted);
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-.knife-nav-item.active {
-  color: var(--color-accent);
-  font-weight: 700;
-  transform: translateX(4px);
-}
-
-

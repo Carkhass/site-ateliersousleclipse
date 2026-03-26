@@ -1,7 +1,7 @@
 import { config, fields, collection } from '@keystatic/core';
 
 export default config({
-  storage: { kind: 'local' }, // ou 'github' selon ta config
+  storage: { kind: 'local' }, 
   collections: {
     couteaux: collection({
       label: 'Mes Couteaux',
@@ -18,14 +18,22 @@ export default config({
             { label: 'Post Instagram', value: 'insta' },
             { label: 'Modèle de Référence (Permanent)', value: 'modele' },
           ],
-          defaultValue: 'insta', // Priorité à Instagram !
+          defaultValue: 'insta',
         }),
         
         description: fields.text({ label: 'Caractéristiques / Histoire', multiline: true }),
+
+        // Ajout du bloc caractéristiques
+        caracteristiques: fields.object({
+          acier: fields.text({ label: 'Acier (ex: C125U, XC75...)' }),
+          manche: fields.text({ label: 'Matière du manche' }),
+        }, {
+          label: 'Détails techniques',
+          description: 'Extraits automatiquement ou saisis manuellement'
+        }),
         
         image: fields.text({ label: 'Photo principale (URL ou chemin)' }),
 
-        // Galerie photos supplémentaire pour les "Modèles"
         galerie: fields.array(
           fields.text({ label: 'Chemin photo sup.' }),
           {

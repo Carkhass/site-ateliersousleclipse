@@ -1,18 +1,38 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "L'Atelier sous l'Éclipse",
+  "image": "https://ateliersousleclipse.fr/images/og-home.jpg",
+  "description": "Coutelier d'art en France spécialisé dans la fabrication de couteaux de cuisine et de table. Spécialisé en ligne de trempe sélective (Hamon).",
+  "url": "https://ateliersousleclipse.fr",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Reyrieux",
+    "postalCode": "01600",
+    "addressCountry": "FR"
+  },
+  "knowsAbout": ["Coutellerie artisanale", "Forge", "Hamon japonais", "Couteaux haut de gamme"],
+  "priceRange": "€€€"
+};
+
 ---
 
 <BaseLayout 
   title="Atelier sous l’éclipse – Coutelier artisanal en France"
-  description="Découvrez l’Atelier sous l’éclipse : des couteaux artisanaux uniques, entièrement fabriqués main avec passion en France. Acier haut de gamme, manches en bois nobles, finitions d’exception."
+  description="Découvrez l’Atelier sous l’éclipse : des couteaux artisanaux uniques, entièrement fabriqués main avec passion en France."
   ogImage="/images/og-home.jpg"
   url="https://www.latelier-sous-leclipse.fr/"
+  isHome={true} 
 >
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
 
 <!-- ========================================================= -->
 <!-- SECTION CENTRALE                                          -->
 <!-- ========================================================= -->
-<section class="container1 mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center">
+<section class="max-w-[1280px] mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center min-h-[55vh]">
   <div class="relative fade-slide-left">
     <img 
       src="/images/portrait-yann2.webp" 
@@ -399,6 +419,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   }
 </script>
 
+<section class="py-12 bg-surface/30 text-center px-4 max-w-4xl mx-auto opacity-80 text-sm italic">
+  <p>
+    Spécialisé dans la <strong>coutellerie d'art</strong> en France, l'Atelier sous l'éclipse propose des 
+    couteaux ffabriqués main en aciers carbone haut de gamme. Chaque pièce est unique, mettant en valeur 
+    le savoir-faire de la <strong>trempe sélective</strong> et la beauté naturelle des bois nobles.
+  </p>
+</section>
 
+</BaseLayout>
 
 </BaseLayout>

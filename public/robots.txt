@@ -1,0 +1,12 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# S'assurer que les images sont bien indexées (important pour tes couteaux !)
+Allow: /images/
+
+# Bloquer les fichiers de configuration ou scripts sensibles si besoin
+Disallow: /contact.php
+
+# Indiquer la route du sitemap (à adapter si ton nom de domaine change)
+Sitemap: https://ateliersousleclipse.fr/sitemap-index.xml

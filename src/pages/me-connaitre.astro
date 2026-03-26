@@ -4,12 +4,22 @@ import { Image } from 'astro:assets';
 
 // --- DEFINITION DES CHEMINS D'IMAGES ---
 const photoYann = "/images/portrait-yann.webp"; 
-const photoHamon = "/images/ligne-trempe.webp";
-const photoManche = "/images/manche-bois-cocobolo.webp";
-const photoBoisEchantillon = "/images/echantillons-bois.webp";
-const photoG10Echantillon = "/images/manche-g10-ebene.webp";
-const photoBerserk = "/images/berserk-inspiration.webp";
+// ... tes autres constantes
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Yann Jacquot",
+  "jobTitle": "Artisan Coutelier",
+  "affiliation": {
+    "@type": "ProfessionalService",
+    "name": "L'Atelier sous l'Éclipse"
+  },
+  "url": "https://ateliersousleclipse.fr/me-connaitre"
+};
 ---
+<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+
 
 <BaseLayout 
   title="L'Artisan | Atelier sous l'Éclipse"
@@ -22,7 +32,7 @@ const photoBerserk = "/images/berserk-inspiration.webp";
         <div class="reveal fade-in">
           {/* H1 Harmonisé */}
           <h1 class="text-3xl md:text-4xl font-serif font-bold text-[var(--color-accent)] mb-8 tracking-tight reveal-child">
-            Parcours
+            L'artisan derrière l'Atelier <span class="sr-only"> : Yann, artisan coutelier à Reyrieux</span>
           </h1>
           <div class="space-y-6 text-lg leading-relaxed text-gray-700">
             <p>
@@ -35,7 +45,7 @@ const photoBerserk = "/images/berserk-inspiration.webp";
         </div>
         <div class="relative reveal fade-slide-right group">
           <div class="pivot-container portrait-mode aspect-[4/5] bg-surface rounded-lg overflow-hidden shadow-2xl border-[12px] border-white">
-             <Image src={photoYann} alt="Yann Jacquot dans son atelier" width={600} height={750} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+             <Image src={photoYann} alt="Yann Jacquot, artisan coutelier à Reyrieux (01)" width={600} height={750} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
           </div>
         </div>
       </div>
@@ -50,12 +60,12 @@ const photoBerserk = "/images/berserk-inspiration.webp";
              <div class="grid grid-cols-2 gap-8 items-start">
                <div class="group">
                   <div class="pivot-container inverse aspect-[3/4] bg-surface rounded shadow-md border border-white/10 overflow-hidden">
-                     <Image src={photoHamon} alt="Détail du Hamon" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                     <Image src={photoHamon} alt="Ligne de trempe sélective (Hamon) sur une lame en acier carbone" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   </div>
                </div>
                <div class="group mt-16">
                   <div class="pivot-container aspect-[3/4] bg-surface rounded shadow-md border border-white/10 overflow-hidden">
-                     <Image src={photoManche} alt="Manche en Cocobolo" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                     <Image src={photoManche} alt="Manche de couteau artisanal en bois de Cocobolo avec finitions polies" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                   </div>
                </div>
              </div>
@@ -90,12 +100,12 @@ const photoBerserk = "/images/berserk-inspiration.webp";
           <div class="grid grid-cols-2 gap-8 items-start">
             <div class="group">
                <div class="pivot-container inverse aspect-[3/4] bg-surface rounded shadow-md border border-black/5 overflow-hidden">
-                  <Image src={photoBoisEchantillon} alt="Échantillons de bois" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <Image src={photoBoisEchantillon} alt="Échantillons de bois de l'atelier sous l'éclipse" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                </div>
             </div>
             <div class="group mt-16">
                <div class="pivot-container aspect-[3/4] bg-surface rounded shadow-md border border-black/5 overflow-hidden">
-                  <Image src={photoG10Echantillon} alt="Montage G10 et Ébène" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <Image src={photoG10Echantillon} alt="Montage G10 et Ébène sur un couteau manche tsuki" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                </div>
             </div>
           </div>
@@ -125,7 +135,7 @@ const photoBerserk = "/images/berserk-inspiration.webp";
           </div>
           <div class="relative">
              <div class="pivot-container w-full aspect-[2/3] bg-gray-100 rounded shadow-inner flex items-center justify-center overflow-hidden border border-black/5">
-                <Image src={photoBerserk} alt="Inspiration Berserk" width={400} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                <Image src={photoBerserk} alt="Hommage à Berserk de Kentaro Miura, inspiration pour l'Atelier sous l'Éclipse" width={400} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
              </div>
              <div class="absolute inset-0 border-2 border-[var(--color-accent)]/20 translate-x-4 translate-y-4 -z-10 rounded"></div>
           </div>

@@ -1,50 +1,72 @@
+// src/scripts/features/booking-modal.js
+
 export function initBookingLogic() {
   const modal = document.getElementById('booking-modal');
-  const openBtns = document.querySelectorAll('.open-booking-modal');
-  const closeBtns = document.querySelectorAll('.close-booking');
-  
-  const titleField = document.getElementById('booking-title');
-  const refInput = document.getElementById('booking-ref-input');
-  const refDisplay = document.getElementById('booking-ref-display');
-  const messageField = document.getElementById('booking-message');
-  const submitBtn = document.getElementById('booking-submit-btn');
-
+  const merciPopup = document.getElementById('merci-popup');
   if (!modal) return;
 
-  openBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const ref = btn.getAttribute('data-ref') || '';
-      const isDispo = btn.getAttribute('data-dispo') === 'true';
+  const closeModal = () => {
+    document.body.classList.remove('active-modal');
+  };
+
+  // On utilise la délégation d'événement sur le document pour être sûr 
+  // que ça marche même si Astro recharge des morceaux de page
+  document.addEventListener('click', (e) => {
+    const target = e.target;
+
+    // 1. OUVERTURE (via tes nouvelles classes)
+    const trigger = target.closest('.trigger-booking-global');
+    if (trigger) {
+      const ref = trigger.getAttribute('data-ref') || '';
+      const isDispo = trigger.getAttribute('data-dispo') === 'true';
+
+      const titleField = document.getElementById('modal-title');
+      const refDisplay = document.getElementById('modal-ref');
+      const refInput = document.getElementById('modal-input-ref');
+      const messageField = document.getElementById('modal-msg');
+
+      if (titleField) titleField.textContent = isDispo ? "Réserver ce couteau" : "Demander une création";
+      if (refDisplay) refDisplay.textContent = `Référence : ${ref}`;
+      if (refInput) refInput.value = ref;
       
-      // 1. Mise à jour des références
-      if(refInput) refInput.value = ref;
-      if(refDisplay) refDisplay.textContent = `Modèle : ${ref}`;
-      
-      // 2. Logique dynamique selon disponibilité
-      if (isDispo) {
-        if(titleField) titleField.textContent = "Réserver cette pièce";
-        if(submitBtn) submitBtn.textContent = "Confirmer la réservation";
-        if(messageField) {
-          messageField.value = `Bonjour, je souhaiterais réserver le couteau "${ref}". Pouvez-vous me recontacter ?`;
-        }
-      } else {
-        if(titleField) titleField.textContent = `Commander un ${ref}`;
-        if(submitBtn) submitBtn.textContent = "Envoyer ma demande de commande";
-        if(messageField) {
-          messageField.value = `Bonjour, je souhaiterais commander un couteau modèle "${ref}". \n\nJ'ai une préférence pour cette essence de bois pour le manche : \n(Indiquez ici vos souhaits...)`;
-        }
+      if (messageField) {
+        messageField.value = isDispo 
+          ? `Bonjour Yann,\n\nJe souhaiterais réserver le couteau "${ref}". Est-il encore disponible ?`
+          : `Bonjour Yann,\n\nJe suis intéressé par le modèle "${ref}" pour une création personnalisée.`;
       }
-      
-      // 3. Affichage avec ta classe habituelle
-      modal.classList.add('visible-fade');
-      document.body.style.overflow = 'hidden'; 
-    });
+
+      document.body.classList.add('active-modal');
+      return;
+    }
+
+    // 2. FERMETURE (Croix ou Overlay)
+    if (target.classList.contains('modal-overlay') || target.closest('.close-x-btn')) {
+      closeModal();
+    }
+
+    // 3. FERMETURE MERCI (Bouton ou fond)
+    if (merciPopup && !merciPopup.classList.contains('hidden')) {
+      if (target.closest('.close-merci') || target === merciPopup) {
+        merciPopup.classList.add('hidden');
+        merciPopup.classList.remove('flex');
+        closeModal();
+      }
+    }
   });
 
-  closeBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      modal.classList.remove('visible-fade');
-      document.body.style.overflow = '';
+  // 4. SYNC AVEC LE FORMULAIRE (pour fermer la saisie avant le merci)
+  const form = modal.querySelector('form');
+  if (form) {
+    form.addEventListener('submit', () => {
+      setTimeout(closeModal, 100);
     });
+  }
+
+  // 5. TOUCHE ECHAP
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+      merciPopup?.classList.add('hidden');
+    }
   });
 }

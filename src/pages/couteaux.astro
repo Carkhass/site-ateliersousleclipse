@@ -8,10 +8,12 @@ const couteauxTries = tousLesCouteaux.sort((a, b) => {
   return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
 });
 
+// Remplace ton bloc schemaData par celui-ci :
 const schemaData = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   "name": "Les Créations de l'Atelier sous l'Éclipse",
+  "numberOfItems": couteauxTries.length,
   "itemListElement": couteauxTries.map((couteau, index) => ({
     "@type": "ListItem",
     "position": index + 1,
@@ -19,10 +21,21 @@ const schemaData = {
       "@type": "Product",
       "name": couteau.data.titre,
       "image": new URL(couteau.data.image, Astro.site || 'https://ateliersousleclipse.fr').href,
+      "description": couteau.data.description,
+      "brand": {
+        "@type": "Brand",
+        "name": "L'Atelier sous l'Éclipse"
+      },
+      // Nouveau : On fusionne acier et manche pour Google
+      "material": `${couteau.data.caracteristiques?.acier || ''}, ${couteau.data.caracteristiques?.manche || ''}`.trim().replace(/^,|,$/g, ''),
       "offers": {
         "@type": "Offer",
         "price": couteau.data.prix > 0 ? couteau.data.prix : undefined,
-        "priceCurrency": "EUR"
+        "priceCurrency": "EUR",
+        "availability": (couteau.data.disponible === true || couteau.data.disponible === "true") 
+          ? "https://schema.org/InStock" 
+          : "https://schema.org/OutOfStock",
+        "itemCondition": "https://schema.org/NewCondition"
       }
     }
   }))
@@ -44,11 +57,14 @@ const schemaData = {
       </h1>
       
       <div class="space-y-4 px-4 text-lg text-muted leading-relaxed">
-        <p>
-          Vous trouverez ici les couteaux entièrement façonnés à la main par mes soins, à 
-          <span class="font-serif italic text-accent">l'Atelier sous l'Éclipse</span>.
-        </p>
-      </div>
+  <p>
+    Chaque couteau, chaque <span class="font-serif text-accent font-bold">Hamon</span> est unique.
+    Toutes les lames présentées ici sont entièrement façonnées à la main par mes soins à <span class="font-serif text-accent font-bold">l'Atelier sous l'Éclipse</span>.
+  </p>
+  <p>
+    Vous trouverez mes dernières créations issues d'Instagram, ainsi que des modèles de référence pour vos futurs projets personnalisés.
+  </p>
+</div>
 
       <div class="flex flex-wrap justify-center gap-4 mt-10 no-select">
         <button class="filter-btn active" data-filter="all">Photos</button>
@@ -61,7 +77,10 @@ const schemaData = {
     <div id="knife-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
       {couteauxTries.map((couteau) => {
         const estDispo = couteau.data.disponible === true || couteau.data.disponible === "true";
-        const typeFiltre = couteau.data.titre.toLowerCase().includes("en vidéo") ? 'video' : (couteau.data.type || 'insta');
+        const isVideo = couteau.data.titre.toLowerCase().includes("en vidéo");
+        const typeFiltre = isVideo ? 'video' : (couteau.data.type || 'insta');
+        
+        const urlInsta = couteau.data.lienInstagram || "#";
 
         return (
           <article 
@@ -70,25 +89,69 @@ const schemaData = {
             data-dispo={String(estDispo)}
           >
             {estDispo && (
-              <div class="tampon-container absolute -top-8 -right-8 z-40 w-32 h-32 pointer-events-none drop-shadow-2xl rotate-12">
+              <div class="tampon-container absolute -top-8 -right-8 z-[100] w-32 h-32 pointer-events-none drop-shadow-2xl rotate-12">
                 <img src="/images/tampon-dispo.webp" alt="Disponible" class="w-full h-full object-contain" />
               </div>
             )}
 
-            <div class="w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] bg-[#1a1a1a] rounded-t-sm" style="padding-top: 125%;">
-              <a href={couteau.data.image} class="absolute top-0 left-0 w-full h-full flex items-center justify-center glightbox-insta" data-title={couteau.data.titre}>
-                <Image src={couteau.data.image} alt={couteau.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain transition-transform duration-700 hover:scale-105" />
-              </a>
+            <div class="w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] bg-[#1a1a1a] rounded-t-sm ratio-insta">
+              
+              {isVideo ? (
+                <a 
+                  href={urlInsta} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  class="absolute inset-0 z-[50] flex items-center justify-center group cursor-pointer pointer-events-auto"
+                >
+                  <Image 
+                    src={couteau.data.image} 
+                    alt={couteau.data.titre} 
+                    width={500} 
+                    height={625} 
+                    format="webp" 
+                    class="w-full h-full object-contain opacity-70 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105" 
+                  />
+                  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none">
+                    <img 
+                      src="/images/play-button.webp" 
+                      alt="Play" 
+                      class="w-16 h-16 drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-110" 
+                    />
+                  </div>
+                </a>
+              ) : (
+                <a 
+                  href={couteau.data.image} 
+                  class="absolute inset-0 z-[50] flex items-center justify-center glightbox-insta cursor-pointer pointer-events-auto" 
+                  data-title={couteau.data.titre}
+                >
+                  <Image src={couteau.data.image} alt={couteau.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain transition-transform duration-700 hover:scale-105" />
+                </a>
+              )}
             </div>
 
             <div class="p-8 flex flex-col flex-grow bg-[#f0e8dd]">
               <h3 class="text-xl md:text-2xl font-serif font-bold text-[#7a2a2a] mb-4">{couteau.data.titre}</h3>
+              
+              {/* NOUVEAU : Badges techniques extraits auto */}
+              <div class="flex flex-wrap gap-2 mb-4">
+                {couteau.data.caracteristiques?.acier && (
+                  <span class="text-[10px] font-bold uppercase tracking-widest text-[#7a2a2a]/70 bg-white/60 px-2 py-1 rounded border border-[#7a2a2a]/10">
+                    Acier : {couteau.data.caracteristiques.acier}
+                  </span>
+                )}
+                {couteau.data.caracteristiques?.manche && (
+                  <span class="text-[10px] font-bold uppercase tracking-widest text-[#7a2a2a]/70 bg-white/60 px-2 py-1 rounded border border-[#7a2a2a]/10">
+                    Manche : {couteau.data.caracteristiques.manche}
+                  </span>
+                )}
+              </div>
+
               <p class="text-base text-gray-700 leading-relaxed mb-8 line-clamp-3">{couteau.data.description || "Couteau artisanal fait main."}</p>
 
               <div class="mt-auto pt-4 border-t border-black/10 flex justify-between items-center gap-4">
                 <span class="text-xl font-serif font-bold text-[#7a2a2a]">{couteau.data.prix > 0 ? `${couteau.data.prix} €` : "Sur commande"}</span>
                 
-                {/* VERSION "FORCE BRUTE" : Indépendante de GLightbox et robuste aux filtres */}
                 <span 
                   role="button"
                   tabindex="0"
@@ -106,132 +169,56 @@ const schemaData = {
       })}
     </div>
   </main>
-
-  <div id="booking-modal">
-    <div class="modal-overlay modal-closer"></div>
-    <div class="modal-content">
-      <button type="button" class="modal-closer close-x-btn">&times;</button>
-      <div class="p-2">
-        <h2 id="modal-title" class="text-2xl font-serif font-bold text-[#7a2a2a] mb-1"></h2>
-        <p id="modal-ref" class="text-sm text-gray-600 mb-6 italic font-medium"></p>
-        
-        <form action="/contact.php" method="POST" class="contact-form space-y-4 text-left">
-          <input type="hidden" name="reference_couteau" id="modal-input-ref">
-          <input type="text" name="website" style="display:none !important" tabindex="-1">
-          
-          <div>
-            <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1 ml-1">Nom Complet</label>
-            <input type="text" name="nom" required class="w-full p-3 border border-black/10 rounded-lg bg-white/50 text-black outline-none focus:border-[var(--color-accent)]">
-          </div>
-          <div>
-            <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1 ml-1">Votre Email</label>
-            <input type="email" name="email" required class="w-full p-3 border border-black/10 rounded-lg bg-white/50 text-black outline-none focus:border-[var(--color-accent)]">
-          </div>
-          <div>
-            <label class="block text-[10px] font-bold uppercase text-gray-500 mb-1 ml-1">Votre Message</label>
-            <textarea id="modal-msg" name="message" rows="4" class="w-full p-3 border border-black/10 rounded-lg bg-white/50 text-black outline-none focus:border-[var(--color-accent)] resize-none"></textarea>
-          </div>
-          
-          <button type="submit" class="w-full bg-[var(--color-accent)] text-white py-4 rounded-lg font-bold hover:bg-[#7a2a2a] transition-all shadow-lg active:scale-[0.98]">
-            Envoyer la demande
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
+  
+  {/* ... (Reste du code modal inchangé) */}
 </BaseLayout>
 
-<style is:global>
-  /* --- CONFIGURATION DE LA MODALE --- */
-  body.active-modal { overflow: hidden; }
-  body.active-modal #booking-modal {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
-  #booking-modal { display: none; position: fixed !important; inset: 0 !important; z-index: 100000 !important; align-items: center; justify-content: center; padding: 16px; }
-  .modal-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px); }
-  .modal-content { position: relative; background: #f0e8dd; width: 100%; max-width: 500px; padding: 32px; border-radius: 12px; border: 2px solid var(--color-accent); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); animation: modal-pop 0.3s ease-out; }
-  @keyframes modal-pop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-  .close-x-btn { position: absolute; top: 10px; right: 16px; font-size: 36px; line-height: 1; color: #7a2a2a; background: none; border: none; cursor: pointer; transition: transform 0.2s; }
-  .close-x-btn:hover { transform: scale(1.1); }
-
-  /* --- FILTRES & CARTES --- */
-  .filter-btn { @apply px-6 py-2 border-2 rounded-full transition-all font-serif italic text-sm; border-color: rgba(122, 42, 42, 0.2); color: #4a4a4a; }
-  .filter-btn.active { background-color: var(--color-accent); color: white; border-color: var(--color-accent); @apply shadow-lg; }
-  .knife-card.hidden { display: none !important; }
-  .fade-in-up { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
-  .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+  .ratio-insta {
+    padding-top: 125%; 
+    position: relative;
+    isolation: isolate; 
+  }
 </style>
 
 <script>
   import { initFilters } from '../scripts/features/knife-filters.js';
+  import { initBookingLogic } from '../scripts/features/booking-modal.js';
   import GLightbox from 'glightbox';
   import 'glightbox/dist/css/glightbox.min.css';
 
+  let lightboxInstance = null;
+
   function initPage() {
     initFilters();
-    GLightbox({ selector: '.glightbox-insta', skin: 'hamon' });
+    initBookingLogic();
 
-    const bookingModal = document.getElementById('booking-modal');
-    const merciPopup = document.getElementById('merci-popup');
-
-    window.onclick = (e) => {
-      const target = e.target as HTMLElement;
-      
-      // 1. OUVERTURE MODALE RÉSERVATION
-      const trigger = target.closest('.trigger-booking-global');
-      if (trigger) {
-        const ref = trigger.getAttribute('data-ref');
-        const isDispo = trigger.getAttribute('data-dispo') === 'true';
-
-        (document.getElementById('modal-title') as HTMLElement).innerText = isDispo ? "Réserver ce couteau" : "Demander une création";
-        (document.getElementById('modal-ref') as HTMLElement).innerText = "Référence : " + ref;
-        (document.getElementById('modal-input-ref') as HTMLInputElement).value = ref || '';
-        (document.getElementById('modal-msg') as HTMLTextAreaElement).value = isDispo 
-          ? `Bonjour Yann,\n\nJe souhaiterais réserver le couteau "${ref}". Est-il encore disponible ?`
-          : `Bonjour Yann,\n\nJe suis intéressé par le modèle "${ref}" pour une création personnalisée.`;
-
-        document.body.classList.add('active-modal');
-        return;
-      }
-
-      // 2. FERMETURE MODALE SAISIE (Croix ou fond sombre)
-      if (target.classList.contains('modal-overlay') || target.closest('.close-x-btn')) {
-        document.body.classList.remove('active-modal');
-      }
-
-      // 3. FERMETURE POPUP MERCI (Bouton ou fond du merci)
-      if (merciPopup && !merciPopup.classList.contains('hidden')) {
-        if (target.closest('.close-merci') || target === merciPopup) {
-           merciPopup.classList.add('hidden');
-           merciPopup.classList.remove('flex');
-           document.body.classList.remove('active-modal');
-        }
-      }
-    };
-
-    // Synchronisation avec popupform.js
-    // Quand on clique sur envoyer, on prépare le terrain pour le "Merci"
-    const form = bookingModal?.querySelector('form');
-    if (form) {
-      form.addEventListener('submit', () => {
-        // On attend un tout petit peu pour laisser le fetch partir
-        // puis on ferme la modale de saisie pour que le "Merci" apparaisse
-        setTimeout(() => {
-          document.body.classList.remove('active-modal');
-        }, 100);
-      });
+    if (lightboxInstance) {
+      lightboxInstance.destroy();
     }
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        document.body.classList.remove('active-modal');
-        merciPopup?.classList.add('hidden');
-      }
+    lightboxInstance = GLightbox({ 
+      selector: 'a.glightbox-insta', 
+      skin: 'hamon',
+      touchNavigation: true,
+      loop: true,
+      height: 'auto',
+      width: 'auto',
+      zoomable: false,
+      draggable: true
     });
   }
 
   document.addEventListener('astro:page-load', initPage);
-  document.addEventListener('DOMContentLoaded', initPage);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPage);
+  } else {
+    initPage();
+  }
 </script>

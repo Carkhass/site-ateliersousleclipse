@@ -3,19 +3,22 @@ import tailwind from '@astrojs/tailwind';
 import keystatic from '@keystatic/astro';
 import { fileURLToPath } from 'node:url';
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap'; // <-- 1. Importation du sitemap
 
-// On vérifie si on est en train de travailler en local (npm run dev)
+// On vérifie si on est en train de travailler en local
 const isDev = process.env.NODE_ENV === 'development';
 
 export default defineConfig({
+  // URL de ton site (Crucial pour le SEO et le sitemap)
+  site: 'https://ateliersousleclipse.fr', 
+
   // Mode statique pur pour l'hébergement OVH
   output: 'static', 
   
   integrations: [
     tailwind(), 
     react(),
-    // Keystatic n'est chargé QUE sur ton PC (isDev). 
-    // Sur GitHub, l'intégration est absente, donc pas d'erreur SSR.
+    sitemap(), // <-- 2. Ajout de l'intégration ici
     ...(isDev ? [keystatic()] : []),
   ],
 
