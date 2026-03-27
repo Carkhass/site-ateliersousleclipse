@@ -51,20 +51,20 @@ const schemaData = {
   <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
 
   <main class="min-h-screen bg-bg text-text pt-32 pb-20 px-4 md:px-20 overflow-x-hidden">
-    <header class="text-center mb-12 fade-in max-w-4xl mx-auto">
-      <h1 class="text-3xl md:text-5xl font-serif font-bold mb-8 text-accent">
+    <header class="text-center mb-12 fade-slide-left max-w-4xl mx-auto">
+      <h1 class="text-3xl md:text-5xl font-serif font-bold mb-8 text-accent reveal-child">
         Les Créations
       </h1>
       
       <div class="space-y-4 px-4 text-lg text-muted leading-relaxed">
-  <p>
-    Chaque couteau, chaque <span class="font-serif text-accent font-bold">Hamon</span> est unique.
-    Toutes les lames présentées ici sont entièrement façonnées à la main par mes soins à <span class="font-serif text-accent font-bold">l'Atelier sous l'Éclipse</span>.
-  </p>
-  <p>
-    Vous trouverez mes dernières créations issues d'Instagram, ainsi que des modèles de référence pour vos futurs projets personnalisés.
-  </p>
-</div>
+        <p class="reveal-child">
+          Chaque couteau, chaque <span class="font-serif text-accent font-bold">Hamon</span> est unique.
+          Toutes les lames présentées ici sont entièrement façonnées à la main par mes soins à <span class="font-serif text-accent font-bold">l'Atelier sous l'Éclipse</span>.
+        </p>
+        <p class="reveal-child">
+          Vous trouverez mes dernières créations issues d'Instagram, ainsi que des modèles de référence pour vos futurs projets personnalisés.
+        </p>
+      </div>
 
       <div class="flex flex-wrap justify-center gap-4 mt-10 no-select">
         <button class="filter-btn active" data-filter="all">Photos</button>

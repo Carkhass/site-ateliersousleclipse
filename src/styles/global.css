@@ -1478,8 +1478,8 @@ form button[type="submit"]:active {
   background-position: center !important;
   border: none !important;
   box-shadow: none !important;
-  width: 4rem !important;  /* La taille du carré rouge */
-  height: 4rem !important;
+  width: 6rem !important;  /* La taille des boutons */
+  height: 6rem !important;
   padding: 0 !important;
   color: transparent !important; /* Cache tout texte résiduel */
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)) !important;
