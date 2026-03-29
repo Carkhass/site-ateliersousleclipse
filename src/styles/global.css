@@ -105,7 +105,11 @@ html {
   scroll-behavior: smooth;
 }
 
-
+/* On force le conteneur principal à respecter la largeur de l'écran */
+main {
+  width: 100%;
+  overflow-x: hidden;
+}
 
 /* Empêche les débordements horizontaux
 html, body {
@@ -216,6 +220,8 @@ main {
   align-items: center;
 }
 
+
+
 /* Ghosts */
 .ghost {
   visibility: hidden;
@@ -293,6 +299,18 @@ main {
     margin-bottom: 0.15rem;
     line-height: 1.1;
   }
+}
+
+.hero-section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 18vh; /* Le dégradé fait 20% de la hauteur */
+  background: linear-gradient(to bottom, transparent, var(--color-bg));
+  z-index: 2;
+  pointer-events: none;
 }
 
 /* Header au scroll */
@@ -1279,6 +1297,19 @@ form button[type="submit"]:active {
   }
 }
 
+@media (max-width: 768px) {
+  /* On donne plus d'air au sommet pour compenser l'emboîtement */
+  .section-couteaux.theme-cuisine {
+    padding-top: 8rem !important; /* Augmente l'espace en haut */
+    margin-top: -5rem !important; /* Réduit un peu la remontée pour éviter la collision */
+  }
+
+  /* On s'assure que le Swiper ne commence pas trop haut */
+  .my-knives-swiper {
+    margin-top: 2rem;
+  }
+}
+
 /* -------------------------
    Thème Table
    ------------------------- */
@@ -1948,25 +1979,118 @@ body.active-modal #booking-modal {
 }
 
 /* =========================================================
-   SYSTÈME DE FILTRES (BOUTONS) PAGE COUTEAUX
+   SYSTÈME DE FILTRES & CRÉATIONS - L'ATELIER SOUS L'ÉCLIPSE
    ========================================================= */
-.filter-btn { 
-  @apply px-6 py-2 border-2 rounded-full transition-all font-serif italic text-sm; 
-  border-color: rgba(122, 42, 42, 0.2); 
-  color: #4a4a4a; 
+
+/* --- 1. CARTES & ACCORDÉON (Commun) --- */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.filter-btn.active { 
-  background-color: var(--color-accent); 
-  color: white; 
-  border-color: var(--color-accent); 
-  @apply shadow-lg; 
+.ratio-insta {
+  padding-top: 125%;
+  position: relative;
+  isolation: isolate;
 }
 
-.knife-card.hidden { 
-  display: none !important; 
+.knife-card {
+  @apply border-2 border-transparent transition-all duration-500;
 }
 
-.group:hover img {
-  opacity: 1 !important;
+/* --- 2. FILTRES : STRUCTURE & MOBILE --- */
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  @apply gap-3 max-w-[420px] mx-auto my-10 px-4;
 }
+
+.filter-btn {
+  @apply transition-all duration-300 font-sans uppercase tracking-[0.15em] text-[11px] font-semibold;
+  appearance: none;
+  background: transparent;
+  border: 1px solid rgba(122, 42, 42, 0.3);
+  color: #7a2a2a;
+  padding: 10px 5px;
+  border-radius: 2px;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.filter-btn.active {
+  @apply opacity-100;
+  background-color: rgba(122, 42, 42, 0.1);
+  border-color: #7a2a2a;
+  box-shadow: inset 0 -3px 0 #7a2a2a;
+  font-weight: 800;
+}
+
+/* --- 3. COMPORTEMENT DESKTOP (> 768px) --- */
+@media (min-width: 769px) {
+  .knife-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    background-color: #f7f3ed;
+  }
+
+  .filter-grid {
+    display: flex;
+    grid-template-columns: none;
+    max-width: none;
+    @apply gap-0 justify-center mb-16 border-b border-[#7a2a2a]/10;
+    width: fit-content;
+  }
+
+  .filter-btn {
+    @apply border-none px-10 py-5 text-[14px] opacity-70 relative flex items-center justify-center;
+    border-radius: 0;
+    line-height: 1;
+  }
+
+  /* Le séparateur vertical bien centré */
+  .filter-btn:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 18px; 
+    width: 1.5px;
+    background-color: rgba(122, 42, 42, 0.3);
+  }
+
+  .filter-btn:hover {
+    @apply opacity-100;
+  }
+
+  .filter-btn.active {
+    @apply bg-transparent opacity-100;
+    font-weight: 900;
+    box-shadow: 0 4px 0 #7a2a2a; 
+  }
+}
+
+/* --- 4. ACCORDÉON MOBILE --- */
+@media (max-width: 768px) {
+  .details-content {
+    max-height: 0;
+    @apply overflow-hidden opacity-0 block;
+    transform: translateY(-10px);
+    transition: max-height 0.3s cubic-bezier(0, 1, 0, 1), opacity 0.2s, transform 0.3s;
+  }
+
+  .details-content.is-open {
+    max-height: 400px;
+    @apply opacity-100 mt-3 pb-2;
+    transform: translateY(0);
+  }
+
+  .tampon-container {
+    @apply !w-[60px] !h-[60px] !-top-2.5 !-right-2.5;
+  }
+}
+
+/* Utilitaires */
+.knife-card.hidden { display: none !important; }

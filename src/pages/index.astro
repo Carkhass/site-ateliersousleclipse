@@ -86,7 +86,7 @@ const autresEvents = futurs.slice(1, 4);
 {agendaAffiche.length > 0 && (
 <section class="relative py-32 mt-24 z-10">
   
-  <div class="absolute inset-0 bg-[#1a1a1a] shadow-2xl skew-y-[-2deg] scale-x-110 -z-10 origin-center border-y border-white/5"></div>
+  <div class="absolute inset-0 bg-[#1a1a1a] shadow-2xl skew-y-[-4deg] scale-x-110 -z-10 origin-center border-y border-white/5"></div>
 
   <div class="max-w-7xl mx-auto px-4">
     
@@ -113,8 +113,8 @@ const autresEvents = futurs.slice(1, 4);
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
       
-      <aside class="lg:col-span-3 fade-slide-left bg-surface p-6 rounded-2xl border border-white/5 shadow-xl h-fit">
-        <h3 class="font-serif text-xl text-accent mb-6 flex items-center gap-2">
+      <aside class="lg:col-span-3 fade-slide-left bg-[#e8dfd4] p-6 rounded-2xl border border-black/5 shadow-xl h-fit">
+        <h3 class="font-serif text-xl text-[#7a1e1e] mb-6 flex items-center gap-2">
           <span>📅</span> Agenda
         </h3>
         <div class="space-y-6">
@@ -126,16 +126,16 @@ const autresEvents = futurs.slice(1, 4);
             
             return (
               <div class={`flex items-center gap-4 group transition-opacity ${isPasse ? 'opacity-50' : ''}`} style={`transition-delay: ${index * 100}ms`}>
-                <div class={`p-2 rounded text-center min-w-[55px] border ${isPasse ? 'bg-white/5 border-white/10 text-muted' : 'bg-accent/10 border-accent/20 text-accent'}`}>
+                <div class={`p-2 rounded text-center min-w-[55px] border ${isPasse ? 'bg-black/5 border-black/10 text-gray-500' : 'bg-accent/10 border-accent/20 text-accent'}`}>
                   <span class={`block text-xs uppercase font-bold leading-none mb-1 ${isPasse ? 'line-through' : ''}`}>{mois}</span>
                   <span class={`text-xl font-bold leading-none ${isPasse ? 'line-through' : ''}`}>{jour}</span>
                 </div>
                 <div>
                   <div class="flex items-center gap-2">
-                    <p class="text-sm font-bold text-text leading-tight">{event.data.titre}</p>
-                    {isPasse && <span class="text-[10px] bg-white/10 px-1 rounded text-muted uppercase font-bold whitespace-nowrap">Terminé</span>}
+                    <p class="text-sm font-bold text-[#2b1b1d] leading-tight">{event.data.titre}</p>
+                    {isPasse && <span class="text-[10px] bg-black/10 px-1 rounded text-gray-600 uppercase font-bold whitespace-nowrap">Terminé</span>}
                   </div>
-                  <p class="text-xs text-muted italic mt-0.5">{event.data.lieu || "Lieu à préciser"}</p>
+                  <p class="text-xs text-gray-600 italic mt-0.5">{event.data.lieu || "Lieu à préciser"}</p>
                 </div>
               </div>
             );
@@ -145,18 +145,18 @@ const autresEvents = futurs.slice(1, 4);
 
       <div class="lg:col-span-9 grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
         {prochainEvent && (
-          /* Ajout de mx-auto, w-[85%] et limitation max-w sur mobile */
           <div class="md:col-span-2 flex flex-col fade-slide-up mx-auto md:mx-0 w-[85%] md:w-full max-w-[280px] md:max-w-[340px]">
             <span class="lg:hidden text-accent text-[11px] font-bold uppercase tracking-[0.3em] mb-4">Ma prochaine exposition</span>
-            <a href={prochainEvent.data.lienInstagram} target="_blank" class="group block rounded-2xl overflow-hidden border-4 border-transparent bg-surface shadow-2xl transition-all duration-500 hover:shadow-accent/20 hover:-translate-y-2">
+            
+            <a href={prochainEvent.data.lienInstagram} target="_blank" class="group block rounded-2xl overflow-hidden border-4 border-transparent bg-[#f0e8dd] shadow-2xl transition-all duration-500 hover:shadow-accent/20 hover:-translate-y-2">
               <div class="aspect-[3/4] md:aspect-[4/5] overflow-hidden border-b-4 border-accent bg-[#1a1a1a]">
                 <img src={prochainEvent.data.image} alt="" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
               </div>
               <div class="p-5">
                 <div class="flex justify-between items-center gap-4">
                   <div>
-                    <h4 class="text-lg font-serif font-bold text-text group-hover:text-accent transition-colors leading-tight">{prochainEvent.data.titre}</h4>
-                    <p class="text-xs text-muted italic mt-1 flex items-center gap-1"><span class="text-accent">📍</span> {prochainEvent.data.lieu}</p>
+                    <h4 class="text-lg font-serif font-bold text-[#2b1b1d] group-hover:text-accent transition-colors leading-tight">{prochainEvent.data.titre}</h4>
+                    <p class="text-xs text-gray-600 italic mt-1 flex items-center gap-1"><span class="text-accent">📍</span> {prochainEvent.data.lieu}</p>
                   </div>
                   <span class="shrink-0 border border-accent text-accent px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter group-hover:bg-accent group-hover:text-white transition-all">À venir</span>
                 </div>
@@ -169,17 +169,20 @@ const autresEvents = futurs.slice(1, 4);
           <span class="lg:hidden text-muted text-[11px] font-bold uppercase tracking-[0.3em] mb-4">Suivantes</span>
           <div class="space-y-4">
             {autresEvents.length > 0 ? autresEvents.map((event, index) => (
-              <a href={event.data.lienInstagram} target="_blank" class="group flex items-center gap-4 bg-surface/50 p-3 rounded-xl border border-accent/5 hover:bg-surface hover:border-accent/20 transition-all" style={`transition-delay: ${index * 150}ms`}>
-                <div class="w-14 h-14 shrink-0 rounded-lg overflow-hidden border border-accent/10">
-                  <img src={event.data.image} alt="" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+              
+              /* Petites cartes (Figées en clair) */
+              <a href={event.data.lienInstagram} target="_blank" class="group flex items-center gap-4 bg-[#e8dfd4]/80 p-3 rounded-xl border border-black/5 hover:bg-[#e8dfd4] hover:border-accent/20 transition-all" style={`transition-delay: ${index * 150}ms`}>
+                <div class="w-14 h-14 shrink-0 rounded-lg overflow-hidden border border-black/10">
+                  <img src={event.data.image} alt="" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <div class="min-w-0">
                   <p class="text-[10px] text-accent font-black uppercase">{new Date(event.data.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}</p>
-                  <h5 class="text-xs font-bold text-text truncate group-hover:text-accent transition-colors">{event.data.titre}</h5>
+                  <h5 class="text-xs font-bold text-[#2b1b1d] truncate group-hover:text-accent transition-colors">{event.data.titre}</h5>
                 </div>
               </a>
+
             )) : (
-              <div class="py-10 flex flex-col items-center justify-center border-2 border-dashed border-accent/5 rounded-2xl opacity-60">
+              <div class="py-10 flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-2xl opacity-60">
                  <span class="text-xl mb-2">✨</span>
                  <p class="text-[10px] text-muted italic uppercase font-bold text-center">Plus de dates bientôt</p>
               </div>
