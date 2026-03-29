@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content'; 
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
@@ -18,6 +19,24 @@ const localBusinessSchema = {
   "priceRange": "€€€"
 };
 
+// --- LOGIQUE ACTUS ---
+const toutesLesActus = await getCollection('actus');
+const maintenant = new Date();
+const ilYaUnMois = new Date();
+ilYaUnMois.setDate(maintenant.getDate() - 30);
+
+const agendaAffiche = toutesLesActus
+  .filter(a => a.data.type === 'evenement' && new Date(a.data.date) >= ilYaUnMois)
+  .sort((a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime());
+
+const actusRecentes = toutesLesActus
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 4);
+
+// On isole le prochain (futur uniquement pour la mise en avant)
+const futurs = agendaAffiche.filter(a => new Date(a.data.date) >= maintenant);
+const prochainEvent = futurs[0];
+const autresEvents = futurs.slice(1, 4);
 ---
 
 <BaseLayout 
@@ -29,9 +48,10 @@ const localBusinessSchema = {
 >
   <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
 
-<!-- ========================================================= -->
-<!-- SECTION CENTRALE                                          -->
-<!-- ========================================================= -->
+  <!-- ========================================================= -->
+  <!-- SECTION PRESENTATION -->
+  <!-- ========================================================= -->
+
 <section class="max-w-[1280px] mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center min-h-[55vh]">
   <div class="relative fade-slide-left">
     <img 
@@ -41,7 +61,7 @@ const localBusinessSchema = {
       tabindex="0"
     />
   </div>
-  <div class="fade-slide-left text-center md:text-left"">
+  <div class="fade-slide-left text-center md:text-left">
     <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
       Bienvenue à l’atelier sous l’éclipse
     </h2>
@@ -60,22 +80,140 @@ const localBusinessSchema = {
   </div>
 </section>
 
+  <!-- ========================================================= -->
+  <!-- SECTION EVENEMENTS -->
+  <!-- ========================================================= -->
+{agendaAffiche.length > 0 && (
+<section class="relative py-32 mt-24 z-10">
+  
+  <div class="absolute inset-0 bg-[#1a1a1a] shadow-2xl skew-y-[-2deg] scale-x-110 -z-10 origin-center border-y border-white/5"></div>
+
+  <div class="max-w-7xl mx-auto px-4">
+    
+    <div class="mb-16 text-center md:text-left fade-slide-up">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-accent reveal-child">
+        Les rendez-vous de l'Atelier
+      </h2>
+      <p class="text-muted mt-2 reveal-child italic">Retrouvez-moi prochainement sur ces évènements</p>
+    </div>
+
+    <div class="hidden lg:grid grid-cols-12 gap-10 mb-6 items-center h-6">
+      <div class="col-span-3"></div>
+      <div class="col-span-9 grid grid-cols-4 gap-8">
+        <div class="col-span-2">
+          <span class="text-accent text-[11px] font-bold uppercase tracking-[0.3em] flex items-center gap-2">
+            <span class="w-6 h-[1px] bg-accent/30"></span> Ma prochaine exposition
+          </span>
+        </div>
+        <div class="col-span-2">
+          <span class="text-muted text-[11px] font-bold uppercase tracking-[0.3em]">Suivantes</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      
+      <aside class="lg:col-span-3 fade-slide-left bg-surface p-6 rounded-2xl border border-white/5 shadow-xl h-fit">
+        <h3 class="font-serif text-xl text-accent mb-6 flex items-center gap-2">
+          <span>📅</span> Agenda
+        </h3>
+        <div class="space-y-6">
+          {agendaAffiche.map((event, index) => {
+            const dateEvent = new Date(event.data.date);
+            const isPasse = dateEvent < maintenant;
+            const mois = dateEvent.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', '');
+            const jour = dateEvent.getDate();
+            
+            return (
+              <div class={`flex items-center gap-4 group transition-opacity ${isPasse ? 'opacity-50' : ''}`} style={`transition-delay: ${index * 100}ms`}>
+                <div class={`p-2 rounded text-center min-w-[55px] border ${isPasse ? 'bg-white/5 border-white/10 text-muted' : 'bg-accent/10 border-accent/20 text-accent'}`}>
+                  <span class={`block text-xs uppercase font-bold leading-none mb-1 ${isPasse ? 'line-through' : ''}`}>{mois}</span>
+                  <span class={`text-xl font-bold leading-none ${isPasse ? 'line-through' : ''}`}>{jour}</span>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <p class="text-sm font-bold text-text leading-tight">{event.data.titre}</p>
+                    {isPasse && <span class="text-[10px] bg-white/10 px-1 rounded text-muted uppercase font-bold whitespace-nowrap">Terminé</span>}
+                  </div>
+                  <p class="text-xs text-muted italic mt-0.5">{event.data.lieu || "Lieu à préciser"}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </aside>
+
+      <div class="lg:col-span-9 grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
+        {prochainEvent && (
+          <div class="md:col-span-2 flex flex-col fade-slide-up max-w-[340px]">
+            <span class="lg:hidden text-accent text-[11px] font-bold uppercase tracking-[0.3em] mb-4">Ma prochaine exposition</span>
+            <a href={prochainEvent.data.lienInstagram} target="_blank" class="group block rounded-2xl overflow-hidden border-4 border-transparent bg-surface shadow-2xl transition-all duration-500 hover:shadow-accent/20 hover:-translate-y-2">
+              <div class="aspect-[4/5] overflow-hidden border-b-4 border-accent bg-[#1a1a1a]">
+                <img src={prochainEvent.data.image} alt="" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+              </div>
+              <div class="p-5">
+                <div class="flex justify-between items-center gap-4">
+                  <div>
+                    <h4 class="text-lg font-serif font-bold text-text group-hover:text-accent transition-colors leading-tight">{prochainEvent.data.titre}</h4>
+                    <p class="text-xs text-muted italic mt-1 flex items-center gap-1"><span class="text-accent">📍</span> {prochainEvent.data.lieu}</p>
+                  </div>
+                  <span class="shrink-0 border border-accent text-accent px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter group-hover:bg-accent group-hover:text-white transition-all">À venir</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        )}
+
+        <div class="md:col-span-2 flex flex-col fade-slide-right">
+          <span class="lg:hidden text-muted text-[11px] font-bold uppercase tracking-[0.3em] mb-4">Suivantes</span>
+          <div class="space-y-4">
+            {autresEvents.length > 0 ? autresEvents.map((event, index) => (
+              <a href={event.data.lienInstagram} target="_blank" class="group flex items-center gap-4 bg-surface/50 p-3 rounded-xl border border-accent/5 hover:bg-surface hover:border-accent/20 transition-all" style={`transition-delay: ${index * 150}ms`}>
+                <div class="w-14 h-14 shrink-0 rounded-lg overflow-hidden border border-accent/10">
+                  <img src={event.data.image} alt="" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <div class="min-w-0">
+                  <p class="text-[10px] text-accent font-black uppercase">{new Date(event.data.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}</p>
+                  <h5 class="text-xs font-bold text-text truncate group-hover:text-accent transition-colors">{event.data.titre}</h5>
+                </div>
+              </a>
+            )) : (
+              <div class="py-10 flex flex-col items-center justify-center border-2 border-dashed border-accent/5 rounded-2xl opacity-60">
+                 <span class="text-xl mb-2">✨</span>
+                 <p class="text-[10px] text-muted italic uppercase font-bold text-center">Plus de dates bientôt</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+)}
+
 
   <!-- ========================================================= -->
   <!-- SECTION POINÇON -->
   <!-- ========================================================= -->
-  <section 
-    class="parallax-section poincon-section relative w-screen h-[60vh] overflow-hidden" 
-    data-parallax-speed="120"
-    data-parallax-zoom="1"
-    data-parallax-zoom-strength="0.2"
-  >
-    <div class="absolute inset-0" data-parallax-target style="transform: translateY(-23.48px) scale(1); will-change: transform;">
-      <img src="/images/fond-poincon-parallax.webp" alt="Détail poinçon YJ atelier sous l'éclipse sur lame artisanale" class="w-full h-full object-cover" />
-    </div>
- 
-  </section>
+<section 
+  class={`parallax-section poincon-section relative w-screen h-[70vh] overflow-hidden z-0 ${agendaAffiche.length > 0 ? '-mt-32' : 'mt-16'}`} 
+  style="clip-path: polygon(0 6%, 100% 0, 100% 94%, 0 100%);"
+  data-parallax-speed="120"
+  data-parallax-zoom="1"
+  data-parallax-zoom-strength="0.2"
+>
+  <div class="absolute inset-0" data-parallax-target>
+    <img 
+      src="/images/fond-poincon-parallax.webp" 
+      alt="Détail poinçon YJ atelier sous l'éclipse sur lame artisanale" 
+      class="w-full h-full object-cover" 
+    />
+  </div>
+  
+  <div class="absolute inset-0 bg-gradient-to-b from-[#1a1a1a] via-transparent to-transparent h-32 opacity-50"></div>
 
+  <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/20 to-transparent h-32"></div>
+</section>
 
 
 <!-- ========================================================= -->

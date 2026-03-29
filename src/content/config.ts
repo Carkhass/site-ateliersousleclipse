@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 
+// Collection pour tes couteaux (existante)
 const couteaux = defineCollection({
   type: 'data',
   schema: z.object({
@@ -8,7 +9,7 @@ const couteaux = defineCollection({
     format: z.string().optional(),
     description: z.string().optional(),
     image: z.string(),
-    prix: z.number().nullable(), // Changé en nullable pour tes commandes persos
+    prix: z.number().nullable(),
     disponible: z.boolean(),
     date: z.string(),
     lienInstagram: z.string().url().optional().nullable(),
@@ -23,4 +24,21 @@ const couteaux = defineCollection({
   }),
 });
 
-export const collections = { couteaux };
+// NOUVELLE COLLECTION : Actualités et Agenda
+const actus = defineCollection({
+  type: 'data',
+  schema: z.object({
+    titre: z.string(),
+    date: z.string(), // Format YYYY-MM-DD
+    type: z.enum(['evenement', 'instagram']),
+    lieu: z.string().optional(), // Utile pour l'agenda
+    image: z.string(),
+    lienInstagram: z.string().url().optional().nullable(),
+  }),
+});
+
+// Export des deux collections
+export const collections = { 
+  'couteaux': couteaux,
+  'actus': actus 
+};
