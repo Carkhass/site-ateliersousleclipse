@@ -1170,6 +1170,77 @@ form button[type="submit"]:active {
   }
 }
 
+
+/* =========================================================
+   PATCH MOBILE : TAILLE DES BOUTONS SWIPER
+   ========================================================= */
+@media (max-width: 768px) {
+  
+  /* On réduit la taille globale du conteneur du bouton */
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 32px !important;  /* Divisé par deux environ */
+    height: 32px !important;
+  }
+
+  /* On réduit la taille de l'icône (la flèche) à l'intérieur */
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    font-size: 14px !important; /* Taille de la flèche plus fine */
+  }
+
+  /* Optionnel : repositionnement pour coller aux bords */
+  .swiper-button-next { right: 5px !important; }
+  .swiper-button-prev { left: 5px !important; }
+
+  /* On réduit aussi les puces de pagination pour rester cohérent */
+  .swiper-pagination-bullet {
+    width: 6px !important;
+    height: 6px !important;
+  }
+}
+
+/* 1. État de base avec transition fluide */
+.swiper-button-next,
+.swiper-button-prev {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s !important;
+  transform: scale(1); /* Pas de !important ici pour laisser l'animation jouer */
+}
+
+/* 2. Animation au survol (Desktop) */
+@media (hover: hover) {
+  .swiper-button-next:hover,
+  .swiper-button-prev:hover {
+    transform: scale(1.15); /* Il grossit au passage de la souris */
+  }
+}
+
+/* 3. Le "Fix" pour le clic : on réinitialise l'échelle sur l'état actif et focus */
+/* Dès qu'on clique ou que le bouton a le focus, on le ramène à 1 proprement */
+.swiper-button-next:active,
+.swiper-button-prev:active,
+.swiper-button-next:focus,
+.swiper-button-prev:focus {
+  transform: scale(1);
+  /* On retire l'outline qui peut parfois créer un décalage visuel */
+  outline: none !important;
+}
+
+/* 4. Pour Mobile : on s'assure que le tap ne laisse pas le bouton "zoomé" */
+@media (max-width: 768px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    /* On peut désactiver le hover sur mobile pour éviter les bugs de 'sticky hover' */
+    transform: scale(1) !important;
+  }
+  
+  /* Uniquement un petit effet d'enfoncement au toucher */
+  .swiper-button-next:active,
+  .swiper-button-prev:active {
+    transform: scale(0.9) !important;
+  }
+}
+
 /* =========================================================
    VARIABLES PAR THÈME
    ========================================================= */
@@ -1449,80 +1520,110 @@ form button[type="submit"]:active {
 }
 
 /* =========================================================
-   CONTRÔLES & DOTS
+   12.D. CONTRÔLES & DOTS EMBLA (PATCHÉ)
    ========================================================= */
 
-/* On cible les deux classes générées par Embla pour être sûr */
+/* État de base des boutons (G & Y) */
 .embla__button, 
 .embla__button--prev, 
 .embla__button--next {
   display: flex !important;
   visibility: visible !important;
-  opacity: 1 !important; /* Pour contourner les opacités à 0 d'Embla */
+  opacity: 1 !important;
   background-color: transparent !important;
-  background-size: contain !important; /* Force l'image à remplir le carré */
+  background-size: contain !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
   border: none !important;
-  box-shadow: none !important;
-  width: 6rem !important;  /* La taille des boutons */
+  box-sizing: border-box !important;
+  width: 6rem !important; /* Taille desktop */
   height: 6rem !important;
   padding: 0 !important;
-  color: transparent !important; /* Cache tout texte résiduel */
+  color: transparent !important;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)) !important;
-  
-  /* On s'assure qu'aucun z-index ne la cache */
-  z-index: 10 !important; 
+  z-index: 10 !important;
+  cursor: pointer;
+  /* Transition fluide pour le zoom */
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s !important;
+  transform: scale(1);
 }
 
 /* --- BOUTON GAUCHE (PRÉCÉDENT) --- */
-.embla__button--prev, 
-[aria-label="Précédent"] {
+.embla__button--prev, [aria-label="Précédent"] {
   background-image: url('/images/nav-gauche.webp') !important;
 }
 
 /* --- BOUTON DROITE (SUIVANT) --- */
-.embla__button--next, 
-[aria-label="Suivant"] {
+.embla__button--next, [aria-label="Suivant"] {
   background-image: url('/images/nav-droite.webp') !important;
 }
 
-/* Effets Hover & État Désactivé */
-.embla__button:hover:not(:disabled) {
-  transform: scale(1.15) !important;
-  opacity: 0.8 !important;
-  background-color: transparent !important;
+/* --- HOVER (SOURIS UNIQUEMENT) --- */
+@media (hover: hover) {
+  .embla__button:hover:not(:disabled) {
+    transform: scale(1.15) !important;
+    opacity: 0.8 !important;
+  }
 }
 
+/* --- FIX : RESET DU ZOOM APRÈS CLIC / FOCUS --- */
+.embla__button:active,
+.embla__button:focus,
+.embla__button:focus-visible {
+  transform: scale(1) !important;
+  outline: none !important;
+}
+
+/* État désactivé */
 .embla__button:disabled {
-  opacity: 0.15 !important; /* Très transparent */
+  opacity: 0.15 !important;
   filter: grayscale(1) !important;
   cursor: not-allowed !important;
-  
+  transform: scale(1) !important;
+}
+
+/* --- MOBILE (PATCH TAILLE /2) --- */
+@media (max-width: 768px) {
+  .embla__button {
+    width: 3rem !important; /* Divisé par deux */
+    height: 3rem !important;
+    transform: scale(1) !important; /* Pas de zoom sur mobile */
+  }
+
+  .embla__button:active {
+    transform: scale(0.9) !important; /* Petit effet d'appui au doigt */
+  }
+
+  .embla__dots {
+    display: none !important;
+  }
+
+  .embla__buttons {
+    gap: 3rem; 
+  }
 }
 
 /* =========================================================
-   ALIGNEMENT VERTICAL (BOUTONS EN HAUT, DOTS EN BAS)
+   ALIGNEMENT & DOTS (RESTE DU CODE)
    ========================================================= */
 
 .embla__controls {
   display: flex;
-  flex-direction: column; /* Aligne les éléments l'un sous l'autre */
-  align-items: center;    /* Centre tout horizontalement */
-  gap: 1.5rem;            /* Espace entre la ligne des boutons et les dots */
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
   margin-top: 2rem;
   width: 100%;
 }
 
 .embla__buttons {
   display: flex;
-  gap: 3rem;              /* Espace entre tes deux flèches G & Y */
+  gap: 3rem;
   justify-content: center;
   align-items: center;
 }
 
 .embla__dots {
-  /* On enlève le position absolute pour qu'ils reviennent au centre */
   position: static; 
   display: flex;
   gap: 0.6rem;
@@ -1530,7 +1631,6 @@ form button[type="submit"]:active {
   align-items: center;
 }
 
-/* On affine un peu la taille des dots pour qu'ils ne volent pas la vedette aux boutons */
 .embla__dot {
   background: transparent;
   border: none;
@@ -1545,15 +1645,6 @@ form button[type="submit"]:active {
 .embla__dot--selected {
   background: var(--color-accent);
   transform: scale(1.1);
-}
-/* === Mobile === */
-@media (max-width: 768px) {
-  .embla__dots {
-    display: none !important;
-  }
-  .embla__buttons {
-    gap: 3rem; /* On écarte un peu plus pour les pouces */
-  }
 }
 
 /* =========================================================
