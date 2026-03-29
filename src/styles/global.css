@@ -669,17 +669,25 @@ header nav a:hover {
 
 /* === Effet premium poinçon === */
 
-/* Desktop : fond fixe pur CSS */
-@media (min-width: 769px) {
+/* Mobile : On laisse le script JS piloter l'image */
+@media (max-width: 768px) {
   .poincon-section {
-    background-image: url('/images/fond-poincon-parallax.webp');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background: #1a1a1a; /* Fond de secours au cas où */
+    height: 50vh; /* Utilise une valeur stable pour éviter les sauts du --vh */
   }
-  /* On masque l'image HTML pour éviter le double affichage */
-  .poincon-section > [data-parallax-target] {
-    display: none;
+  
+  /* On s'assure que l'image remplit bien tout l'espace pour avoir de la marge de mouvement */
+  .poincon-section [data-parallax-target] {
+    position: absolute;
+    inset: -15% 0; /* On agrandit l'image de 15% en haut/bas pour le débattement */
+    height: 130%;
+    will-change: transform;
+  }
+  
+  .poincon-section img {
+    width: 100%;
+    height: 100%;
+    object-cover: cover;
   }
 }
 
