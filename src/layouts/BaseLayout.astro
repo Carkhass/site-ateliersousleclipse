@@ -218,8 +218,10 @@ const {
     import { initHeroAnimation } from '../scripts/layout/hero-animation.js';
     import { popupform } from '../scripts/features/popupform.js';
     import { initCarte3D } from '../scripts/features/carte-3d.js';
+    import { initParallax } from '../scripts/layout/parallax.js';
 
     function runInit() {
+      initParallax();
       initHeaderSticky();
       initMenuMobile();
       initThemeToggle();

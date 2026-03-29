@@ -620,32 +620,25 @@ header nav a:hover {
 }
 
 
-
 /* =========================================================
    9. SECTIONS PLEINE LARGEUR & PARALLAX
    ========================================================= */
-
 .section-fullwidth {
   width: 100%;
   position: relative;
 }
 
-/* Section parallaxe */
 .parallax-section {
   position: relative;
   overflow: hidden;
 }
-.parallax-section img {
+
+.parallax-section [data-parallax-target] {
   will-change: transform;
-  transition: none; /* pas de transition au chargement */
+  /* On ne met pas de transition ici pour que le JS soit instantané au scroll */
 }
 
-.parallax-section.parallax-active img {
-  transition: transform 0.2s ease-out;
-}
-
-
-/* Overlay sombre pour lisibilité */
+/* Overlay commun */
 .parallax-section::before {
   content: "";
   position: absolute;
@@ -654,52 +647,38 @@ header nav a:hover {
   z-index: 1;
 }
 
-/* Contenu au-dessus de l'image */
-.parallax-section > .relative {
-  position: relative;
-  z-index: 2;
-}
+/* Cas spécifique du Poinçon sur Mobile */
 
-/* État initial et mouvement fluide pour hero */
-.hero-section [data-parallax-target] {
-  transform: translateY(0) scale(1);
-  will-change: transform;
-  transition: transform 0.4s ease-out;
-}
-
-/* === Effet premium poinçon === */
-
-/* Mobile : On laisse le script JS piloter l'image */
 @media (max-width: 768px) {
   .poincon-section {
-    background: #1a1a1a; /* Fond de secours au cas où */
-    height: 50vh; /* Utilise une valeur stable pour éviter les sauts du --vh */
+    height: 50vh !important; /* Taille fixe */
+    background: #1a1a1a;
   }
   
-  /* On s'assure que l'image remplit bien tout l'espace pour avoir de la marge de mouvement */
   .poincon-section [data-parallax-target] {
     position: absolute;
-    inset: -15% 0; /* On agrandit l'image de 15% en haut/bas pour le débattement */
-    height: 130%;
-    will-change: transform;
+    inset: -15% 0; /* Marge pour le mouvement */
+    height: 130%; /* Hauteur source augmentée */
   }
-  
+
   .poincon-section img {
     width: 100%;
     height: 100%;
-    object-cover: cover;
+    /* ⚡ On revient à cover car l'image mobile est déjà recadrée ⚡ */
+    object-fit: cover; 
   }
 }
 
-/* Mobile : fallback image HTML */
-@media (max-width: 768px) {
+/* Desktop : Effet fixe natif pour les grosses machines */
+@media (min-width: 769px) {
   .poincon-section {
-    background: none;
-    height: calc(var(--vh) * 45);
+    background-image: url('/images/fond-poincon-parallax.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
   }
-  .poincon-section [data-parallax-target] {
-    transform: translateY(0) scale(1);
-    will-change: transform;
+  .poincon-section > [data-parallax-target] {
+    display: none;
   }
 }
 

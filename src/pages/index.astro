@@ -149,7 +149,6 @@ const autresEvents = futurs.slice(1, 4);
           <div class="md:col-span-2 flex flex-col fade-slide-up mx-auto md:mx-0 w-[85%] md:w-full max-w-[280px] md:max-w-[340px]">
             <span class="lg:hidden text-accent text-[11px] font-bold uppercase tracking-[0.3em] mb-4">Ma prochaine exposition</span>
             <a href={prochainEvent.data.lienInstagram} target="_blank" class="group block rounded-2xl overflow-hidden border-4 border-transparent bg-surface shadow-2xl transition-all duration-500 hover:shadow-accent/20 hover:-translate-y-2">
-              /* Aspect ratio réduit sur mobile (3/4 au lieu de 4/5) */
               <div class="aspect-[3/4] md:aspect-[4/5] overflow-hidden border-b-4 border-accent bg-[#1a1a1a]">
                 <img src={prochainEvent.data.image} alt="" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
               </div>
@@ -198,22 +197,24 @@ const autresEvents = futurs.slice(1, 4);
   <!-- SECTION POINÇON -->
   <!-- ========================================================= -->
 <section 
-  class={`parallax-section poincon-section relative w-screen h-[70vh] overflow-hidden z-0 ${agendaAffiche.length > 0 ? '-mt-32' : 'mt-16'}`} 
+  class={`parallax-section poincon-section relative w-screen h-[70vh] md:h-[70vh] overflow-hidden z-0 ${agendaAffiche.length > 0 ? '-mt-32' : 'mt-16'}`} 
   style="clip-path: polygon(0 6%, 100% 0, 100% 94%, 0 100%);"
-  data-parallax-speed="100"
+  data-parallax-speed="300"
   data-parallax-zoom="1.1"
   data-parallax-zoom-strength="0.1"
 >
   <div class="absolute inset-0" data-parallax-target>
-    <img 
-      src="/images/fond-poincon-parallax.webp" 
-      alt="Détail poinçon YJ atelier sous l'éclipse sur lame artisanale" 
-      class="w-full h-full object-cover" 
-    />
+    <picture>
+      <source media="(max-width: 768px)" srcset="/images/fond-poincon-mobile.webp">
+      <img 
+        src="/images/fond-poincon-parallax.webp" 
+        alt="Détail poinçon YJ atelier sous l'éclipse sur lame artisanale" 
+        class="w-full h-full object-cover" 
+      />
+    </picture>
   </div>
   
   <div class="absolute inset-0 bg-gradient-to-b from-[#1a1a1a] via-transparent to-transparent h-32 opacity-50"></div>
-
   <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/20 to-transparent h-32"></div>
 </section>
 
