@@ -82,7 +82,7 @@ const schemaData = {
   <div id="knife-grid" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-12 max-w-7xl mx-auto">
     {couteauxTries.map((couteau) => {
       const estDispo = couteau.data.disponible === true || couteau.data.disponible === "true";
-      const isVideo = couteau.data.titre.toLowerCase().includes("en vidéo");
+      const isVideo = couteau.data.format === "video" || couteau.data.titre.toLowerCase().includes("en vidéo");
       const typeFiltre = isVideo ? 'video' : (couteau.data.type || 'insta');
       const urlInsta = couteau.data.lienInstagram || "#";
       
