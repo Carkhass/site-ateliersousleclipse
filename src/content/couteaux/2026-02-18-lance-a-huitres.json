@@ -1,0 +1,16 @@
+{
+  "titre": "Lance à huîtres",
+  "univers": "Gastronomie",
+  "description": "Idéal pour ouvrir les huîtres avec précision",
+  "caracteristiques": {
+    "acier": "80crv2",
+    "manche": "amourette et alisier, rivets carbone"
+  },
+  "image": [
+    "/images/couteaux/2026-02-18-lance-a-huitres.webp"
+  ],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/p/DU6DQVYinq0/",
+  "date": "2026-02-18",
+  "disponible": true
+}

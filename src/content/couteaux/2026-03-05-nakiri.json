@@ -1,5 +1,5 @@
 {
-  "titre": "Nakiri Tsuki",
+  "titre": "Nakiri",
   "univers": "Gastronomie",
   "description": "Idéal pour émincer les légumes avec précision",
   "caracteristiques": {
@@ -7,10 +7,10 @@
     "manche": ""
   },
   "image": [
-    "/images/couteaux/2026-03-23-nakiri-tsuki.webp"
+    "/images/couteaux/2026-03-05-nakiri.webp"
   ],
   "prix": 0,
-  "lienInstagram": "https://www.instagram.com/reel/DWPKIujk8S0/",
-  "date": "2026-03-23",
+  "lienInstagram": "https://www.instagram.com/reel/DVgwC4pj0oB/",
+  "date": "2026-03-05",
   "disponible": true
 }
