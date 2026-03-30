@@ -1,0 +1,19 @@
+{
+  "titre": "Table",
+  "univers": "Gastronomie",
+  "type": "instagram",
+  "format": "photo",
+  "description": "Idéal pour les repas",
+  "caracteristiques": {
+    "acier": "XC100",
+    "manche": "olivier et rivets carbone"
+  },
+  "image": [
+    "/images/couteaux/2026-03-19-table.webp"
+  ],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/p/DWEyKRiAgEB/",
+  "date": "2026-03-19",
+  "disponible": true,
+  "last_update": "2026-03-30T23:41:56.057Z"
+}
