@@ -1,0 +1,19 @@
+{
+  "titre": "lance à huîtres",
+  "univers": "Gastronomie",
+  "type": "instagram",
+  "format": "photo",
+  "description": "Lance à huîtres en 80crv2 pour ouvrir les coquillages avec facilité",
+  "caracteristiques": {
+    "acier": "80crv2",
+    "manche": "wacapou, alisier et bois inconnu"
+  },
+  "image": [
+    "/images/couteaux/2026-03-03-lance-a-huitres.webp"
+  ],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/p/DVbiqP2AkpK/",
+  "date": "2026-03-03",
+  "disponible": false,
+  "last_update": "2026-03-30T23:52:08.842Z"
+}

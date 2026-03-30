@@ -1,0 +1,19 @@
+{
+  "titre": "Nakiri",
+  "univers": "Gastronomie",
+  "type": "instagram",
+  "format": "video",
+  "description": "Idéal pour émincer les légumes avec précision",
+  "caracteristiques": {
+    "acier": "Non précisé",
+    "manche": "Non précisé"
+  },
+  "image": [
+    "/images/couteaux/2026-03-05-nakiri.webp"
+  ],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/reel/DVgwC4pj0oB/",
+  "date": "2026-03-05",
+  "disponible": false,
+  "last_update": "2026-03-30T23:51:55.594Z"
+}
