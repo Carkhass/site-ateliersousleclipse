@@ -14,31 +14,35 @@ const schemaData = {
   "@type": "ItemList",
   "name": "Les Créations de l'Atelier sous l'Éclipse",
   "numberOfItems": couteauxTries.length,
-  "itemListElement": couteauxTries.map((couteau, index) => ({
-    "@type": "ListItem",
-    "position": index + 1,
-    "item": {
-      "@type": "Product",
-      "name": couteau.data.titre,
-      "image": new URL(couteau.data.image, Astro.site || 'https://ateliersousleclipse.fr').href,
-      "description": couteau.data.description,
-      "brand": {
-        "@type": "Brand",
-        "name": "L'Atelier sous l'Éclipse"
-      },
-      // Nouveau : On fusionne acier et manche pour Google
-      "material": `${couteau.data.caracteristiques?.acier || ''}, ${couteau.data.caracteristiques?.manche || ''}`.trim().replace(/^,|,$/g, ''),
-      "offers": {
-        "@type": "Offer",
-        "price": couteau.data.prix > 0 ? couteau.data.prix : undefined,
-        "priceCurrency": "EUR",
-        "availability": (couteau.data.disponible === true || couteau.data.disponible === "true") 
-          ? "https://schema.org/InStock" 
-          : "https://schema.org/OutOfStock",
-        "itemCondition": "https://schema.org/NewCondition"
+  "itemListElement": couteauxTries.map((couteau, index) => {
+    // On récupère la première image pour le SEO
+    const firstImage = Array.isArray(couteau.data.image) ? couteau.data.image[0] : couteau.data.image;
+    
+    return {
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "Product",
+        "name": couteau.data.titre,
+        "image": new URL(firstImage, Astro.site || 'https://ateliersousleclipse.fr').href,
+        "description": couteau.data.description,
+        "brand": {
+          "@type": "Brand",
+          "name": "L'Atelier sous l'Éclipse"
+        },
+        "material": `${couteau.data.caracteristiques?.acier || ''}, ${couteau.data.caracteristiques?.manche || ''}`.trim().replace(/^,|,$/g, ''),
+        "offers": {
+          "@type": "Offer",
+          "price": couteau.data.prix > 0 ? couteau.data.prix : undefined,
+          "priceCurrency": "EUR",
+          "availability": (couteau.data.disponible === true || couteau.data.disponible === "true") 
+            ? "https://schema.org/InStock" 
+            : "https://schema.org/OutOfStock",
+          "itemCondition": "https://schema.org/NewCondition"
+        }
       }
-    }
-  }))
+    };
+  })
 };
 ---
 
@@ -81,6 +85,9 @@ const schemaData = {
       const isVideo = couteau.data.titre.toLowerCase().includes("en vidéo");
       const typeFiltre = isVideo ? 'video' : (couteau.data.type || 'insta');
       const urlInsta = couteau.data.lienInstagram || "#";
+      
+      // Sécurité pour récupérer l'image (prend le premier élément du tableau)
+      const imagePath = Array.isArray(couteau.data.image) ? couteau.data.image[0] : couteau.data.image;
 
       return (
         <article 
@@ -101,14 +108,14 @@ const schemaData = {
           <div class="w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] bg-[#1a1a1a] rounded-t-sm ratio-insta">
             {isVideo ? (
               <a href={urlInsta} target="_blank" rel="noopener noreferrer" class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center group cursor-pointer pointer-events-auto">
-                <Image src={couteau.data.image} alt={couteau.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain opacity-70 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105" />
+                <Image src={imagePath} alt={couteau.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain opacity-70 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105" />
                 <div class="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none">
                   <img src="/images/play-button.webp" alt="Play" class="w-16 h-16 drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-110" />
                 </div>
               </a>
             ) : (
-              <a href={couteau.data.image} class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center glightbox-insta cursor-pointer pointer-events-auto" data-title={couteau.data.titre}>
-                <Image src={couteau.data.image} alt={couteau.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain transition-transform duration-700 hover:scale-105" />
+              <a href={imagePath} class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center glightbox-insta cursor-pointer pointer-events-auto" data-title={couteau.data.titre}>
+                <Image src={imagePath} alt={couteau.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain transition-transform duration-700 hover:scale-105" />
               </a>
             )}
           </div>
@@ -213,7 +220,6 @@ const schemaData = {
   function initAccordion() {
     const toggles = document.querySelectorAll('.toggle-details');
     toggles.forEach(btn => {
-      // On remplace pour éviter les listeners fantômes au changement de page Astro
       const newBtn = btn.cloneNode(true);
       btn.parentNode.replaceChild(newBtn, btn);
 

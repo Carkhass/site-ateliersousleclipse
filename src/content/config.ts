@@ -1,44 +1,58 @@
 import { defineCollection, z } from 'astro:content';
 
-// Collection pour tes couteaux (existante)
+// 1. Collection COUTEAUX
 const couteaux = defineCollection({
   type: 'data',
   schema: z.object({
     titre: z.string(),
-    type: z.string().optional(),
-    format: z.string().optional(),
-    description: z.string().optional(),
-    image: z.string(),
-    prix: z.number().nullable(),
-    disponible: z.boolean(),
+    univers: z.enum(['Gastronomie', 'Aventure', 'Quotidien', 'Exception']).default('Quotidien'),
+    type: z.string().optional().nullable(),
+    format: z.string().optional().nullable(),
+    description: z.string().optional().nullable(),
+    image: z.preprocess((val) => {
+      if (typeof val === 'string') return [val];
+      return val;
+    }, z.array(z.string())), 
+    prix: z.number().nullable().default(0),
+    disponible: z.union([z.boolean(), z.string()]).transform(val => val === true || val === "true").default(true),
     date: z.string(),
-    lienInstagram: z.string().url().optional().nullable(),
+    lienInstagram: z.string().url().optional().nullable().or(z.literal("")),
     caracteristiques: z.object({
       acier: z.string().optional().nullable(),
       manche: z.string().optional().nullable(),
-    }).optional(), 
-    details_evenement: z.object({
-      lieu: z.string().nullable().optional(),
-      date: z.string().nullable().optional(),
     }).optional(),
+    last_update: z.string().optional().nullable(),
   }),
 });
 
-// NOUVELLE COLLECTION : Actualités et Agenda
+// 2. Collection ACTUS (Salons, Marchés)
 const actus = defineCollection({
   type: 'data',
   schema: z.object({
     titre: z.string(),
-    date: z.string(), // Format YYYY-MM-DD
+    date: z.string(),
     type: z.enum(['evenement', 'instagram']),
-    lieu: z.string().optional(), // Utile pour l'agenda
+    lieu: z.string().optional().nullable(),
     image: z.string(),
-    lienInstagram: z.string().url().optional().nullable(),
+    lienInstagram: z.string().url().optional().nullable().or(z.literal("")),
   }),
 });
 
-// Export des deux collections
+// 3. NOUVEAU : Collection DIVERS (Coulisses, Rencontres, Savoir-faire)
+const divers = defineCollection({
+  type: 'data',
+  schema: z.object({
+    titre: z.string(),
+    date: z.string(),
+    tags: z.array(z.string()).optional(), // Ex: ["Japon", "Affûtage", "Rencontre"]
+    description: z.string(),
+    image: z.array(z.string()), // On garde le format tableau par cohérence
+    lienInstagram: z.string().url().optional().nullable().or(z.literal("")),
+  }),
+});
+
 export const collections = { 
   'couteaux': couteaux,
-  'actus': actus 
+  'actus': actus,
+  'divers': divers
 };
