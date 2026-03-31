@@ -1,0 +1,19 @@
+{
+  "titre": "Bon'Ap",
+  "univers": "Gastronomie",
+  "type": "instagram",
+  "format": "video",
+  "description": "",
+  "caracteristiques": {
+    "acier": "Non précisé",
+    "manche": "Non précisé"
+  },
+  "image": [
+    "/images/couteaux/2025-12-08-bon-ap.webp"
+  ],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/reel/DSAoe8AD7jI/",
+  "date": "2025-12-08",
+  "disponible": true,
+  "last_update": "2026-03-31T08:37:29.341Z"
+}

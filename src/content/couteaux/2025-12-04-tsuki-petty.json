@@ -3,9 +3,9 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "video",
-  "description": "Les deux derniers Tsuki Petty sont prêts à partir !",
+  "description": "Un des deux derniers Tsuki Petty disponible pour vous !",
   "caracteristiques": {
-    "acier": "C75F",
+    "acier": "80crv2",
     "manche": "Morta"
   },
   "image": [
@@ -15,5 +15,5 @@
   "lienInstagram": "https://www.instagram.com/reel/DR2TDg9GDBv/",
   "date": "2025-12-04",
   "disponible": true,
-  "last_update": "2026-03-31T08:14:47.730Z"
+  "last_update": "2026-03-31T08:38:03.235Z"
 }

@@ -1,0 +1,19 @@
+{
+  "titre": "Eclipse",
+  "univers": "Exception",
+  "type": "instagram",
+  "format": "video",
+  "description": "Vous le trouvez comment celui-ci ?",
+  "caracteristiques": {
+    "acier": "80crv2",
+    "manche": "Ebène"
+  },
+  "image": [
+    "/images/couteaux/2025-12-05-eclipse.webp"
+  ],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/reel/DR46mnEjpIm/",
+  "date": "2025-12-05",
+  "disponible": false,
+  "last_update": "2026-03-31T08:37:51.767Z"
+}

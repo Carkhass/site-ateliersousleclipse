@@ -1,12 +1,12 @@
 {
   "titre": "Actualité Atelier",
-  "univers": "Exception",
+  "univers": "Gastronomie",
   "type": "instagram",
   "format": "video",
   "description": "Bon week-end à toutes et à tous !",
   "caracteristiques": {
     "acier": "Non précisé",
-    "manche": "null"
+    "manche": "Non précisé"
   },
   "image": [
     "/images/divers/2025-12-06-actualite-atelier.webp"
@@ -15,5 +15,5 @@
   "lienInstagram": "https://www.instagram.com/reel/DR7fYtalZRa/",
   "date": "2025-12-06",
   "disponible": true,
-  "last_update": "2026-03-31T07:30:06.777Z"
+  "last_update": "2026-03-31T08:37:40.716Z"
 }

@@ -3,7 +3,7 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "video",
-  "description": "Un des deux derniers Tsuki Petty disponibles.",
+  "description": "Un des deux derniers Tsuki Petty !",
   "caracteristiques": {
     "acier": "C125U",
     "manche": "Ébène noir du Gabon"
@@ -11,9 +11,9 @@
   "image": [
     "/images/couteaux/2025-12-22-tsuki-petty.webp"
   ],
-  "prix": 230,
+  "prix": null,
   "lienInstagram": "https://www.instagram.com/reel/DSktk6uABM9/",
   "date": "2025-12-22",
   "disponible": true,
-  "last_update": "2026-03-31T08:14:02.193Z"
+  "last_update": "2026-03-31T08:37:18.106Z"
 }
