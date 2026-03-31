@@ -19,24 +19,32 @@ const localBusinessSchema = {
   "priceRange": "€€€"
 };
 
-// --- LOGIQUE ACTUS ---
-const toutesLesActus = await getCollection('actus');
+// --- LOGIQUE ACTUS PATCHÉE ---
+const toutesLesActus = await getCollection('actus') || [];
 const maintenant = new Date();
+
+// 1. On définit les marges de temps
 const ilYaUnMois = new Date();
 ilYaUnMois.setDate(maintenant.getDate() - 30);
 
-const agendaAffiche = toutesLesActus
-  .filter(a => a.data.type === 'evenement' && new Date(a.data.date) >= ilYaUnMois)
-  .sort((a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime());
+const margeVisibilitePassé = new Date();
+margeVisibilitePassé.setDate(maintenant.getDate() - 3); // L'actu reste 3 jours après la date
 
+// 2. On filtre les événements pour l'agenda (récents + futurs proches)
+const agendaAffiche = toutesLesActus
+  .filter(a => a.data.type === 'evenement' && new Date(a.data.date_event || a.data.date) >= ilYaUnMois)
+  .sort((a, b) => new Date(a.data.date_event || a.data.date).getTime() - new Date(b.data.date_event || b.data.date).getTime());
+
+// 3. On isole les événements à mettre en avant (Futurs + ceux passés depuis moins de 3 jours)
+const futurs = agendaAffiche.filter(a => new Date(a.data.date_event || a.data.date) >= margeVisibilitePassé);
+
+const prochainEvent = futurs[0];
+const autresEvents = futurs.slice(1, 4);
+
+// 4. Les actus récentes (tous types confondus, pour le flux global)
 const actusRecentes = toutesLesActus
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
   .slice(0, 4);
-
-// On isole le prochain (futur uniquement pour la mise en avant)
-const futurs = agendaAffiche.filter(a => new Date(a.data.date) >= maintenant);
-const prochainEvent = futurs[0];
-const autresEvents = futurs.slice(1, 4);
 ---
 
 <BaseLayout 
@@ -48,11 +56,7 @@ const autresEvents = futurs.slice(1, 4);
 >
   <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
 
-  <!-- ========================================================= -->
-  <!-- SECTION PRESENTATION -->
-  <!-- ========================================================= -->
-
-<section class="max-w-[1280px] mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center min-h-[55vh]">
+  <section class="max-w-[1280px] mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center min-h-[55vh]">
   <div class="relative fade-slide-left">
     <img 
       src="/images/portrait-yann2.webp" 
@@ -80,10 +84,7 @@ const autresEvents = futurs.slice(1, 4);
   </div>
 </section>
 
-  <!-- ========================================================= -->
-  <!-- SECTION EVENEMENTS -->
-  <!-- ========================================================= -->
-{agendaAffiche.length > 0 && (
+  {agendaAffiche.length > 0 && (
 <section class="relative py-32 mt-24 z-10">
   
   <div class="absolute inset-0 bg-[#1a1a1a] shadow-2xl skew-y-[-4deg] scale-x-110 -z-10 origin-center border-y border-white/5"></div>
@@ -119,10 +120,10 @@ const autresEvents = futurs.slice(1, 4);
         </h3>
         <div class="space-y-6">
           {agendaAffiche.map((event, index) => {
-            const dateEvent = new Date(event.data.date);
-            const isPasse = dateEvent < maintenant;
-            const mois = dateEvent.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', '');
-            const jour = dateEvent.getDate();
+            const dateObj = new Date(event.data.date_event || event.data.date);
+            const isPasse = dateObj < maintenant;
+            const mois = dateObj.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', '');
+            const jour = dateObj.getDate();
             
             return (
               <div class={`flex items-center gap-4 group transition-opacity ${isPasse ? 'opacity-50' : ''}`} style={`transition-delay: ${index * 100}ms`}>
@@ -156,6 +157,9 @@ const autresEvents = futurs.slice(1, 4);
                 <div class="flex justify-between items-center gap-4">
                   <div>
                     <h4 class="text-lg font-serif font-bold text-[#2b1b1d] group-hover:text-accent transition-colors leading-tight">{prochainEvent.data.titre}</h4>
+                    <p class="text-xs text-gray-600 italic mt-1 flex items-center gap-1">
+                      <span class="text-accent">📅</span> {prochainEvent.data.date_formattee || new Date(prochainEvent.data.date_event || prochainEvent.data.date).toLocaleDateString('fr-FR')}
+                    </p>
                     <p class="text-xs text-gray-600 italic mt-1 flex items-center gap-1"><span class="text-accent">📍</span> {prochainEvent.data.lieu}</p>
                   </div>
                   <span class="shrink-0 border border-accent text-accent px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter group-hover:bg-accent group-hover:text-white transition-all">À venir</span>
@@ -170,13 +174,15 @@ const autresEvents = futurs.slice(1, 4);
           <div class="space-y-4">
             {autresEvents.length > 0 ? autresEvents.map((event, index) => (
               
-              /* Petites cartes (Figées en clair) */
+              /* Petites cartes (Utilisation de date_formattee si dispo) */
               <a href={event.data.lienInstagram} target="_blank" class="group flex items-center gap-4 bg-[#e8dfd4]/80 p-3 rounded-xl border border-black/5 hover:bg-[#e8dfd4] hover:border-accent/20 transition-all" style={`transition-delay: ${index * 150}ms`}>
                 <div class="w-14 h-14 shrink-0 rounded-lg overflow-hidden border border-black/10">
                   <img src={event.data.image} alt="" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <div class="min-w-0">
-                  <p class="text-[10px] text-accent font-black uppercase">{new Date(event.data.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}</p>
+                  <p class="text-[10px] text-accent font-black uppercase">
+                    {event.data.date_formattee ? event.data.date_formattee.split('/').slice(0,2).join('/') : new Date(event.data.date_event || event.data.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
+                  </p>
                   <h5 class="text-xs font-bold text-[#2b1b1d] truncate group-hover:text-accent transition-colors">{event.data.titre}</h5>
                 </div>
               </a>
