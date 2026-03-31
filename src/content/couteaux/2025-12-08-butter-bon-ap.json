@@ -3,10 +3,10 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "video",
-  "description": "La vidéo du dernier Butter Bon'Ap",
+  "description": "Le dernier Butter Bon'Ap est disponible 😇",
   "caracteristiques": {
-    "acier": "null",
-    "manche": "null"
+    "acier": "Non précisé",
+    "manche": "Non précisé"
   },
   "image": [
     "/images/couteaux/2025-12-08-butter-bon-ap.webp"
@@ -15,5 +15,5 @@
   "lienInstagram": "https://www.instagram.com/reel/DSAoe8AD7jI/",
   "date": "2025-12-08",
   "disponible": true,
-  "last_update": "2026-03-31T08:14:13.555Z"
+  "last_update": "2026-03-31T08:51:09.430Z"
 }

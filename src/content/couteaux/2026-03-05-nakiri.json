@@ -3,17 +3,17 @@
   "univers": "Exception",
   "type": "instagram",
   "format": "video",
-  "description": "Joli ce Red heart hein ?",
+  "description": "joli ce Red heart hein ?",
   "caracteristiques": {
-    "acier": "Red heart",
-    "manche": "Non précisé"
+    "acier": "null",
+    "manche": "null"
   },
   "image": [
     "/images/couteaux/2026-03-05-nakiri.webp"
   ],
-  "prix": 0,
+  "prix": null,
   "lienInstagram": "https://www.instagram.com/reel/DVgwC4pj0oB/",
   "date": "2026-03-05",
   "disponible": true,
-  "last_update": "2026-03-31T08:11:55.459Z"
+  "last_update": "2026-03-31T08:49:40.213Z"
 }

@@ -3,10 +3,10 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "video",
-  "description": "Couteau idéal pour émincer les légumes avec précision.",
+  "description": "",
   "caracteristiques": {
     "acier": "XC100",
-    "manche": "Mortau"
+    "manche": "Morta"
   },
   "image": [
     "/images/couteaux/2026-03-23-nakiri-tsuki.webp"
@@ -15,5 +15,5 @@
   "lienInstagram": "https://www.instagram.com/reel/DWPKIujk8S0/",
   "date": "2026-03-23",
   "disponible": true,
-  "last_update": "2026-03-31T08:34:02.944Z"
+  "last_update": "2026-03-31T08:48:54.978Z"
 }

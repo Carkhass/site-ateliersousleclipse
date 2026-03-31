@@ -1,0 +1,19 @@
+{
+  "titre": "Office présenté récemment",
+  "univers": "Exception",
+  "type": "instagram",
+  "format": "video",
+  "description": "Bon week-end à toutes et à tous !",
+  "caracteristiques": {
+    "acier": "Non précisé",
+    "manche": "Non précisé"
+  },
+  "image": [
+    "/images/couteaux/2025-12-06-office-presente-recemment.webp"
+  ],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/reel/DR7fYtalZRa/",
+  "date": "2025-12-06",
+  "disponible": true,
+  "last_update": "2026-03-31T08:51:16.920Z"
+}

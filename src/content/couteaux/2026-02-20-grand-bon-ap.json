@@ -6,7 +6,7 @@
   "description": "Ce beau joujou sera accompagné par un petit frère, dont le manche sera taillé dans les mêmes plaquettes, avec plus de doré encore.",
   "caracteristiques": {
     "acier": "C125U",
-    "manche": "Bouleau madré stabilisé teinté bleu et or"
+    "manche": "Bouleau madré stabilisé teinté bleu et or, rivets inox"
   },
   "image": [
     "/images/couteaux/2026-02-20-grand-bon-ap.webp"
@@ -15,5 +15,5 @@
   "lienInstagram": "https://www.instagram.com/p/DU_K1unFVzA/",
   "date": "2026-02-20",
   "disponible": false,
-  "last_update": "2026-03-31T08:36:20.180Z"
+  "last_update": "2026-03-31T08:50:24.129Z"
 }

@@ -1,19 +1,19 @@
 {
   "titre": "Table",
-  "univers": "Quotidien",
+  "univers": "Exception",
   "type": "instagram",
   "format": "photo",
   "description": "C'est raiment un de mes bois préférés à travailler, jamais déçu du rendu",
   "caracteristiques": {
     "acier": "XC100",
-    "manche": "Olivier avec rivets carbone"
+    "manche": "olivier et rivets carbone"
   },
   "image": [
     "/images/couteaux/2026-03-19-table.webp"
   ],
-  "prix": null,
+  "prix": 0,
   "lienInstagram": "https://www.instagram.com/p/DWEyKRiAgEB/",
   "date": "2026-03-19",
   "disponible": true,
-  "last_update": "2026-03-31T08:34:25.841Z"
+  "last_update": "2026-03-31T08:49:09.929Z"
 }

@@ -6,14 +6,14 @@
   "description": "Ce soir, une lance à huîtres.",
   "caracteristiques": {
     "acier": "80crv2",
-    "manche": "bois inconnu, wacapou, alisier"
+    "manche": "Bois inconnu, Wacapou, Alisier"
   },
   "image": [
     "/images/couteaux/2026-03-03-lance-a-huitres.webp"
   ],
-  "prix": 0,
+  "prix": null,
   "lienInstagram": "https://www.instagram.com/p/DVbiqP2AkpK/",
   "date": "2026-03-03",
   "disponible": false,
-  "last_update": "2026-03-31T08:35:34.718Z"
+  "last_update": "2026-03-31T08:49:54.824Z"
 }
