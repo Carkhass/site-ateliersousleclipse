@@ -46,7 +46,10 @@ const divers = defineCollection({
     date: z.string(),
     tags: z.array(z.string()).optional(), // Ex: ["Japon", "Affûtage", "Rencontre"]
     description: z.string(),
-    image: z.array(z.string()), // On garde le format tableau par cohérence
+    image: z.preprocess((val) => {
+  if (typeof val === 'string') return [val];
+  return val;
+}, z.array(z.string())),
     lienInstagram: z.string().url().optional().nullable().or(z.literal("")),
   }),
 });
