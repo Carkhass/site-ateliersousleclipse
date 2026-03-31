@@ -3,42 +3,40 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 
-const tousLesCouteaux = await getCollection('couteaux');
-const couteauxTries = tousLesCouteaux.sort((a, b) => {
-  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+// 1. On récupère les deux collections en parallèle
+const couteaux = await getCollection('couteaux');
+const divers = await getCollection('divers');
+
+// 2. On fusionne les tableaux et on trie par date décroissante
+// On utilise .data.date car c'est le champ commun défini dans tes schémas Zod
+const tousLesItems = [...couteaux, ...divers].sort((a, b) => {
+  const dateA = new Date(a.data.date).getTime();
+  const dateB = new Date(b.data.date).getTime();
+  return dateB - dateA;
 });
 
-// Remplace ton bloc schemaData par celui-ci :
+// 3. On définit couteauxTries pour que le reste de ton code HTML n'ait pas besoin de changer
+const couteauxTries = tousLesItems;
+
 const schemaData = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   "name": "Les Créations de l'Atelier sous l'Éclipse",
   "numberOfItems": couteauxTries.length,
-  "itemListElement": couteauxTries.map((couteau, index) => {
-    // On récupère la première image pour le SEO
-    const firstImage = Array.isArray(couteau.data.image) ? couteau.data.image[0] : couteau.data.image;
+  "itemListElement": couteauxTries.map((item, index) => {
+    const firstImage = Array.isArray(item.data.image) ? item.data.image[0] : item.data.image;
     
     return {
       "@type": "ListItem",
       "position": index + 1,
       "item": {
         "@type": "Product",
-        "name": couteau.data.titre,
-        "image": new URL(firstImage, Astro.site || 'https://ateliersousleclipse.fr').href,
-        "description": couteau.data.description,
+        "name": item.data.titre,
+        "image": new URL(firstImage || '', Astro.site || 'https://ateliersousleclipse.fr').href,
+        "description": item.data.description || "",
         "brand": {
           "@type": "Brand",
           "name": "L'Atelier sous l'Éclipse"
-        },
-        "material": `${couteau.data.caracteristiques?.acier || ''}, ${couteau.data.caracteristiques?.manche || ''}`.trim().replace(/^,|,$/g, ''),
-        "offers": {
-          "@type": "Offer",
-          "price": couteau.data.prix > 0 ? couteau.data.prix : undefined,
-          "priceCurrency": "EUR",
-          "availability": (couteau.data.disponible === true || couteau.data.disponible === "true") 
-            ? "https://schema.org/InStock" 
-            : "https://schema.org/OutOfStock",
-          "itemCondition": "https://schema.org/NewCondition"
         }
       }
     };
@@ -72,34 +70,37 @@ const schemaData = {
     </div>
 
     <div class="flex flex-wrap md:justify-center gap-2 md:gap-4 mt-10 no-select filter-grid">
-  <button class="filter-btn active" data-filter="all">Photos</button>
-  <button class="filter-btn" data-filter="dispo">📦 Disponibles</button>
-  <button class="filter-btn" data-filter="modele">⚒️ Les Modèles</button>
-  <button class="filter-btn" data-filter="video">🎬 Vidéos</button>
-</div>
+      <button class="filter-btn active" data-filter="all">Photos</button>
+      <button class="filter-btn" data-filter="dispo">📦 Disponibles</button>
+      <button class="filter-btn" data-filter="modele">⚒️ Les Modèles</button>
+      <button class="filter-btn" data-filter="video">🎬 Vidéos</button>
+    </div>
   </header>
 
   <div id="knife-grid" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-12 max-w-7xl mx-auto">
-    {couteauxTries.map((couteau) => {
-      const estDispo = couteau.data.disponible === true || couteau.data.disponible === "true";
-      const isVideo = couteau.data.format === "video" || couteau.data.titre.toLowerCase().includes("en vidéo");
-      const typeFiltre = isVideo ? 'video' : (couteau.data.type || 'insta');
-      const urlInsta = couteau.data.lienInstagram || "#";
+    {couteauxTries.map((item) => {
+      // 1. Détection ultra-simple grâce au nouveau n8n
+      const isVideo = item.data.type === "video" || item.data.format === "video";
       
-      // Sécurité pour récupérer l'image (prend le premier élément du tableau)
-      const imagePath = Array.isArray(couteau.data.image) ? couteau.data.image[0] : couteau.data.image;
+      // 2. L'image est maintenant toujours une String (plus de tableau [])
+      const imagePath = item.data.image;
+      
+      // 3. Normalisation des états
+      const estDispo = item.data.disponible === true || String(item.data.disponible) === "true";
+      const typeFiltre = isVideo ? 'video' : (item.data.type || 'insta');
+      const urlInsta = item.data.lienInstagram || "#";
 
       return (
         <article 
-  class="knife-card fade-in-up relative flex flex-col h-full bg-surface shadow-lg rounded-lg border-2 border-transparent transition-all duration-500"
-  data-type={typeFiltre}
-  data-dispo={String(estDispo)}
->
+          class="knife-card fade-in-up relative flex flex-col h-full bg-surface shadow-lg rounded-lg border-2 border-transparent transition-all duration-500"
+          data-type={typeFiltre}
+          data-dispo={String(estDispo)}
+        >
           <div class="tampon-container absolute -top-8 -right-8 z-[100] w-32 h-32 pointer-events-none drop-shadow-2xl rotate-12">
             {estDispo ? (
               <img src="/images/tampon-dispo.webp" alt="Disponible" class="w-full h-full object-contain" />
             ) : (
-              couteau.data.prix > 0 && (
+              (item.data.prix > 0) && (
                 <img src="/images/tampon-vendu.webp" alt="Vendu" class="w-full h-full object-contain" />
               )
             )}
@@ -108,22 +109,21 @@ const schemaData = {
           <div class="w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] bg-[#1a1a1a] rounded-t-sm ratio-insta">
             {isVideo ? (
               <a href={urlInsta} target="_blank" rel="noopener noreferrer" class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center group cursor-pointer pointer-events-auto">
-                <Image src={imagePath} alt={couteau.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain opacity-70 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105" />
+                <Image src={imagePath} alt={item.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain opacity-70 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105" />
                 <div class="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none">
                   <img src="/images/play-button.webp" alt="Play" class="w-16 h-16 drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-110" />
                 </div>
               </a>
             ) : (
-              <a href={imagePath} class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center glightbox-insta cursor-pointer pointer-events-auto" data-title={couteau.data.titre}>
-                <Image src={imagePath} alt={couteau.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain transition-transform duration-700 hover:scale-105" />
+              <a href={imagePath} class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center glightbox-insta cursor-pointer pointer-events-auto" data-title={item.data.titre}>
+                <Image src={imagePath} alt={item.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain transition-transform duration-700 hover:scale-105" />
               </a>
             )}
           </div>
 
           <div class="p-3 md:p-8 flex flex-col flex-grow bg-[#f0e8dd] relative">
-            
             <div class="flex justify-between items-start mb-1">
-              <h3 class="text-sm md:text-2xl font-serif font-bold text-[#7a2a2a] leading-tight">{couteau.data.titre}</h3>
+              <h3 class="text-sm md:text-2xl font-serif font-bold text-[#7a2a2a] leading-tight">{item.data.titre}</h3>
               <button class="toggle-details md:hidden text-[#7a2a2a] p-1 focus:outline-none" aria-label="Voir détails">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -132,41 +132,37 @@ const schemaData = {
             </div>
 
             <div class="details-content">
-  <div class="flex flex-col gap-1 mb-3 py-2 border-y border-[#7a2a2a]/10">
-    
-    {couteau.data.caracteristiques?.acier && (
-      <div class="flex items-baseline gap-2">
-        <span class="text-[10px] font-bold uppercase text-[#7a2a2a]/60 w-12 shrink-0">Acier</span>
-        <span class="text-[11px] font-mono text-[#4a4a4a] italic">{couteau.data.caracteristiques.acier}</span>
-      </div>
-    )}
-    
-    {couteau.data.caracteristiques?.manche && (
-      <div class="flex items-baseline gap-2">
-        <span class="text-[10px] font-bold uppercase text-[#7a2a2a]/60 w-12 shrink-0">Manche</span>
-        <span class="text-[11px] font-mono text-[#4a4a4a] line-clamp-1">{couteau.data.caracteristiques.manche}</span>
-      </div>
-    )}
-
-    {couteau.data.description && (
-      <p class="text-[11px] md:text-sm text-gray-700 leading-relaxed mt-2 pt-2 border-t border-black/5 md:line-clamp-none">
-        {couteau.data.description}
-      </p>
-    )}
-  </div>
-</div>
+              <div class="flex flex-col gap-1 mb-3 py-2 border-y border-[#7a2a2a]/10">
+                {item.data.caracteristiques?.acier && (
+                  <div class="flex items-baseline gap-2">
+                    <span class="text-[10px] font-bold uppercase text-[#7a2a2a]/60 w-12 shrink-0">Acier</span>
+                    <span class="text-[11px] font-mono text-[#4a4a4a] italic">{item.data.caracteristiques.acier}</span>
+                  </div>
+                )}
+                {item.data.caracteristiques?.manche && (
+                  <div class="flex items-baseline gap-2">
+                    <span class="text-[10px] font-bold uppercase text-[#7a2a2a]/60 w-12 shrink-0">Manche</span>
+                    <span class="text-[11px] font-mono text-[#4a4a4a] line-clamp-1">{item.data.caracteristiques.manche}</span>
+                  </div>
+                )}
+                {item.data.description && (
+                  <p class="text-[11px] md:text-sm text-gray-700 leading-relaxed mt-2 pt-2 border-t border-black/5">
+                    {item.data.description}
+                  </p>
+                )}
+              </div>
+            </div>
 
             <div class="mt-auto pt-2 md:pt-4 border-t border-black/10 flex justify-between items-center gap-2 relative z-[60]"> 
               <span class="text-xs md:text-xl font-serif font-bold text-[#7a2a2a]">
-                {couteau.data.prix > 0 ? `${couteau.data.prix} €` : "Sur commande"}
+                {item.data.prix > 0 ? `${item.data.prix} €` : "Sur commande"}
               </span>
-              
               <span 
                 role="button"
                 tabindex="0"
                 class="trigger-booking-global cursor-pointer px-3 py-1.5 md:px-5 md:py-2.5 rounded font-bold text-[9px] md:text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md bg-[var(--color-accent)] text-[var(--color-bg)] hover:bg-[#7a2a2a] hover:scale-105"
                 style={!estDispo ? "background-color: transparent; border: 2px solid var(--color-accent); color: var(--color-accent);" : ""}
-                data-ref={couteau.data.titre}
+                data-ref={item.data.titre}
                 data-dispo={String(estDispo)}
               >
                 {estDispo ? 'Réserver' : 'Demander'}
