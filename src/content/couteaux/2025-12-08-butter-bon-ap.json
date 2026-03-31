@@ -1,19 +1,19 @@
 {
   "titre": "Butter Bon'Ap",
-  "univers": "Gastronomie",
+  "univers": "Exception",
   "type": "instagram",
   "format": "video",
-  "description": "Le dernier Butter Bon'Ap de Yann 😇",
+  "description": "Le dernier Butter Bon'Ap de l'atelier 🤩",
   "caracteristiques": {
-    "acier": "Non précisé",
-    "manche": "Non précisé"
+    "acier": "null",
+    "manche": "null"
   },
   "image": [
     "/images/couteaux/2025-12-08-butter-bon-ap.webp"
   ],
-  "prix": 0,
+  "prix": null,
   "lienInstagram": "https://www.instagram.com/reel/DSAoe8AD7jI/",
   "date": "2025-12-08",
   "disponible": true,
-  "last_update": "2026-03-31T07:29:55.335Z"
+  "last_update": "2026-03-31T07:59:45.472Z"
 }

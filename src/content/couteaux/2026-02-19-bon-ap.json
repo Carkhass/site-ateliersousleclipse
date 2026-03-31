@@ -3,17 +3,17 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "photo",
-  "description": "Un Bon'Ap avec une pointe un peu différente de d'habitude, moins courbe.",
+  "description": "Vous aimez cette petite variation ?",
   "caracteristiques": {
     "acier": "C125U",
-    "manche": "Red heart"
+    "manche": "Red heart et rivets carbone"
   },
   "image": [
     "/images/couteaux/2026-02-19-bon-ap.webp"
   ],
-  "prix": null,
+  "prix": 0,
   "lienInstagram": "https://www.instagram.com/p/DU8oTmOFHI6/",
   "date": "2026-02-19",
   "disponible": true,
-  "last_update": "2026-03-31T07:28:11.156Z"
+  "last_update": "2026-03-31T07:58:48.085Z"
 }

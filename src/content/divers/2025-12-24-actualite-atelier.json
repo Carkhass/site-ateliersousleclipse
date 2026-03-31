@@ -1,9 +1,9 @@
 {
   "titre": "Actualité Atelier",
-  "univers": "Quotidien",
+  "univers": "Exception",
   "type": "instagram",
   "format": "video",
-  "description": "Je vous souhaite de belles fêtes de fin d'année à tous !",
+  "description": "Merci d'être là, à suivre mes créations",
   "caracteristiques": {
     "acier": "Non précisé",
     "manche": "Non précisé"
@@ -14,6 +14,6 @@
   "prix": 0,
   "lienInstagram": "https://www.instagram.com/reel/DSpZJbojMi3/",
   "date": "2025-12-24",
-  "disponible": false,
-  "last_update": "2026-03-31T07:29:08.870Z"
+  "disponible": true,
+  "last_update": "2026-03-31T07:59:22.982Z"
 }

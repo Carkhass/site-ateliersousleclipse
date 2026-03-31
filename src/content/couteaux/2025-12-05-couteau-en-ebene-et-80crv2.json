@@ -3,7 +3,7 @@
   "univers": "Aventure",
   "type": "instagram",
   "format": "video",
-  "description": "Le dernier camp en ébène et 80crv2",
+  "description": "",
   "caracteristiques": {
     "acier": "80crv2",
     "manche": "Ébène"
@@ -11,9 +11,9 @@
   "image": [
     "/images/couteaux/2025-12-05-couteau-en-ebene-et-80crv2.webp"
   ],
-  "prix": null,
+  "prix": 0,
   "lienInstagram": "https://www.instagram.com/reel/DR46mnEjpIm/",
   "date": "2025-12-05",
   "disponible": true,
-  "last_update": "2026-03-31T07:30:18.246Z"
+  "last_update": "2026-03-31T08:00:08.501Z"
 }

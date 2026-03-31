@@ -3,10 +3,10 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "photo",
-  "description": "Idéal pour émincer les légumes avec précision",
+  "description": "Un nakiri Bon'ap.",
   "caracteristiques": {
     "acier": "C125U",
-    "manche": "Red heart"
+    "manche": "Red Heart"
   },
   "image": [
     "/images/couteaux/2026-03-04-nakiri-bon-ap.webp"
@@ -15,5 +15,5 @@
   "lienInstagram": "https://www.instagram.com/p/DVeLPvdAmYh/",
   "date": "2026-03-04",
   "disponible": false,
-  "last_update": "2026-03-31T07:03:54.384Z"
+  "last_update": "2026-03-31T07:57:39.513Z"
 }

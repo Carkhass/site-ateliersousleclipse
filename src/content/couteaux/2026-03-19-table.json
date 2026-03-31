@@ -6,14 +6,14 @@
   "description": "C'est raiment un de mes bois préférés à travailler, jamais déçu du rendu",
   "caracteristiques": {
     "acier": "XC100",
-    "manche": "olivier avec rivets carbone"
+    "manche": "olivier, rivets carbone"
   },
   "image": [
     "/images/couteaux/2026-03-19-table.webp"
   ],
-  "prix": 0,
+  "prix": null,
   "lienInstagram": "https://www.instagram.com/p/DWEyKRiAgEB/",
   "date": "2026-03-19",
   "disponible": true,
-  "last_update": "2026-03-31T07:26:04.894Z"
+  "last_update": "2026-03-31T07:56:42.243Z"
 }

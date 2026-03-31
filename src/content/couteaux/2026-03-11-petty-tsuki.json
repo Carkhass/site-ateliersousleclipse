@@ -3,17 +3,17 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "photo",
-  "description": "Vous aimez bien ?",
+  "description": "Vous aimez bien?",
   "caracteristiques": {
     "acier": "C125U",
-    "manche": "Cocobolo"
+    "manche": "Cocobolo avec G10 au centre et rivets carbone"
   },
   "image": [
     "/images/couteaux/2026-03-11-petty-tsuki.webp"
   ],
-  "prix": 0,
+  "prix": null,
   "lienInstagram": "https://www.instagram.com/p/DVwIqvHgv43/",
   "date": "2026-03-11",
   "disponible": true,
-  "last_update": "2026-03-31T07:26:27.805Z"
+  "last_update": "2026-03-31T07:57:05.019Z"
 }
