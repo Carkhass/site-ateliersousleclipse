@@ -1,0 +1,15 @@
+{
+  "titre": "Sans nom",
+  "date": "2026-03-30",
+  "lienInstagram": "https://www.instagram.com/p/DWg1C8MlZLg/",
+  "description": "Lance à huîtres.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/2026-03-30-sans-nom.webp",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Olivier, morta (centre)"
+  }
+}
