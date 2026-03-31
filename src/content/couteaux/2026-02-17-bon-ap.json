@@ -1,0 +1,19 @@
+{
+  "titre": "Bon'ap",
+  "description": "Un Grand Bon'ap pour votre cuisine quotidienne",
+  "lienInstagram": "https://www.instagram.com/p/DU3jTUMgobs/",
+  "date": "2026-02-17",
+  "last_update": "2026-03-31T10:14:42.510Z",
+  "univers": "Gastronomie",
+  "type": "instagram",
+  "format": "photo",
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Manche en ébène pale moon"
+  },
+  "image": [
+    "/images/couteaux/2026-02-17-bon-ap.webp"
+  ],
+  "prix": null,
+  "disponible": false
+}

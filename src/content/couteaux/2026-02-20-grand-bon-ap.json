@@ -1,19 +1,19 @@
 {
   "titre": "Grand Bon'ap",
+  "description": "Ce beau joujou sera accompagné par un petit frère, dont le manche sera taillé dans les mêmes plaquettes, avec plus de doré encore.",
+  "lienInstagram": "https://www.instagram.com/p/DU_K1unFVzA/",
+  "date": "2026-02-20",
+  "last_update": "2026-03-31T10:14:25.521Z",
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "photo",
-  "description": "Ce beau joujou sera accompagné par un petit frère, dont le manche sera taillé dans les mêmes plaquettes, avec plus de doré encore.",
   "caracteristiques": {
     "acier": "C125U",
-    "manche": "Bouleau madré stabilisé teinté bleu et or, rivets inox"
+    "manche": "Bouleau madré stabilisé teinté bleu et or"
   },
   "image": [
     "/images/couteaux/2026-02-20-grand-bon-ap.webp"
   ],
   "prix": null,
-  "lienInstagram": "https://www.instagram.com/p/DU_K1unFVzA/",
-  "date": "2026-02-20",
-  "disponible": false,
-  "last_update": "2026-03-31T08:50:24.129Z"
+  "disponible": true
 }

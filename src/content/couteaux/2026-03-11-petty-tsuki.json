@@ -1,19 +1,19 @@
 {
   "titre": "Petty Tsuki",
+  "description": "Un Petty Tsuki avec un chouette bois de cocobolo !",
+  "lienInstagram": "https://www.instagram.com/p/DVwIqvHgv43/",
+  "date": "2026-03-11",
+  "last_update": "2026-03-31T10:13:25.676Z",
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "photo",
-  "description": "Vous aimez bien ?",
   "caracteristiques": {
     "acier": "C125U",
-    "manche": "Cocobolo avec G10 au centre et rivets carbone"
+    "manche": "Cocobolo avec centre G10 et rivets carbone"
   },
   "image": [
     "/images/couteaux/2026-03-11-petty-tsuki.webp"
   ],
-  "prix": null,
-  "lienInstagram": "https://www.instagram.com/p/DVwIqvHgv43/",
-  "date": "2026-03-11",
-  "disponible": true,
-  "last_update": "2026-03-31T08:49:24.912Z"
+  "prix": 230,
+  "disponible": true
 }

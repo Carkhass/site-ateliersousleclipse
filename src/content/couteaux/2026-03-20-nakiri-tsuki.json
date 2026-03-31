@@ -1,19 +1,19 @@
 {
   "titre": "Nakiri Tsuki",
+  "description": "Un poids plume, une agilité remarquable dû à la finesse de la lame, et un équilibre optimisé qui fera la terreur des légumes",
+  "lienInstagram": "https://www.instagram.com/p/DWHS4N_gPvW/",
+  "date": "2026-03-20",
+  "last_update": "2026-03-31T10:13:02.894Z",
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "photo",
-  "description": "Un poids plume, une agilité remarquable dû à la finesse de la lame, et un équilibre optimisé qui fera la terreur des légumes",
   "caracteristiques": {
     "acier": "C125U",
-    "manche": "Morta, G10"
+    "manche": "Morta G10"
   },
   "image": [
     "/images/couteaux/2026-03-20-nakiri-tsuki.webp"
   ],
   "prix": null,
-  "lienInstagram": "https://www.instagram.com/p/DWHS4N_gPvW/",
-  "date": "2026-03-20",
-  "disponible": true,
-  "last_update": "2026-03-31T08:49:02.077Z"
+  "disponible": true
 }
