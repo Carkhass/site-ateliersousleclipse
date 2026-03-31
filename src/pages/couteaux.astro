@@ -3,20 +3,23 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 
-// 1. On récupère les deux collections en parallèle
-const couteaux = await getCollection('couteaux');
-const divers = await getCollection('divers');
+// 1. Récupération sécurisée des collections (gère le cas où un dossier est vide)
+const resCouteaux = await getCollection('couteaux').catch(() => []);
+const resDivers = await getCollection('divers').catch(() => []);
 
-// 2. On fusionne les tableaux et on trie par date décroissante
-// On utilise .data.date car c'est le champ commun défini dans tes schémas Zod
-const tousLesItems = [...couteaux, ...divers].sort((a, b) => {
-  const dateA = new Date(a.data.date).getTime();
-  const dateB = new Date(b.data.date).getTime();
+// 2. Fusion et tri avec fallback sur les dates pour éviter les erreurs "undefined"
+const tousLesItems = [...(resCouteaux || []), ...(resDivers || [])].sort((a, b) => {
+  const dateA = new Date(a.data?.date || 0).getTime();
+  const dateB = new Date(b.data?.date || 0).getTime();
   return dateB - dateA;
 });
 
-// 3. On définit couteauxTries pour que le reste de ton code HTML n'ait pas besoin de changer
-const couteauxTries = tousLesItems;
+// 3. Filtrage préventif : on ne garde que ce qui a au moins une image valide
+// Cela évite l'erreur [UnsupportedImageFormat] durant le build
+const couteauxTries = tousLesItems.filter(item => {
+  const img = Array.isArray(item.data.image) ? item.data.image[0] : item.data.image;
+  return img && typeof img === 'string' && img.trim() !== '';
+});
 
 const schemaData = {
   "@context": "https://schema.org",
@@ -53,7 +56,6 @@ const schemaData = {
   <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
 
   <main class="min-h-screen bg-bg text-text pt-32 pb-20 px-4 md:px-20 overflow-x-hidden">
-  
   <header class="text-center mb-12 fade-slide-left max-w-4xl mx-auto">
     <h1 class="text-3xl md:text-5xl font-serif font-bold mb-8 text-accent reveal-child">
       Les Créations
@@ -79,11 +81,15 @@ const schemaData = {
 
   <div id="knife-grid" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-12 max-w-7xl mx-auto">
     {couteauxTries.map((item) => {
-      // 1. Détection ultra-simple grâce au nouveau n8n
-      const isVideo = item.data.type === "video" || item.data.format === "video";
+      // 1. Extraction sécurisée de l'image (Gère l'ancien format tableau et le nouveau format string)
+      const rawImage = item.data.image;
+      const imagePath = Array.isArray(rawImage) ? rawImage[0] : rawImage;
       
-      // 2. L'image est maintenant toujours une String (plus de tableau [])
-      const imagePath = item.data.image;
+      // Sécurité build : si pas d'image, on ignore l'item pour éviter le crash
+      if (!imagePath) return null;
+
+      // 2. Détection du format
+      const isVideo = item.data.type === "video" || item.data.format === "video";
       
       // 3. Normalisation des états
       const estDispo = item.data.disponible === true || String(item.data.disponible) === "true";
