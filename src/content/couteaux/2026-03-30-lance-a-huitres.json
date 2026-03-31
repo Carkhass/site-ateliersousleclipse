@@ -1,0 +1,17 @@
+{
+  "titre": "Lance à huîtres",
+  "date": "2026-03-30",
+  "lienInstagram": "https://www.instagram.com/p/DWg1C8MlZLg/",
+  "univers": "Gastronomie",
+  "description": "Lance à huîtres parfaite pour déguster vos coquillages préférés !",
+  "type": "instagram",
+  "format": "photo",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Olivier avec morta au centre"
+  },
+  "last_update": "2026-03-31T10:34:38.805Z",
+  "image": "/images/couteaux/2026-03-30-lance-a-huitres.webp"
+}

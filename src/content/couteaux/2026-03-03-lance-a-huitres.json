@@ -1,0 +1,17 @@
+{
+  "titre": "Lance à huîtres",
+  "date": "2026-03-03",
+  "lienInstagram": "https://www.instagram.com/p/DVbiqP2AkpK/",
+  "univers": "Gastronomie",
+  "description": "Couteau fini pour votre soirée à huîtres",
+  "type": "instagram",
+  "format": "photo",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "80crv2",
+    "manche": "Wacapou, alisier et bois inconnu"
+  },
+  "last_update": "2026-03-31T10:36:17.325Z",
+  "image": "/images/couteaux/2026-03-03-lance-a-huitres.webp"
+}

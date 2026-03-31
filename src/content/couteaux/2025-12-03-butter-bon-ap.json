@@ -1,0 +1,17 @@
+{
+  "titre": "Butter Bon'Ap",
+  "date": "2025-12-03",
+  "lienInstagram": "https://www.instagram.com/p/DRzwNrDgmgw/",
+  "univers": "Gastronomie",
+  "description": "Hamon peu courant, ici on a 3 petits soleils.",
+  "type": "instagram",
+  "format": "photo",
+  "prix": 88,
+  "disponible": true,
+  "caracteristiques": {
+    "acier": "XC100",
+    "manche": "Koa"
+  },
+  "last_update": "2026-03-31T10:38:42.037Z",
+  "image": "/images/couteaux/2025-12-03-butter-bon-ap.webp"
+}

@@ -1,0 +1,17 @@
+{
+  "titre": "Bon'Ap",
+  "date": "2026-03-10",
+  "lienInstagram": "https://www.instagram.com/p/DVtngTGgtlV/",
+  "univers": "Gastronomie",
+  "description": "Un Bon'Ap tout simple pour ce soir.",
+  "type": "instagram",
+  "format": "photo",
+  "prix": 0,
+  "disponible": true,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Ébène de Macassar"
+  },
+  "last_update": "2026-03-31T10:35:54.693Z",
+  "image": "/images/couteaux/2026-03-10-bon-ap.webp"
+}

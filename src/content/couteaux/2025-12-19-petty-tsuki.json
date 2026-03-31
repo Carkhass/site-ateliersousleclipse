@@ -1,0 +1,17 @@
+{
+  "titre": "Petty Tsuki",
+  "date": "2025-12-19",
+  "lienInstagram": "https://www.instagram.com/p/DSc-1OLFGxi/",
+  "univers": "Gastronomie",
+  "description": "Deux Petty Tsuki uniques, avec des nuances dans les ébènes et des hamons différents.",
+  "type": "instagram",
+  "format": "photo",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Ébène noir du Gabon, G10, rivets carbone"
+  },
+  "last_update": "2026-03-31T10:38:04.052Z",
+  "image": "/images/couteaux/2025-12-19-petty-tsuki.webp"
+}

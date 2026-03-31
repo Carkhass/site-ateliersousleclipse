@@ -1,0 +1,17 @@
+{
+  "titre": "Camp",
+  "date": "2025-12-02",
+  "lienInstagram": "https://www.instagram.com/p/DRxL-z7FKrG/",
+  "univers": "Aventure",
+  "description": "Un couteau robuste pour les aventuriers",
+  "type": "instagram",
+  "format": "photo",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "80crv2 aged acid stonewash",
+    "manche": "Ébène noir du Gabon, G10 et rivets carbone"
+  },
+  "last_update": "2026-03-31T10:38:49.809Z",
+  "image": "/images/couteaux/2025-12-02-camp.webp"
+}
