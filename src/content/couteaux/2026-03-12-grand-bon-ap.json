@@ -1,0 +1,15 @@
+{
+  "titre": "Grand Bon'Ap",
+  "date": "2026-03-12",
+  "lienInstagram": "https://www.instagram.com/reel/DVy03wPEwt9/",
+  "description": "Un couteau de cuisine artisanal en C125U et ébène de Macassar",
+  "type": "video",
+  "format": "video",
+  "image": "/images/couteaux/2026-03-12-grand-bon-ap.webp",
+  "prix": 0,
+  "disponible": true,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Ébène de Macassar"
+  }
+}

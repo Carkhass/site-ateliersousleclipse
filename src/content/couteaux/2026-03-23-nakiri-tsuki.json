@@ -1,0 +1,15 @@
+{
+  "titre": "Nakiri Tsuki",
+  "date": "2026-03-23",
+  "lienInstagram": "https://www.instagram.com/reel/DWPKIujk8S0/",
+  "description": "Découvrez le Nakiri Tsuki en détail",
+  "type": "video",
+  "format": "video",
+  "image": "/images/couteaux/2026-03-23-nakiri-tsuki.webp",
+  "prix": 0,
+  "disponible": true,
+  "caracteristiques": {
+    "acier": "Non précisé",
+    "manche": "Non précisé"
+  }
+}
