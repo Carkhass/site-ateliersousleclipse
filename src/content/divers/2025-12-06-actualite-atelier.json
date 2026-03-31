@@ -1,0 +1,19 @@
+{
+  "titre": "Actualité Atelier",
+  "univers": "Exception",
+  "type": "instagram",
+  "format": "video",
+  "description": "Bon week-end à toutes et à tous !",
+  "caracteristiques": {
+    "acier": "Non précisé",
+    "manche": "null"
+  },
+  "image": [
+    "/images/divers/2025-12-06-actualite-atelier.webp"
+  ],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/reel/DR7fYtalZRa/",
+  "date": "2025-12-06",
+  "disponible": true,
+  "last_update": "2026-03-31T07:30:06.777Z"
+}

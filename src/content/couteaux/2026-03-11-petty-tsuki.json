@@ -3,10 +3,10 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "photo",
-  "description": "Idéal pour les travaux de cuisine précis",
+  "description": "Vous aimez bien ?",
   "caracteristiques": {
     "acier": "C125U",
-    "manche": "Cocobolo et G10 avec rivets carbone"
+    "manche": "Cocobolo"
   },
   "image": [
     "/images/couteaux/2026-03-11-petty-tsuki.webp"
@@ -15,5 +15,5 @@
   "lienInstagram": "https://www.instagram.com/p/DVwIqvHgv43/",
   "date": "2026-03-11",
   "disponible": true,
-  "last_update": "2026-03-31T07:03:33.655Z"
+  "last_update": "2026-03-31T07:26:27.805Z"
 }

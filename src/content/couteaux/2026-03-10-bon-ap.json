@@ -3,17 +3,17 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "photo",
-  "description": "Idéal pour les tâches de cuisine",
+  "description": "Un Bon'Ap tout simple pour ce soir.",
   "caracteristiques": {
     "acier": "C125U",
-    "manche": "ébène de Macassar, rivets inox"
+    "manche": "Ébène de Macassar, rivets inox"
   },
   "image": [
     "/images/couteaux/2026-03-10-bon-ap.webp"
   ],
-  "prix": 0,
+  "prix": null,
   "lienInstagram": "https://www.instagram.com/p/DVtngTGgtlV/",
   "date": "2026-03-10",
   "disponible": true,
-  "last_update": "2026-03-31T07:03:40.858Z"
+  "last_update": "2026-03-31T07:26:39.433Z"
 }

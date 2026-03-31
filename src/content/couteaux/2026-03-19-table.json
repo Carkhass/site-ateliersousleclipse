@@ -1,12 +1,12 @@
 {
   "titre": "Table",
-  "univers": "Gastronomie",
+  "univers": "Quotidien",
   "type": "instagram",
   "format": "photo",
-  "description": "Idéal pour le service de table avec un manche en olivier",
+  "description": "C'est raiment un de mes bois préférés à travailler, jamais déçu du rendu",
   "caracteristiques": {
     "acier": "XC100",
-    "manche": "olivier et rivets carbone"
+    "manche": "olivier avec rivets carbone"
   },
   "image": [
     "/images/couteaux/2026-03-19-table.webp"
@@ -15,5 +15,5 @@
   "lienInstagram": "https://www.instagram.com/p/DWEyKRiAgEB/",
   "date": "2026-03-19",
   "disponible": true,
-  "last_update": "2026-03-31T07:03:20.136Z"
+  "last_update": "2026-03-31T07:26:04.894Z"
 }

@@ -3,17 +3,17 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "video",
-  "description": "Idéal pour émincer les légumes avec précision",
+  "description": "null",
   "caracteristiques": {
-    "acier": "Non précisé",
-    "manche": "Non précisé"
+    "acier": "null",
+    "manche": "null"
   },
   "image": [
     "/images/couteaux/2026-03-23-nakiri-tsuki.webp"
   ],
-  "prix": 0,
+  "prix": null,
   "lienInstagram": "https://www.instagram.com/reel/DWPKIujk8S0/",
   "date": "2026-03-23",
   "disponible": true,
-  "last_update": "2026-03-31T07:03:07.414Z"
+  "last_update": "2026-03-31T07:25:42.134Z"
 }

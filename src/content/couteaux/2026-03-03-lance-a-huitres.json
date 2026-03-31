@@ -3,17 +3,17 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "photo",
-  "description": "Lance à huîtres pour ouvrir les huîtres avec facilité",
+  "description": "Ce soir, une lance à huîtres.",
   "caracteristiques": {
     "acier": "80crv2",
-    "manche": "wacapou, alisier et bois inconnu"
+    "manche": "Bois inconnu"
   },
   "image": [
     "/images/couteaux/2026-03-03-lance-a-huitres.webp"
   ],
-  "prix": 0,
+  "prix": null,
   "lienInstagram": "https://www.instagram.com/p/DVbiqP2AkpK/",
   "date": "2026-03-03",
   "disponible": false,
-  "last_update": "2026-03-31T07:04:01.172Z"
+  "last_update": "2026-03-31T07:27:13.511Z"
 }

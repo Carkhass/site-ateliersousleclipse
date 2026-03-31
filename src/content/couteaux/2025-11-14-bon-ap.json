@@ -1,0 +1,19 @@
+{
+  "titre": "Bon'Ap",
+  "univers": "Gastronomie",
+  "type": "instagram",
+  "format": "photo",
+  "description": "Un hamon très marqué et contrasté, ou l'essentiel de l'activité est proche de la ligne, avec finalement peu de ashi.",
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Chêne vert stabilisé teinté bleu, rivets inox"
+  },
+  "image": [
+    "/images/couteaux/2025-11-14-bon-ap.webp"
+  ],
+  "prix": null,
+  "lienInstagram": "https://www.instagram.com/p/DRC3Z5GkegZ/",
+  "date": "2025-11-14",
+  "disponible": false,
+  "last_update": "2026-03-31T07:31:51.501Z"
+}

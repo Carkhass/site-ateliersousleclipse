@@ -1,0 +1,19 @@
+{
+  "titre": "Actualité Atelier",
+  "univers": "Quotidien",
+  "type": "instagram",
+  "format": "video",
+  "description": "Je vous souhaite de belles fêtes de fin d'année à tous !",
+  "caracteristiques": {
+    "acier": "Non précisé",
+    "manche": "Non précisé"
+  },
+  "image": [
+    "/images/divers/2025-12-24-actualite-atelier.webp"
+  ],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/reel/DSpZJbojMi3/",
+  "date": "2025-12-24",
+  "disponible": false,
+  "last_update": "2026-03-31T07:29:08.870Z"
+}

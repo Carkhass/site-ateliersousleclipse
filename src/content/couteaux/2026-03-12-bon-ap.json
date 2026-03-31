@@ -3,7 +3,7 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "video",
-  "description": "Idéal pour les tâches culinaires",
+  "description": "🤩",
   "caracteristiques": {
     "acier": "C125U",
     "manche": "Ébène de Macassar"
@@ -11,9 +11,9 @@
   "image": [
     "/images/couteaux/2026-03-12-bon-ap.webp"
   ],
-  "prix": 0,
+  "prix": null,
   "lienInstagram": "https://www.instagram.com/reel/DVy03wPEwt9/",
   "date": "2026-03-12",
   "disponible": true,
-  "last_update": "2026-03-31T07:03:27.187Z"
+  "last_update": "2026-03-31T07:26:16.704Z"
 }

@@ -1,0 +1,19 @@
+{
+  "titre": "Bon'Ap",
+  "univers": "Gastronomie",
+  "type": "instagram",
+  "format": "photo",
+  "description": "Celui-ci a un hamon un peu torturé, très graphique.",
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Olivier"
+  },
+  "image": [
+    "/images/couteaux/2025-11-18-bon-ap.webp"
+  ],
+  "prix": null,
+  "lienInstagram": "https://www.instagram.com/p/DRNJc97Eqlu/",
+  "date": "2025-11-18",
+  "disponible": false,
+  "last_update": "2026-03-31T07:31:39.859Z"
+}
