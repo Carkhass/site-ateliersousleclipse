@@ -1,0 +1,15 @@
+{
+  "titre": "Grand Bon'Ap",
+  "date": "2026-02-26",
+  "lienInstagram": "https://www.instagram.com/reel/DVOrsN-kQ-X/",
+  "description": "Découvrez le dernier Bon'Ap",
+  "type": "video",
+  "format": "video",
+  "image": "/images/couteaux/2026-02-26-grand-bon-ap.webp",
+  "prix": 0,
+  "disponible": true,
+  "caracteristiques": {
+    "acier": "Non précisé",
+    "manche": "Non précisé"
+  }
+}

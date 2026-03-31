@@ -1,0 +1,15 @@
+{
+  "titre": "Nakiri Bon'ap",
+  "date": "2026-03-04",
+  "lienInstagram": "https://www.instagram.com/p/DVeLPvdAmYh/",
+  "description": "Un nakiri Bon'ap en C125U",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/2026-03-04-nakiri-bon-ap.webp",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "red heart"
+  }
+}

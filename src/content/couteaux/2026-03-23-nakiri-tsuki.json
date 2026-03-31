@@ -7,7 +7,7 @@
   "format": "video",
   "image": "/images/couteaux/2026-03-23-nakiri-tsuki.webp",
   "prix": 0,
-  "disponible": true,
+  "disponible": false,
   "caracteristiques": {
     "acier": "Non précisé",
     "manche": "Non précisé"
