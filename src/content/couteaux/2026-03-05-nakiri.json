@@ -1,0 +1,19 @@
+{
+  "titre": "Nakiri",
+  "univers": "Gastronomie",
+  "type": "instagram",
+  "format": "video",
+  "description": "Un nakiri en vidéo",
+  "caracteristiques": {
+    "acier": "Non précisé",
+    "manche": "Non précisé"
+  },
+  "image": [
+    "/images/couteaux/2026-03-05-nakiri.webp"
+  ],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/reel/DVgwC4pj0oB/",
+  "date": "2026-03-05",
+  "disponible": true,
+  "last_update": "2026-03-31T07:03:47.427Z"
+}

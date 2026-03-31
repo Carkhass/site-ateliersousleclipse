@@ -1,0 +1,19 @@
+{
+  "titre": "Bon'ap",
+  "univers": "Gastronomie",
+  "type": "instagram",
+  "format": "video",
+  "description": "Idéal pour les tâches culinaires",
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Ébène de Macassar"
+  },
+  "image": [
+    "/images/couteaux/2026-03-12-bon-ap.webp"
+  ],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/reel/DVy03wPEwt9/",
+  "date": "2026-03-12",
+  "disponible": true,
+  "last_update": "2026-03-31T07:03:27.187Z"
+}

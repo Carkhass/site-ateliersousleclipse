@@ -1,0 +1,19 @@
+{
+  "titre": "Grand Bon'ap",
+  "univers": "Gastronomie",
+  "type": "instagram",
+  "format": "photo",
+  "description": "Idéal pour les tâches de cuisine",
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "bouleau madré stabilisé teinté bleu et or, rivets inox"
+  },
+  "image": [
+    "/images/couteaux/2026-02-20-grand-bon-ap.webp"
+  ],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/p/DU_K1unFVzA/",
+  "date": "2026-02-20",
+  "disponible": true,
+  "last_update": "2026-03-31T07:04:28.240Z"
+}

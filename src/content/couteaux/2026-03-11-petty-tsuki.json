@@ -1,0 +1,19 @@
+{
+  "titre": "Petty Tsuki",
+  "univers": "Gastronomie",
+  "type": "instagram",
+  "format": "photo",
+  "description": "Idéal pour les travaux de cuisine précis",
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Cocobolo et G10 avec rivets carbone"
+  },
+  "image": [
+    "/images/couteaux/2026-03-11-petty-tsuki.webp"
+  ],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/p/DVwIqvHgv43/",
+  "date": "2026-03-11",
+  "disponible": true,
+  "last_update": "2026-03-31T07:03:33.655Z"
+}

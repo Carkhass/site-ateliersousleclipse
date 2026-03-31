@@ -1,0 +1,19 @@
+{
+  "titre": "Table",
+  "univers": "Gastronomie",
+  "type": "instagram",
+  "format": "photo",
+  "description": "Idéal pour le service de table avec un manche en olivier",
+  "caracteristiques": {
+    "acier": "XC100",
+    "manche": "olivier et rivets carbone"
+  },
+  "image": [
+    "/images/couteaux/2026-03-19-table.webp"
+  ],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/p/DWEyKRiAgEB/",
+  "date": "2026-03-19",
+  "disponible": true,
+  "last_update": "2026-03-31T07:03:20.136Z"
+}

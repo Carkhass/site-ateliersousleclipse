@@ -1,0 +1,19 @@
+{
+  "titre": "Bon'Ap",
+  "univers": "Gastronomie",
+  "type": "instagram",
+  "format": "video",
+  "description": "Découvrez le dernier Bon'Ap",
+  "caracteristiques": {
+    "acier": "Non précisé",
+    "manche": "Non précisé"
+  },
+  "image": [
+    "/images/couteaux/2026-02-26-bon-ap.webp"
+  ],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/reel/DVOrsN-kQ-X/",
+  "date": "2026-02-26",
+  "disponible": true,
+  "last_update": "2026-03-31T07:04:08.176Z"
+}
