@@ -6,14 +6,14 @@
   "description": "Ce soir, un Grand Bon'ap.",
   "caracteristiques": {
     "acier": "C125U",
-    "manche": "ébène pale moon (ébène royal)"
+    "manche": "Ébène pale moon (ébène royal)"
   },
   "image": [
     "/images/couteaux/2026-02-17-grand-bon-ap.webp"
   ],
-  "prix": 0,
+  "prix": null,
   "lienInstagram": "https://www.instagram.com/p/DU3jTUMgobs/",
   "date": "2026-02-17",
   "disponible": false,
-  "last_update": "2026-03-31T07:58:59.862Z"
+  "last_update": "2026-03-31T08:13:27.470Z"
 }

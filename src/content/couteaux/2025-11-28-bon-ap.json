@@ -6,7 +6,7 @@
   "description": "Ouais, maintenant je fais des couteaux à beurre.",
   "caracteristiques": {
     "acier": "XC100",
-    "manche": "Cocobolo et Alisier"
+    "manche": "Cocobolo et alisier"
   },
   "image": [
     "/images/couteaux/2025-11-28-bon-ap.webp"
@@ -15,5 +15,5 @@
   "lienInstagram": "https://www.instagram.com/p/DRm5dweDfde/",
   "date": "2025-11-28",
   "disponible": false,
-  "last_update": "2026-03-31T08:00:54.928Z"
+  "last_update": "2026-03-31T08:15:22.603Z"
 }

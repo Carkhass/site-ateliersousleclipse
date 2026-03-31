@@ -3,17 +3,17 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "video",
-  "description": "null",
+  "description": "L'artisanal Nakiri Tsuki, lame tranchante et finement polie, idéal pour les préparations de cuisine.",
   "caracteristiques": {
-    "acier": "null",
-    "manche": "null"
+    "acier": "XC90",
+    "manche": "Morta"
   },
   "image": [
     "/images/couteaux/2026-03-23-nakiri-tsuki.webp"
   ],
-  "prix": null,
+  "prix": 220,
   "lienInstagram": "https://www.instagram.com/reel/DWPKIujk8S0/",
   "date": "2026-03-23",
-  "disponible": false,
-  "last_update": "2026-03-31T07:56:19.347Z"
+  "disponible": true,
+  "last_update": "2026-03-31T08:10:46.325Z"
 }

@@ -3,17 +3,17 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "video",
-  "description": "Les deux derniers Tsuki Petty",
+  "description": "Les deux derniers Tsuki Petty sont prêts à partir !",
   "caracteristiques": {
-    "acier": "80crv2",
-    "manche": "Bois de Morta"
+    "acier": "C75F",
+    "manche": "Morta"
   },
   "image": [
     "/images/couteaux/2025-12-04-tsuki-petty.webp"
   ],
-  "prix": null,
+  "prix": 230,
   "lienInstagram": "https://www.instagram.com/reel/DR2TDg9GDBv/",
   "date": "2025-12-04",
-  "disponible": false,
-  "last_update": "2026-03-31T07:30:29.646Z"
+  "disponible": true,
+  "last_update": "2026-03-31T08:14:47.730Z"
 }

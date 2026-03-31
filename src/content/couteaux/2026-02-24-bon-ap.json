@@ -1,9 +1,9 @@
 {
   "titre": "Bon'ap",
-  "univers": "Gastronomie",
+  "univers": "Exception",
   "type": "instagram",
   "format": "video",
-  "description": "Le grand Bon'ap en vidéo",
+  "description": "Plus disponible.",
   "caracteristiques": {
     "acier": "Non précisé",
     "manche": "Non précisé"
@@ -15,5 +15,5 @@
   "lienInstagram": "https://www.instagram.com/reel/DVJhgRQDMVH/",
   "date": "2026-02-24",
   "disponible": false,
-  "last_update": "2026-03-31T07:58:25.521Z"
+  "last_update": "2026-03-31T08:12:52.814Z"
 }

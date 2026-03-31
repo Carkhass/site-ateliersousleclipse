@@ -3,7 +3,7 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "video",
-  "description": "Le dernier Bon'Ap",
+  "description": "Le dernier Bon'Ap 😇",
   "caracteristiques": {
     "acier": "Non précisé",
     "manche": "Non précisé"
@@ -14,6 +14,6 @@
   "prix": 0,
   "lienInstagram": "https://www.instagram.com/reel/DVOrsN-kQ-X/",
   "date": "2026-02-26",
-  "disponible": false,
-  "last_update": "2026-03-31T07:58:02.619Z"
+  "disponible": true,
+  "last_update": "2026-03-31T08:12:29.962Z"
 }

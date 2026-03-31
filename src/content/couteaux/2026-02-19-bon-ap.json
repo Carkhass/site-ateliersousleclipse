@@ -6,14 +6,14 @@
   "description": "Vous aimez cette petite variation ?",
   "caracteristiques": {
     "acier": "C125U",
-    "manche": "Red heart et rivets carbone"
+    "manche": "Red heart, rivets carbone"
   },
   "image": [
     "/images/couteaux/2026-02-19-bon-ap.webp"
   ],
-  "prix": 0,
+  "prix": null,
   "lienInstagram": "https://www.instagram.com/p/DU8oTmOFHI6/",
   "date": "2026-02-19",
   "disponible": true,
-  "last_update": "2026-03-31T07:58:48.085Z"
+  "last_update": "2026-03-31T08:13:15.689Z"
 }

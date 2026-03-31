@@ -1,11 +1,11 @@
 {
   "titre": "Nakiri",
-  "univers": "Quotidien",
+  "univers": "Exception",
   "type": "instagram",
   "format": "video",
-  "description": "Le nakiri en vidéo joli ce Red heart hein ?",
+  "description": "Joli ce Red heart hein ?",
   "caracteristiques": {
-    "acier": "Non précisé",
+    "acier": "Red heart",
     "manche": "Non précisé"
   },
   "image": [
@@ -15,5 +15,5 @@
   "lienInstagram": "https://www.instagram.com/reel/DVgwC4pj0oB/",
   "date": "2026-03-05",
   "disponible": true,
-  "last_update": "2026-03-31T07:57:28.342Z"
+  "last_update": "2026-03-31T08:11:55.459Z"
 }

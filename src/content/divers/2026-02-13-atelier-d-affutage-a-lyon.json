@@ -3,7 +3,7 @@
   "univers": "Gastronomie",
   "type": "instagram",
   "format": "photo",
-  "description": "Une rencontre au sommet avec les maîtres affûteurs et forgerons japonais.",
+  "description": "Une rencontre au sommet avec le maître affûteur Kasahara Shigehiro et le forgeron Eric Chevalier.",
   "caracteristiques": {
     "acier": "Non précisé",
     "manche": "Non précisé"
@@ -14,6 +14,6 @@
   "prix": 0,
   "lienInstagram": "https://www.instagram.com/p/DUtMVtgAktA/",
   "date": "2026-02-13",
-  "disponible": false,
-  "last_update": "2026-03-31T07:59:11.322Z"
+  "disponible": true,
+  "last_update": "2026-03-31T08:13:39.195Z"
 }
