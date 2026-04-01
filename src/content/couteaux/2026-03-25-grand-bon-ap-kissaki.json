@@ -2,14 +2,14 @@
   "titre": "Grand Bon'ap \"Kissaki\"",
   "date": "2026-03-25",
   "lienInstagram": "https://www.instagram.com/p/DWUMkpfAmRM/",
-  "description": "Kissaki pour sa pointe plus fine que d'habitude !",
+  "description": "Grand Bon'ap \"Kissaki\" avec une pointe plus fine que d'habitude, idéal pour les découpes précises en cuisine.",
   "type": "couteau",
   "format": "photo",
   "image": "/images/couteaux/2026-03-25-grand-bon-ap-kissaki.webp",
-  "prix": 0,
+  "prix": 230,
   "disponible": false,
   "caracteristiques": {
     "acier": "C125U",
-    "manche": "satiné rubané"
+    "manche": "Satiné rubané"
   }
 }

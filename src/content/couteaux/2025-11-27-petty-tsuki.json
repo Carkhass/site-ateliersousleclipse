@@ -1,0 +1,15 @@
+{
+  "titre": "Petty Tsuki",
+  "date": "2025-11-27",
+  "lienInstagram": "https://www.instagram.com/p/DRkT86NEbsS/",
+  "description": "Petty Tsuki, idéal pour émincer les légumes avec précision et réaliser des découpes fines en cuisine.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/2025-11-27-petty-tsuki.webp",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Ébène noir du Gabon et G10, rivets carbone"
+  }
+}

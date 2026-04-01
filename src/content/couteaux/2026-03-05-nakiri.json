@@ -1,0 +1,15 @@
+{
+  "titre": "Nakiri",
+  "date": "2026-03-05",
+  "lienInstagram": "https://www.instagram.com/reel/DVgwC4pj0oB/",
+  "description": "Le nakiri en vidéo joli ce Red heart hein ? 😍",
+  "type": "video",
+  "format": "video",
+  "image": "/images/couteaux/2026-03-05-nakiri.webp",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "Non précisé",
+    "manche": "Red heart"
+  }
+}

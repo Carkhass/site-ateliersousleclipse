@@ -1,0 +1,15 @@
+{
+  "titre": "Tsuki Petty",
+  "date": "2025-12-04",
+  "lienInstagram": "https://www.instagram.com/reel/DR2TDg9GDBv/",
+  "description": "Aujourd'hui pas de couteau terminé à vous présenter, alors ça sera une vidéo d'un des deux derniers Tsuki Petty 🤩",
+  "type": "video",
+  "format": "video",
+  "image": "/images/couteaux/2025-12-04-tsuki-petty.webp",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "Non précisé",
+    "manche": "Non précisé"
+  }
+}

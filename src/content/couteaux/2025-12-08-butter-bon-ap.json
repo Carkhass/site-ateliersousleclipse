@@ -1,0 +1,15 @@
+{
+  "titre": "Butter Bon'Ap",
+  "date": "2025-12-08",
+  "lienInstagram": "https://www.instagram.com/reel/DSAoe8AD7jI/",
+  "description": "Ce soir, une vidéo du dernier Butter Bon'Ap.",
+  "type": "video",
+  "format": "video",
+  "image": "/images/couteaux/2025-12-08-butter-bon-ap.webp",
+  "prix": 0,
+  "disponible": true,
+  "caracteristiques": {
+    "acier": "Non précisé",
+    "manche": "Non précisé"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "titre": "Bon'ap",
+  "date": "2026-02-25",
+  "lienInstagram": "https://www.instagram.com/p/DVMMA0ggvXx/",
+  "description": "Le Bon'ap qui accompagne le grand d'il y a quelques jours.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/2026-02-25-bon-ap.webp",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Bouleau madré stabilisé teinté bleu avec parties résine"
+  }
+}

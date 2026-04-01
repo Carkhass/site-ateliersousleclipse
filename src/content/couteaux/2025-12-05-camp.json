@@ -1,0 +1,15 @@
+{
+  "titre": "Camp",
+  "date": "2025-12-05",
+  "lienInstagram": "https://www.instagram.com/reel/DR46mnEjpIm/",
+  "description": "Vidéo du dernier camp en ébène et 80crv2. Idéal pour les travaux de coupe en extérieur et le travail du bois.",
+  "type": "video",
+  "format": "video",
+  "image": "/images/couteaux/2025-12-05-camp.webp",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "80crv2",
+    "manche": "Ébène"
+  }
+}

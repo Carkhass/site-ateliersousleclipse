@@ -1,0 +1,15 @@
+{
+  "titre": "Butter Bon'Ap",
+  "date": "2025-12-03",
+  "lienInstagram": "https://www.instagram.com/p/DRzwNrDgmgw/",
+  "description": "Encore un Butter Bon'Ap. 🤩 Idéal pour tartiner beurre, rillettes ou fromages frais avec élégance.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/2025-12-03-butter-bon-ap.webp",
+  "prix": 88,
+  "disponible": true,
+  "caracteristiques": {
+    "acier": "XC100",
+    "manche": "Koa"
+  }
+}

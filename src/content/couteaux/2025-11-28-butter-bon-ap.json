@@ -1,0 +1,15 @@
+{
+  "titre": "Butter Bon'ap",
+  "date": "2025-11-28",
+  "lienInstagram": "https://www.instagram.com/p/DRm5dweDfde/",
+  "description": "Butter Bon'ap 😁",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/2025-11-28-butter-bon-ap.webp",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "XC100",
+    "manche": "Cocobolo et alisier"
+  }
+}

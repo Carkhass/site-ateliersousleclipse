@@ -1,0 +1,15 @@
+{
+  "titre": "Grand Bon'ap",
+  "date": "2026-02-17",
+  "lienInstagram": "https://www.instagram.com/p/DU3jTUMgobs/",
+  "description": "Salut tout le monde ! Ce soir, un Grand Bon'ap. Idéal pour émincer les légumes avec précision.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/2026-02-17-grand-bon-ap.webp",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Ébène pale moon (ébène royal), rivets carbone"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "titre": "Office",
+  "date": "2025-12-06",
+  "lienInstagram": "https://www.instagram.com/reel/DR7fYtalZRa/",
+  "description": "Je continue sur la lancée des réels avec une vidéo du tout dernier office présenté il y a quelques jours.",
+  "type": "video",
+  "format": "video",
+  "image": "/images/couteaux/2025-12-06-office.webp",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "Non précisé",
+    "manche": "Non précisé"
+  }
+}

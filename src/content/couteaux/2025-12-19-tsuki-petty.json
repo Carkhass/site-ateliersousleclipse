@@ -1,0 +1,15 @@
+{
+  "titre": "Tsuki Petty",
+  "date": "2025-12-19",
+  "lienInstagram": "https://www.instagram.com/p/DSc-1OLFGxi/",
+  "description": "Petty Tsuki.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/2025-12-19-tsuki-petty.webp",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Ébène noir du Gabon, G10 rouge et noir, rivets carbone"
+  }
+}

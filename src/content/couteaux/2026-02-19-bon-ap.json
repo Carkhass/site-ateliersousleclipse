@@ -1,0 +1,15 @@
+{
+  "titre": "Bon'Ap",
+  "date": "2026-02-19",
+  "lienInstagram": "https://www.instagram.com/p/DU8oTmOFHI6/",
+  "description": "Un Bon'Ap avec une pointe un peu différente de d'habitude, moins courbe. Idéal pour émincer les légumes avec précision.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/2026-02-19-bon-ap.webp",
+  "prix": 0,
+  "disponible": true,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Red heart, rivets carbone"
+  }
+}
