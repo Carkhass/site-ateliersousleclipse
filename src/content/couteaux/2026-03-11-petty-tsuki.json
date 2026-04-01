@@ -1,0 +1,15 @@
+{
+  "titre": "Petty Tsuki",
+  "date": "2026-03-11",
+  "lienInstagram": "https://www.instagram.com/p/DVwIqvHgv43/",
+  "description": "Idéal pour les tâches de précision en cuisine, comme éplucher ou découper de petits aliments.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/2026-03-11-petty-tsuki.webp",
+  "prix": 0,
+  "disponible": true,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Cocobolo, G10 au centre, rivets carbone"
+  }
+}

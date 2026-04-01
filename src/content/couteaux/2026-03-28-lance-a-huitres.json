@@ -1,0 +1,15 @@
+{
+  "titre": "Lance à huîtres",
+  "date": "2026-03-28",
+  "lienInstagram": "https://www.instagram.com/p/DWb6OcIAt6f/",
+  "description": "Idéale pour ouvrir les huîtres avec facilité et sécurité",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/2026-03-28-lance-a-huitres.webp",
+  "prix": 0,
+  "disponible": false,
+  "caracteristiques": {
+    "acier": "80crv2",
+    "manche": "Red heart et ébène noir du Gabon"
+  }
+}
