@@ -58,9 +58,9 @@
   --color-muted: #b8a8a0;
 
   /* 🔥 Rouge Sombre dark */
-  --color-accent: #7a1e1e;
-  --color-accent-light: #a83232;
-  --color-accent-dark: #5c0f0f;
+--color-accent: #c94141; /* Un rouge plus vif, plus "lumineux" */
+  --color-accent-light: #ff5c5c;
+  --color-accent-dark: #a83232;
 
   --color-success: #4ad295;
   --color-warning: #f0c020;
@@ -311,6 +311,21 @@ main {
   background: linear-gradient(to bottom, transparent, var(--color-bg));
   z-index: 2;
   pointer-events: none;
+}
+
+/* En mode sombre, on passe en blanc cassé harmonisé */
+.dark #hero-logo, 
+.dark #hero-logo-ghost {
+    /* 1. On passe en blanc pur */
+    filter: invert(1) 
+            /* 2. On baisse légèrement la luminosité pour s'approcher du crème */
+            brightness(0.95) 
+            /* 3. On ajoute une pointe de sépia pour réchauffer le blanc (le côté crème) */
+            sepia(0.2) 
+            /* 4. On sature un poil pour que le jaune du sépia ressorte */
+            saturate(1.2);
+    
+    transition: filter 0.4s ease;
 }
 
 /* Header au scroll */
@@ -637,6 +652,90 @@ header nav a:hover {
   }
 }
 
+
+
+
+/* =========================================================
+    SECTION VITRINE - L'EFFET "ÉTABLI" (STACK)
+   ========================================================= */
+
+.vitrine-stack {
+    position: relative;
+    aspect-ratio: 4 / 5; 
+    background: var(--color-surface);
+    /* Ombre portée plus profonde pour l'effet de décollage */
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4); 
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* --- INCLINAISONS PAR DÉFAUT (DESKTOP) --- */
+/* On incline légèrement les colonnes pour casser la ligne droite */
+.vitrine-column:nth-child(1) { transform: rotate(-2.5deg); }
+.vitrine-column:nth-child(2) { transform: rotate(1deg) translateY(10px); }
+.vitrine-column:nth-child(3) { transform: rotate(-1.5deg) translateY(-5px); }
+
+/* --- HOVER PREMIUM --- */
+.vitrine-column {
+    position: relative;
+    /* On définit une transition fluide et longue pour le retour à la normale */
+    transition: transform 0.8s cubic-bezier(0.33, 1, 0.68, 1) !important;
+    will-change: transform;
+    z-index: 10;
+}
+
+/* --- HOVER PREMIUM --- */
+.vitrine-column:hover {
+    z-index: 50;
+    /* On redresse la carte : rotation 0 et scale légèrement boosté */
+    /* Le !important est nécessaire pour couper l'effet du JS de parallaxe au survol */
+    transform: rotate(0deg) scale(1.05) translateY(0) !important;
+    cursor: pointer;
+}
+
+/* On adoucit aussi l'ombre au survol pour donner un effet d'élévation */
+.vitrine-column:hover .vitrine-stack {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* --- ADAPTATION MOBILE --- */
+@media (max-width: 768px) {
+    .grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0; /* Chevauchement des cartes */
+    }
+
+    .vitrine-column {
+        width: 85%;
+        max-width: 340px;
+        margin-top: -100px; /* Empilement vertical */
+    }
+
+    .vitrine-column:first-child { margin-top: 0; }
+
+    /* Rotations plus affirmées sur mobile pour le look "stack" */
+    .vitrine-column:nth-child(1) { z-index: 10; transform: rotate(-4deg) translateX(-10px); }
+    .vitrine-column:nth-child(2) { z-index: 20; transform: rotate(3deg) translateX(10px); }
+    .vitrine-column:nth-child(3) { z-index: 30; transform: rotate(-2deg); }
+    
+    /* On ajoute une bordure "papier" sur mobile uniquement */
+    .vitrine-stack {
+        border: 6px solid var(--color-surface);
+    }
+}
+
+/* --- FIX CENTRAGE BOUTON --- */
+.btn-vitrine-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 6rem;
+    position: relative;
+    z-index: 100; /* Toujours au-dessus des cartes */
+}
 
 /* =========================================================
    9. SECTIONS PLEINE LARGEUR & PARALLAX

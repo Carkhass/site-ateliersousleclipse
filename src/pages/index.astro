@@ -56,33 +56,60 @@ const actusRecentes = toutesLesActus
 >
   <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
 
-  <section class="max-w-[1280px] mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center min-h-[55vh]">
-  <div class="relative fade-slide-left">
-    <img 
-      src="/images/portrait-yann2.webp" 
-      alt="Portrait de Yann, artisan coutelier français"
-      class="img-zoom max-w-md w-full h-auto rounded-lg shadow-xl object-cover border-4 border-accent mx-auto md:ml-auto"
-      tabindex="0"
-    />
-  </div>
-  <div class="fade-slide-left text-center md:text-left">
-    <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
-      Bienvenue à l’atelier sous l’éclipse
-    </h2>
-    <p class="text-lg text-muted leading-relaxed mb-4 reveal-child">
-      Mon premier langage fut celui des ordinateurs, un univers où la précision est une loi et la patience une vertu.<br />
-      Aujourd'hui, je parle une autre langue : celle du métal et du bois.<br />
-    </p>
-    <p class="text-lg text-muted leading-relaxed mb-6 reveal-child">
-      Au fil des années j'ai affiné mon savoir-faire, nourri par la pratique et la passion.<br />
-      Aujourd'hui, je mets cette expérience au service de celles et ceux qui recherchent
-      des pièces uniques, façonnées avec soin et pensées pour durer.
-    </p>
-    <a href="/me-connaitre" class="cta-premium inline-block px-6 py-3 text-white rounded reveal-child">
-      En savoir plus
-    </a>
+
+  <!-- ========================================================= -->
+  <!-- SECTION VITRINE -->
+  <!-- ========================================================= -->
+<section class="py-24 bg-bg overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6">
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10">
+      
+      <div class="vitrine-column" data-delay="0">
+        <div class="vitrine-stack shadow-2xl rounded-sm overflow-hidden bg-surface">
+          <img src="/images/vitrine/Détails-nakiri-tsuki-morta-G10.webp" class="crossfade-img active" alt="Détail forge" />
+          <img src="/images/vitrine/Détails-couteau-camp-ébène.webp" class="crossfade-img" alt="Détail manche" />
+          <img src="/images/vitrine/Détails-table-olivier.webp" class="crossfade-img" alt="Détail bois" />
+          <img src="/images/vitrine/Détails-grand-bonap-satiné.webp" class="crossfade-img" alt="Finition" />
+        </div>
+      </div>
+
+      <div class="vitrine-column" data-delay="2000">
+        <div class="vitrine-stack shadow-2xl rounded-sm overflow-hidden bg-surface">
+          <img src="/images/vitrine/Couteau-Nakiri-Tsuki-morta.webp" class="crossfade-img active" alt="Nakiri" />
+          <img src="/images/vitrine/Couteau-camp-ébène.webp" class="crossfade-img" alt="Couteau de camp" />
+          <img src="/images/vitrine/Couteau-Petty-Tsuki-ébène.webp" class="crossfade-img" alt="Petty" />
+        </div>
+      </div>
+
+      <div class="vitrine-column" data-delay="4000">
+        <div class="vitrine-stack shadow-2xl rounded-sm overflow-hidden bg-surface">
+          <img src="/images/vitrine/Ensemble-couteau-table.webp" class="crossfade-img active" alt="Table" />
+          <img src="/images/vitrine/Couteau-table-olivier.webp" class="crossfade-img" alt="Service" />
+          <img src="/images/vitrine/Détails-table-loupe-peuplier.webp" class="crossfade-img" alt="Loupe" />
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="btn-vitrine-container reveal-on-scroll">
+      <a href="/couteaux" class="group relative px-12 py-4 overflow-hidden border border-muted/20 rounded-sm bg-transparent transition-all duration-700 hover:border-accent/50">
+        <span class="absolute inset-0 w-0 bg-surface/50 transition-all duration-500 ease-out group-hover:w-full"></span>
+        
+        <span class="relative font-serif text-xs uppercase tracking-[0.5em] text-muted group-hover:text-accent transition-colors duration-500">
+          Explorer la Collection
+        </span>
+      </a>
+    </div>
+
   </div>
 </section>
+
+
+
+  <!-- ========================================================= -->
+  <!-- SECTION ACTU -->
+  <!-- ========================================================= -->
 
   {agendaAffiche.length > 0 && (
 <section class="relative py-32 mt-24 z-10">
@@ -495,6 +522,40 @@ const actusRecentes = toutesLesActus
 </script>
 
 
+  <!-- ========================================================= -->
+  <!-- SECTION PRESENTATION -->
+  <!-- ========================================================= -->
+
+
+  <section class="max-w-[1280px] mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center min-h-[55vh]">
+  <div class="relative fade-slide-left">
+    <img 
+      src="/images/portrait-yann2.webp" 
+      alt="Portrait de Yann, artisan coutelier français"
+      class="img-zoom max-w-md w-full h-auto rounded-lg shadow-xl object-cover border-4 border-accent mx-auto md:ml-auto"
+      tabindex="0"
+    />
+  </div>
+  <div class="fade-slide-left text-center md:text-left">
+    <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
+      Bienvenue à l’atelier sous l’éclipse
+    </h2>
+    <p class="text-lg text-muted leading-relaxed mb-4 reveal-child">
+      Mon premier langage fut celui des ordinateurs, un univers où la précision est une loi et la patience une vertu.<br />
+      Aujourd'hui, je parle une autre langue : celle du métal et du bois.<br />
+    </p>
+    <p class="text-lg text-muted leading-relaxed mb-6 reveal-child">
+      Au fil des années j'ai affiné mon savoir-faire, nourri par la pratique et la passion.<br />
+      Aujourd'hui, je mets cette expérience au service de celles et ceux qui recherchent
+      des pièces uniques, façonnées avec soin et pensées pour durer.
+    </p>
+    <a href="/me-connaitre" class="cta-premium inline-block px-6 py-3 text-white rounded reveal-child">
+      En savoir plus
+    </a>
+  </div>
+</section>
+
+
 
 <!-- ========================================================= -->
 <!-- SECTION 3 : Inspiration + Galerie hamon (Embla Carousel)  -->
@@ -561,11 +622,25 @@ const actusRecentes = toutesLesActus
 <script>
   import EmblaCarousel from 'embla-carousel';
   import { initEmbla } from '../scripts/init/init-embla.js';
+  // 1. On utilise les accolades si on importe la constante exportée
+  import { initVitrine } from '../scripts/animations/anim-vitrine.js';
 
-  if (typeof window !== 'undefined') {
+  const runAllInits = () => {
+    // Initialisation Embla
     document.querySelectorAll('.embla').forEach((root) => {
       initEmbla(root, EmblaCarousel);
     });
+    
+    // Initialisation de ta nouvelle Vitrine
+    initVitrine();
+  };
+
+  // 2. On lance tout proprement
+  if (typeof window !== 'undefined') {
+    runAllInits();
+    
+    // Pour que ça survive au changement de page Astro
+    document.addEventListener('astro:page-load', runAllInits);
   }
 </script>
 

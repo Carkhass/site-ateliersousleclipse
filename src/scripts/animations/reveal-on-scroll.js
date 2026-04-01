@@ -3,6 +3,7 @@ export function initRevealOnScroll() {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
   const animationSelectors = [
+    '.reveal',
     '[class*="fade-slide-"]',
     '.fade-in',
     '.slide-up',
