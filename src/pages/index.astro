@@ -71,7 +71,7 @@ const actusRecentes = toutesLesActus
 <section class="py-24 bg-bg overflow-hidden">
   <div class="max-w-7xl mx-auto px-6">
     
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
       
       <div class="vitrine-column" data-delay="0">
         <div class="vitrine-stack shadow-2xl rounded-sm overflow-hidden bg-surface">
@@ -100,11 +100,10 @@ const actusRecentes = toutesLesActus
       
     </div>
 
-    <div class="btn-vitrine-container reveal-on-scroll">
+    <div class="btn-vitrine-container">
       <a href="/couteaux" class="group relative px-12 py-4 overflow-hidden border border-muted/20 rounded-sm bg-transparent transition-all duration-700 hover:border-accent/50">
         <span class="absolute inset-0 w-0 bg-surface/50 transition-all duration-500 ease-out group-hover:w-full"></span>
-        
-        <span class="relative font-serif text-xs uppercase tracking-[0.5em] text-muted group-hover:text-accent transition-colors duration-500">
+        <span class="relative font-serif text-xl uppercase tracking-[0.5em] text-muted group-hover:text-accent transition-colors duration-500">
           Explorer la Collection
         </span>
       </a>
@@ -630,26 +629,23 @@ const actusRecentes = toutesLesActus
 <script>
   import EmblaCarousel from 'embla-carousel';
   import { initEmbla } from '../scripts/init/init-embla.js';
-  // 1. On utilise les accolades si on importe la constante exportée
   import { initVitrine } from '../scripts/animations/anim-vitrine.js';
 
   const runAllInits = () => {
-    // Initialisation Embla
+    // Embla
     document.querySelectorAll('.embla').forEach((root) => {
       initEmbla(root, EmblaCarousel);
     });
     
-    // Initialisation de ta nouvelle Vitrine
+    // Vitrine (qui lance maintenant le crossfade + le parallax)
     initVitrine();
   };
 
-  // 2. On lance tout proprement
-  if (typeof window !== 'undefined') {
-    runAllInits();
-    
-    // Pour que ça survive au changement de page Astro
-    document.addEventListener('astro:page-load', runAllInits);
-  }
+  // Premier chargement
+  runAllInits();
+
+  // Chargements suivants (navigation Astro)
+  document.addEventListener('astro:page-load', runAllInits);
 </script>
 
 <section class="py-12 bg-surface/30 text-center px-4 max-w-4xl mx-auto opacity-80 text-sm italic">

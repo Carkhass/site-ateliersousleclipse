@@ -653,77 +653,91 @@ header nav a:hover {
 }
 
 
-
-
 /* =========================================================
-    SECTION VITRINE - L'EFFET "ÉTABLI" (STACK)
+   SECTION VITRINE - ALIGNEMENT ET NETTETÉ
    ========================================================= */
 
 .vitrine-stack {
     position: relative;
-    aspect-ratio: 4 / 5; 
+    aspect-ratio: 4 / 5;
+    width: 100%;
     background: var(--color-surface);
-    /* Ombre portée plus profonde pour l'effet de décollage */
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4); 
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); 
     border: 1px solid rgba(255, 255, 255, 0.05);
     overflow: hidden;
-    transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+    transform: translateZ(0); 
 }
 
-/* --- INCLINAISONS PAR DÉFAUT (DESKTOP) --- */
-/* On incline légèrement les colonnes pour casser la ligne droite */
-.vitrine-column:nth-child(1) { transform: rotate(-2.5deg); }
-.vitrine-column:nth-child(2) { transform: rotate(1deg) translateY(10px); }
-.vitrine-column:nth-child(3) { transform: rotate(-1.5deg) translateY(-5px); }
+.crossfade-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    z-index: 1;
+    image-rendering: -webkit-optimize-contrast;
+    will-change: opacity;
+    transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-/* --- HOVER PREMIUM --- */
+.crossfade-img.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+/* --- COLONNES --- */
 .vitrine-column {
     position: relative;
-    /* On définit une transition fluide et longue pour le retour à la normale */
-    transition: transform 0.8s cubic-bezier(0.33, 1, 0.68, 1) !important;
-    will-change: transform;
     z-index: 10;
+    will-change: transform;
+    /* Transition courte pour la fluidité du scroll, plus longue pour le hover */
+    transition: transform 0.1s linear; 
 }
 
-/* --- HOVER PREMIUM --- */
-.vitrine-column:hover {
-    z-index: 50;
-    /* On redresse la carte : rotation 0 et scale légèrement boosté */
-    /* Le !important est nécessaire pour couper l'effet du JS de parallaxe au survol */
-    transform: rotate(0deg) scale(1.05) translateY(0) !important;
-    cursor: pointer;
+/* --- HOVER (DESKTOP) --- */
+@media (min-width: 768px) {
+    .vitrine-column:hover {
+        z-index: 50;
+        transform: scale(1.02) !important; 
+        cursor: pointer;
+    }
 }
 
-/* On adoucit aussi l'ombre au survol pour donner un effet d'élévation */
-.vitrine-column:hover .vitrine-stack {
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
-}
-
-/* --- ADAPTATION MOBILE --- */
-@media (max-width: 768px) {
+/* --- MOBILE : LOOK "TAS DE PHOTOS" --- */
+@media (max-width: 767px) {
     .grid {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0; /* Chevauchement des cartes */
+        gap: 0; 
     }
 
     .vitrine-column {
         width: 85%;
         max-width: 340px;
-        margin-top: -100px; /* Empilement vertical */
+        margin-top: -85px; 
+        transition: none; 
     }
 
-    .vitrine-column:first-child { margin-top: 0; }
+    /* Attribution des rotations initiales */
+    .vitrine-column:nth-child(1) { 
+        z-index: 30; 
+        margin-top: 0 !important;
+        transform: rotate(-3deg); 
+    }
+    .vitrine-column:nth-child(2) { 
+        z-index: 20; 
+        transform: rotate(2deg);
+    }
+    .vitrine-column:nth-child(3) { 
+        z-index: 10; 
+        transform: rotate(-1.5deg);
+    }
 
-    /* Rotations plus affirmées sur mobile pour le look "stack" */
-    .vitrine-column:nth-child(1) { z-index: 10; transform: rotate(-4deg) translateX(-10px); }
-    .vitrine-column:nth-child(2) { z-index: 20; transform: rotate(3deg) translateX(10px); }
-    .vitrine-column:nth-child(3) { z-index: 30; transform: rotate(-2deg); }
-    
-    /* On ajoute une bordure "papier" sur mobile uniquement */
     .vitrine-stack {
-        border: 6px solid var(--color-surface);
+        border: 4px solid var(--color-surface);
+        box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.5); 
     }
 }
 
@@ -734,7 +748,7 @@ header nav a:hover {
     width: 100%;
     margin-top: 6rem;
     position: relative;
-    z-index: 100; /* Toujours au-dessus des cartes */
+    z-index: 100;
 }
 
 /* =========================================================
