@@ -3,23 +3,27 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 
-// 1. Récupération sécurisée des collections (gère le cas où un dossier est vide)
+// 1. Récupération sécurisée
 const resCouteaux = await getCollection('couteaux').catch(() => []);
+// On garde resDivers sous le coude, mais on ne l'injecte plus dans la liste principale
 const resDivers = await getCollection('divers').catch(() => []);
 
-// 2. Fusion et tri avec fallback sur les dates pour éviter les erreurs "undefined"
-const tousLesItems = [...(resCouteaux || []), ...(resDivers || [])].sort((a, b) => {
+// 2. On ne garde QUE les couteaux pour cette page
+// Le tri reste identique pour avoir les nouveautés en premier
+const tousLesItems = [...(resCouteaux || [])].sort((a, b) => {
   const dateA = new Date(a.data?.date || 0).getTime();
   const dateB = new Date(b.data?.date || 0).getTime();
   return dateB - dateA;
 });
 
-// 3. Filtrage préventif : on ne garde que ce qui a au moins une image valide
-// Cela évite l'erreur [UnsupportedImageFormat] durant le build
+// 3. Filtrage des images valides (inchangé)
 const couteauxTries = tousLesItems.filter(item => {
   const img = Array.isArray(item.data.image) ? item.data.image[0] : item.data.image;
   return img && typeof img === 'string' && img.trim() !== '';
 });
+
+// Le reste du code (schemaData) utilisera automatiquement 
+// uniquement les couteaux grâce à "couteauxTries".
 
 const schemaData = {
   "@context": "https://schema.org",

@@ -1,15 +1,16 @@
 {
   "titre": "Nakiri Tsuki",
-  "date": "2026-03-20",
-  "lienInstagram": "https://www.instagram.com/p/DWHS4N_gPvW/",
-  "description": "Nakiri Tsuki. Le premier du genre. 😇",
-  "type": "couteau",
   "format": "photo",
-  "image": "/images/couteaux/2026-03-20-nakiri-tsuki.webp",
-  "prix": 0,
-  "disponible": true,
+  "type": "couteau",
+  "description": "Nakiri Tsuki. Le premier du genre. 😇",
   "caracteristiques": {
     "acier": "C125U",
     "manche": "Morta, G10 et rivets carbone"
-  }
+  },
+  "image": "/images/couteaux/2026-03-20-nakiri-tsuki.webp",
+  "galerie": [],
+  "prix": 250,
+  "lienInstagram": "https://www.instagram.com/p/DWHS4N_gPvW/",
+  "date": "2026-03-20",
+  "disponible": true
 }

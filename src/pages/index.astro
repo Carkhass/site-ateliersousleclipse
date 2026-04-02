@@ -36,7 +36,15 @@ const agendaAffiche = toutesLesActus
   .sort((a, b) => new Date(a.data.date_event || a.data.date).getTime() - new Date(b.data.date_event || b.data.date).getTime());
 
 // 3. On isole les événements à mettre en avant (Futurs + ceux passés depuis moins de 3 jours)
-const futurs = agendaAffiche.filter(a => new Date(a.data.date_event || a.data.date) >= margeVisibilitePassé);
+// 3. On isole les événements (Futurs + ceux passés depuis moins de 3 jours)
+const futurs = agendaAffiche.filter(a => {
+  // FORCE la priorité sur date_event s'il existe
+  const dateEffective = a.data.date_event 
+    ? new Date(a.data.date_event) 
+    : new Date(a.data.date);
+    
+  return dateEffective >= margeVisibilitePassé;
+});
 
 const prochainEvent = futurs[0];
 const autresEvents = futurs.slice(1, 4);
