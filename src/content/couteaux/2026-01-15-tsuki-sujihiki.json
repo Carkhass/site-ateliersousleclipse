@@ -1,15 +1,17 @@
 {
   "titre": "Tsuki Sujihiki",
-  "date": "2026-01-15",
-  "lienInstagram": "https://www.instagram.com/p/DTifgxLDZFL/",
-  "description": "Tsuki Sujihiki. Une ligne moderne pour ce trancheur agile. Parfait pour couper finement viandes et poissons.",
-  "type": "couteau",
   "format": "photo",
-  "image": "/images/couteaux/2026-01-15-tsuki-sujihiki.webp",
-  "prix": 240,
-  "disponible": true,
+  "type": "modele",
+  "description": "Tsuki Sujihiki. Une ligne moderne pour ce trancheur agile. Parfait pour couper finement viandes et poissons.",
   "caracteristiques": {
     "acier": "C125U",
     "manche": "Morta et G10, rivets carbone"
-  }
+  },
+  "image": "/images/couteaux/2026-01-15-tsuki-sujihiki.webp",
+  "galerie": [],
+  "prix": 240,
+  "lienInstagram": "https://www.instagram.com/p/DTifgxLDZFL/",
+  "date": "2026-01-15",
+  "disponible": true,
+  "favori": true
 }

@@ -62,9 +62,13 @@ const initMobileStackParallax = () => {
     });
 };
 
-// LA SEULE FONCTION À EXPORTER
 export const initVitrine = () => {
     initCrossfade();
-    initParallaxVitrine();
-    initMobileStackParallax();
+    
+    // On attend un court instant ou on vérifie si les éléments sont visibles 
+    // pour que le parallaxe JS n'écrase pas la transition CSS d'entrée
+    setTimeout(() => {
+        initParallaxVitrine();
+        initMobileStackParallax();
+    }, 1000); 
 };

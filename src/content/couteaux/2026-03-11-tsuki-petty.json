@@ -1,15 +1,17 @@
 {
   "titre": "Tsuki Petty",
-  "date": "2026-03-11",
-  "lienInstagram": "https://www.instagram.com/p/DVwIqvHgv43/",
-  "description": "Un Petty Tsuki, C125U et un chouette cocobolo. G10 au centre, rivets carbone. Idéal pour émincer les légumes avec précision et réaliser des découpes fines.",
-  "type": "couteau",
   "format": "photo",
-  "image": "/images/couteaux/2026-03-11-tsuki-petty.webp",
-  "prix": 0,
-  "disponible": true,
+  "type": "couteau",
+  "description": "Un Petty Tsuki, C125U et un chouette cocobolo. G10 au centre, rivets carbone. Idéal pour émincer les légumes avec précision et réaliser des découpes fines.",
   "caracteristiques": {
     "acier": "C125U",
     "manche": "Cocobolo, intercalaire G10, rivets carbone"
-  }
+  },
+  "image": "/images/couteaux/2026-03-11-tsuki-petty.webp",
+  "galerie": [],
+  "prix": 180,
+  "lienInstagram": "https://www.instagram.com/p/DVwIqvHgv43/",
+  "date": "2026-03-11",
+  "disponible": true,
+  "favori": false
 }

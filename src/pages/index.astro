@@ -68,42 +68,78 @@ const actusRecentes = toutesLesActus
   <!-- ========================================================= -->
   <!-- SECTION VITRINE -->
   <!-- ========================================================= -->
-<section class="py-24 bg-bg overflow-hidden">
+<section class="py-24 bg-bg overflow-hidden" aria-labelledby="vitrine-title">
   <div class="max-w-7xl mx-auto px-6">
+    
+    <h2 id="vitrine-title" class="sr-only">Galerie de nos couteaux artisanaux et détails de forge</h2>
     
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
       
-      <div class="vitrine-column" data-delay="0">
+      <div class="vitrine-column reveal" data-delay="0">
         <div class="vitrine-stack shadow-2xl rounded-sm overflow-hidden bg-surface">
-          <img src="/images/vitrine/Détails-nakiri-tsuki-morta-G10.webp" class="crossfade-img active" alt="Détail forge" />
-          <img src="/images/vitrine/Détails-couteau-camp-ébène.webp" class="crossfade-img" alt="Détail manche" />
-          <img src="/images/vitrine/Détails-table-olivier.webp" class="crossfade-img" alt="Détail bois" />
-          <img src="/images/vitrine/Détails-grand-bonap-satiné.webp" class="crossfade-img" alt="Finition" />
+          <img src="/images/vitrine/Détails-nakiri-tsuki-morta-G10.webp" 
+               class="crossfade-img active" 
+               alt="Détail lame Nakiri Tsuki en acier et manche Morta"
+               loading="lazy"
+               width="400" height="500" />
+          <img src="/images/vitrine/Détails-couteau-camp-ébène.webp" 
+               class="crossfade-img" 
+               alt="Gros plan manche en ébène pour couteau de camp"
+               loading="lazy" />
+          <img src="/images/vitrine/Détails-table-olivier.webp" 
+               class="crossfade-img" 
+               alt="Finition manche en bois d'olivier sur couteau de table"
+               loading="lazy" />
+          <img src="/images/vitrine/Détails-grand-bonap-satiné.webp" 
+               class="crossfade-img" 
+               alt="Détail de la finition satinée sur lame Grand Bon'Ap"
+               loading="lazy" />
         </div>
       </div>
 
-      <div class="vitrine-column" data-delay="2000">
+      <div class="vitrine-column reveal" data-delay="2000">
         <div class="vitrine-stack shadow-2xl rounded-sm overflow-hidden bg-surface">
-          <img src="/images/vitrine/Couteau-Nakiri-Tsuki-morta.webp" class="crossfade-img active" alt="Nakiri" />
-          <img src="/images/vitrine/Couteau-camp-ébène.webp" class="crossfade-img" alt="Couteau de camp" />
-          <img src="/images/vitrine/Couteau-Petty-Tsuki-ébène.webp" class="crossfade-img" alt="Petty" />
+          <img src="/images/vitrine/Couteau-Nakiri-Tsuki-morta.webp" 
+               class="crossfade-img active" 
+               alt="Couteau Nakiri Tsuki artisanal avec manche en Morta"
+               loading="lazy" />
+          <img src="/images/vitrine/Couteau-camp-ébène.webp" 
+               class="crossfade-img" 
+               alt="Couteau de camp robuste avec et manche ébène"
+               loading="lazy" />
+          <img src="/images/vitrine/Couteau-Petty-Tsuki-ébène.webp" 
+               class="crossfade-img" 
+               alt="Couteau Petty Tsuki polyvalent pour la cuisine de précision"
+               loading="lazy" />
         </div>
       </div>
 
-      <div class="vitrine-column" data-delay="4000">
+      <div class="vitrine-column reveal" data-delay="4000">
         <div class="vitrine-stack shadow-2xl rounded-sm overflow-hidden bg-surface">
-          <img src="/images/vitrine/Ensemble-couteau-table.webp" class="crossfade-img active" alt="Table" />
-          <img src="/images/vitrine/Couteau-table-olivier.webp" class="crossfade-img" alt="Service" />
-          <img src="/images/vitrine/Détails-table-loupe-peuplier.webp" class="crossfade-img" alt="Loupe" />
+          <img src="/images/vitrine/Ensemble-couteau-table.webp" 
+               class="crossfade-img active" 
+               alt="Ensemble de couteaux de table artisanaux pour la gastronomie"
+               loading="lazy" />
+          <img src="/images/vitrine/Couteau-table-olivier.webp" 
+               class="crossfade-img" 
+               alt="Couteau de table élégant manche en bois d'olivier"
+               loading="lazy" />
+          <img src="/images/vitrine/Détails-table-loupe-peuplier.webp" 
+               class="crossfade-img" 
+               alt="Focus sur la loupe de peuplier stabilisée d'un manche de couteau"
+               loading="lazy" />
         </div>
       </div>
       
     </div>
 
-    <div class="btn-vitrine-container">
-      <a href="/couteaux" class="group relative px-12 py-4 overflow-hidden border border-muted/20 rounded-sm bg-transparent transition-all duration-700 hover:border-accent/50">
+    <div class="btn-vitrine-container reveal">
+      <a href="/couteaux" 
+         class="group relative px-8 py-4 md:px-12 md:py-4 overflow-hidden border border-muted/20 rounded-sm bg-transparent transition-all duration-700 hover:border-accent/50 inline-block text-center"
+         aria-label="Voir toute la collection de couteaux artisanaux">
         <span class="absolute inset-0 w-0 bg-surface/50 transition-all duration-500 ease-out group-hover:w-full"></span>
-        <span class="relative font-serif text-xl uppercase tracking-[0.5em] text-muted group-hover:text-accent transition-colors duration-500">
+        
+        <span class="relative font-serif text-base md:text-xl uppercase tracking-[0.2em] md:tracking-[0.5em] text-muted group-hover:text-accent transition-colors duration-500 whitespace-nowrap">
           Explorer la Collection
         </span>
       </a>
@@ -111,7 +147,6 @@ const actusRecentes = toutesLesActus
 
   </div>
 </section>
-
 
 
   <!-- ========================================================= -->

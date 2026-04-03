@@ -1,15 +1,17 @@
 {
   "titre": "Lance à huîtres",
-  "date": "2026-03-03",
-  "lienInstagram": "https://www.instagram.com/p/DVbiqP2AkpK/",
-  "description": "Ce soir, une lance à huîtres. 😁 Idéal pour ouvrir vos huîtres avec efficacité et sécurité.",
-  "type": "couteau",
   "format": "photo",
-  "image": "/images/couteaux/2026-03-03-lance-a-huitres.webp",
-  "prix": 0,
-  "disponible": false,
+  "type": "modele",
+  "description": "Idéal pour ouvrir vos huîtres avec efficacité et sécurité.",
   "caracteristiques": {
     "acier": "80crv2",
     "manche": "Wacapou, alisier et bois inconnu"
-  }
+  },
+  "image": "/images/couteaux/2026-03-03-lance-a-huitres.webp",
+  "galerie": [],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/p/DVbiqP2AkpK/",
+  "date": "2026-03-03",
+  "disponible": false,
+  "favori": true
 }

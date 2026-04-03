@@ -1,15 +1,17 @@
 {
   "titre": "Lance à huîtres",
-  "date": "2026-02-18",
-  "lienInstagram": "https://www.instagram.com/p/DU6DQVYinq0/",
-  "description": "Lance à huîtres. 😇",
-  "type": "couteau",
   "format": "photo",
-  "image": "/images/couteaux/2026-02-18-lance-a-huitres.webp",
-  "prix": 0,
-  "disponible": true,
+  "type": "couteau",
+  "description": "Lance à huîtres. 😇",
   "caracteristiques": {
     "acier": "80crv2",
     "manche": "Amourette et alisier, rivets carbone"
-  }
+  },
+  "image": "/images/couteaux/2026-02-18-lance-a-huitres.webp",
+  "galerie": [],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/p/DU6DQVYinq0/",
+  "date": "2026-02-18",
+  "disponible": false,
+  "favori": false
 }

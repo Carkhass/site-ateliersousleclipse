@@ -1,15 +1,17 @@
 {
   "titre": "Lance à huîtres",
-  "date": "2026-03-30",
-  "lienInstagram": "https://www.instagram.com/p/DWg1C8MlZLg/",
-  "description": "Outil robuste conçu pour ouvrir les huîtres avec facilité et sécurité.",
-  "type": "couteau",
   "format": "photo",
-  "image": "/images/couteaux/2026-03-30-lance-a-huitres.webp",
-  "prix": 0,
-  "disponible": false,
+  "type": "couteau",
+  "description": "Outil robuste conçu pour ouvrir les huîtres avec facilité et sécurité.",
   "caracteristiques": {
     "acier": "C125U",
     "manche": "Olivier et morta au centre"
-  }
+  },
+  "image": "/images/couteaux/2026-03-30-lance-a-huitres.webp",
+  "galerie": [],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/p/DWg1C8MlZLg/",
+  "date": "2026-03-30",
+  "disponible": false,
+  "favori": true
 }

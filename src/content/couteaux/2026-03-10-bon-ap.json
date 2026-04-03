@@ -1,15 +1,17 @@
 {
   "titre": "Bon'Ap",
-  "date": "2026-03-10",
-  "lienInstagram": "https://www.instagram.com/p/DVtngTGgtlV/",
-  "description": "Un Bon'Ap tout simple pour ce soir. Idéal pour émincer les légumes avec précision.",
-  "type": "couteau",
   "format": "photo",
-  "image": "/images/couteaux/2026-03-10-bon-ap.webp",
-  "prix": 0,
-  "disponible": true,
+  "type": "modele",
+  "description": "Un Bon'Ap tout simple pour ce soir. Idéal pour émincer les légumes avec précision.",
   "caracteristiques": {
     "acier": "C125U",
     "manche": "Ébène de Macassar, rivets inox"
-  }
+  },
+  "image": "/images/couteaux/2026-03-10-bon-ap.webp",
+  "galerie": [],
+  "prix": 180,
+  "lienInstagram": "https://www.instagram.com/p/DVtngTGgtlV/",
+  "date": "2026-03-10",
+  "disponible": true,
+  "favori": true
 }

@@ -1,15 +1,17 @@
 {
   "titre": "Camp",
-  "date": "2025-12-02",
-  "lienInstagram": "https://www.instagram.com/p/DRxL-z7FKrG/",
-  "description": "Camp.",
-  "type": "couteau",
   "format": "photo",
-  "image": "/images/couteaux/2025-12-02-camp.webp",
-  "prix": 0,
-  "disponible": false,
+  "type": "modele",
+  "description": "Camp.",
   "caracteristiques": {
     "acier": "80crv2 aged acid stonewash",
     "manche": "Ébène noir du Gabon, G10 et rivets carbone"
-  }
+  },
+  "image": "/images/couteaux/2025-12-02-camp.webp",
+  "galerie": [],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/p/DRxL-z7FKrG/",
+  "date": "2025-12-02",
+  "disponible": false,
+  "favori": true
 }

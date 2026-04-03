@@ -1,15 +1,17 @@
 {
   "titre": "Tsuki Petty",
-  "date": "2025-12-22",
-  "lienInstagram": "https://www.instagram.com/reel/DSktk6uABM9/",
-  "description": "Un des deux derniers Tsuki Petty.",
-  "type": "video",
   "format": "video",
-  "image": "/images/couteaux/2025-12-22-tsuki-petty.webp",
-  "prix": 0,
-  "disponible": false,
+  "type": "modele",
+  "description": "Un des deux derniers Tsuki Petty.",
   "caracteristiques": {
     "acier": "C125U",
     "manche": "Ébène noir du Gabon"
-  }
+  },
+  "image": "/images/couteaux/2025-12-22-tsuki-petty.webp",
+  "galerie": [],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/reel/DSktk6uABM9/",
+  "date": "2025-12-22",
+  "disponible": true,
+  "favori": true
 }

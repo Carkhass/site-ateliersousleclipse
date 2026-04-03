@@ -1,15 +1,17 @@
 {
   "titre": "Grand Bon'Ap",
-  "date": "2026-02-20",
-  "lienInstagram": "https://www.instagram.com/p/DU_K1unFVzA/",
-  "description": "Grand Bon'ap, C125U, bouleau madré stabilisé teinté bleu et or.",
-  "type": "couteau",
   "format": "photo",
-  "image": "/images/couteaux/2026-02-20-grand-bon-ap.webp",
-  "prix": 0,
-  "disponible": false,
+  "type": "modele",
+  "description": "Grand Bon'ap, C125U, bouleau madré stabilisé teinté bleu et or.",
   "caracteristiques": {
     "acier": "C125U",
     "manche": "Bouleau madré stabilisé teinté bleu et or, rivets inox"
-  }
+  },
+  "image": "/images/couteaux/2026-02-20-grand-bon-ap.webp",
+  "galerie": [],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/p/DU_K1unFVzA/",
+  "date": "2026-02-20",
+  "disponible": false,
+  "favori": true
 }
