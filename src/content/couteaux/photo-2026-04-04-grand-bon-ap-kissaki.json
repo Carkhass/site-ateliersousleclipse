@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-04-04-grand-bon-ap-kissaki",
+  "titre": "Grand Bon'ap Kissaki",
+  "date": "2026-04-04",
+  "lienInstagram": "https://www.instagram.com/p/DWt4iObAv36/",
+  "description": "Grand Bon'ap \"Kissaki\". Idéal pour émincer les légumes avec précision.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-04-04-grand-bon-ap-kissaki.webp",
+  "prix": 240,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Gidgee, rivets inox"
+  }
+}
