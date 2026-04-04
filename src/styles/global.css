@@ -38,7 +38,7 @@
 
   /* 🔥 Rouge Sombre */
   --color-accent: #7a1e1e;
-  --color-accent-light: #a83232;
+  --color-accent-light: #c94141;
   --color-accent-dark: #5c0f0f;
 
   --color-success: #3fa073;
@@ -58,7 +58,7 @@
   --color-muted: #b8a8a0;
 
   /* 🔥 Rouge Sombre dark */
---color-accent: #c94141; /* Un rouge plus vif, plus "lumineux" */
+  --color-accent: #c94141; /* Un rouge plus vif, plus "lumineux" */
   --color-accent-light: #ff5c5c;
   --color-accent-dark: #a83232;
 
@@ -679,6 +679,7 @@ header nav a:hover {
     image-rendering: -webkit-optimize-contrast;
     will-change: opacity;
     transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    image-rendering: auto;
 }
 
 .crossfade-img.active {
@@ -777,6 +778,8 @@ header nav a:hover {
     transform: translateY(0);
 }
 
+
+
 /* =========================================================
    9. SECTIONS PLEINE LARGEUR & PARALLAX
    ========================================================= */
@@ -826,17 +829,38 @@ header nav a:hover {
   }
 }
 
-/* Desktop : Effet fixe natif pour les grosses machines */
+
+
+.poincon-section {
+    /* ÉTAT INITIAL (Déjà présent dans ton code) */
+    background: #1a1a1a;
+    overflow: hidden;
+    position: relative;
+    
+    /* LE CHANGEMENT : On applique le skew sur la section */
+    transform: skewY(-4deg) !important;
+    transform-origin: center center !important;
+}
+
+/* PATCH DESKTOP : Le correctif pour l'écran de bug */
 @media (min-width: 769px) {
-  .poincon-section {
-    background-image: url('/images/fond-poincon-parallax.webp');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-  }
-  .poincon-section > [data-parallax-target] {
-    display: none;
-  }
+    .poincon-section {
+        /* 1. On supprime l'image de fond CSS car elle ne peut pas être penchée */
+        background-image: none !important; 
+        background-color: #1a1a1a;
+        
+        /* 2. On désactive le fixed pour autoriser le mouvement */
+        background-attachment: scroll !important; 
+    }
+    
+    /* 3. On s'assure que le contenu interne (l'image redressée) est visible */
+    .poincon-section > [data-parallax-target] {
+        display: block !important;
+        position: absolute;
+        inset: 0;
+        z-index: 1; /* Sous les gradients */
+        will-change: transform; /* Important pour le JS */
+    }
 }
 
 /* =========================================================

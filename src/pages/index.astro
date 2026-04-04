@@ -133,163 +133,41 @@ const actusRecentes = toutesLesActus
       
     </div>
 
-    <div class="btn-vitrine-container reveal">
-      <a href="/couteaux" 
-         class="group relative px-8 py-4 md:px-12 md:py-4 overflow-hidden border border-muted/20 rounded-sm bg-transparent transition-all duration-700 hover:border-accent/50 inline-block text-center"
-         aria-label="Voir toute la collection de couteaux artisanaux">
-        <span class="absolute inset-0 w-0 bg-surface/50 transition-all duration-500 ease-out group-hover:w-full"></span>
-        
-        <span class="relative font-serif text-base md:text-xl uppercase tracking-[0.2em] md:tracking-[0.5em] text-muted group-hover:text-accent transition-colors duration-500 whitespace-nowrap">
-          Explorer la Collection
-        </span>
-      </a>
-    </div>
-
-  </div>
-</section>
-
-
-  <!-- ========================================================= -->
-  <!-- SECTION ACTU -->
-  <!-- ========================================================= -->
-
-  {agendaAffiche.length > 0 && (
-<section class="relative py-32 mt-24 z-10">
-  
-  <div class="absolute inset-0 bg-[#1a1a1a] shadow-2xl skew-y-[-4deg] scale-x-110 -z-10 origin-center border-y border-white/5"></div>
-
-  <div class="max-w-7xl mx-auto px-4">
+    <div class="btn-vitrine-container reveal flex justify-center w-full px-4">
+  <a href="/couteaux" 
+     class="group relative w-full max-w-[280px] md:max-w-none md:w-auto px-4 py-4 md:px-12 md:py-4 overflow-hidden border border-muted/20 rounded-sm bg-transparent transition-all duration-700 hover:border-accent/50 inline-block text-center"
+     aria-label="Voir toute la collection de couteaux artisanaux">
     
-    <div class="mb-16 text-center md:text-left fade-slide-up">
-      <h2 class="text-3xl md:text-4xl font-serif font-bold text-accent reveal-child">
-        Les rendez-vous de l'Atelier
-      </h2>
-      <p class="text-muted mt-2 reveal-child italic">Retrouvez-moi prochainement sur ces évènements</p>
-    </div>
-
-    <div class="hidden lg:grid grid-cols-12 gap-10 mb-6 items-center h-6">
-      <div class="col-span-3"></div>
-      <div class="col-span-9 grid grid-cols-4 gap-8">
-        <div class="col-span-2">
-          <span class="text-accent text-[11px] font-bold uppercase tracking-[0.3em] flex items-center gap-2">
-            <span class="w-6 h-[1px] bg-accent/30"></span> Ma prochaine exposition
-          </span>
-        </div>
-        <div class="col-span-2">
-          <span class="text-muted text-[11px] font-bold uppercase tracking-[0.3em]">Suivantes</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-      
-      <aside class="lg:col-span-3 fade-slide-left bg-[#e8dfd4] p-6 rounded-2xl border border-black/5 shadow-xl h-fit">
-        <h3 class="font-serif text-xl text-[#7a1e1e] mb-6 flex items-center gap-2">
-          <span>📅</span> Agenda
-        </h3>
-        <div class="space-y-6">
-          {agendaAffiche.map((event, index) => {
-            const dateObj = new Date(event.data.date_event || event.data.date);
-            const isPasse = dateObj < maintenant;
-            const mois = dateObj.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', '');
-            const jour = dateObj.getDate();
-            
-            return (
-              <div class={`flex items-center gap-4 group transition-opacity ${isPasse ? 'opacity-50' : ''}`} style={`transition-delay: ${index * 100}ms`}>
-                <div class={`p-2 rounded text-center min-w-[55px] border ${isPasse ? 'bg-black/5 border-black/10 text-gray-500' : 'bg-accent/10 border-accent/20 text-accent'}`}>
-                  <span class={`block text-xs uppercase font-bold leading-none mb-1 ${isPasse ? 'line-through' : ''}`}>{mois}</span>
-                  <span class={`text-xl font-bold leading-none ${isPasse ? 'line-through' : ''}`}>{jour}</span>
-                </div>
-                <div>
-                  <div class="flex items-center gap-2">
-                    <p class="text-sm font-bold text-[#2b1b1d] leading-tight">{event.data.titre}</p>
-                    {isPasse && <span class="text-[10px] bg-black/10 px-1 rounded text-gray-600 uppercase font-bold whitespace-nowrap">Terminé</span>}
-                  </div>
-                  <p class="text-xs text-gray-600 italic mt-0.5">{event.data.lieu || "Lieu à préciser"}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </aside>
-
-      <div class="lg:col-span-9 grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
-        {prochainEvent && (
-          <div class="md:col-span-2 flex flex-col fade-slide-up mx-auto md:mx-0 w-[85%] md:w-full max-w-[280px] md:max-w-[340px]">
-            <span class="lg:hidden text-accent text-[11px] font-bold uppercase tracking-[0.3em] mb-4">Ma prochaine exposition</span>
-            
-            <a href={prochainEvent.data.lienInstagram} target="_blank" class="group block rounded-2xl overflow-hidden border-4 border-transparent bg-[#f0e8dd] shadow-2xl transition-all duration-500 hover:shadow-accent/20 hover:-translate-y-2">
-              <div class="aspect-[3/4] md:aspect-[4/5] overflow-hidden border-b-4 border-accent bg-[#1a1a1a]">
-                <img src={prochainEvent.data.image} alt="" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
-              </div>
-              <div class="p-5">
-                <div class="flex justify-between items-center gap-4">
-                  <div>
-                    <h4 class="text-lg font-serif font-bold text-[#2b1b1d] group-hover:text-accent transition-colors leading-tight">{prochainEvent.data.titre}</h4>
-                    <p class="text-xs text-gray-600 italic mt-1 flex items-center gap-1">
-                      <span class="text-accent">📅</span> {prochainEvent.data.date_formattee || new Date(prochainEvent.data.date_event || prochainEvent.data.date).toLocaleDateString('fr-FR')}
-                    </p>
-                    <p class="text-xs text-gray-600 italic mt-1 flex items-center gap-1"><span class="text-accent">📍</span> {prochainEvent.data.lieu}</p>
-                  </div>
-                  <span class="shrink-0 border border-accent text-accent px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter group-hover:bg-accent group-hover:text-white transition-all">À venir</span>
-                </div>
-              </div>
-            </a>
-          </div>
-        )}
-
-        <div class="md:col-span-2 flex flex-col fade-slide-right">
-          <span class="lg:hidden text-muted text-[11px] font-bold uppercase tracking-[0.3em] mb-4">Suivantes</span>
-          <div class="space-y-4">
-            {autresEvents.length > 0 ? autresEvents.map((event, index) => (
-              
-              /* Petites cartes (Utilisation de date_formattee si dispo) */
-              <a href={event.data.lienInstagram} target="_blank" class="group flex items-center gap-4 bg-[#e8dfd4]/80 p-3 rounded-xl border border-black/5 hover:bg-[#e8dfd4] hover:border-accent/20 transition-all" style={`transition-delay: ${index * 150}ms`}>
-                <div class="w-14 h-14 shrink-0 rounded-lg overflow-hidden border border-black/10">
-                  <img src={event.data.image} alt="" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <div class="min-w-0">
-                  <p class="text-[10px] text-accent font-black uppercase">
-                    {event.data.date_formattee ? event.data.date_formattee.split('/').slice(0,2).join('/') : new Date(event.data.date_event || event.data.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
-                  </p>
-                  <h5 class="text-xs font-bold text-[#2b1b1d] truncate group-hover:text-accent transition-colors">{event.data.titre}</h5>
-                </div>
-              </a>
-
-            )) : (
-              <div class="py-10 flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-2xl opacity-60">
-                 <span class="text-xl mb-2">✨</span>
-                 <p class="text-[10px] text-muted italic uppercase font-bold text-center">Plus de dates bientôt</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    <span class="absolute inset-0 w-0 bg-surface/50 transition-all duration-500 ease-out group-hover:w-full"></span>
+    
+    <span class="relative font-serif text-[15px] sm:text-base md:text-xl uppercase tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.5em] text-muted group-hover:text-accent transition-colors duration-500 block whitespace-nowrap">
+      Explorer la Collection
+    </span>
+  </a>
+</div>
 </section>
-)}
-
 
   <!-- ========================================================= -->
   <!-- SECTION POINÇON -->
   <!-- ========================================================= -->
 <section 
-  class={`parallax-section poincon-section relative w-screen h-[70vh] md:h-[70vh] overflow-hidden z-0 ${agendaAffiche.length > 0 ? '-mt-32' : 'mt-16'}`} 
-  style="clip-path: polygon(0 6%, 100% 0, 100% 94%, 0 100%);"
-  data-parallax-speed="300"
+  class={`parallax-section poincon-section relative w-full h-[70vh] md:h-[70vh] mt-12 my-32 overflow-visible z-0 ${agendaAffiche.length > 0 ? '-mt-32' : ''}`} 
+  style="clip-path: none;" /* On enlève le clip-path car on va utiliser le skew */
+  data-parallax-speed="300" /* Je respecte tes vitesses */
   data-parallax-zoom="1.1"
   data-parallax-zoom-strength="0.1"
 >
-  <div class="absolute inset-0" data-parallax-target>
+  <div class="absolute inset-0 origin-center scale-[1.3] skew-y-[4deg] overflow-hidden" data-parallax-target>
     <picture>
       <source media="(max-width: 768px)" srcset="/images/fond-poincon-mobile.webp">
       <img 
-        src="/images/fond-poincon-parallax.webp" 
+        src="/images/fond-poincon-parallax2.webp" 
         alt="Détail poinçon YJ atelier sous l'éclipse sur lame artisanale" 
         class="w-full h-full object-cover" 
       />
     </picture>
+    
+    <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/60 opacity-80"></div>
   </div>
   
   <div class="absolute inset-0 bg-gradient-to-b from-[#1a1a1a] via-transparent to-transparent h-32 opacity-50"></div>
@@ -300,7 +178,7 @@ const actusRecentes = toutesLesActus
 <!-- ========================================================= -->
 <!-- SECTION COUTEAUX - THEME CUISINE -->
 <!-- ========================================================= -->
-<section class="section-couteaux theme-cuisine relative z-10 -mt-24 pt-48 pb-32">
+<section class="section-couteaux theme-cuisine relative z-10 mt-12 pt-48 pb-32">
   <div class="section-2-grid mx-auto px-4 grid gap-12 items-center lg:grid-cols-[65%_35%]">
 
     <!-- Colonne 1 : Slider couteaux -->
@@ -562,6 +440,129 @@ const actusRecentes = toutesLesActus
     initLightbox();
   }
 </script>
+
+
+  <!-- ========================================================= -->
+  <!-- SECTION ACTU -->
+  <!-- ========================================================= -->
+
+  {agendaAffiche.length > 0 && (
+<section class="relative py-32 mt-24 z-10">
+  
+  <div class="absolute inset-0 bg-[#1a1a1a] shadow-2xl skew-y-[-4deg] scale-x-110 -z-10 origin-center border-y border-white/5"></div>
+
+  <div class="max-w-7xl mx-auto px-4">
+    
+    <div class="mb-16 text-center md:text-left fade-slide-up">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-[var(--color-accent-light)] reveal-child">
+        Les rendez-vous de l'Atelier
+      </h2>
+      <p class="text-muted mt-2 reveal-child italic">Retrouvez-moi prochainement sur ces évènements</p>
+    </div>
+
+    <div class="hidden lg:grid grid-cols-12 gap-10 mb-6 items-center h-6">
+      <div class="col-span-3"></div>
+      <div class="col-span-9 grid grid-cols-4 gap-8">
+        <div class="col-span-2">
+          <span class="text-accent text-[11px] font-bold uppercase tracking-[0.3em] flex items-center gap-2">
+            <span class="w-6 h-[1px] bg-accent/30"></span> Ma prochaine exposition
+          </span>
+        </div>
+        <div class="col-span-2">
+          <span class="text-muted text-[11px] font-bold uppercase tracking-[0.3em]">Suivantes</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      
+      <aside class="lg:col-span-3 fade-slide-left bg-[#e8dfd4] p-6 rounded-2xl border border-black/5 shadow-xl h-fit">
+        <h3 class="font-serif text-xl text-[#7a1e1e] mb-6 flex items-center gap-2">
+          <span>📅</span> Agenda
+        </h3>
+        <div class="space-y-6">
+          {agendaAffiche.map((event, index) => {
+            const dateObj = new Date(event.data.date_event || event.data.date);
+            const isPasse = dateObj < maintenant;
+            const mois = dateObj.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', '');
+            const jour = dateObj.getDate();
+            
+            return (
+              <div class={`flex items-center gap-4 group transition-opacity ${isPasse ? 'opacity-50' : ''}`} style={`transition-delay: ${index * 100}ms`}>
+                <div class={`p-2 rounded text-center min-w-[55px] border ${isPasse ? 'bg-black/5 border-black/10 text-gray-500' : 'bg-accent/10 border-accent/20 text-accent'}`}>
+                  <span class={`block text-xs uppercase font-bold leading-none mb-1 ${isPasse ? 'line-through' : ''}`}>{mois}</span>
+                  <span class={`text-xl font-bold leading-none ${isPasse ? 'line-through' : ''}`}>{jour}</span>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <p class="text-sm font-bold text-[#2b1b1d] leading-tight">{event.data.titre}</p>
+                    {isPasse && <span class="text-[10px] bg-black/10 px-1 rounded text-gray-600 uppercase font-bold whitespace-nowrap">Terminé</span>}
+                  </div>
+                  <p class="text-xs text-gray-600 italic mt-0.5">{event.data.lieu || "Lieu à préciser"}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </aside>
+
+      <div class="lg:col-span-9 grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
+        {prochainEvent && (
+          <div class="md:col-span-2 flex flex-col fade-slide-up mx-auto md:mx-0 w-[85%] md:w-full max-w-[280px] md:max-w-[340px]">
+            <span class="lg:hidden text-accent text-[11px] font-bold uppercase tracking-[0.3em] mb-4">Ma prochaine exposition</span>
+            
+            <a href={prochainEvent.data.lienInstagram} target="_blank" class="group block rounded-2xl overflow-hidden border-4 border-transparent bg-[#f0e8dd] shadow-2xl transition-all duration-500 hover:shadow-accent/20 hover:-translate-y-2">
+              <div class="aspect-[3/4] md:aspect-[4/5] overflow-hidden border-b-4 border-accent bg-[#1a1a1a]">
+                <img src={prochainEvent.data.image} alt="" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+              </div>
+              <div class="p-5">
+                <div class="flex justify-between items-center gap-4">
+                  <div>
+                    <h4 class="text-lg font-serif font-bold text-[#2b1b1d] group-hover:text-accent transition-colors leading-tight">{prochainEvent.data.titre}</h4>
+                    <p class="text-xs text-gray-600 italic mt-1 flex items-center gap-1">
+                      <span class="text-accent">📅</span> {prochainEvent.data.date_formattee || new Date(prochainEvent.data.date_event || prochainEvent.data.date).toLocaleDateString('fr-FR')}
+                    </p>
+                    <p class="text-xs text-gray-600 italic mt-1 flex items-center gap-1"><span class="text-accent">📍</span> {prochainEvent.data.lieu}</p>
+                  </div>
+                  <span class="shrink-0 border border-accent text-accent px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter group-hover:bg-accent group-hover:text-white transition-all">À venir</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        )}
+
+        <div class="md:col-span-2 flex flex-col fade-slide-right">
+          <span class="lg:hidden text-muted text-[11px] font-bold uppercase tracking-[0.3em] mb-4">Suivantes</span>
+          <div class="space-y-4">
+            {autresEvents.length > 0 ? autresEvents.map((event, index) => (
+              
+              /* Petites cartes (Utilisation de date_formattee si dispo) */
+              <a href={event.data.lienInstagram} target="_blank" class="group flex items-center gap-4 bg-[#e8dfd4]/80 p-3 rounded-xl border border-black/5 hover:bg-[#e8dfd4] hover:border-accent/20 transition-all" style={`transition-delay: ${index * 150}ms`}>
+                <div class="w-14 h-14 shrink-0 rounded-lg overflow-hidden border border-black/10">
+                  <img src={event.data.image} alt="" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <div class="min-w-0">
+                  <p class="text-[10px] text-accent font-black uppercase">
+                    {event.data.date_formattee ? event.data.date_formattee.split('/').slice(0,2).join('/') : new Date(event.data.date_event || event.data.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
+                  </p>
+                  <h5 class="text-xs font-bold text-[#2b1b1d] truncate group-hover:text-accent transition-colors">{event.data.titre}</h5>
+                </div>
+              </a>
+
+            )) : (
+              <div class="py-10 flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-2xl opacity-60">
+                 <span class="text-xl mb-2">✨</span>
+                 <p class="text-[10px] text-muted italic uppercase font-bold text-center">Plus de dates bientôt</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+)}
+
 
 
   <!-- ========================================================= -->
