@@ -530,13 +530,26 @@ header nav a:hover {
 
 .hero-section {
   height: calc(var(--vh) * 30);
-  background-size: contain; /* ou cover si tu veux recadrer */
+  background-size: contain;
   background-position: center;
 }
 
+/* --- SOUS-TITRE (Patché pour couleurs et structure) --- */
 .hero-section .hero-subtitle {
   padding: 0 1rem;
   text-align: center;
+  /* Aligné sur la couleur du titre (évolue selon le thème dark/light) */
+  color: var(--color-text) !important;
+  font-weight: 500 !important;
+}
+
+/* Le mot accentué (hamon) */
+.hero-section .hero-subtitle em {
+  color: var(--color-accent) !important;
+  font-style: italic;
+  font-weight: 700;
+  /* Lueur subtile pour souligner la ligne de trempe */
+  text-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.2);
 }
 
 #hero-subtitle {
@@ -548,43 +561,24 @@ header nav a:hover {
   transform: translateY(40px);
 }
 
-
 .hero-section .hero-button {
   display: block;
   margin: 1rem auto 0;
 }
 
-/* --- Style spécifique des lettres du sous-titre du hero --- */
-.hero-subtitle .letter {
-  /* On peut surcharger ici si on veut un style différent du global */
-}
-
-/* Animation premium : fade-in-up lettre par lettre */
+/* --- Animation des lettres --- */
 .letter {
   opacity: 0;
-  transform: translateY(8px); /* léger mouvement vers le haut */
+  transform: translateY(8px);
   display: inline-block;
-  animation: fadeInUpLetter 0.1s ease-out forwards;
+  /* L'animation est déclenchée par le JS via animation-delay */
+  animation: fadeInUpLetter 0.5s ease-out forwards;
 }
 
 @keyframes fadeInUpLetter {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* Par défaut, le <br> est masqué */
-.br-mobile {
-  display: none;
-}
-
-@media (max-width: 1024px) {
-  .br-mobile {
-    display: block;       /* force le retour à la ligne */
-    width: 100%;          /* occupe toute la largeur */
-    height: 0;            /* pas d'espace vertical supplémentaire */
-    line-height: 0;
   }
 }
 
@@ -597,21 +591,37 @@ header nav a:hover {
   content: "";
   position: absolute;
   inset: 0;
-  /* Dégradé sur seulement le haut */
   z-index: 1;
   pointer-events: none;
 }
 
+/* --- RESPONSIVE --- */
+
 @media (max-width: 768px) {
   .hero-section {
-    height: calc(var(--vh) * 30); /* ou garder 40vh si desktop OK */
+    height: calc(var(--vh) * 30);
+  }
+  
+  #hero-subtitle {
+    transition: transform 1600ms ease;
+    font-size: 0.95rem; /* Ajustement pour la lisibilité sur petit écran */
+  }
+
+  .hero-detached #hero-subtitle {
+    letter-spacing: normal;
+    transform: translateY(40px);
+  }
+  
+  /* Accentuation plus lumineuse en mode sombre pour le mobile */
+  .dark .hero-subtitle em {
+    color: var(--color-accent-light) !important;
   }
 }
 
 @media (max-width: 414px) {
   .hero-section {
-    height: calc(var(--vh) * 20); /* 40% de la hauteur visible */
-    min-height: 235px; /* sécurité */
+    height: calc(var(--vh) * 20);
+    min-height: 235px;
     background-size: cover;
     background-position: center;
   }
@@ -627,7 +637,6 @@ header nav a:hover {
   }
 }
 
-
 /* Mobile clone + fade */
 @media (max-width: 768px) {
   #hero-title.fade-out {
@@ -637,18 +646,6 @@ header nav a:hover {
   }
   #header-title.fade-in {
     opacity: 1 !important;
-  }
-}
-
-@media (max-width: 768px) {
-  /* On garde la transition sur transform, mais on enlève le letter-spacing */
-  #hero-subtitle {
-    transition: transform 1600ms ease; /* supprime letter-spacing de la transition */
-  }
-
-  .hero-detached #hero-subtitle {
-    letter-spacing: normal; /* annule l’écartement des lettres */
-    transform: translateY(40px); /* on conserve le mouvement vertical */
   }
 }
 

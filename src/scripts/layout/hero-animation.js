@@ -21,37 +21,42 @@ export function initHeroAnimation() {
 
   // Sous-titre
   const animateSubtitle = (el) => {
+    // 1. On récupère le HTML brut (avec les balises <em>)
     const rawHTML = el.innerHTML;
-    const chars = rawHTML
-      .split(/(<[^>]+>)/g)
-      .map(part => {
-        if (/^<[^>]+>$/.test(part.trim())) return part;
-        return part.split('').map(c =>
-          c === ' '
-            ? '<span class="letter">&nbsp;</span>'
-            : `<span class="letter">${c}</span>`
+    
+    // 2. La REGEX Magique : elle sépare les balises HTML du texte
+    // Ce qui donne un tableau mixant ["texte", "<balise>", "texte", etc.]
+    const parts = rawHTML.split(/(<[^>]+>)/g);
+    
+    // 3. Reconstruction intelligente
+    el.innerHTML = parts.map(part => {
+      // Si c'est une balise HTML (comme <em> ou </em>), on la renvoie TELLE QUELLE
+      if (/^<[^>]+>$/.test(part.trim())) {
+        return part; 
+      }
+      
+      // Si c'est du texte, on découpe par MOTS pour éviter les coupures (comme avant)
+      // Et on anime chaque LETTRE à l'intérieur
+      return part.split(/(\s+)/).map(word => {
+        // C'est un espace ? On le garde.
+        if (word.trim() === '') return word;
+        
+        // C'est un mot ? On anime ses lettres
+        const letters = word.split('').map(c => 
+          `<span class="letter">${c}</span>`
         ).join('');
-      })
-      .join('');
-    el.innerHTML = chars;
+        
+        // On entoure le mot d'un span 'nowrap' pour qu'il ne se coupe pas en deux
+        return `<span style="white-space: nowrap; display: inline-block;">${letters}</span>`;
+      }).join('');
+    }).join('');
 
+    // 4. Application des délais d'animation (identique)
     let delay = 0;
     el.querySelectorAll('.letter').forEach(span => {
       span.style.animationDelay = `${delay}s`;
       delay += 0.02;
     });
-
-    if (window.innerWidth <= 1024) {
-      const letters = el.querySelectorAll('.letter');
-      const cutIndex = 37;
-      if (letters[cutIndex]) {
-        const br = document.createElement('br');
-        br.style.display = 'block';
-        br.style.width = '100%';
-        br.style.lineHeight = '0';
-        letters[cutIndex].after(br);
-      }
-    }
 
     el.style.opacity = 1;
   };
