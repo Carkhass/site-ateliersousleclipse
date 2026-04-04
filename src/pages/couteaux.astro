@@ -142,6 +142,7 @@ const schemaData = {
             </div>
 
             <div class="details-content">
+             <div class="min-h-0">
               <div class="flex flex-col gap-1 mb-3 py-2 border-y border-[#7a2a2a]/10">
                 {item.data.caracteristiques?.acier && (
                   <div class="flex items-baseline gap-2">
@@ -160,6 +161,7 @@ const schemaData = {
                     {item.data.description}
                   </p>
                 )}
+              </div>
               </div>
             </div>
 
@@ -212,6 +214,111 @@ const schemaData = {
       </div>
     </div>
   </div>
+
+<style is:global>
+  /* --- 1. CORRECTIF CHIRURGICAL GLIGHTBOX (Tous écrans) --- */
+  
+  /* On neutralise l'ombre sur tous les conteneurs parents */
+  .glightbox-container .gslide-inner-content,
+  .glightbox-container .ginner-container,
+  .glightbox-container .gslide-image,
+  .glightbox-container .gslide-media {
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+
+  /* On nettoie la LÉGENDE (Caption) qui fait la grosse ombre en bas */
+  .glightbox-container .gslide-description {
+    background: transparent !important; /* Enlève le fond solide */
+    box-shadow: none !important;      /* Enlève la grosse ombre du bas */
+    border: none !important;
+  }
+
+  /* Style du titre sous l'image pour qu'il soit propre sur le flou */
+  .glightbox-container .gslide-title {
+    color: white !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Ombre portée sur le texte pour lisibilité */
+    text-align: center;
+    font-family: serif; /* Pour coller à ton style */
+  }
+
+  /* On applique l'ombre UNIQUEMENT sur l'image réelle */
+  .gslide-image img {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6) !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: 95vw !important;
+    max-height: 75vh !important; /* Réduit un peu pour laisser de la place au titre sans scroll */
+    display: block !important;
+    margin: 0 auto !important;
+  }
+
+  /* --- 2. STYLE MOBILE (Max 768px) --- */
+  @media (max-width: 768px) {
+    #knife-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      align-items: start !important; 
+      gap: 12px !important;
+      padding: 15px 8px !important; 
+    }
+
+    .knife-card {
+      display: flex !important;
+      flex-direction: column !important;
+      height: auto !important;
+      min-width: 0; 
+      position: relative !important;
+    }
+
+    .tampon-container {
+      width: 60px !important;
+      height: 60px !important;
+      top: -10px !important;
+      right: -10px !important;
+      z-index: 100 !important;
+    }
+
+    .details-content {
+      display: grid !important;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition: grid-template-rows 0.4s ease, opacity 0.3s ease;
+      overflow: hidden;
+    }
+
+    .details-content.is-open {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      padding-top: 4px;
+    }
+
+    .details-content > div { overflow: hidden; }
+
+    .details-content .flex.flex-col.gap-1.py-2 {
+      border-bottom: none !important; 
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    .knife-card h3 {
+      font-size: 14px !important;
+      min-height: 2.8em !important;
+      line-height: 1.2 !important;
+      display: -webkit-box !important;
+      -webkit-line-clamp: 2 !important;
+      -webkit-box-orient: vertical !important;
+      overflow: hidden;
+      margin-bottom: 2px !important;
+    }
+
+    .knife-card .mt-auto {
+      margin-top: auto;
+      padding-top: 10px;
+      border-top: 1px solid rgba(122, 42, 42, 0.1) !important;
+    }
+  }
+</style>
 </BaseLayout>
 
 
@@ -223,22 +330,27 @@ const schemaData = {
 
   let lightboxInstance = null;
 
-  function initAccordion() {
+function initAccordion() {
     const toggles = document.querySelectorAll('.toggle-details');
     toggles.forEach(btn => {
-      const newBtn = btn.cloneNode(true);
-      btn.parentNode.replaceChild(newBtn, btn);
-
-      newBtn.addEventListener('click', (e) => {
+      // On retire l'ancien listener s'il existe (pour éviter les doubles clics)
+      btn.onclick = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const card = newBtn.closest('.knife-card');
+        const card = btn.closest('.knife-card');
         const content = card.querySelector('.details-content');
         
-        newBtn.classList.toggle('active');
+        // On bascule les classes
+        btn.classList.toggle('active');
         content.classList.toggle('is-open');
-      });
+
+        // Petit bonus : rotation de la flèche si tu as un SVG
+        const svg = btn.querySelector('svg');
+        if (svg) {
+          svg.style.transform = content.classList.contains('is-open') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+      };
     });
   }
 
