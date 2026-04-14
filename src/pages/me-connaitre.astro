@@ -30,124 +30,166 @@ const personSchema = {
   description="Découvrez le parcours de Yann, de l'informatique à la forge artisanale. Une quête de sens et de création entre Trévoux et les traditions japonaises."
 >
   <main class="pt-32 pb-20 bg-bg text-text overflow-x-hidden">
+
+  <!-- ========================================================= -->
+  <!-- SECTION ARTISAN -->
+  <!-- ========================================================= -->
+
+    <section class="max-w-7xl mx-auto px-6 md:px-20 mb-24 md:mb-32">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
     
-    <section class="max-w-7xl mx-auto px-4 md:px-20 mb-32">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <div class="reveal fade-slide-left">
-          {/* H1 Harmonisé */}
-          <h1 class="text-3xl md:text-4xl font-serif font-bold text-[var(--color-accent)] mb-8 tracking-tight reveal-child">
-            L'artisan derrière l'Atelier <span class="sr-only"> : Yann, artisan coutelier à Reyrieux</span>
-          </h1>
-          <div class="space-y-6 text-lg leading-relaxed text-muted">
-            <p class="reveal-child">
-              Je m’appelle <span class="font-serif text-accent font-bold">Yann</span>. Installé à Reyrieux (01) juste au Nord de Lyon, mon parcours n'a pas commencé dans le fracas de l'enclume, mais dans le milieu immatériel de l'informatique. Informaticien de formation, j'ai passé ma jeunesse à explorer le virtuel avant de comprendre que j'avais aussi besoin de réalisations concrètes, tangibles.
-            </p>
-            <p class="reveal-child">
-              C’est en 2017 que tout bascule. Poussé par ma curiosité, ma gourmandise (j'aime cuisiner et j'aime encore plus le faire avec de bons outils), je chine une vieille forge à charbon et une enclume. À Trévoux, mon lieu de résidence à ce moment là, dans mon petit atelier, j'ai commencé à dompter le feu pour donner vie à mes premières lames. Ce qui n'était qu'un bricolage est devenu une quête de créativité brute.
-            </p>
-          </div>
-        </div>
-        <div class="relative reveal fade-slide-right group">
-          <div class="pivot-container portrait-mode aspect-[4/5] bg-surface rounded-lg overflow-hidden shadow-2xl border-[12px] border-white reveal-child">
-             <Image src={photoYann} alt="Yann Jacquot, artisan coutelier à Reyrieux (01)" width={600} height={750} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="relative py-32 mb-32 z-10">
-      <div class="absolute inset-0 bg-[#1a1a1a] shadow-2xl skew-y-[-2deg] scale-x-110 -z-10 origin-center"></div>
+    <div class="reveal fade-slide-left text-center lg:text-left">
+      {/* H1 Harmonisé : Centré sur mobile, Gauche sur Desktop */}
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[var(--color-accent)] mb-8 tracking-tight reveal-child leading-tight">
+        L'artisan derrière l'Atelier <span class="sr-only"> : Yann, artisan coutelier à Reyrieux</span>
+      </h1>
       
-      <div class="max-w-6xl mx-auto px-4 md:px-20">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <div class="reveal fade-slide-left">
-             <div class="grid grid-cols-2 gap-8 items-start">
-               <div class="group">
-                  <div class="pivot-container inverse aspect-[3/4] bg-surface rounded shadow-md border border-white/10 overflow-hidden reveal-child">
-                     <Image src={photoHamon} alt="Ligne de trempe sélective (Hamon) sur une lame en acier carbone" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                  </div>
-               </div>
-               <div class="group mt-16">
-                  <div class="pivot-container aspect-[3/4] bg-surface rounded shadow-md border border-white/10 overflow-hidden reveal-child">
-                     <Image src={photoManche} alt="Manche de couteau artisanal en bois de Cocobolo avec finitions polies" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                  </div>
-               </div>
-             </div>
-          </div>
-          <div class="reveal fade-slide-right">
-            {/* H2 Harmonisé */}
-            <h2 class="text-3xl md:text-4xl font-serif font-bold text-[var(--color-accent-light)] mb-8 tracking-tight reveal-child">
-              Sobriété & Efficacité
-            </h2>
-            <div class="space-y-6 text-lg text-muted leading-relaxed mt-4">
-              <p class="reveal-child">Mon design puise ses racines dans la coutellerie japonaises. J'admire chez les forgerons nippons cette capacité à marier une efficacité redoutable à une esthétique dépouillée.</p>
-              <p class="reveal-child">Ma spécialité ? La <em>trempe sélective</em>. Cette technique permet de créer le <span class="font-serif text-accent font-bold">Hamon</span>, cette ligne de vie sur l'acier, témoin d'un équilibre entre dureté et souplesse.</p>
-            </div>
-          </div>
+      {/* Texte : Alignement naturel mais avec un meilleur espacement */}
+      <div class="space-y-6 text-base md:text-lg leading-relaxed text-muted text-left">
+        <p class="reveal-child">
+          Je m’appelle <span class="font-serif text-accent font-bold">Yann</span>. Installé à Reyrieux (01) juste au Nord de Lyon, mon parcours n'a pas commencé dans le fracas de l'enclume, mais dans le milieu immatériel de l'informatique. Informaticien de formation, j'ai passé ma jeunesse à explorer le virtuel avant de comprendre que j'avais aussi besoin de réalisations concrètes, tangibles.
+        </p>
+        <p class="reveal-child">
+          C’est en 2017 que tout bascule. Poussé par ma curiosité, ma gourmandise (j'aime cuisiner et j'aime encore plus le faire avec de bons outils), je chine une vieille forge à charbon et une enclume. À Trévoux, mon lieu de résidence à ce moment là, dans mon petit atelier, j'ai commencé à dompter le feu pour donner vie à mes premières lames. Ce qui n'était qu'un bricolage est devenu une quête de créativité brute.
+        </p>
+      </div>
+    </div>
+
+    {/* Image : Ajout d'une marge haute sur mobile (mt-12) */}
+    <div class="relative reveal fade-slide-right group mt-12 lg:mt-0">
+      <div class="pivot-container portrait-mode aspect-[4/5] bg-surface rounded-lg overflow-hidden shadow-2xl border-[8px] md:border-[12px] border-white reveal-child">
+         <Image src={photoYann} alt="Yann Jacquot, artisan coutelier à Reyrieux (01)" width={600} height={750} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{/* ========================================================= */}
+{/* SECTION SOBRIETE EFFICACITE - FOND STABLE & IMAGES AERÉES */}
+{/* ========================================================= */}
+<section class="section-dark-skew relative py-24 md:py-32 mb-32">
+  <div class="max-w-6xl mx-auto px-6 md:px-20 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      
+      {/* Texte : Order 1 pour passer au dessus sur mobile */}
+      <div class="reveal fade-slide-right order-1 lg:order-2 text-center lg:text-left">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-[var(--color-accent-light)] mb-8 tracking-tight reveal-child">
+          Sobriété & Efficacité
+        </h2>
+        <div class="space-y-6 text-lg text-muted leading-relaxed mt-4">
+          <p class="reveal-child">Mon design puise ses racines dans la coutellerie japonaise. J'admire chez les forgerons nippons cette capacité à marier une efficacité redoutable à une esthétique dépouillée.</p>
+          <p class="reveal-child">Ma spécialité ? La <em>trempe sélective</em>. Cette technique permet de créer le <span class="font-serif text-accent-light font-bold">Hamon</span>, cette ligne de vie sur l'acier, témoin d'un équilibre entre dureté et souplesse.</p>
         </div>
       </div>
-    </section>
 
-    <section class="max-w-7xl mx-auto px-4 md:px-20 mb-32">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-        <div class="reveal fade-slide-left">
-           {/* H2 Harmonisé */}
-           <h2 class="text-3xl md:text-4xl font-serif font-bold text-[var(--color-accent)] mb-8 tracking-tight reveal-child">
-             Matières & Équilibre
-           </h2>
-           <div class="space-y-6 text-lg text-muted leading-relaxed mt-4 antialiased">
-             <p class="reveal-child">Le choix du manche est crucial. Je travaille principalement des bois nobles, choisis pour leur veinage et leur densité.</p>
-             <p class="reveal-child">Pour des projets plus modernes, j'intègre des composites comme le G10, appréciés pour leur robustesse inaltérable.</p>
+      {/* Images : Utilisation de js-parallax-item */}
+      <div class="reveal order-2 lg:order-1 relative">
+         <div class="flex flex-col items-center md:grid md:grid-cols-2 gap-0 md:gap-8 relative">
+            <div class="group js-parallax-item w-[85%] md:w-full z-10">
+               <div class="pivot-container inverse aspect-[3/4] bg-surface rounded shadow-2xl border border-white/10 overflow-hidden reveal-child">
+                  <Image src={photoHamon} alt="Ligne de trempe sélective Hamon" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+               </div>
+            </div>
+            <div class="group js-parallax-item w-[85%] md:w-full mt-4 md:mt-16 z-20">
+               <div class="pivot-container aspect-[3/4] bg-surface rounded shadow-2xl border border-white/10 overflow-hidden reveal-child">
+                  <Image src={photoManche} alt="Manche en bois de Cocobolo" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+               </div>
+            </div>
+         </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+{/* ========================================================= */}
+{/* SECTION MATIÈRE ÉQUILIBRE  */}
+{/* ========================================================= */}
+<section class="max-w-7xl mx-auto px-6 md:px-20 mb-32">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    
+    <div class="reveal fade-slide-left text-center lg:text-left">
+       <h2 class="text-3xl md:text-4xl font-serif font-bold text-[var(--color-accent)] mb-8 tracking-tight reveal-child">
+         Matières & Équilibre
+       </h2>
+       <div class="space-y-6 text-lg text-muted leading-relaxed mt-4 antialiased">
+         <p class="reveal-child">Le choix du manche est crucial. Je travaille principalement des bois nobles, choisis pour leur veinage et leur densité.</p>
+         <p class="reveal-child">Pour des projets plus modernes, j'intègre des composites comme le G10, appréciés pour leur robustesse inaltérable.</p>
+       </div>
+    </div>
+
+    <div class="reveal">
+      <div class="flex flex-col items-center md:grid md:grid-cols-2 gap-0 md:gap-8 relative pt-10 md:pt-0">
+        {/* AJOUT DE js-parallax-item ICI */}
+        <div class="group js-parallax-item w-[85%] md:w-full z-10">
+           <div class="pivot-container inverse aspect-[3/4] bg-surface rounded shadow-md border border-black/5 overflow-hidden reveal-child">
+              <Image src={photoBoisEchantillon} alt="Échantillons de bois" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
            </div>
         </div>
-        <div class="reveal fade-slide-right">
-          <div class="grid grid-cols-2 gap-8 items-start">
-            <div class="group">
-               <div class="pivot-container inverse aspect-[3/4] bg-surface rounded shadow-md border border-black/5 overflow-hidden reveal-child">
-                  <Image src={photoBoisEchantillon} alt="Échantillons de bois de l'atelier sous l'éclipse" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-               </div>
-            </div>
-            <div class="group mt-16">
-               <div class="pivot-container aspect-[3/4] bg-surface rounded shadow-md border border-black/5 overflow-hidden reveal-child">
-                  <Image src={photoG10Echantillon} alt="Montage G10 et Ébène sur un couteau manche tsuki" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-               </div>
-            </div>
-          </div>
+        {/* AJOUT DE js-parallax-item ICI */}
+        <div class="group js-parallax-item w-[85%] md:w-full mt-4 md:mt-16 z-20">
+           <div class="pivot-container aspect-[3/4] bg-surface rounded shadow-md border border-black/5 overflow-hidden reveal-child">
+              <Image src={photoG10Echantillon} alt="Montage G10 et Ébène" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="max-w-5xl mx-auto px-4 mb-32 reveal fade-slide-up group">
-      <div class="bg-surface p-10 md:p-16 rounded-2xl shadow-xl relative overflow-hidden border border-black/5">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
-          <div class="lg:col-span-2">
-            {/* H2 Harmonisé */}
-            <h2 class="text-3xl md:text-4xl font-serif font-bold mb-8 tracking-tight text-[var(--color-accent)] reveal-child">
-              Pourquoi "Sous l'Éclipse" ?
-            </h2>
-            <div class="space-y-6 text-lg text-muted leading-relaxed italic border-l-2 border-accent/20 pl-6 antialiased">
-              <p class="reveal-child">
-                Le nom de l'atelier est un hommage à <span class="font-serif text-accent font-bold">Berserk</span>, manga créé par Kentaro Miura, malheureusement décédé le 6 mai 2021.
-              </p>
-              <p class="reveal-child">
-                Berserk est un récit d’une rare intensité et d’une profondeur insondable, racontant l’épopée d’un guerrier mercenaire contre le destin et la causalité. Malheureusement inachevée, l’histoire ne connaîtra pas la fin qu’elle mérite, mais les 41 tomes existants suffisent pour se rendre compte que Kentaro Miura a écrit et dessiné cette œuvre à l’encre de son âme. 
-              </p>
-              <p class="reveal-child">
-                Cette intensité et ce don de soi dans la création sont ma boussole, c'est ce que j'essaie d'insuffler dans mon propre travail à l'atelier. Une lutte humble contre la matière pour en extraire l'exceptionnel.
-              </p>
-            </div>
-          </div>
-          <div class="relative">
-             <div class="pivot-container w-full aspect-[2/3] bg-gray-100 rounded shadow-inner flex items-center justify-center overflow-hidden border border-black/5 reveal-child">
-                <Image src={photoBerserk} alt="Hommage à Berserk de Kentaro Miura, inspiration pour l'Atelier sous l'Éclipse" width={400} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-             </div>
-             <div class="absolute inset-0 border-2 border-[var(--color-accent)]/20 translate-x-4 translate-y-4 -z-10 rounded"></div>
-          </div>
+  </div>
+</section>
+
+{/* ========================================================= */}
+{/* SECTION BERSERK  */}
+{/* ========================================================= */}
+
+<section class="max-w-5xl mx-auto px-4 mb-32 reveal fade-slide-up group">
+  <div class="bg-surface p-8 md:p-16 rounded-2xl shadow-xl relative overflow-hidden border border-black/5">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+      
+      {/* Texte : Centré sur mobile, Gauche sur Desktop */}
+      <div class="lg:col-span-3 text-center lg:text-left">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold mb-8 tracking-tight text-[var(--color-accent)] reveal-child">
+          Pourquoi "Sous l'Éclipse" ?
+        </h2>
+        
+        {/* Suppression de la bordure gauche sur mobile pour plus de propreté */}
+        <div class="space-y-6 text-base md:text-lg text-muted leading-relaxed italic border-none lg:border-l-2 lg:border-accent/20 lg:pl-6 antialiased">
+          <p class="reveal-child">
+            Le nom de l'atelier est un hommage à <span class="font-serif text-accent font-bold">Berserk</span>, manga créé par Kentaro Miura, malheureusement décédé le 6 mai 2021.
+          </p>
+          <p class="reveal-child">
+            Berserk est un récit d’une rare intensité et d’une profondeur insondable, racontant l’épopée d’un guerrier mercenaire contre le destin et la causalité. Malheureusement inachevée, l’histoire ne connaîtra pas la fin qu’elle mérite.
+          </p>
+          <p class="reveal-child">
+            Cette intensité et ce don de soi sont ma boussole. C'est ce que j'essaie d'insuffler dans mon travail : une lutte humble contre la matière pour en extraire l'exceptionnel.
+          </p>
         </div>
       </div>
-    </section>
+
+      {/* Image : Plus d'espace au dessus sur mobile */}
+      <div class="relative lg:col-span-2 mt-8 lg:mt-0">
+          <div class="pivot-container w-full h-auto bg-gray-100 rounded shadow-inner flex items-center justify-center overflow-hidden border border-black/5 reveal-child">
+            <Image 
+              src={photoBerserk} 
+              alt="Hommage à Berserk" 
+              width={600}
+              height={800} 
+              class="w-full h-auto block group-hover:scale-105 transition-transform duration-700" 
+            />
+          </div>
+          {/* L'ombre portée décorative */}
+          <div class="absolute inset-0 border-2 border-[var(--color-accent)]/20 translate-x-4 translate-y-4 -z-10 rounded"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
   </main>
+  
 </BaseLayout>
 
 <style>
@@ -162,34 +204,101 @@ const personSchema = {
   }
 
   main {
-    overflow-x: hidden;
+    /* Très important pour que le biseau ne crée pas de scroll horizontal */
+    overflow-x: hidden; 
   }
 
-  /* --- LOGIQUE DU PIVOT FLUIDE (BLOC COMPLET) --- */
+  /* --- NOUVEAU : FOND SOMBRE BIAISÉ --- */
+  .section-dark-skew {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-dark-skew::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -10vw; /* Débordement extérieur pour garantir la diagonale */
+    right: -10vw;
+    bottom: 0;
+    background-color: #1a1a1a;
+    transform: skewY(-2deg);
+    z-index: -1;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  }
+
+  /* --- LOGIQUE DU PIVOT FLUIDE --- */
   .pivot-container {
     transform: rotate(0deg);
-    transition: transform 1000ms cubic-bezier(0.4, 0, 0.2, 1);
+    /* On réduit un peu le temps pour plus de réactivité au scroll */
+    transition: transform 600ms cubic-bezier(0.2, 0, 0.2, 1);
     will-change: transform;
     transform-origin: center;
   }
 
-  /* Section 1 : Penché par défaut */
+
+/* Sur mobile, le JS pilote SANS transition pour une réactivité totale */
+@media (max-width: 1023px) {
+  /* On augmente l'espace entre le texte et le bloc images */
+  .section-dark-skew .order-2 {
+    margin-top: 2rem; /* Ajoute une marge de sécurité */
+  }
+
+  /* On s'assure que le bloc texte est prioritaire */
+  .section-dark-skew .order-1 {
+    position: relative;
+    z-index: 50;
+    padding-bottom: 2rem; /* Espace interne pour respirer */
+  }
+
+  .js-parallax-item .pivot-container {
+    transition: none !important;
+    will-change: transform;
+  }
+}
+
+  /* Sur Desktop, on garde tes effets de pivot au hover intacts */
+  @media (min-width: 1024px) {
+    .group:hover .pivot-container.inverse {
+      transform: rotate(-3deg);
+    }
+    .group:hover .pivot-container:not(.inverse) {
+      transform: rotate(3deg);
+    }
+  }
+
   .pivot-container.portrait-mode {
     transform: rotate(3deg);
   }
 
-  /* Hover Section 1 : se redresse */
   .group:hover .pivot-container.portrait-mode {
     transform: rotate(0deg);
   }
 
-  /* Hover Autres Sections : pivotent de 3° */
   .group:hover .pivot-container:not(.portrait-mode) {
     transform: rotate(3deg);
   }
 
-  /* Hover Autres Sections (inverse) : pivotent de -3° */
   .group:hover .pivot-container.inverse {
     transform: rotate(-3deg);
   }
+
+  
 </style>
+
+<script>
+  // Si ton fichier .astro est dans src/pages/ et ton script dans src/scripts/animations/
+  import { initArtisanParallax } from "../scripts/animations/anim-page-meconnaitre.js";
+
+  // Fonction pour lancer le script
+  const launchAnim = () => {
+
+    initArtisanParallax();
+  };
+
+  // On écoute le chargement du DOM
+  document.addEventListener('DOMContentLoaded', launchAnim);
+  
+  // Si tu utilises les ViewTransitions d'Astro, il faut aussi cet écouteur :
+  document.addEventListener('astro:page-load', launchAnim);
+</script>
