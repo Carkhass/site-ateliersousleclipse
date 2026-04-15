@@ -215,6 +215,70 @@ const schemaData = {
     </div>
   </div>
 
+  
+<!-- ========================================================= -->
+<!-- SECTION : Inspiration + Galerie hamon (Embla Carousel)  -->
+<!-- ========================================================= -->
+<section class="w-full max-w-none bg-surface py-16 inspiration-section">
+
+  <!-- 📝 TEXTE -->
+  <div class="max-w-6xl mx-auto px-4 space-y-6 text-center fade-slide-up">
+    <h2 class="text-3xl md:text-4xl font-serif font-bold text-accent reveal-child">
+      Inspiration
+    </h2>
+    <p class="text-lg text-muted leading-relaxed reveal-child">
+      L’esthétique japonaise, sobre et naturelle, m’inspire profondément. 
+      J’aime travailler des matières authentiques pour les manches : textures brutes, couleurs organiques.
+    </p>
+    <p class="text-lg text-muted leading-relaxed reveal-child">
+      Sur beaucoup de mes créations, vous remarquerez une “ligne” sur la lame : le <i class="font-serif italic text-accent">Hamon</i>. 
+      Parfois fluide, parfois indomptée, c’est la signature laissée par la trempe sélective — 
+      un savoir-faire ancestral japonais. Chaque hamon est unique, fruit de l’acier, du feu et du geste.
+    </p>
+  </div>
+
+  <!-- 🎠 CAROUSEL -->
+  <div class="fade-slide-up mt-10">
+    <div class="embla mx-auto">
+      <div class="embla__viewport">
+        <div class="embla__container">
+          {[
+            "hamon-1",
+            "hamon-2",
+            "hamon-3",
+            "hamon-4",
+            "hamon-5",
+            "hamon-6"
+          ].map(name => (
+            <div class="embla__slide" key={name}>
+              <div class="embla__parallax">
+                <div class="embla__parallax__layer">
+                  <img 
+                    src={`/images/slider/${name}.webp`} 
+                    alt={`Détail de couteau artisanal avec hamon atelier sous l'éclipse - ${name}`} 
+                    class="embla__parallax__img" 
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Contrôles Embla -->
+      <div class="embla__controls mt-4 flex items-center justify-between">
+        <div class="embla__buttons flex gap-2">
+          <button class="embla__button embla__button--prev" type="button" aria-label="Précédent"></button>
+          <button class="embla__button embla__button--next" type="button" aria-label="Suivant"></button>
+        </div>
+        <div class="embla__dots flex gap-2"></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
 <style is:global>
   /* --- 1. CORRECTIF CHIRURGICAL GLIGHTBOX (Tous écrans) --- */
   
@@ -325,15 +389,18 @@ const schemaData = {
 <script>
   import { initFilters } from '../scripts/features/knife-filters.js';
   import { initBookingLogic } from '../scripts/features/booking-modal.js';
+  // Ajout des imports Embla
+  import EmblaCarousel from 'embla-carousel';
+  import { initEmbla } from '../scripts/init/init-embla.js';
+  
   import GLightbox from 'glightbox';
   import 'glightbox/dist/css/glightbox.min.css';
 
   let lightboxInstance = null;
 
-function initAccordion() {
+  function initAccordion() {
     const toggles = document.querySelectorAll('.toggle-details');
     toggles.forEach(btn => {
-      // On retire l'ancien listener s'il existe (pour éviter les doubles clics)
       btn.onclick = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -341,11 +408,9 @@ function initAccordion() {
         const card = btn.closest('.knife-card');
         const content = card.querySelector('.details-content');
         
-        // On bascule les classes
         btn.classList.toggle('active');
         content.classList.toggle('is-open');
 
-        // Petit bonus : rotation de la flèche si tu as un SVG
         const svg = btn.querySelector('svg');
         if (svg) {
           svg.style.transform = content.classList.contains('is-open') ? 'rotate(180deg)' : 'rotate(0deg)';
@@ -355,6 +420,12 @@ function initAccordion() {
   }
 
   function initPage() {
+    // Initialisation d'Embla (nouvelle section déplacée)
+    document.querySelectorAll('.embla').forEach((root) => {
+      initEmbla(root, EmblaCarousel);
+    });
+
+    // Initialisations existantes
     initFilters();
     initBookingLogic();
     initAccordion();
@@ -373,10 +444,16 @@ function initAccordion() {
     });
   }
 
+  // Astro gère le premier chargement et les suivants avec astro:page-load
   document.addEventListener('astro:page-load', initPage);
+
+  // Fallback au cas où astro:page-load ne s'exécute pas sur le premier hit
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initPage);
   } else {
-    initPage();
+    // Si déjà chargé mais pas par astro:page-load (cas rares)
+    if (!window.astroPageLoadExecuted) {
+        initPage();
+    }
   }
 </script>

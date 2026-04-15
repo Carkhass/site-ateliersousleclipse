@@ -600,87 +600,20 @@ const actusRecentes = toutesLesActus
 
 
 
-<!-- ========================================================= -->
-<!-- SECTION : Inspiration + Galerie hamon (Embla Carousel)  -->
-<!-- ========================================================= -->
-<section class="w-full max-w-none bg-surface py-16 inspiration-section">
 
-  <!-- 📝 TEXTE -->
-  <div class="max-w-6xl mx-auto px-4 space-y-6 text-center fade-slide-up">
-    <h2 class="text-3xl md:text-4xl font-serif font-bold text-accent reveal-child">
-      Inspiration
-    </h2>
-    <p class="text-lg text-muted leading-relaxed reveal-child">
-      L’esthétique japonaise, sobre et naturelle, m’inspire profondément. 
-      J’aime travailler des matières authentiques pour les manches : textures brutes, couleurs organiques.
-    </p>
-    <p class="text-lg text-muted leading-relaxed reveal-child">
-      Sur beaucoup de mes créations, vous remarquerez une “ligne” sur la lame : le <i class="font-serif italic text-accent">Hamon</i>. 
-      Parfois fluide, parfois indomptée, c’est la signature laissée par la trempe sélective — 
-      un savoir-faire ancestral japonais. Chaque hamon est unique, fruit de l’acier, du feu et du geste.
-    </p>
-  </div>
 
-  <!-- 🎠 CAROUSEL -->
-  <div class="fade-slide-up mt-10">
-    <div class="embla mx-auto">
-      <div class="embla__viewport">
-        <div class="embla__container">
-          {[
-            "hamon-1",
-            "hamon-2",
-            "hamon-3",
-            "hamon-4",
-            "hamon-5",
-            "hamon-6"
-          ].map(name => (
-            <div class="embla__slide" key={name}>
-              <div class="embla__parallax">
-                <div class="embla__parallax__layer">
-                  <img 
-                    src={`/images/slider/${name}.webp`} 
-                    alt={`Détail de couteau artisanal avec hamon atelier sous l'éclipse - ${name}`} 
-                    class="embla__parallax__img" 
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <!-- Contrôles Embla -->
-      <div class="embla__controls mt-4 flex items-center justify-between">
-        <div class="embla__buttons flex gap-2">
-          <button class="embla__button embla__button--prev" type="button" aria-label="Précédent"></button>
-          <button class="embla__button embla__button--next" type="button" aria-label="Suivant"></button>
-        </div>
-        <div class="embla__dots flex gap-2"></div>
-      </div>
-    </div>
-  </div>
-
-</section>
 <script>
-  import EmblaCarousel from 'embla-carousel';
-  import { initEmbla } from '../scripts/init/init-embla.js';
   import { initVitrine } from '../scripts/animations/anim-vitrine.js';
 
   const runAllInits = () => {
-    // Embla
-    document.querySelectorAll('.embla').forEach((root) => {
-      initEmbla(root, EmblaCarousel);
-    });
-    
-    // Vitrine (qui lance maintenant le crossfade + le parallax)
+    // On ne garde que la Vitrine ici
     initVitrine();
   };
 
   // Premier chargement
   runAllInits();
 
-  // Chargements suivants (navigation Astro)
+  // Chargements suivants (navigation fluide Astro)
   document.addEventListener('astro:page-load', runAllInits);
 </script>
 
