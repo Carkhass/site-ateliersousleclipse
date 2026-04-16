@@ -1,0 +1,276 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from 'astro:assets';
+
+const stages = [
+  {
+    titre: "Niveau 1 - Couteau simple",
+    duree: "1 Journée",
+    prix: "290€",
+    description: "Apprenez à travailler l'acier et à réaliser vos premières émoutures au backstand pour créer un couteau droit. Finitions standard.",
+    image: "/images/stage-stock-removal.webp" 
+  },
+  {
+    titre: "Niveau 2 - Couteau de Cuisine",
+    duree: "2 Jours",
+    prix: "530€",
+    description: "Vous fabriquerez votre couteau de cuisine au choix et vous apprendrez la trempe sélective afin de produire un hamon. Finitions premium.",
+    image: "/images/stage-cuisine.webp"
+  },
+];
+
+// SEO : JSON-LD pour les cours/stages
+const courseSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Stages de Coutellerie - L'Atelier sous l'Éclipse",
+  "description": "Apprenez la fabrication de couteaux avec Yann Jacquot à Reyrieux. Initiation au stock-removal et traitements thermiques.",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "L'Atelier sous l'Éclipse",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Reyrieux",
+      "postalCode": "01600",
+      "addressCountry": "FR"
+    }
+  }
+};
+---
+
+<BaseLayout 
+  title="Stages de Coutellerie | Atelier sous l'Éclipse"
+  description="Apprenez la fabrication de couteaux avec Yann Jacquot à Reyrieux. Créez votre propre lame de A à Z via la technique du stock-removal."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(courseSchema)} />
+
+  <main class="pt-32 pb-20 bg-bg text-text overflow-x-hidden">
+
+    <section class="max-w-7xl mx-auto px-6 mb-24 text-center">
+      <div class="reveal fade-slide-up">
+        <h1 class="text-3xl md:text-5xl font-serif font-bold mb-8 text-accent reveal-child">
+          Stages
+        </h1>
+        <p class="max-w-2xl mx-auto text-lg text-muted italic reveal-child">
+          Accompagnement à la fabrication de couteaux.
+        </p>
+      </div>
+    </section>
+
+    <section class="section-dark-skew relative py-24 my-16">
+      <div class="max-w-5xl mx-auto px-6 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          
+          <div class="reveal fade-slide-left">
+            <h2 class="text-3xl font-serif font-bold text-[var(--color-accent-light)] mb-6 reveal-child">
+              De la barre à la lame
+            </h2>
+            <div class="space-y-4 text-muted reveal-child">
+              <p>Au sein de mon petit atelier à Reyrieux, je vous invite à venir fabriquer votre couteau sous ma supervision.</p>
+              <p>Actuellement il n'est pas possible de forger par manque de place, mais nous utilisons la précision du backstand et la rigueur du trait.</p>
+              <p>Vous apprendrez à maîtriser l'abrasion pour donner vie à une géométrie fonctionnelle, à gérer les traitements thermiques, les ajustements entre matières et bien sûr quelques techniques liées aux finitions spécifiques.</p>
+            </div>
+          </div>
+          
+          <div class="js-parallax-item reveal fade-slide-right">
+             <div class="pivot-container aspect-video rounded-lg overflow-hidden border border-white/10 shadow-2xl bg-surface reveal-child">
+                <div class="w-full h-full flex items-center justify-center text-accent/20 italic p-8 text-center">
+                    [ Photo : Travail de précision au backstand ]
+                </div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="max-w-4xl mx-auto px-6 mb-12"> 
+      <div class="relative bg-surface border border-white/5 rounded-2xl p-8 md:p-12 shadow-2xl reveal fade-slide-up overflow-hidden">
+        
+        <div class="absolute top-0 right-0 w-24 h-24 border-t border-r border-accent/10 m-4 rounded-tr-xl"></div>
+
+        <div class="flex flex-col md:flex-row items-center md:items-start gap-10 relative z-10">
+          
+          <div class="text-accent/40 shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
+          </div>
+
+          <div class="text-center md:text-left">
+            <h3 class="text-xl md:text-2xl font-serif font-bold text-accent mb-8 reveal-child italic">
+              Le cadre de l'expérience
+            </h3>
+            
+            <div class="space-y-6 text-muted reveal-child">
+              <div class="flex items-center gap-4 justify-center md:justify-start">
+                <div class="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(var(--color-accent-rgb),0.4)] shrink-0"></div>
+                <p>Ouvert aux adultes de <span class="text-accent font-semibold">18 ans et plus</span>.</p>
+              </div>
+              
+              <div class="flex items-center gap-4 justify-center md:justify-start">
+                <div class="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(var(--color-accent-rgb),0.4)] shrink-0"></div>
+                <p>Mineurs acceptés <span class="text-accent font-semibold">dès 15 ans</span> (accompagnés d'un parent présent).</p>
+              </div>
+
+              <div class="flex items-center gap-4 justify-center md:justify-start">
+                <div class="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_8px_rgba(var(--color-accent-rgb),0.4)] shrink-0"></div>
+                <p>Nécessite une <span class="text-accent font-semibold italic">condition physique adaptée</span> au travail debout et à l'utilisation de machines.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="relative py-24 bg-grid-subtle"> 
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+          {stages.map((stage, index) => (
+            <div 
+              class="bg-surface border border-black/5 rounded-2xl p-8 shadow-xl flex flex-col hover:border-accent/20 transition-all duration-500 group reveal fade-slide-up"
+              style={`transition-delay: ${index * 200}ms;`}
+            >
+              <h3 class="text-2xl font-serif font-bold text-accent mb-2 reveal-child">{stage.titre}</h3>
+              
+              <div class="flex gap-4 text-sm font-mono text-muted mb-6 uppercase tracking-widest reveal-child">
+                <span>{stage.duree}</span>
+                <span class="text-accent/50">|</span>
+                <span class="text-accent font-bold">{stage.prix}</span>
+              </div>
+              
+              <p class="text-muted mb-8 flex-grow leading-relaxed reveal-child">{stage.description}</p>
+              
+              {/* Le lien devient un bouton avec l'attribut data-stage */}
+              <button 
+                data-stage-btn={stage.titre}
+                class="inline-block px-6 py-3 bg-accent text-bg font-bold rounded-lg transition-all hover:bg-accent-light hover:-translate-y-1 text-center reveal-child"
+              >
+                Réserver ma place
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="relative py-24 bg-[#0a0a0a] border-y border-white/5">
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <h2 class="text-3xl font-serif font-bold text-[var(--color-accent-light)] mb-16 text-center reveal fade-slide-up">
+          Préparer votre venue
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          <div class="bg-surface border border-white/5 p-8 rounded-xl reveal fade-slide-up text-center flex flex-col items-center" style="transition-delay: 100ms;">
+            <div class="text-accent mb-4 reveal-child">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-4 reveal-child">Horaires</h3>
+            <p class="text-sm text-muted leading-relaxed reveal-child">
+              <strong>8h30 — 17h30</strong><br /> Une journée complète pour prendre le temps de bien faire. Une pause conviviale est prévue à midi.
+            </p>
+          </div>
+
+          <div class="bg-surface border border-white/5 p-8 rounded-xl reveal fade-slide-up text-center flex flex-col items-center" style="transition-delay: 200ms;">
+            <div class="text-accent mb-4 reveal-child">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-4 reveal-child">Tenue & EPI</h3>
+            <p class="text-sm text-muted leading-relaxed reveal-child">
+              Je fournis masque FFP3, lunettes de protection, gants et bouchons. <strong>Obligatoire :</strong> vêtements 100% coton et chaussures fermées en cuir.
+            </p>
+          </div>
+
+          <div class="bg-surface border border-white/5 p-8 rounded-xl reveal fade-slide-up text-center flex flex-col items-center" style="transition-delay: 300ms;">
+            <div class="text-accent mb-4 reveal-child">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path><line x1="6" y1="2" x2="6" y2="4"></line><line x1="10" y1="2" x2="10" y2="4"></line><line x1="14" y1="2" x2="14" y2="4"></line>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-4 reveal-child">Le Midi</h3>
+            <p class="text-sm text-muted leading-relaxed reveal-child">
+              Repas tiré du sac. Nous déjeunons ensemble à ma table pour échanger sur nos expériences et la passion coutelière.
+            </p>
+          </div>
+
+          <div class="bg-surface border border-white/5 p-8 rounded-xl reveal fade-slide-up text-center flex flex-col items-center" style="transition-delay: 400ms;">
+            <div class="text-accent mb-4 reveal-child">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-4 reveal-child">Accès</h3>
+            <p class="text-sm text-muted leading-relaxed reveal-child">
+              L'atelier est situé à Reyrieux (01) à mon domicile. Parking facile sur place. Liste de gîtes et chambres d'hôtes disponible sur demande.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  /* --- REVEAL CORE --- */
+  .reveal { opacity: 0; }
+  .reveal.visible { opacity: 1; }
+
+  /* --- SECTIONS SPÉCIFIQUES --- */
+  .section-dark-skew {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-dark-skew::before {
+    content: "";
+    position: absolute;
+    top: 0; left: -10vw; right: -10vw; bottom: 0;
+    background-color: #111111;
+    transform: skewY(-2deg);
+    z-index: -1;
+  }
+
+  .bg-grid-subtle {
+    background-color: var(--color-bg);
+    background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  /* --- PIVOT & PARALLAX --- */
+  .pivot-container {
+    transition: transform 600ms cubic-bezier(0.2, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  @media (min-width: 1024px) {
+    .group:hover .pivot-container {
+      transform: rotate(3deg);
+    }
+  }
+</style>
+
+<script>
+  import { initArtisanParallax } from "../scripts/animations/anim-page-meconnaitre.js";
+  import { initStageAndContactScroll } from '../scripts/features/stage-scroll.js';
+
+  const launchAnim = () => {
+    initArtisanParallax();
+    initStageAndContactScroll();
+  };
+
+  // 1. Gestion des navigations fluides (View Transitions)
+  document.addEventListener('astro:page-load', launchAnim);
+
+  // 2. Fallback pour le premier chargement ou rafraîchissement manuel
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', launchAnim);
+  } else {
+    launchAnim();
+  }
+</script>
