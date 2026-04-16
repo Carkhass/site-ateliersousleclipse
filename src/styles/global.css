@@ -2227,103 +2227,123 @@ html.dark .knife-card,
   #knife-grid {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    grid-auto-rows: auto !important; 
-    gap: 12px !important;
-    padding: 15px 8px !important;
-    align-items: start !important; /* Déploiement indépendant */
+    grid-auto-rows: auto !important; /* On laisse la hauteur naturelle */
+    gap: 10px !important;
+    padding: 12px 6px !important;
+    align-items: start !important; /* IMPORTANT : empêche l'étirement "vide" */
   }
 
   .knife-card {
     display: flex !important;
     flex-direction: column !important;
-    min-height: 320px !important; /* Aligne les fiches de gauche et droite */
-    height: auto !important;
     background-color: #faf8f5 !important;
+    height: auto !important;
+    border-radius: 4px !important;
+    position: relative !important; /* Indispensable pour le tampon */
+    overflow: visible !important; /* Permet au tampon de dépasser */
   }
 
-  /* Correction Mode Sombre Mobile */
-  html.dark .knife-card,
-  .dark .knife-card {
-    background-color: #1a1a1a !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
+  /* 1. On force l'image en carré parfait. C'est souvent ça qui décale tout sur smartphone */
+  .knife-card .relative.aspect-square, 
+  .knife-card img {
+    aspect-ratio: 1 / 1 !important;
+    width: 100% !important;
+    object-fit: cover !important;
   }
 
-  /* Normalisation du titre */
+  /* 2. Titre : Hauteur fixe et serrée pour aligner les deux colonnes */
   .knife-card h3 {
-    font-size: 13px !important;
+    font-size: 12px !important;
     line-height: 1.2 !important;
-    height: 32px !important; 
-    margin: 8px 0 !important;
-    text-align: center !important;
+    height: 30px !important; /* Hauteur pour 2 lignes max */
+    margin: 6px 4px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    text-align: center !important;
   }
 
-  .tampon-container {
-    width: 55px !important;
-    height: 55px !important;
-    top: -10px !important;
-    right: -10px !important;
-    z-index: 110 !important;
-  }
-
-  /* LOGIQUE ACCORDÉON MOBILE */
+  /* 3. Zone Flèche : On la compresse au maximum */
   .toggle-details {
     display: flex !important;
-    position: relative !important;
-    margin: 0 auto !important;
-    align-items: center;
-    justify-content: center;
-    height: 32px !important;
-    width: 100% !important;
-    border-bottom: none !important; /* On laisse la bordure à la zone d'en-dessous */
-    margin-bottom: 0 !important;
-    cursor: pointer;
+    height: 24px !important; /* Réduit de 32px à 24px */
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
   }
 
+  .toggle-details svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* 4. Accordéon */
   .details-content {
     display: grid !important;
     grid-template-rows: 0fr;
     opacity: 0;
-    transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease !important;
-    overflow: hidden;
+    transition: all 0.3s ease-out;
+  }
+
+  .details-content.is-open {
+    grid-template-rows: 1fr !important;
+    opacity: 1 !important;
+    padding-bottom: 8px !important;
   }
 
   .details-content > div {
     min-height: 0;
   }
 
-  .details-content.is-open {
-    grid-template-rows: 1fr !important;
-    opacity: 1 !important;
-    margin-bottom: 8px;
-  }
-
-  .details-content .flex-col {
-    padding: 8px 0 !important;
-    margin-bottom: 0 !important;
-  }
-
-  /* Zone basse (Prix/Bouton) */
+  /* 5. Zone Prix : On enlève les marges inutiles */
   .knife-card .mt-auto {
-    margin-top: auto !important;
-    padding: 10px 5px !important;
+    margin-top: 0 !important; /* On ne pousse plus au fond violemment */
+    padding: 8px 4px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    gap: 6px !important;
-    /* On NE met PAS de border-top: none ici. 
-       C'est ce trait (défini en HTML) qui fera la séparation propre sous la flèche. */
+    gap: 4px !important;
+    /* Le trait HTML (border-t) s'affichera ici */
+  }
+
+  .price-tag {
+    font-size: 13px !important;
+    font-weight: bold !important;
   }
 
   .trigger-booking-global {
-    width: 100% !important;
-    max-width: 110px !important;
+    width: 90% !important;
     font-size: 10px !important;
-    padding: 8px 4px !important;
+    padding: 6px 0 !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  /* Tampon */
+  .tampon-container {
+    position: absolute !important;
+    width: 50px !important; /* Taille ajustée */
+    height: 50px !important;
+    top: -8px !important;
+    right: -8px !important;
+    z-index: 50 !important; /* Force le passage au premier plan */
+    pointer-events: none; /* Évite de gêner le clic sur la fiche */
   }
 }
+
+/* Correction Dark Mode pour mobile */
+html.dark .knife-card, .dark .knife-card {
+  background-color: #1e1e1e !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+}
+
+/* Correction Dark Mode pour mobile */
+html.dark .knife-card, .dark .knife-card {
+  background-color: #1e1e1e !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+}
+
 /* --- 4. COMPORTEMENT DESKTOP (> 768px) --- */
 @media (min-width: 769px) {
   /* PAS D'ACCORDÉON SUR DESKTOP */
