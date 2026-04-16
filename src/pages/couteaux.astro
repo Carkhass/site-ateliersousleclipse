@@ -99,63 +99,61 @@ const schemaData = {
 
     return (
       <article 
-        class="knife-card fade-in-up relative flex flex-col h-full bg-surface shadow-lg rounded-lg border-2 border-transparent transition-all duration-500"
-        data-type={typeFiltre}
-        data-dispo={String(estDispo)}
-      >
-        <div class="tampon-container absolute -top-8 -right-8 z-[100] w-32 h-32 pointer-events-none drop-shadow-2xl rotate-12">
-          {estDispo ? (
-            <img src="/images/tampon-dispo.webp" alt="Disponible" class="w-full h-full object-contain" />
-          ) : (
-            (item.data.prix > 0) && (
-              <img src="/images/tampon-vendu.webp" alt="Vendu" class="w-full h-full object-contain" />
-            )
-          )}
-        </div>
-
-        {/* SECTION IMAGE / CANVAS */}
-        <div class={`w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] bg-[#1a1a1a] rounded-t-sm ratio-insta ${isTableModel ? 'hamon-scratcher-container' : ''}`}>
-          {isTableModel ? (
-            /* PATCH : Pour le modèle table, on laisse la div vide. 
-               Le script JS injectera le Canvas et l'Image de fond ici.
-            */
-            <div class="scratcher-placeholder absolute inset-0 flex items-center justify-center text-accent/20 italic">
-               Chargement du Hamon...
-            </div>
-          ) : (
-            /* Comportement standard pour les autres couteaux */
-            isVideo ? (
-              <a href={urlInsta} target="_blank" rel="noopener noreferrer" class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center group cursor-pointer pointer-events-auto">
-                <Image src={imagePath} alt={item.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain opacity-70 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105" />
-                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none">
-                  <img src="/images/play-button.webp" alt="Play" class="w-16 h-16 drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-110" />
-                </div>
-              </a>
-            ) : (
-              <a href={imagePath} class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center glightbox-insta cursor-pointer pointer-events-auto" data-title={item.data.titre}>
-                <Image src={imagePath} alt={item.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain transition-transform duration-700 hover:scale-105" />
-              </a>
-            )
-          )}
-        </div>
-
-        <div class="p-3 md:p-8 flex flex-col flex-grow bg-[#f0e8dd] relative">
-  
-  <div class="flex flex-col md:flex-row justify-between md:items-center mb-1 gap-1 md:gap-2 relative">
-    <h3 class="text-sm md:text-2xl font-serif font-bold text-[#7a2a2a] leading-tight text-center md:text-left w-full md:flex-1 min-w-0">
-      {item.data.titre}
-    </h3>
-    
-    <button class="toggle-details md:hidden text-[#7a2a2a] p-1.5 focus:outline-none self-center shrink-0" aria-label="Voir détails">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-      </svg>
-    </button>
+  class="knife-card fade-in-up" 
+  data-type={typeFiltre}
+  data-dispo={String(estDispo)}
+>
+  <div class="tampon-container absolute">
+    {estDispo ? (
+      <img src="/images/tampon-dispo.webp" alt="Disponible" class="w-full h-full object-contain" />
+    ) : (
+      (item.data.prix > 0) && (
+        <img src="/images/tampon-vendu.webp" alt="Vendu" class="w-full h-full object-contain" />
+      )
+    )}
   </div>
 
-  <div class="details-content">
-    <div class="min-h-0">
-      <div class="flex flex-col gap-1 mb-3 py-2 border-y border-[#7a2a2a]/10">
+  {/* SECTION IMAGE / CANVAS */}
+  <div class={`w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] rounded-t-sm ratio-insta ${isTableModel ? 'hamon-scratcher-container' : ''}`}>
+    {isTableModel ? (
+      <div class="scratcher-placeholder absolute inset-0 flex items-center justify-center text-accent/20 italic">
+          Chargement du Hamon...
+      </div>
+    ) : (
+      isVideo ? (
+        <a href={urlInsta} target="_blank" rel="noopener noreferrer" class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center group cursor-pointer pointer-events-auto">
+          <Image src={imagePath} alt={item.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain transition-all duration-500" />
+          <div class="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none">
+            <img src="/images/play-button.webp" alt="Play" class="w-16 h-16 drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-110" />
+          </div>
+        </a>
+      ) : (
+        <a href={imagePath} class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center glightbox-insta cursor-pointer pointer-events-auto" data-title={item.data.titre}>
+          <Image src={imagePath} alt={item.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain transition-transform duration-700 hover:scale-105" />
+        </a>
+      )
+    )}
+  </div>
+
+{/* SECTION CONTENU */}
+  <div class="p-3 md:p-8 flex flex-col flex-grow relative">
+    
+    <div class="flex flex-col md:flex-row justify-between items-center mb-1 gap-1 relative">
+      <h3 class="font-serif font-bold text-[#7a2a2a] leading-tight">
+        {item.data.titre}
+      </h3>
+      
+      {/* La flèche réapparaît pour l'accordéon mobile (masquée via CSS sur Desktop) */}
+      <button class="toggle-details text-[#7a2a2a] p-1.5 focus:outline-none" aria-label="Voir détails">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+    </div>
+
+    {/* Zone de contenu : enveloppée dans details-content pour la logique mobile */}
+    <div class="details-content">
+      <div class="flex flex-col gap-1 mb-3 py-2 border-[#7a2a2a]/10 border-y">
         {item.data.caracteristiques?.acier && (
           <div class="flex items-baseline gap-2">
             <span class="text-[10px] font-bold uppercase text-[#7a2a2a]/60 w-12 shrink-0">Acier</span>
@@ -175,29 +173,28 @@ const schemaData = {
         )}
       </div>
     </div>
-  </div>
 
-  <div class="mt-auto pt-2 md:pt-4 border-t border-black/10 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-2 relative z-[60]"> 
-    <div class="text-center md:text-left">
-      <span class="text-[13px] md:text-xl font-serif font-bold text-[#7a2a2a]">
-        {item.data.prix > 0 ? `${item.data.prix} €` : "Sur commande"}
+    <div class="mt-auto pt-2 flex flex-col md:flex-row justify-between items-center gap-2 relative z-[60]"> 
+      <div class="text-center md:text-left">
+        <span class="price-tag font-serif font-bold text-[#7a2a2a]">
+          {item.data.prix > 0 ? `${item.data.prix} €` : "Sur commande"}
+        </span>
+      </div>
+      
+      <span 
+        role="button"
+        tabindex="0"
+        class="trigger-booking-global cursor-pointer rounded font-bold uppercase tracking-wider transition-all active:scale-95 shadow-md text-center"
+        style={!estDispo ? "background-color: transparent; border: 2px solid var(--color-accent); color: var(--color-accent);" : "background-color: var(--color-accent); color: var(--color-bg);"}
+        data-ref={item.data.titre}
+        data-dispo={String(estDispo)}
+      >
+        {estDispo ? 'Réserver' : 'Demander'}
       </span>
     </div>
-    
-    <span 
-      role="button"
-      tabindex="0"
-      class="trigger-booking-global w-full md:w-auto cursor-pointer px-4 py-2 md:px-5 md:py-2.5 rounded font-bold text-[10px] md:text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md bg-[var(--color-accent)] text-[var(--color-bg)] hover:bg-[#7a2a2a] text-center"
-      style={!estDispo ? "background-color: transparent; border: 2px solid var(--color-accent); color: var(--color-accent);" : ""}
-      data-ref={item.data.titre}
-      data-dispo={String(estDispo)}
-    >
-      {estDispo ? 'Réserver' : 'Demander'}
-    </span>
   </div>
-</div>
-</div>
-      </article>
+
+</article>
     );
   })}
 </div>
@@ -294,128 +291,7 @@ const schemaData = {
   </div>
 
 </section>
-<style is:global>
-  /* --- 1. GLIGHTBOX --- */
-  .glightbox-container .gslide-inner-content,
-  .glightbox-container .ginner-container,
-  .glightbox-container .gslide-image,
-  .glightbox-container .gslide-media {
-    box-shadow: none !important;
-    background: transparent !important;
-  }
-  .glightbox-container .gslide-description {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-  }
-  .gslide-image img {
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6) !important;
-    max-width: 95vw !important;
-    max-height: 75vh !important;
-    display: block !important;
-    margin: 0 auto !important;
-  }
 
-  /* --- 2. STYLE MOBILE (Max 768px) --- */
-  @media (max-width: 768px) {
-    #knife-grid {
-      display: grid !important;
-      grid-template-columns: repeat(2, 1fr) !important;
-      /* On retire grid-auto-rows: 1fr qui empêchait l'accordéon de se fermer */
-      gap: 12px !important;
-      padding: 15px 8px !important;
-      align-items: start !important;
-    }
-
-    .knife-card {
-      display: flex !important;
-      flex-direction: column !important;
-      min-height: 100% !important; /* Pour l'alignement */
-      overflow: visible !important; 
-      position: relative !important;
-    }
-
-    /* On stabilise l'image */
-    .ratio-insta {
-      padding-top: 125% !important; /* On revient au ratio initial pour l'élégance */
-      overflow: hidden !important;
-      border-radius: 8px 8px 0 0;
-    }
-
-    .tampon-container {
-      width: 60px !important;
-      height: 60px !important;
-      top: -10px !important;
-      right: -10px !important;
-      z-index: 110 !important;
-    }
-
-    /* TITRE : On retire le flex:1 qui forçait l'ouverture */
-    .knife-card h3 {
-      font-size: 13px !important;
-      line-height: 1.2 !important;
-      margin-bottom: 0 !important;
-      white-space: normal !important;
-      flex: none !important; 
-      padding-right: 20px; /* Place pour la flèche */
-    }
-
-    .toggle-details {
-      position: absolute;
-      right: 8px;
-      top: 8px; /* Ajuste selon ton padding interne */
-      z-index: 10;
-    }
-
-    /* --- ACCORDÉON (RÉTABLI) --- */
-    .details-content {
-      display: grid !important;
-      grid-template-rows: 0fr !important; /* Fermé par défaut */
-      opacity: 0 !important;
-      transition: grid-template-rows 0.4s ease, opacity 0.3s ease !important;
-      overflow: hidden !important;
-    }
-
-    .details-content.is-open {
-      grid-template-rows: 1fr !important; /* S'ouvre au clic */
-      opacity: 1 !important;
-    }
-
-    /* --- FOOTER : STACK VERTICAL --- */
-    .knife-card .mt-auto {
-      margin-top: auto !important;
-      padding-top: 10px !important;
-      border-top: 1px solid rgba(122, 42, 42, 0.1) !important;
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
-      gap: 8px !important;
-    }
-
-    .mt-auto span.font-serif {
-      font-size: 13px !important;
-      text-align: center;
-    }
-
-    .trigger-booking-global {
-      width: 100% !important;
-      max-width: 120px;
-      text-align: center;
-      padding: 8px 4px !important;
-      font-size: 10px !important;
-    }
-  }
-
-  /* --- 3. HAMON --- */
-  .hamon-scratcher-container canvas,
-  .hamon-scratcher-container .scratcher-placeholder {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-  }
-</style>
 </BaseLayout>
 
 

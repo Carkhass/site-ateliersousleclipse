@@ -2138,11 +2138,15 @@ body.active-modal #booking-modal {
   isolation: isolate; /* Crée un nouveau contexte de rendu propre à chaque carte */
 }
 
-/* =========================================================
-   SYSTÈME DE FILTRES & CRÉATIONS - L'ATELIER SOUS L'ÉCLIPSE
-   ========================================================= */
+/* ==========================================================
+   SECTION : PAGE COUTEAUX (STRUCTURE & CARTES)
+   ========================================================== */
 
-/* --- 1. CARTES & ACCORDÉON (Commun) --- */
+/* ==========================================================
+   SECTION : PAGE COUTEAUX (STRUCTURE & CARTES)
+   ========================================================== */
+
+/* --- 1. COMMUN (Toutes tailles) --- */
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -2150,17 +2154,42 @@ body.active-modal #booking-modal {
   overflow: hidden;
 }
 
+.knife-card {
+  @apply border-2 border-transparent transition-all duration-500;
+  display: flex !important;
+  flex-direction: column !important;
+  background-color: #f0e8dd;
+  position: relative !important;
+  overflow: visible !important; 
+}
+
 .ratio-insta {
   padding-top: 125%;
   position: relative;
   isolation: isolate;
+  overflow: hidden;
+  background: #1a1a1a;
 }
 
-.knife-card {
-  @apply border-2 border-transparent transition-all duration-500;
+.ratio-insta img {
+  position: absolute !important;
+  top: 0; left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
 }
 
-/* --- 2. FILTRES : STRUCTURE & MOBILE --- */
+/* Hamon (Commun) */
+.hamon-scratcher-container canvas,
+.hamon-scratcher-container .scratcher-placeholder {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* --- 2. FILTRES --- */
 .filter-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -2187,12 +2216,129 @@ body.active-modal #booking-modal {
   font-weight: 800;
 }
 
-/* --- 3. COMPORTEMENT DESKTOP (> 768px) --- */
+/* --- 3. COMPORTEMENT MOBILE (Max 768px) --- */
+@media (max-width: 768px) {
+  #knife-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-auto-rows: auto !important; 
+    gap: 12px !important;
+    padding: 15px 8px !important;
+    align-items: start !important; 
+  }
+
+  .tampon-container {
+    width: 55px !important;
+    height: 55px !important;
+    top: -10px !important;
+    right: -10px !important;
+    z-index: 110 !important;
+  }
+
+  .knife-card h3 {
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+    margin: 8px 0 !important;
+    text-align: center !important;
+  }
+
+  /* LOGIQUE ACCORDÉON MOBILE */
+  .toggle-details {
+    display: flex !important;
+    position: relative !important;
+    margin: 0 auto !important;
+    align-items: center;
+    justify-content: center;
+    height: 32px !important;
+    width: 100% !important;
+    border-bottom: 1px solid rgba(122, 42, 42, 0.1) !important;
+    margin-bottom: 4px !important;
+    cursor: pointer;
+  }
+
+  .details-content {
+    display: grid !important;
+    grid-template-rows: 0fr; /* Totalement fermé au départ */
+    opacity: 0;
+    transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease !important;
+    overflow: hidden;
+  }
+
+  /* Indispensable pour que le grid-template-rows 0fr fonctionne */
+  .details-content > div {
+    min-height: 0;
+  }
+
+  .details-content.is-open {
+    grid-template-rows: 1fr !important;
+    opacity: 1 !important;
+    margin-bottom: 8px; /* Espace après ouverture */
+  }
+
+  /* On cible la flex-col interne pour les bordures */
+  .details-content .flex-col {
+    border-top: none !important; 
+    border-bottom: 1px solid rgba(122, 42, 42, 0.1) !important;
+    padding: 8px 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .knife-card .mt-auto {
+    margin-top: auto !important;
+    padding: 10px 5px !important;
+    border-top: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  .trigger-booking-global {
+    width: 100% !important;
+    max-width: 110px !important;
+    font-size: 10px !important;
+    padding: 8px 4px !important;
+  }
+}
+/* --- 4. COMPORTEMENT DESKTOP (> 768px) --- */
 @media (min-width: 769px) {
+  /* PAS D'ACCORDÉON SUR DESKTOP */
+  .details-content {
+    display: block !important;
+    grid-template-rows: none !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+  }
+
+  .toggle-details {
+    display: none !important; /* On cache la flèche sur PC */
+  }
+
   .knife-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
     background-color: #f7f3ed;
+    border-color: var(--color-accent) !important;
+  }
+
+  .knife-card .mt-auto {
+    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+    margin-top: auto;
+    padding-top: 1.5rem !important;
+  }
+
+  .tampon-container {
+    width: 128px !important;
+    height: 128px !important;
+    top: -32px !important;
+    right: -32px !important;
+    z-index: 100 !important;
+    pointer-events: none;
+  }
+
+  .trigger-booking-global {
+    padding: 10px 20px !important;
+    font-size: 12px !important;
   }
 
   .filter-grid {
@@ -2209,7 +2355,6 @@ body.active-modal #booking-modal {
     line-height: 1;
   }
 
-  /* Le séparateur vertical bien centré */
   .filter-btn:not(:last-child)::after {
     content: "";
     position: absolute;
@@ -2221,15 +2366,25 @@ body.active-modal #booking-modal {
     background-color: rgba(122, 42, 42, 0.3);
   }
 
-  .filter-btn:hover {
-    @apply opacity-100;
-  }
-
   .filter-btn.active {
     @apply bg-transparent opacity-100;
     font-weight: 900;
     box-shadow: 0 4px 0 #7a2a2a; 
   }
+}
+
+/* --- 5. GLIGHTBOX (Toujours à la fin) --- */
+.glightbox-container .gslide-inner-content,
+.glightbox-container .ginner-container,
+.glightbox-container .gslide-image,
+.glightbox-container .gslide-media {
+  box-shadow: none !important;
+  background: transparent !important;
+}
+.glightbox-container .gslide-description {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 
