@@ -2142,10 +2142,6 @@ body.active-modal #booking-modal {
    SECTION : PAGE COUTEAUX (STRUCTURE & CARTES)
    ========================================================== */
 
-/* ==========================================================
-   SECTION : PAGE COUTEAUX (STRUCTURE & CARTES)
-   ========================================================== */
-
 /* --- 1. COMMUN (Toutes tailles) --- */
 .line-clamp-3 {
   display: -webkit-box;
@@ -2158,9 +2154,19 @@ body.active-modal #booking-modal {
   @apply border-2 border-transparent transition-all duration-500;
   display: flex !important;
   flex-direction: column !important;
-  background-color: #f0e8dd;
+  background-color: #faf8f5 !important; /* Fond light */
+  border: 1px solid rgba(122, 42, 42, 0.15) !important;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  border-radius: 4px;
   position: relative !important;
   overflow: visible !important; 
+}
+
+/* CORRECTIF DARK MODE : On adoucit la fiche la nuit */
+html.dark .knife-card,
+.dark .knife-card {
+  background-color: var(--color-muted: #b8a8a0) !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
 }
 
 .ratio-insta {
@@ -2201,7 +2207,7 @@ body.active-modal #booking-modal {
   appearance: none;
   background: transparent;
   border: 1px solid rgba(122, 42, 42, 0.3);
-  color: #7a2a2a;
+  color: var(--color-accent);
   padding: 10px 5px;
   border-radius: 2px;
   opacity: 0.9;
@@ -2251,11 +2257,11 @@ body.active-modal #booking-modal {
     justify-content: center;
     height: 32px !important;
     width: 100% !important;
-    border-bottom: 1px solid rgba(122, 42, 42, 0.1) !important;
-    margin-bottom: 4px !important;
+    /* ON SUPPRIME LA BORDURE ICI POUR TUER LE DOUBLE TRAIT */
+    border-bottom: none !important; 
+    margin-bottom: 0 !important;
     cursor: pointer;
   }
-
   .details-content {
     display: grid !important;
     grid-template-rows: 0fr; /* Totalement fermé au départ */
@@ -2277,8 +2283,6 @@ body.active-modal #booking-modal {
 
   /* On cible la flex-col interne pour les bordures */
   .details-content .flex-col {
-    border-top: none !important; 
-    border-bottom: 1px solid rgba(122, 42, 42, 0.1) !important;
     padding: 8px 0 !important;
     margin-bottom: 0 !important;
   }
@@ -2286,7 +2290,6 @@ body.active-modal #booking-modal {
   .knife-card .mt-auto {
     margin-top: auto !important;
     padding: 10px 5px !important;
-    border-top: none !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -2317,12 +2320,18 @@ body.active-modal #booking-modal {
   .knife-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
-    background-color: #f7f3ed;
+    background-color: #ffffff !important; /* Blanc pur au hover (Light) */
+    border-color: var(--color-accent) !important;
+  }
+
+  /* CORRECTIF DARK MODE (Hover) */
+  html.dark .knife-card:hover,
+  .dark .knife-card:hover {
+    background-color: var(--color-muted: #b8a8a0);
     border-color: var(--color-accent) !important;
   }
 
   .knife-card .mt-auto {
-    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
     margin-top: auto;
     padding-top: 1.5rem !important;
   }

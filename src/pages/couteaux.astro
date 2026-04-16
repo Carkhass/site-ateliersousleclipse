@@ -75,7 +75,7 @@ const schemaData = {
       </p>
     </div>
 
-    <div class="flex flex-wrap md:justify-center gap-2 md:gap-4 mt-10 no-select filter-grid">
+    <div class="flex flex-wrap md:justify-center gap-2 md:gap-4 mt-10 no-select filter-grid ">
       <button class="filter-btn active" data-filter="dispo">📦 Disponibles</button>
       <button class="filter-btn" data-filter="all">Galerie</button>
       <button class="filter-btn" data-filter="modele">⚒️ Les Modèles</button>
@@ -136,45 +136,50 @@ const schemaData = {
   </div>
 
 {/* SECTION CONTENU */}
-  <div class="p-3 md:p-8 flex flex-col flex-grow relative">
+  <div class="p-3 md:p-6 flex flex-col flex-grow relative">
     
-    <div class="flex flex-col md:flex-row justify-between items-center mb-1 gap-1 relative">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-2 gap-1 relative">
       <h3 class="font-serif font-bold text-[#7a2a2a] leading-tight">
         {item.data.titre}
       </h3>
       
-      {/* La flèche réapparaît pour l'accordéon mobile (masquée via CSS sur Desktop) */}
-      <button class="toggle-details text-[#7a2a2a] p-1.5 focus:outline-none" aria-label="Voir détails">
+      <button class="toggle-details md:hidden text-[#7a2a2a] p-1.5 focus:outline-none" aria-label="Voir détails">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
     </div>
 
-    {/* Zone de contenu : enveloppée dans details-content pour la logique mobile */}
-    <div class="details-content">
-      <div class="flex flex-col gap-1 mb-3 py-2 border-[#7a2a2a]/10 border-y">
-        {item.data.caracteristiques?.acier && (
-          <div class="flex items-baseline gap-2">
-            <span class="text-[10px] font-bold uppercase text-[#7a2a2a]/60 w-12 shrink-0">Acier</span>
-            <span class="text-[11px] font-mono text-[#4a4a4a] italic">{item.data.caracteristiques.acier}</span>
-          </div>
-        )}
-        {item.data.caracteristiques?.manche && (
-          <div class="flex items-baseline gap-2">
-            <span class="text-[10px] font-bold uppercase text-[#7a2a2a]/60 w-12 shrink-0">Manche</span>
-            <span class="text-[11px] font-mono text-[#4a4a4a] line-clamp-1">{item.data.caracteristiques.manche}</span>
-          </div>
-        )}
-        {item.data.description && (
-          <p class="text-[11px] md:text-sm text-gray-700 leading-relaxed mt-2 pt-2 border-t border-black/5">
-            {item.data.description}
-          </p>
-        )}
+    {/* Zone de contenu : flex-grow pour pousser le bouton vers le bas si la carte s'étire */}
+    <div class="details-content flex flex-col flex-grow">
+      <div class="flex flex-col flex-grow">
+        
+        {/* Un seul trait propre au-dessus des infos techniques */}
+        <div class="flex flex-col gap-1 py-2 border-t border-[#7a2a2a]/10">
+          {item.data.caracteristiques?.acier && (
+            <div class="flex items-baseline gap-2">
+              <span class="text-[10px] font-bold uppercase text-[#7a2a2a]/60 w-12 shrink-0">Acier</span>
+              <span class="text-[11px] font-mono text-[#4a4a4a] italic">{item.data.caracteristiques.acier}</span>
+            </div>
+          )}
+          {item.data.caracteristiques?.manche && (
+            <div class="flex items-baseline gap-2">
+              <span class="text-[10px] font-bold uppercase text-[#7a2a2a]/60 w-12 shrink-0">Manche</span>
+              <span class="text-[11px] font-mono text-[#4a4a4a] line-clamp-1">{item.data.caracteristiques.manche}</span>
+            </div>
+          )}
+          {item.data.description && (
+            /* Un trait propre pour séparer les infos techniques de la description libre */
+            <p class="text-[11px] md:text-sm text-gray-700 leading-relaxed mt-2 pt-2 border-t border-[#7a2a2a]/10">
+              {item.data.description}
+            </p>
+          )}
+        </div>
       </div>
     </div>
 
-    <div class="mt-auto pt-2 flex flex-col md:flex-row justify-between items-center gap-2 relative z-[60]"> 
+    {/* Le bloc prix : un seul trait au-dessus, repoussé tout en bas grâce au flex-grow du dessus */}
+    <div class="mt-auto pt-3 border-t border-[#7a2a2a]/10 flex flex-col md:flex-row justify-between items-center gap-2 relative z-[60]"> 
       <div class="text-center md:text-left">
         <span class="price-tag font-serif font-bold text-[#7a2a2a]">
           {item.data.prix > 0 ? `${item.data.prix} €` : "Sur commande"}
