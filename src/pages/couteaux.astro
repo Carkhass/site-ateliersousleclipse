@@ -114,7 +114,7 @@ const schemaData = {
         </div>
 
         {/* SECTION IMAGE / CANVAS */}
-        <div class={`w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] bg-[#1a1a1a] rounded-t-sm ratio-insta ${isTableModel ? 'hamon-scratcher-container min-h-[300px]' : ''}`}>
+        <div class={`w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] bg-[#1a1a1a] rounded-t-sm ratio-insta ${isTableModel ? 'hamon-scratcher-container' : ''}`}>
           {isTableModel ? (
             /* PATCH : Pour le modèle table, on laisse la div vide. 
                Le script JS injectera le Canvas et l'Image de fond ici.
@@ -391,6 +391,26 @@ const schemaData = {
     }
   }
 
+/* Force le container à être un carré ou un rectangle strict pour le calcul du JS */
+/* On s'aligne strictement sur la boîte existante */
+.hamon-scratcher-container.ratio-insta {
+  /* On ne définit plus de height ou d'aspect-ratio ici, 
+     c'est .ratio-insta qui s'en occupe via le padding */
+}
+
+/* On force le canvas à occuper 100% de la boîte générée par le padding */
+.hamon-scratcher-container canvas,
+.hamon-scratcher-container .scratcher-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
   
 </style>
 </BaseLayout>

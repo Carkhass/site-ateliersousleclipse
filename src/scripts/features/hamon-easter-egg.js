@@ -48,22 +48,32 @@ export function initHamonScratcher() {
   imgBrute.crossOrigin = "anonymous";
 
   function setup() {
-    const rect = container.getBoundingClientRect();
-    if (rect.width === 0) { setTimeout(setup, 100); return; }
-    
-    canvas.width = rect.width;
-    canvas.height = rect.height;
-    
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.drawImage(imgBrute, 0, 0, canvas.width, canvas.height);
-    
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.fillRect(0, 0, canvas.width, canvas.height * 0.4);
-    
-    ctx.lineWidth = 40;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
+  const rect = container.getBoundingClientRect();
+  
+  // Sécurité : si le container n'est pas encore rendu
+  if (rect.width === 0) { 
+    setTimeout(setup, 100); 
+    return; 
   }
+  
+  // On force le canvas à prendre la taille exacte du container de la fiche
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+  
+  ctx.globalCompositeOperation = 'source-over';
+  // On dessine l'image brute pour qu'elle remplisse parfaitement le canvas de la fiche
+  ctx.drawImage(imgBrute, 0, 0, canvas.width, canvas.height);
+  
+  ctx.globalCompositeOperation = 'destination-out';
+  
+  // On réduit la zone d'effacement automatique du haut pour les petites fiches
+  ctx.fillRect(0, 0, canvas.width, canvas.height * 0.2); 
+  
+  // On réduit un peu la taille du trait pour les petites fiches
+  ctx.lineWidth = canvas.width < 400 ? 25 : 40; 
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+}
 
   imgBrute.onload = setup;
   imgBrute.src = imgBrutePath;

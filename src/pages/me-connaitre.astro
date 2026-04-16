@@ -358,6 +358,20 @@ const personSchema = {
     50% { transform: translateY(-10px); }
   }
 
+  /* --- AJUSTEMENT MOBILE POUR LA BULLE DE CASCA --- */
+@media (max-width: 767px) {
+  #casca-bubble {
+    /* On descend la bulle pour qu'elle soit sous la truffe sur mobile */
+    top: 12% !important; 
+    left: 20% !important;
+    transform: translateX(-50%) scale(0.9);
+    width: 260px !important;
+    z-index: 100;
+  }
+
+
+}
+
   
 </style>
 
