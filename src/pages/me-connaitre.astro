@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { Image } from 'astro:assets';
+import photoYann from '../assets/images/yann-jacquot-coutelier.webp';
 
 // --- DÉFINITION DES CHEMINS D'IMAGES ---
 const photoYann = "/images/portrait-yann.webp"; 
@@ -39,12 +40,10 @@ const personSchema = {
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
     
     <div class="reveal fade-slide-left text-center lg:text-left">
-      {/* H1 Harmonisé : Centré sur mobile, Gauche sur Desktop */}
       <h1 class="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[var(--color-accent)] mb-8 tracking-tight reveal-child leading-tight">
         L'artisan derrière l'Atelier <span class="sr-only"> : Yann, artisan coutelier à Reyrieux</span>
       </h1>
       
-      {/* Texte : Alignement naturel mais avec un meilleur espacement */}
       <div class="space-y-6 text-base md:text-lg leading-relaxed text-muted text-left">
         <p class="reveal-child">
           Je m’appelle <span class="font-serif text-accent font-bold">Yann</span>. Installé à Reyrieux (01) juste au Nord de Lyon, mon parcours n'a pas commencé dans le fracas de l'enclume, mais dans le milieu immatériel de l'informatique. Informaticien de formation, j'ai passé ma jeunesse à explorer le virtuel avant de comprendre que j'avais aussi besoin de réalisations concrètes, tangibles.
@@ -55,11 +54,50 @@ const personSchema = {
       </div>
     </div>
 
-    {/* Image : Ajout d'une marge haute sur mobile (mt-12) */}
-    <div class="relative reveal fade-slide-right group mt-12 lg:mt-0">
-      <div class="pivot-container portrait-mode aspect-[4/5] bg-surface rounded-lg overflow-hidden shadow-2xl border-[8px] md:border-[12px] border-white reveal-child">
-         <Image src={photoYann} alt="Yann Jacquot, artisan coutelier à Reyrieux (01)" width={600} height={750} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" />
+    {/* Image : Zone Easter Egg intégrée pour la synchronisation */}
+    <div class="relative reveal fade-slide-right group mt-12 lg:mt-0 overflow-visible">
+      
+      {/* C'est ce conteneur qui tourne, le bouton doit être DEDANS */}
+      <div class="pivot-container portrait-mode aspect-[4/5] bg-surface rounded-lg overflow-hidden shadow-2xl border-[8px] md:border-[12px] border-white reveal-child relative">
+        
+        <Image 
+          src={photoYann} 
+          alt="Yann Jacquot, artisan coutelier à Reyrieux (01) avec sa chienne Casca" 
+          width={600} 
+          height={750} 
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
+        />
+
+        {/* --- ZONE EASTER EGG (Truffe de Casca) --- */}
+        {/* Invisible mais cliquable. Les coordonnées % assurent la réactivité */}
+        {/* --- ZONE DE RÉGLAGE (À supprimer une fois calibré) --- */}
+        <button 
+  id="casca-nose-trigger"
+  class="absolute rounded-full cursor-help easter-egg-trigger"
+  style="top: 65%; left: 36%; width: 11%; height: 9%; z-index: 100;" 
+  aria-label="Secret de l'Atelier"
+></button>
       </div>
+
+      <div 
+        id="casca-bubble" 
+        class="absolute opacity-0 scale-95 pointer-events-none transition-all duration-500 z-50"
+        style="top: 27%; left: 35%; width: 280px;"
+      >
+        <div class="relative bg-white text-bg p-4 rounded-2xl shadow-2xl border-2 border-accent font-sans text-sm leading-relaxed">
+          <div class="absolute bottom-[-10px] left-10 w-5 h-5 bg-white border-r-2 border-b-2 border-accent rotate-45"></div>
+          
+          <p class="font-bold text-accent mb-1">🐾 Casca dit :</p>
+<p class="text-muted">
+  "Woof !<br>
+  File voir les <span class="font-bold text-accent italic">couteaux</span>, l'un d'eux semble avoir perdu son éclat.<br>
+  Mais attention : un beau <span class="font-bold text-accent">Hamon</span> ne se donne pas au premier regard, il faut savoir faire parler l'acier !"
+</p>
+          
+          <button id="close-casca-bubble" class="mt-3 text-[10px] uppercase tracking-widest font-bold text-muted hover:text-accent transition-colors">Fermer</button>
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -283,22 +321,96 @@ const personSchema = {
     transform: rotate(-3deg);
   }
 
+/* --- Style spécifique pour la truffe --- */
+
+  .easter-egg-trigger {
+  background: transparent;
+  border: none;
+  outline: none;
+  /* On utilise plus le translate(-50%,-50%) si tes coordonnées 70/42 sont déjà bonnes */
+  /* car le scale du parent pourrait mal réagir avec */
+  pointer-events: auto;
+}
+
+  /* --- MODE DÉBOGAGE : À SUPPRIMER APRÈS RÉGLAGE --- */
+  .debug-mode {
+    background: rgba(255, 0, 0, 0.4) !important;
+    border: 2px solid red !important;
+    box-shadow: 0 0 10px red;
+  }
+
+  .easter-egg-trigger:focus-visible {
+    box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.5);
+  }
+
+  #casca-bubble {
+    /* Filtre pour donner un petit côté "BD" propre */
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+  }
+
+  /* Animation de flottement pour la bulle */
+  .opacity-100#casca-bubble {
+    animation: floatBubble 3s ease-in-out infinite;
+  }
+
+  @keyframes floatBubble {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
   
 </style>
 
 <script>
-  // Si ton fichier .astro est dans src/pages/ et ton script dans src/scripts/animations/
   import { initArtisanParallax } from "../scripts/animations/anim-page-meconnaitre.js";
 
-  // Fonction pour lancer le script
-  const launchAnim = () => {
+  // 1. Logique de l'Easter Egg
+  const initCascaEasterEgg = () => {
+    const trigger = document.getElementById('casca-nose-trigger');
+    const bubble = document.getElementById('casca-bubble');
+    const closeBtn = document.getElementById('close-casca-bubble');
+    const woofSound = new Audio('/sounds/woof.mp3');
 
-    initArtisanParallax();
+    if (!trigger || !bubble) return;
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      
+      // 1. Son
+      woofSound.play().catch(() => {});
+
+      // 2. LocalStorage
+      localStorage.setItem('hamon_quest', 'active');
+
+      // 3. Affichage Bulle
+      bubble.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+      bubble.classList.add('opacity-100', 'scale-100');
+
+      // On cache la zone rouge de débug si elle est encore là
+      trigger.classList.remove('debug-mode');
+    });
+
+    closeBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      bubble.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+      bubble.classList.remove('opacity-100', 'scale-100');
+    });
   };
 
-  // On écoute le chargement du DOM
-  document.addEventListener('DOMContentLoaded', launchAnim);
-  
-  // Si tu utilises les ViewTransitions d'Astro, il faut aussi cet écouteur :
-  document.addEventListener('astro:page-load', launchAnim);
+  // 2. Fonction globale d'initialisation
+  const runPageInit = () => {
+    initArtisanParallax();
+    initCascaEasterEgg();
+  };
+
+  // 3. Écouteurs de chargement
+  // DOMContentLoaded pour le premier chargement "dur"
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runPageInit);
+  } else {
+    runPageInit();
+  }
+
+  // astro:page-load pour les navigations fluides via ViewTransitions
+  document.addEventListener('astro:page-load', runPageInit);
 </script>

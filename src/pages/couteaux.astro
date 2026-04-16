@@ -84,40 +84,47 @@ const schemaData = {
   </header>
 
   <div id="knife-grid" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-12 max-w-7xl mx-auto">
-    {couteauxTries.map((item) => {
-      // 1. Extraction sécurisée de l'image (Gère l'ancien format tableau et le nouveau format string)
-      const rawImage = item.data.image;
-      const imagePath = Array.isArray(rawImage) ? rawImage[0] : rawImage;
-      
-      // Sécurité build : si pas d'image, on ignore l'item pour éviter le crash
-      if (!imagePath) return null;
+  {couteauxTries.map((item) => {
+    const rawImage = item.data.image;
+    const imagePath = Array.isArray(rawImage) ? rawImage[0] : rawImage;
+    if (!imagePath) return null;
 
-      // 2. Détection du format
-      const isVideo = item.data.type === "video" || item.data.format === "video";
-      
-      // 3. Normalisation des états
-      const estDispo = item.data.disponible === true || String(item.data.disponible) === "true";
-      const typeFiltre = isVideo ? 'video' : (item.data.type || 'insta');
-      const urlInsta = item.data.lienInstagram || "#";
+    const isVideo = item.data.type === "video" || item.data.format === "video";
+    const estDispo = item.data.disponible === true || String(item.data.disponible) === "true";
+    const typeFiltre = isVideo ? 'video' : (item.data.type || 'insta');
+    const urlInsta = item.data.lienInstagram || "#";
 
-      return (
-        <article 
-          class="knife-card fade-in-up relative flex flex-col h-full bg-surface shadow-lg rounded-lg border-2 border-transparent transition-all duration-500"
-          data-type={typeFiltre}
-          data-dispo={String(estDispo)}
-        >
-          <div class="tampon-container absolute -top-8 -right-8 z-[100] w-32 h-32 pointer-events-none drop-shadow-2xl rotate-12">
-            {estDispo ? (
-              <img src="/images/tampon-dispo.webp" alt="Disponible" class="w-full h-full object-contain" />
-            ) : (
-              (item.data.prix > 0) && (
-                <img src="/images/tampon-vendu.webp" alt="Vendu" class="w-full h-full object-contain" />
-              )
-            )}
-          </div>
+    // PATCH : Identification du modèle Table
+    const isTableModel = item.data.titre.toLowerCase().includes("table");
 
-          <div class="w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] bg-[#1a1a1a] rounded-t-sm ratio-insta">
-            {isVideo ? (
+    return (
+      <article 
+        class="knife-card fade-in-up relative flex flex-col h-full bg-surface shadow-lg rounded-lg border-2 border-transparent transition-all duration-500"
+        data-type={typeFiltre}
+        data-dispo={String(estDispo)}
+      >
+        <div class="tampon-container absolute -top-8 -right-8 z-[100] w-32 h-32 pointer-events-none drop-shadow-2xl rotate-12">
+          {estDispo ? (
+            <img src="/images/tampon-dispo.webp" alt="Disponible" class="w-full h-full object-contain" />
+          ) : (
+            (item.data.prix > 0) && (
+              <img src="/images/tampon-vendu.webp" alt="Vendu" class="w-full h-full object-contain" />
+            )
+          )}
+        </div>
+
+        {/* SECTION IMAGE / CANVAS */}
+        <div class={`w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] bg-[#1a1a1a] rounded-t-sm ratio-insta ${isTableModel ? 'hamon-scratcher-container min-h-[300px]' : ''}`}>
+          {isTableModel ? (
+            /* PATCH : Pour le modèle table, on laisse la div vide. 
+               Le script JS injectera le Canvas et l'Image de fond ici.
+            */
+            <div class="scratcher-placeholder absolute inset-0 flex items-center justify-center text-accent/20 italic">
+               Chargement du Hamon...
+            </div>
+          ) : (
+            /* Comportement standard pour les autres couteaux */
+            isVideo ? (
               <a href={urlInsta} target="_blank" rel="noopener noreferrer" class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center group cursor-pointer pointer-events-auto">
                 <Image src={imagePath} alt={item.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain opacity-70 transition-all duration-500 group-hover:opacity-100 group-hover:scale-105" />
                 <div class="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none">
@@ -128,21 +135,22 @@ const schemaData = {
               <a href={imagePath} class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center glightbox-insta cursor-pointer pointer-events-auto" data-title={item.data.titre}>
                 <Image src={imagePath} alt={item.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain transition-transform duration-700 hover:scale-105" />
               </a>
-            )}
+            )
+          )}
+        </div>
+
+        <div class="p-3 md:p-8 flex flex-col flex-grow bg-[#f0e8dd] relative">
+          <div class="flex justify-between items-start mb-1">
+            <h3 class="text-sm md:text-2xl font-serif font-bold text-[#7a2a2a] leading-tight">{item.data.titre}</h3>
+            <button class="toggle-details md:hidden text-[#7a2a2a] p-1 focus:outline-none" aria-label="Voir détails">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
           </div>
 
-          <div class="p-3 md:p-8 flex flex-col flex-grow bg-[#f0e8dd] relative">
-            <div class="flex justify-between items-start mb-1">
-              <h3 class="text-sm md:text-2xl font-serif font-bold text-[#7a2a2a] leading-tight">{item.data.titre}</h3>
-              <button class="toggle-details md:hidden text-[#7a2a2a] p-1 focus:outline-none" aria-label="Voir détails">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-            </div>
-
-            <div class="details-content">
-             <div class="min-h-0">
+          <div class="details-content">
+            <div class="min-h-0">
               <div class="flex flex-col gap-1 mb-3 py-2 border-y border-[#7a2a2a]/10">
                 {item.data.caracteristiques?.acier && (
                   <div class="flex items-baseline gap-2">
@@ -162,29 +170,29 @@ const schemaData = {
                   </p>
                 )}
               </div>
-              </div>
-            </div>
-
-            <div class="mt-auto pt-2 md:pt-4 border-t border-black/10 flex justify-between items-center gap-2 relative z-[60]"> 
-              <span class="text-xs md:text-xl font-serif font-bold text-[#7a2a2a]">
-                {item.data.prix > 0 ? `${item.data.prix} €` : "Sur commande"}
-              </span>
-              <span 
-                role="button"
-                tabindex="0"
-                class="trigger-booking-global cursor-pointer px-3 py-1.5 md:px-5 md:py-2.5 rounded font-bold text-[9px] md:text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md bg-[var(--color-accent)] text-[var(--color-bg)] hover:bg-[#7a2a2a] hover:scale-105"
-                style={!estDispo ? "background-color: transparent; border: 2px solid var(--color-accent); color: var(--color-accent);" : ""}
-                data-ref={item.data.titre}
-                data-dispo={String(estDispo)}
-              >
-                {estDispo ? 'Réserver' : 'Demander'}
-              </span>
             </div>
           </div>
-        </article>
-      );
-    })}
-  </div>
+
+          <div class="mt-auto pt-2 md:pt-4 border-t border-black/10 flex justify-between items-center gap-2 relative z-[60]"> 
+            <span class="text-xs md:text-xl font-serif font-bold text-[#7a2a2a]">
+              {item.data.prix > 0 ? `${item.data.prix} €` : "Sur commande"}
+            </span>
+            <span 
+              role="button"
+              tabindex="0"
+              class="trigger-booking-global cursor-pointer px-3 py-1.5 md:px-5 md:py-2.5 rounded font-bold text-[9px] md:text-xs uppercase tracking-wider transition-all active:scale-95 shadow-md bg-[var(--color-accent)] text-[var(--color-bg)] hover:bg-[#7a2a2a] hover:scale-105"
+              style={!estDispo ? "background-color: transparent; border: 2px solid var(--color-accent); color: var(--color-accent);" : ""}
+              data-ref={item.data.titre}
+              data-dispo={String(estDispo)}
+            >
+              {estDispo ? 'Réserver' : 'Demander'}
+            </span>
+          </div>
+        </div>
+      </article>
+    );
+  })}
+</div>
 </main>
   
 <div id="booking-modal" class="fixed inset-0 z-[999] items-center justify-center p-4">
@@ -382,6 +390,8 @@ const schemaData = {
       border-top: 1px solid rgba(122, 42, 42, 0.1) !important;
     }
   }
+
+  
 </style>
 </BaseLayout>
 
@@ -389,71 +399,51 @@ const schemaData = {
 <script>
   import { initFilters } from '../scripts/features/knife-filters.js';
   import { initBookingLogic } from '../scripts/features/booking-modal.js';
-  // Ajout des imports Embla
+  import { initHamonScratcher } from '../scripts/features/hamon-easter-egg.js'; // L'import propre
   import EmblaCarousel from 'embla-carousel';
   import { initEmbla } from '../scripts/init/init-embla.js';
-  
   import GLightbox from 'glightbox';
   import 'glightbox/dist/css/glightbox.min.css';
 
   let lightboxInstance = null;
 
   function initAccordion() {
-    const toggles = document.querySelectorAll('.toggle-details');
-    toggles.forEach(btn => {
+    // Ton code accordéon existant...
+    document.querySelectorAll('.toggle-details').forEach(btn => {
       btn.onclick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const card = btn.closest('.knife-card');
-        const content = card.querySelector('.details-content');
-        
+        e.preventDefault(); e.stopPropagation();
+        const content = btn.closest('.knife-card').querySelector('.details-content');
         btn.classList.toggle('active');
         content.classList.toggle('is-open');
-
         const svg = btn.querySelector('svg');
-        if (svg) {
-          svg.style.transform = content.classList.contains('is-open') ? 'rotate(180deg)' : 'rotate(0deg)';
-        }
+        if (svg) svg.style.transform = content.classList.contains('is-open') ? 'rotate(180deg)' : 'rotate(0deg)';
       };
     });
   }
 
   function initPage() {
-    // Initialisation d'Embla (nouvelle section déplacée)
-    document.querySelectorAll('.embla').forEach((root) => {
-      initEmbla(root, EmblaCarousel);
-    });
-
-    // Initialisations existantes
+    document.querySelectorAll('.embla').forEach((root) => initEmbla(root, EmblaCarousel));
+    
     initFilters();
     initBookingLogic();
     initAccordion();
+    initHamonScratcher(); // On appelle juste la fonction exportée
 
-    if (lightboxInstance) {
-      lightboxInstance.destroy();
-    }
-
+    if (lightboxInstance) lightboxInstance.destroy();
     lightboxInstance = GLightbox({ 
-      selector: 'a.glightbox-insta', 
-      skin: 'hamon',
-      touchNavigation: true,
-      loop: true,
-      zoomable: false,
-      draggable: true
+        selector: 'a.glightbox-insta', 
+        skin: 'hamon', 
+        touchNavigation: true, 
+        loop: true, 
+        zoomable: false, 
+        draggable: true 
     });
   }
 
-  // Astro gère le premier chargement et les suivants avec astro:page-load
   document.addEventListener('astro:page-load', initPage);
-
-  // Fallback au cas où astro:page-load ne s'exécute pas sur le premier hit
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPage);
-  } else {
-    // Si déjà chargé mais pas par astro:page-load (cas rares)
-    if (!window.astroPageLoadExecuted) {
-        initPage();
-    }
+  if (document.readyState !== 'loading') { 
+    if (!window.astroPageLoadExecuted) initPage(); 
+  } else { 
+    document.addEventListener('DOMContentLoaded', initPage); 
   }
 </script>
