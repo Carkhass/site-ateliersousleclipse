@@ -2222,123 +2222,112 @@ html.dark .knife-card,
   font-weight: 800;
 }
 
+
 /* --- 3. COMPORTEMENT MOBILE (Max 768px) --- */
 @media (max-width: 768px) {
   #knife-grid {
     display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    grid-auto-rows: auto !important; /* On laisse la hauteur naturelle */
-    gap: 10px !important;
-    padding: 12px 6px !important;
-    align-items: start !important; /* IMPORTANT : empêche l'étirement "vide" */
+    /* On verrouille les largeurs pour la symétrie parfaite */
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    
+    /* LA CLÉ : On ne force plus la hauteur des lignes */
+    grid-auto-rows: min-content !important; 
+    
+    gap: 12px !important;
+    padding: 10px 6px !important;
+    
+    /* On aligne en haut pour que chaque fiche vive sa vie */
+    align-items: start !important; 
   }
 
   .knife-card {
     display: flex !important;
     flex-direction: column !important;
+    height: auto !important; /* La fiche ne s'étire plus pour copier sa voisine */
     background-color: #faf8f5 !important;
-    height: auto !important;
-    border-radius: 4px !important;
-    position: relative !important; /* Indispensable pour le tampon */
-    overflow: visible !important; /* Permet au tampon de dépasser */
+    position: relative !important;
+    overflow: visible !important;
   }
 
-  /* 1. On force l'image en carré parfait. C'est souvent ça qui décale tout sur smartphone */
-  .knife-card .relative.aspect-square, 
-  .knife-card img {
-    aspect-ratio: 1 / 1 !important;
+  /* Pour éviter que l'ouverture d'une fiche ne décale TOUTE la ligne, 
+     on peut forcer la fiche ouverte à ne pas impacter la hauteur de ligne 
+     de la grille globale sur certains navigateurs */
+  .knife-card:not(.is-open) {
+    align-self: start !important;
+  }
+
+  /* IMAGE : On préserve la qualité et le carré */
+  .knife-card .ratio-insta {
     width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    overflow: hidden !important;
+  }
+
+  .knife-card img {
+    width: 100% !important;
+    height: 100% !important;
     object-fit: cover !important;
   }
 
-  /* 2. Titre : Hauteur fixe et serrée pour aligner les deux colonnes */
+  /* TITRE : Hauteur fixe pour que les boutons soient alignés quand c'est fermé */
   .knife-card h3 {
-    font-size: 12px !important;
-    line-height: 1.2 !important;
-    height: 30px !important; /* Hauteur pour 2 lignes max */
-    margin: 6px 4px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-  }
-
-  /* 3. Zone Flèche : On la compresse au maximum */
-  .toggle-details {
-    display: flex !important;
-    height: 24px !important; /* Réduit de 32px à 24px */
-    align-items: center !important;
-    justify-content: center !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-  }
-
-  .toggle-details svg {
-    width: 16px !important;
-    height: 16px !important;
-  }
-
-  /* 4. Accordéon */
-  .details-content {
-    display: grid !important;
-    grid-template-rows: 0fr;
-    opacity: 0;
-    transition: all 0.3s ease-out;
-  }
-
-  .details-content.is-open {
-    grid-template-rows: 1fr !important;
-    opacity: 1 !important;
-    padding-bottom: 8px !important;
-  }
-
-  .details-content > div {
-    min-height: 0;
-  }
-
-  /* 5. Zone Prix : On enlève les marges inutiles */
-  .knife-card .mt-auto {
-    margin-top: 0 !important; /* On ne pousse plus au fond violemment */
-    padding: 8px 4px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 4px !important;
-    /* Le trait HTML (border-t) s'affichera ici */
-  }
-
-  .price-tag {
     font-size: 13px !important;
-    font-weight: bold !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 6px 0 !important;
   }
+
+  /* ACCORDÉON : Le gain de place */
+  .toggle-details {
+    height: 24px !important;
+    margin: 0 !important;
+  }
+
+  /* Zone Basse (Prix/Bouton) */
+  .knife-card .mt-auto {
+    margin-top: 8px !important; /* Un petit espace fixe au lieu de auto */
+    padding: 8px 4px !important;
+  }
+
+/* --- ACCORDÉON MOBILE --- */
+.details-content {
+  display: grid !important;
+  grid-template-rows: 0fr !important;
+  opacity: 0 !important;
+  visibility: hidden !important; /* Cache le contenu pour les lecteurs d'écran et le rendu */
+  transition: all 0.3s ease-in-out !important;
+  overflow: hidden !important;
+}
+
+.details-content.is-open {
+  grid-template-rows: 1fr !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  padding-bottom: 12px !important;
+}
+
+/* On force l'enfant à ne pas avoir de taille minimale */
+.details-content > div {
+  min-height: 0 !important;
+  margin: 0 !important; 
+}
+
+  /* Rotation de la flèche uniquement si ouvert */
+  .knife-card:has(.is-open) .toggle-details svg {
+    transform: rotate(180deg) !important;
+  }
+}
 
   .trigger-booking-global {
-    width: 90% !important;
-    font-size: 10px !important;
-    padding: 6px 0 !important;
-    letter-spacing: 0.5px !important;
-  }
-
-  /* Tampon */
-  .tampon-container {
-    position: absolute !important;
-    width: 50px !important; /* Taille ajustée */
-    height: 50px !important;
-    top: -8px !important;
-    right: -8px !important;
-    z-index: 50 !important; /* Force le passage au premier plan */
-    pointer-events: none; /* Évite de gêner le clic sur la fiche */
-  }
+  /* On redonne une taille naturelle au bouton sur desktop */
+  width: auto !important; 
+  padding: 10px 25px !important;
+  display: inline-block !important;
 }
 
-/* Correction Dark Mode pour mobile */
-html.dark .knife-card, .dark .knife-card {
-  background-color: #1e1e1e !important;
-  border: 1px solid rgba(255,255,255,0.1) !important;
-}
-
-/* Correction Dark Mode pour mobile */
+/* Dark Mode */
 html.dark .knife-card, .dark .knife-card {
   background-color: #1e1e1e !important;
   border: 1px solid rgba(255,255,255,0.1) !important;
