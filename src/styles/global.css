@@ -2230,7 +2230,34 @@ html.dark .knife-card,
     grid-auto-rows: auto !important; 
     gap: 12px !important;
     padding: 15px 8px !important;
-    align-items: start !important; 
+    align-items: start !important; /* Déploiement indépendant */
+  }
+
+  .knife-card {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 320px !important; /* Aligne les fiches de gauche et droite */
+    height: auto !important;
+    background-color: #faf8f5 !important;
+  }
+
+  /* Correction Mode Sombre Mobile */
+  html.dark .knife-card,
+  .dark .knife-card {
+    background-color: #1a1a1a !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* Normalisation du titre */
+  .knife-card h3 {
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+    height: 32px !important; 
+    margin: 8px 0 !important;
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   .tampon-container {
@@ -2239,13 +2266,6 @@ html.dark .knife-card,
     top: -10px !important;
     right: -10px !important;
     z-index: 110 !important;
-  }
-
-  .knife-card h3 {
-    font-size: 13px !important;
-    line-height: 1.2 !important;
-    margin: 8px 0 !important;
-    text-align: center !important;
   }
 
   /* LOGIQUE ACCORDÉON MOBILE */
@@ -2257,20 +2277,19 @@ html.dark .knife-card,
     justify-content: center;
     height: 32px !important;
     width: 100% !important;
-    /* ON SUPPRIME LA BORDURE ICI POUR TUER LE DOUBLE TRAIT */
-    border-bottom: none !important; 
+    border-bottom: none !important; /* On laisse la bordure à la zone d'en-dessous */
     margin-bottom: 0 !important;
     cursor: pointer;
   }
+
   .details-content {
     display: grid !important;
-    grid-template-rows: 0fr; /* Totalement fermé au départ */
+    grid-template-rows: 0fr;
     opacity: 0;
     transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease !important;
     overflow: hidden;
   }
 
-  /* Indispensable pour que le grid-template-rows 0fr fonctionne */
   .details-content > div {
     min-height: 0;
   }
@@ -2278,15 +2297,15 @@ html.dark .knife-card,
   .details-content.is-open {
     grid-template-rows: 1fr !important;
     opacity: 1 !important;
-    margin-bottom: 8px; /* Espace après ouverture */
+    margin-bottom: 8px;
   }
 
-  /* On cible la flex-col interne pour les bordures */
   .details-content .flex-col {
     padding: 8px 0 !important;
     margin-bottom: 0 !important;
   }
 
+  /* Zone basse (Prix/Bouton) */
   .knife-card .mt-auto {
     margin-top: auto !important;
     padding: 10px 5px !important;
@@ -2294,6 +2313,8 @@ html.dark .knife-card,
     flex-direction: column !important;
     align-items: center !important;
     gap: 6px !important;
+    /* On NE met PAS de border-top: none ici. 
+       C'est ce trait (défini en HTML) qui fera la séparation propre sous la flèche. */
   }
 
   .trigger-booking-global {
