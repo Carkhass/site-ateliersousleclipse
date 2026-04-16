@@ -160,7 +160,7 @@ const courseSchema = {
           Préparer votre venue
         </h2>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
           
           <div class="bg-surface border border-white/5 p-8 rounded-xl reveal fade-slide-up text-center flex flex-col items-center" style="transition-delay: 100ms;">
             <div class="text-accent mb-4 reveal-child">
@@ -251,6 +251,50 @@ const courseSchema = {
   @media (min-width: 1024px) {
     .group:hover .pivot-container {
       transform: rotate(3deg);
+    }
+  }
+
+  /* --- OPTIMISATIONS MOBILE (767px) --- */
+  @media (max-width: 767px) {
+    /* Évite que l'image ne mange le texte */
+    .js-parallax-item {
+      margin-top: 3rem !important;
+      margin-bottom: 1rem;
+    }
+
+    /* LE "BIG HAMMER" POUR LES 2 COLONNES */
+    /* On cible spécifiquement la div grid à l'intérieur de la section relative */
+    section.relative .grid.grid-cols-2 {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 12px !important;
+    }
+
+    /* On ajuste les cartes pour qu'elles rentrent bien côte à côte */
+    section.relative .grid-cols-2 .bg-surface {
+      padding: 1rem !important;
+      min-height: 180px; /* Aligne les hauteurs */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .grid-cols-2 h3 {
+      font-size: 0.85rem !important;
+      margin-bottom: 0.4rem !important;
+      line-height: 1.2;
+    }
+
+    .grid-cols-2 p {
+      font-size: 0.7rem !important;
+      line-height: 1.25 !important;
+    }
+
+    .grid-cols-2 svg {
+      width: 22px !important;
+      height: 22px !important;
+      margin-bottom: 0.4rem !important;
     }
   }
 </style>
