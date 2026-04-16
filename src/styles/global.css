@@ -2291,6 +2291,15 @@ html.dark .knife-card,
     padding: 8px 4px !important;
   }
 
+  .trigger-booking-global {
+    width: auto !important;      /* Ne force plus la largeur */
+    min-width: 100px !important; /* Sécurité pour qu'il ne soit pas trop petit */
+    padding: 6px 15px !important; /* 15px d'espace à gauche et à droite du texte */
+    font-size: 10px !important;
+    display: inline-block !important; /* Permet au bouton de ne prendre que sa place */
+    margin: 0 auto !important;   /* Garde le centrage */
+  }
+
 /* --- ACCORDÉON MOBILE --- */
 .details-content {
   display: grid !important;
