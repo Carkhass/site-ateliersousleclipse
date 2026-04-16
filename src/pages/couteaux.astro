@@ -141,7 +141,7 @@ const schemaData = {
 
         <div class="p-3 md:p-8 flex flex-col flex-grow bg-[#f0e8dd] relative">
           <div class="flex justify-between items-start mb-1">
-            <h3 class="text-sm md:text-2xl font-serif font-bold text-[#7a2a2a] leading-tight">{item.data.titre}</h3>
+            <h3 class="text-sm md:text-2xl font-serif font-bold text-[#7a2a2a] leading-tight flex-1 min-w-0">{item.data.titre}</h3>
             <button class="toggle-details md:hidden text-[#7a2a2a] p-1 focus:outline-none" aria-label="Voir détails">
               <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -290,11 +290,8 @@ const schemaData = {
   </div>
 
 </section>
-
 <style is:global>
   /* --- 1. CORRECTIF CHIRURGICAL GLIGHTBOX (Tous écrans) --- */
-  
-  /* On neutralise l'ombre sur tous les conteneurs parents */
   .glightbox-container .gslide-inner-content,
   .glightbox-container .ginner-container,
   .glightbox-container .gslide-image,
@@ -303,28 +300,25 @@ const schemaData = {
     background: transparent !important;
   }
 
-  /* On nettoie la LÉGENDE (Caption) qui fait la grosse ombre en bas */
   .glightbox-container .gslide-description {
-    background: transparent !important; /* Enlève le fond solide */
-    box-shadow: none !important;      /* Enlève la grosse ombre du bas */
+    background: transparent !important;
+    box-shadow: none !important;
     border: none !important;
   }
 
-  /* Style du titre sous l'image pour qu'il soit propre sur le flou */
   .glightbox-container .gslide-title {
     color: white !important;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Ombre portée sur le texte pour lisibilité */
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
     text-align: center;
-    font-family: serif; /* Pour coller à ton style */
+    font-family: serif;
   }
 
-  /* On applique l'ombre UNIQUEMENT sur l'image réelle */
   .gslide-image img {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6) !important;
     width: auto !important;
     height: auto !important;
     max-width: 95vw !important;
-    max-height: 75vh !important; /* Réduit un peu pour laisser de la place au titre sans scroll */
+    max-height: 75vh !important;
     display: block !important;
     margin: 0 auto !important;
   }
@@ -332,29 +326,55 @@ const schemaData = {
   /* --- 2. STYLE MOBILE (Max 768px) --- */
   @media (max-width: 768px) {
     #knife-grid {
-      display: grid !important;
-      grid-template-columns: repeat(2, 1fr) !important;
-      align-items: start !important; 
-      gap: 12px !important;
-      padding: 15px 8px !important; 
-    }
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-auto-rows: 1fr !important; /* MAGIE : Force toutes les fiches d'une ligne à la même hauteur */
+    gap: 12px !important;
+  }
 
-    .knife-card {
-      display: flex !important;
-      flex-direction: column !important;
-      height: auto !important;
-      min-width: 0; 
-      position: relative !important;
+  .knife-card {
+    height: 100% !important; /* La carte occupe toute la place allouée par grid-auto-rows */
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+    /* On s'assure que le conteneur d'image, lui, reste bien propre */
+    .ratio-insta {
+      overflow: hidden !important;
+      border-radius: 8px 8px 0 0; /* Pour garder les coins arrondis en haut */
     }
 
     .tampon-container {
-      width: 60px !important;
-      height: 60px !important;
-      top: -10px !important;
-      right: -10px !important;
-      z-index: 100 !important;
+      width: 65px !important; /* On peut le remonter un poil en taille */
+      height: 65px !important;
+      top: -15px !important; /* On le fait dépasser à nouveau */
+      right: -15px !important;
+      z-index: 110 !important; /* On le passe devant tout */
+      pointer-events: none;
     }
 
+    /* Titre : Passage sur 2 lignes pour éviter le crop */
+    .knife-card h3 {
+      font-size: 13px !important;
+      line-height: 1.2 !important;
+      min-height: 32px !important;
+      max-height: none !important;
+      display: block !important;
+      overflow: visible !important;
+      white-space: normal !important;
+      flex: 1;
+      margin-bottom: 4px !important;
+      padding-right: 4px;
+    }
+
+    /* Flèche de détails : Calée en haut à droite */
+    .toggle-details {
+      align-self: flex-start;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    /* Accordéon détails */
     .details-content {
       display: grid !important;
       grid-template-rows: 0fr;
@@ -369,92 +389,53 @@ const schemaData = {
       padding-top: 4px;
     }
 
-    .details-content > div { overflow: hidden; }
-
     .details-content .flex.flex-col.gap-1.py-2 {
       border-bottom: none !important; 
       margin-bottom: 0 !important;
       padding-bottom: 0 !important;
     }
 
-    .knife-card h3 {
-      font-size: 14px !important;
-      min-height: 2.8em !important;
-      line-height: 1.2 !important;
-      display: -webkit-box !important;
-      -webkit-line-clamp: 2 !important;
-      -webkit-box-orient: vertical !important;
-      overflow: hidden;
-      margin-bottom: 2px !important;
-    }
-
+    /* Footer de carte : Stack Vertical (Prix au dessus du bouton) */
     .knife-card .mt-auto {
       margin-top: auto;
       padding-top: 10px;
       border-top: 1px solid rgba(122, 42, 42, 0.1) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 8px !important;
+    }
+
+    .mt-auto span.font-serif {
+      font-size: 13px !important;
+      display: block !important;
+      text-align: center;
+      white-space: normal !important;
+    }
+
+    .trigger-booking-global {
+      width: 100% !important;
+      max-width: 130px; /* Largeur optimale pour mobile */
+      margin: 0 auto;
+      flex-shrink: 0 !important;
+      text-align: center;
+      padding: 8px 4px !important;
     }
   }
 
-  @media (max-width: 768px) {
-  /* Empêche le conteneur parent de laisser déborder ses enfants */
-  .knife-card .p-3 {
-    overflow: hidden; 
-  }
-
-  /* Force le bouton à ne jamais rétrécir et le prix à s'adapter */
-  .trigger-booking-global {
-    flex-shrink: 0 !important;
-    white-space: nowrap; /* Garde le texte du bouton sur une ligne */
-  }
-
-  /* Si le prix est trop long, il réduit sa taille plutôt que de pousser le bouton */
-  .mt-auto span:first-child {
-    overflow: hidden;
-    text-overflow: ellipsis; /* Ajoute "..." si c'est vraiment trop long */
-    white-space: nowrap;
-  }
-  
-  /* On s'assure que la zone de prix/bouton est bien aérée */
-  .mt-auto.flex-col {
-    padding-bottom: 0.5rem;
-  }
-
-  /* On redonne un peu de taille au prix puisqu'il est seul sur sa ligne */
-  .mt-auto span.font-serif {
-    font-size: 13px !important;
-    display: block;
-    margin-bottom: 2px;
-  }
-
-  /* Le bouton s'étire proprement sur la largeur disponible */
-  .trigger-booking-global {
+  /* --- 3. CONTENEUR HAMON SCRATCHER --- */
+  .hamon-scratcher-container canvas,
+  .hamon-scratcher-container .scratcher-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100% !important;
-    max-width: 140px; /* On évite qu'il soit trop large pour rester élégant */
-    margin: 0 auto;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block;
+    margin: 0;
+    padding: 0;
   }
-}
-
-/* Force le container à être un carré ou un rectangle strict pour le calcul du JS */
-/* On s'aligne strictement sur la boîte existante */
-.hamon-scratcher-container.ratio-insta {
-  /* On ne définit plus de height ou d'aspect-ratio ici, 
-     c'est .ratio-insta qui s'en occupe via le padding */
-}
-
-/* On force le canvas à occuper 100% de la boîte générée par le padding */
-.hamon-scratcher-container canvas,
-.hamon-scratcher-container .scratcher-placeholder {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  display: block;
-  margin: 0;
-  padding: 0;
-}
-  
 </style>
 </BaseLayout>
 
