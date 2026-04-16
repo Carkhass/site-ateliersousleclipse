@@ -326,101 +326,81 @@ const schemaData = {
   /* --- 2. STYLE MOBILE (Max 768px) --- */
   @media (max-width: 768px) {
     #knife-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    grid-auto-rows: 1fr !important; /* MAGIE : Force toutes les fiches d'une ligne à la même hauteur */
-    gap: 12px !important;
-  }
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      grid-auto-rows: 1fr !important; /* Force l'alignement strict par ligne */
+      gap: 12px !important;
+      padding: 15px 8px !important;
+      align-items: stretch !important;
+    }
 
-  .knife-card {
-    height: 100% !important; /* La carte occupe toute la place allouée par grid-auto-rows */
-    display: flex !important;
-    flex-direction: column !important;
-  }
+    .knife-card {
+      height: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: visible !important; /* Pour les tampons */
+      min-width: 0;
+    }
 
-    /* On s'assure que le conteneur d'image, lui, reste bien propre */
+    /* Neutralisation du padding global qui décale tout */
     .ratio-insta {
+      padding-top: 100% !important; /* Ratio 1:1 plus compact pour mobile */
       overflow: hidden !important;
-      border-radius: 8px 8px 0 0; /* Pour garder les coins arrondis en haut */
+      border-radius: 8px 8px 0 0;
+      flex-shrink: 0 !important;
     }
 
     .tampon-container {
-      width: 65px !important; /* On peut le remonter un poil en taille */
-      height: 65px !important;
-      top: -15px !important; /* On le fait dépasser à nouveau */
-      right: -15px !important;
-      z-index: 110 !important; /* On le passe devant tout */
-      pointer-events: none;
+      width: 60px !important;
+      height: 60px !important;
+      top: -10px !important;
+      right: -10px !important;
+      z-index: 110 !important;
     }
 
-    /* Titre : Passage sur 2 lignes pour éviter le crop */
+    /* Titre : On stabilise la hauteur */
     .knife-card h3 {
       font-size: 13px !important;
       line-height: 1.2 !important;
-      min-height: 32px !important;
-      max-height: none !important;
-      display: block !important;
-      overflow: visible !important;
+      min-height: 32px !important; /* Espace pour 2 lignes */
+      display: flex !important;
+      align-items: center !important;
       white-space: normal !important;
-      flex: 1;
       margin-bottom: 4px !important;
       padding-right: 4px;
+      flex: 0 0 auto !important; /* Empêche le titre de "pousser" inutilement */
     }
 
-    /* Flèche de détails : Calée en haut à droite */
     .toggle-details {
       align-self: flex-start;
-      margin-top: 2px;
+      margin-top: 4px;
       flex-shrink: 0;
     }
 
-    /* Accordéon détails */
-    .details-content {
-      display: grid !important;
-      grid-template-rows: 0fr;
-      opacity: 0;
-      transition: grid-template-rows 0.4s ease, opacity 0.3s ease;
-      overflow: hidden;
-    }
-
-    .details-content.is-open {
-      grid-template-rows: 1fr;
-      opacity: 1;
-      padding-top: 4px;
-    }
-
-    .details-content .flex.flex-col.gap-1.py-2 {
-      border-bottom: none !important; 
-      margin-bottom: 0 !important;
-      padding-bottom: 0 !important;
-    }
-
-    /* Footer de carte : Stack Vertical (Prix au dessus du bouton) */
+    /* Footer : Calé en bas */
     .knife-card .mt-auto {
-      margin-top: auto;
-      padding-top: 10px;
+      margin-top: auto !important; 
+      padding-top: 8px !important;
       border-top: 1px solid rgba(122, 42, 42, 0.1) !important;
       display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
-      gap: 8px !important;
+      gap: 6px !important;
+      background: transparent !important;
     }
 
     .mt-auto span.font-serif {
-      font-size: 13px !important;
-      display: block !important;
+      font-size: 12px !important;
       text-align: center;
-      white-space: normal !important;
+      line-height: 1 !important;
     }
-    
 
     .trigger-booking-global {
       width: 100% !important;
-      max-width: 130px; /* Largeur optimale pour mobile */
-      margin: 0 auto;
-      flex-shrink: 0 !important;
-      text-align: center;
-      padding: 8px 4px !important;
+      max-width: 110px;
+      padding: 6px 2px !important;
+      font-size: 9px !important;
+      margin-bottom: 4px !important;
     }
   }
 
@@ -434,8 +414,6 @@ const schemaData = {
     height: 100% !important;
     object-fit: cover !important;
     display: block;
-    margin: 0;
-    padding: 0;
   }
 </style>
 </BaseLayout>
