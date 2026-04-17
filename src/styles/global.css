@@ -2272,7 +2272,7 @@ html.dark .knife-card,
   /* TITRE : Hauteur fixe pour que les boutons soient alignés quand c'est fermé */
   .knife-card h3 {
     font-size: 13px !important;
-    height: 32px !important;
+    height: 14px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -2281,14 +2281,14 @@ html.dark .knife-card,
 
   /* ACCORDÉON : Le gain de place */
   .toggle-details {
-    height: 24px !important;
+    height: 18px !important;
     margin: 0 !important;
   }
 
   /* Zone Basse (Prix/Bouton) */
   .knife-card .mt-auto {
-    margin-top: 8px !important; /* Un petit espace fixe au lieu de auto */
-    padding: 8px 4px !important;
+    margin-top: 4px !important; /* Un petit espace fixe au lieu de auto */
+    padding: 4px 4px !important;
   }
 
   .trigger-booking-global {
@@ -2299,6 +2299,70 @@ html.dark .knife-card,
     display: inline-block !important; /* Permet au bouton de ne prendre que sa place */
     margin: 0 auto !important;   /* Garde le centrage */
   }
+
+  /* --- NOUVEAU BOUTON DÉTAILS PREMIUM --- */
+@media (max-width: 768px) {
+  .toggle-details {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 12px 0 !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    /* On crée une zone de clic plus large pour le confort */
+    width: 100% !important;
+  }
+
+  .label-details, .label-close {
+    font-family: serif !important;
+    font-size: 9px !important;
+    font-weight: 700 !important;
+    letter-spacing: 3px !important; /* Très espacé = Luxe */
+    text-transform: uppercase !important;
+    color: #7a2a2a !important;
+    position: relative !important;
+    padding-bottom: 4px !important;
+    transition: opacity 0.3s ease !important;
+  }
+
+  /* Le trait magique : il part du centre et s'étire */
+  .label-details::after, .label-close::after {
+    content: "" !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 20px !important; /* Taille de base */
+    height: 1px !important;
+    background-color: #7a2a2a !important;
+    opacity: 0.3 !important;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease !important;
+  }
+
+  /* Animation automatique douce pour attirer l'oeil (Pulse) */
+  @keyframes link-pulse {
+    0% { width: 20px; opacity: 0.3; }
+    50% { width: 40px; opacity: 0.6; }
+    100% { width: 20px; opacity: 0.3; }
+  }
+
+  /* On applique le pulse uniquement quand c'est fermé pour inviter à ouvrir */
+  .toggle-details:not(.active) .label-details::after {
+    animation: link-pulse 3s infinite ease-in-out !important;
+  }
+
+  /* État actif : le trait reste grand et sombre */
+  .toggle-details.active .label-close::after {
+    width: 100% !important; /* Il souligne tout le mot "FERMER" */
+    opacity: 0.8 !important;
+  }
+
+  /* On cache proprement l'autre label */
+  .label-close { display: none !important; }
+  .toggle-details.active .label-details { display: none !important; }
+  .toggle-details.active .label-close { display: inline-block !important; }
+}
 
 /* --- ACCORDÉON MOBILE --- */
 .details-content {
