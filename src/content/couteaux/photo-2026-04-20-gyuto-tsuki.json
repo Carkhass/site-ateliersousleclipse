@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-04-20-gyuto-tsuki",
+  "titre": "Gyuto Tsuki",
+  "date": "2026-04-20",
+  "lienInstagram": "https://www.instagram.com/p/DXXDnvjAo-W/",
+  "description": "Gyuto Tsuki. Idéal pour émincer les légumes avec précision et préparer vos viandes et poissons.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-04-20-gyuto-tsuki.webp",
+  "prix": 250,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Bouleau de karelie teinté stabilisé, rivets fibre de carbone"
+  }
+}
