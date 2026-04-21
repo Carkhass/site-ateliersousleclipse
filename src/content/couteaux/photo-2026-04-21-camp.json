@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-04-21-camp",
+  "titre": "Camp",
+  "date": "2026-04-21",
+  "lienInstagram": "https://www.instagram.com/p/DXZrlQGAty8/",
+  "description": "Camp. Un compagnon idéal pour le camping et le bushcraft.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-04-21-camp.webp",
+  "prix": 245,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "80crv2",
+    "manche": "Morta, rivets carbone"
+  }
+}
