@@ -33,6 +33,13 @@ const schemaData = {
   "itemListElement": couteauxTries.map((item, index) => {
     const firstImage = Array.isArray(item.data.image) ? item.data.image[0] : item.data.image;
     
+    // --- 1. Logique de disponibilité (Dynamique) ---
+    const estDispo = item.data.disponible === true || String(item.data.disponible) === "true";
+    const availabilityStatus = estDispo ? "https://schema.org/InStock" : "https://schema.org/OutOfStock";
+    
+    // --- 2. Logique de prix (Google exige un format numérique) ---
+    const prixSchema = item.data.prix > 0 ? item.data.prix : "0";
+
     return {
       "@type": "ListItem",
       "position": index + 1,
@@ -44,11 +51,21 @@ const schemaData = {
         "brand": {
           "@type": "Brand",
           "name": "L'Atelier sous l'Éclipse"
+        },
+        // --- 3. LE BLOC OFFERS ATTENDU PAR GOOGLE ---
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "EUR",
+          "price": prixSchema,
+          "availability": availabilityStatus,
+          "itemCondition": "https://schema.org/NewCondition",
+          "url": Astro.site ? new URL(Astro.url.pathname, Astro.site).href : 'https://ateliersousleclipse.fr/couteaux'
         }
       }
     };
   })
 };
+---
 ---
 
 <BaseLayout
