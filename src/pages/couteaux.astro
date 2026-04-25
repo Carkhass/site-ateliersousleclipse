@@ -9,8 +9,16 @@ const resCouteaux = await getCollection('couteaux').catch(() => []);
 const resDivers = await getCollection('divers').catch(() => []);
 
 // 2. On ne garde QUE les couteaux pour cette page
-// Le tri reste identique pour avoir les nouveautés en premier
+// NOUVEAU TRI : Disponibles en premier, puis par date décroissante
 const tousLesItems = [...(resCouteaux || [])].sort((a, b) => {
+  const isDispoA = a.data.disponible === true || String(a.data.disponible) === "true";
+  const isDispoB = b.data.disponible === true || String(b.data.disponible) === "true";
+
+  // 1er niveau de tri : Mettre les disponibles en haut
+  if (isDispoA && !isDispoB) return -1; // A passe avant B
+  if (!isDispoA && isDispoB) return 1;  // B passe avant A
+
+  // 2ème niveau de tri : Si les deux ont le même statut, on trie par date (le plus récent d'abord)
   const dateA = new Date(a.data?.date || 0).getTime();
   const dateB = new Date(b.data?.date || 0).getTime();
   return dateB - dateA;
@@ -118,15 +126,35 @@ const schemaData = {
       <article 
   class="knife-card fade-in-up" 
   data-type={typeFiltre}
-  data-dispo={String(estDispo)}
->
+  data-dispo={String(estDispo)}>
+
+  {/* LA BULLE DE CASCA (Uniquement pour l'Easter Egg) */}
+        {isTableModel && (
+          <div class="casca-popup absolute -top-10 left-2 z-[100] opacity-0 flex items-end gap-2 drop-shadow-md pointer-events-none">
+            
+            {/* L'avatar de Casca (en premier) */}
+            <div class="w-20 h-20 rounded-full border-2 border-[#faf8f5] shadow-inner overflow-hidden shrink-0 bg-[#7a2a2a]">
+              <img 
+                src="/images/casca-smile.webp" 
+                alt="Casca" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* La bulle de texte (pointe vers la gauche) */}
+            <div class="bg-[#faf8f5] text-[#7a2a2a] border border-[#7a2a2a]/20 px-3 py-2 rounded-2xl rounded-bl-none text-xs font-serif font-bold italic shadow-sm">
+              J'ai flairé un truc par ici... 🐾
+            </div>
+            
+          </div>
+        )}
+
+
   <div class="tampon-container absolute">
     {estDispo ? (
       <img src="/images/tampon-dispo.webp" alt="Disponible" class="w-full h-full object-contain" />
     ) : (
-      (item.data.prix > 0) && (
-        <img src="/images/tampon-vendu.webp" alt="Vendu" class="w-full h-full object-contain" />
-      )
+      <img src="/images/tampon-pdispo.webp" alt="Plus Disponible" class="w-full h-full object-contain" />
     )}
   </div>
 

@@ -2142,6 +2142,22 @@ body.active-modal #booking-modal {
    SECTION : PAGE COUTEAUX (STRUCTURE & CARTES)
    ========================================================== */
 
+  /* --- ANIMATION CASCA EASTER EGG --- */
+@keyframes casca-peek {
+  0%   { opacity: 0; transform: translateY(15px); }
+  10%  { opacity: 1; transform: translateY(0); }    /* Apparaît rapidement */
+  85%  { opacity: 1; transform: translateY(0); }    /* Reste affiché longtemps */
+  100% { opacity: 0; transform: translateY(-10px); } /* S'évapore vers le haut à la fin */
+}
+
+/* Magie : ton script JS ajoute ".visible" à la ".knife-card"
+  On déclenche l'animation de l'enfant ".casca-popup" à ce moment-là !
+*/
+.knife-card.visible .casca-popup {
+  animation: casca-peek 10s ease-in-out forwards;
+  animation-delay: 0.5s; /* Petit délai pour la surprise après le scroll */
+}
+
 /* --- 1. COMMUN (Toutes tailles) --- */
 .line-clamp-3 {
   display: -webkit-box;
