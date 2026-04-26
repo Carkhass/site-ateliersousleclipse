@@ -1176,6 +1176,8 @@ form button[type="submit"]:active {
 /* =========================================================
    SLIDER COMMUN
    ========================================================= */
+
+
 .my-knives-swiper {
   width: 100%; /* indispensable pour Swiper */
   position: relative;
