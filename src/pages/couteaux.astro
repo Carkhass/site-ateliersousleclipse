@@ -98,6 +98,12 @@ const schemaData = {
       <p class="reveal-child">
         Vous trouverez mes dernières créations issues d'Instagram, ainsi que des modèles de référence pour vos futurs projets personnalisés.
       </p>
+      <p class="reveal-child">
+      Certaines s'envolent vite. Pour recevoir un accès privilégié avant la mise en ligne publique, inscrivez-vous ici : 
+      <button id="open-club-modal" class="cursor-pointer cta-premium px-5 py-3.5 rounded text-white font-bold text-xs uppercase tracking-[0.2em] mt-6 hover:scale-[1.02] active:scale-95 transition-all shadow-lg">
+        Rejoindre le Carnet
+      </a>
+      </p>
     </div>
 
     <div class="flex flex-wrap md:justify-center gap-2 md:gap-4 mt-10 no-select filter-grid ">
@@ -341,6 +347,69 @@ const schemaData = {
 
 </section>
 
+<!-- ========================================================= -->
+<!-- SECTION CLUB  -->
+<!-- ========================================================= -->
+
+<div id="club-modal" class="fixed inset-0 z-[120] hidden items-center justify-center p-4">
+  <div id="close-club-bg" class="absolute inset-0 bg-black/70 backdrop-blur-md cursor-pointer transition-opacity duration-300 opacity-0"></div>
+  
+  <div id="club-modal-content" class="relative bg-surface p-8 md:p-10 rounded-2xl shadow-2xl max-w-md w-full text-center transform transition-all duration-300 scale-95 opacity-0 border border-white/10">
+    
+    <button id="close-club-btn" aria-label="Fermer" class="absolute top-4 right-4 text-muted hover:text-white transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+    </button>
+
+    <div id="club-form-container">
+      <h3 class="text-2xl font-serif font-bold text-accent mb-2">Le Carnet de l'Atelier</h3>
+      <p class="text-muted text-sm mb-6 leading-relaxed">
+        Je termine en moyenne 2 à 3 pièces par semaine. Laissez-moi votre e-mail pour recevoir la présentation du vendredi et avoir la priorité sur mes nouvelles créations.
+      </p>
+      
+      <form id="club-form" class="space-y-4 text-left">
+  
+  <label for="prenom-club" class="sr-only">Votre prénom</label>
+  <input 
+    type="text" 
+    id="prenom-club" 
+    placeholder="Votre prénom..." 
+    class="w-full p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 text-sm outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-inner" 
+    required
+  >
+
+  <label for="email-club" class="sr-only">Votre adresse e-mail</label>
+  <input 
+    type="email" 
+    id="email-club" 
+    placeholder="Votre e-mail..." 
+    class="w-full p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 text-sm outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-inner" 
+    required
+  >
+
+  <div class="flex justify-center pt-2">
+    <button 
+      type="submit" 
+      id="btn-club"
+      class="cta-premium w-auto px-8 py-3.5 rounded text-white font-bold text-xs uppercase tracking-[0.2em] hover:scale-[1.02] active:scale-95 transition-all shadow-lg"
+    >
+      Demander l'accès
+    </button>
+  </div>
+
+</form>
+    </div>
+
+    <div id="msg-club-success" class="hidden py-4">
+      <h3 class="text-2xl font-serif font-bold text-accent mb-2">Message envoyé</h3>
+      <p class="text-muted text-sm mb-6">Bienvenue dans le carnet. Surveillez votre boîte mail ce vendredi.</p>
+      <button id="close-club-success" class="cta-premium px-5 py-3.5 rounded text-white font-bold text-xs uppercase tracking-[0.2em] mt-6 hover:scale-[1.02] active:scale-95 transition-all shadow-lg">
+        Fermer
+      </button>
+    </div>
+
+  </div>
+</div>
+
 </BaseLayout>
 
 
@@ -394,4 +463,92 @@ const schemaData = {
   } else { 
     document.addEventListener('DOMContentLoaded', initPage); 
   }
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const openBtn = document.getElementById('open-club-modal');
+    const modal = document.getElementById('club-modal');
+    const bg = document.getElementById('close-club-bg');
+    const content = document.getElementById('club-modal-content');
+    const closeBtn = document.getElementById('close-club-btn');
+    const closeSuccessBtn = document.getElementById('close-club-success');
+    const form = document.getElementById('club-form');
+    const submitBtn = document.getElementById('btn-club');
+    const formContainer = document.getElementById('club-form-container');
+    const successMsg = document.getElementById('msg-club-success');
+    const prenom = document.getElementById('prenom-club').value;
+
+    const WEBHOOK_URL = "https://n8n.yahncloud.fr/webhook/rejoindre-club"; 
+
+    // Fonction pour ouvrir
+    function openModal() {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      // Petit délai pour déclencher la transition CSS
+      setTimeout(() => {
+        bg.classList.remove('opacity-0');
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    // Fonction pour fermer
+    function closeModal() {
+      bg.classList.add('opacity-0');
+      content.classList.remove('scale-100', 'opacity-100');
+      content.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        // Reset du formulaire en douce
+        setTimeout(() => {
+          formContainer.classList.remove('hidden');
+          successMsg.classList.add('hidden');
+          form.reset();
+        }, 300);
+      }, 300);
+    }
+
+    // Événements d'ouverture / fermeture
+    if(openBtn) openBtn.addEventListener('click', openModal);
+    if(closeBtn) closeBtn.addEventListener('click', closeModal);
+    if(bg) bg.addEventListener('click', closeModal);
+    if(closeSuccessBtn) closeSuccessBtn.addEventListener('click', closeModal);
+
+    // Envoi du formulaire à n8n
+    if(form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // C'est ICI qu'il faut lire les valeurs, au moment où on clique !
+        const prenom = document.getElementById('prenom-club').value;
+        const email = document.getElementById('email-club').value;
+        
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = "Traitement...";
+        submitBtn.style.pointerEvents = "none";
+        submitBtn.style.opacity = "0.7";
+
+        try {
+          await fetch(WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prenom: prenom, email: email })
+          });
+          
+          // Succès : on switch le contenu
+          formContainer.classList.add('hidden');
+          successMsg.classList.remove('hidden');
+          
+        } catch (error) {
+          submitBtn.innerText = "Erreur, réessayez";
+          setTimeout(() => { 
+            submitBtn.innerText = originalText; 
+            submitBtn.style.pointerEvents = "auto";
+            submitBtn.style.opacity = "1";
+          }, 3000);
+        }
+      });
+    }
+  });
 </script>
