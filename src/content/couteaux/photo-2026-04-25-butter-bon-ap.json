@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-04-25-butter-bon-ap",
+  "titre": "Butter Bon'ap",
+  "date": "2026-04-25",
+  "lienInstagram": "https://www.instagram.com/p/DXj_J8ygkg1/",
+  "description": "Le Butter Bon'ap est composé d'un acier XC100 et d'un manche en bouleau madré stabilisé. Cet instrument est conçu pour une utilisation technique en cuisine. Son profil présente une esthétique sobre et équilibrée.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-04-25-butter-bon-ap.webp",
+  "prix": 0,
+  "disponible": false,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "XC100",
+    "manche": "bouleau madré stabilisé"
+  }
+}
