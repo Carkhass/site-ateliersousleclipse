@@ -1,17 +1,17 @@
 {
-  "slug_technique": "video-2026-04-26-non-specifie",
   "titre": "Non spécifié",
-  "date": "2026-04-26",
-  "lienInstagram": "https://www.instagram.com/reel/DXl1WkzAsS-/",
+  "format": "photo",
+  "type": "insta",
   "description": "Cet instrument présente une finition soignée après l'application d'une protection sur son manche. La pièce révèle une texture profonde et une esthétique sobre. L'ensemble offre une prise en main optimisée pour un usage quotidien.",
-  "type": "video",
-  "format": "video",
-  "image": "/images/couteaux/video-2026-04-26-non-specifie.webp",
-  "prix": 0,
-  "disponible": false,
-  "favori": false,
   "caracteristiques": {
     "acier": "Non spécifié",
     "manche": "Non spécifié"
-  }
+  },
+  "image": "/images/couteaux/video-2026-04-26-non-specifie.webp",
+  "galerie": [],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/reel/DXl1WkzAsS-/",
+  "date": "2026-04-26",
+  "disponible": false,
+  "favori": false
 }

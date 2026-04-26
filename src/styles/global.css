@@ -2276,8 +2276,8 @@ html.dark .knife-card,
 
   /* TAMPON : Dimensions et position sur Mobile */
   .tampon-container {
-    width: 75px !important;
-    height: 75px !important;
+    width: 55px !important;
+    height: 55px !important;
     top: -12px !important;
     right: -12px !important;
     z-index: 100 !important;
