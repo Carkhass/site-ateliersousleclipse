@@ -72,11 +72,21 @@ const courseSchema = {
             </div>
           </div>
           
-          <div class="js-parallax-item reveal fade-slide-right">
-             <div class="pivot-container aspect-video rounded-lg overflow-hidden border border-white/10 shadow-2xl bg-surface reveal-child">
-                <div class="w-full h-full flex items-center justify-center text-accent/20 italic p-8 text-center">
-                    [ Photo : Travail de précision au backstand ]
-                </div>
+          <div class="js-parallax-item reveal fade-slide-right relative z-20 group overflow-visible">
+             {/* Le conteneur fixe : on y remet le pivot-container (si tu aimes le léger effet d'inclinaison de ton autre section), 
+                l'overflow-hidden pour masquer ce qui dépasse du zoom, et un cadre bordeaux affiné (border-2).
+             */}
+             <div class="pivot-container aspect-video rounded-lg overflow-hidden shadow-2xl border-2 border-[var(--color-accent-light)] bg-surface reveal-child relative">
+                
+                {/* L'Image : Elle remplit l'espace et zoome TRÈS LENTEMENT (duration-1000 = 1 seconde) 
+                   uniquement quand on survole le groupe parent. 
+                */}
+                <img 
+                  src="/images/trempe-couteau.webp" 
+                  alt="Photo de traitements thermiques de couteau à l'atelier sous l'éclipse"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
+                />
+
              </div>
           </div>
         </div>
