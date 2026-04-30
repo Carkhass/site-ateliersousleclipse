@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-04-30-couteau-a-jambon",
+  "titre": "Couteau à jambon",
+  "date": "2026-04-30",
+  "lienInstagram": "https://www.instagram.com/p/DXxBKTxAszJ/",
+  "description": "Le Couteau à jambon est composé d'un acier C125U et d'un manche en morta avec rivets carbone. Cet instrument présente un profil souple optimisé pour les préparations culinaires de précision. Sa silhouette fine évoque la fluidité d'un trait d'encre sur une surface sombre.",
+  "type": "instrument",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-04-30-couteau-a-jambon.webp",
+  "prix": 0,
+  "disponible": false,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Morta et rivets carbone"
+  }
+}
