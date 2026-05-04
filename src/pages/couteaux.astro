@@ -11,16 +11,10 @@ const resDivers = await getCollection('divers').catch(() => []);
 // 2. On ne garde QUE les couteaux pour cette page
 // NOUVEAU TRI : Disponibles en premier, puis par date décroissante
 const tousLesItems = [...(resCouteaux || [])].sort((a, b) => {
-  const isDispoA = a.data.disponible === true || String(a.data.disponible) === "true";
-  const isDispoB = b.data.disponible === true || String(b.data.disponible) === "true";
-
-  // 1er niveau de tri : Mettre les disponibles en haut
-  if (isDispoA && !isDispoB) return -1; // A passe avant B
-  if (!isDispoA && isDispoB) return 1;  // B passe avant A
-
-  // 2ème niveau de tri : Si les deux ont le même statut, on trie par date (le plus récent d'abord)
   const dateA = new Date(a.data?.date || 0).getTime();
   const dateB = new Date(b.data?.date || 0).getTime();
+  
+  // Du plus récent au plus ancien
   return dateB - dateA;
 });
 
@@ -73,7 +67,6 @@ const schemaData = {
     };
   })
 };
----
 ---
 
 <BaseLayout
