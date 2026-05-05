@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-05-05-table",
+  "titre": "Table",
+  "date": "2026-05-05",
+  "lienInstagram": "https://www.instagram.com/p/DX9nqoIAi9H/",
+  "description": "Ce couteau de table est conçu autour d'une lame en acier XC100, un acier carbone reconnu pour sa finesse de grain et sa capacité à tenir un tranchant rasoir. J'ai travaillé le profil pour offrir une glisse fluide lors de la découpe, tout en conservant la robustesse nécessaire à un usage quotidien.\n\nLe manche est façonné en loupe d'orme stabilisée, une essence aux motifs complexes et organiques qui offre une prise en main chaleureuse. L'ensemble est assemblé avec des rivets en fibre de verre pour garantir une durabilité et une stabilité optimales dans le temps.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-05-05-table.webp",
+  "prix": 110,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "XC100",
+    "manche": "loupe d'orme stabilisée"
+  }
+}
