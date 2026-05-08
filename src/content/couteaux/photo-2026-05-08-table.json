@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-05-08-table",
+  "titre": "Table",
+  "date": "2026-05-08",
+  "lienInstagram": "https://www.instagram.com/p/DYFbqy7gnCk/",
+  "description": "Ce couteau de table est conçu à partir d'un acier XC100, un acier carbone apprécié pour sa finesse de grain et la tenue de son tranchant. La lame révèle une ligne de trempe sélective (hamon), témoignant du traitement thermique précis réalisé dans mon atelier pour garantir un équilibre entre dureté et souplesse.\n\nLe manche est façonné en moutouchi, une essence de bois dense que je travaille ici pour la première fois. Son aspect sobre et son poli naturel offrent une prise en main douce et durable, idéale pour accompagner vos moments de gastronomie avec élégance et simplicité.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-05-08-table.webp",
+  "prix": 0,
+  "disponible": false,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "XC100",
+    "manche": "Moutouchi"
+  }
+}
