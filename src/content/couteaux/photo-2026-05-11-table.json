@@ -1,17 +1,17 @@
 {
-  "slug_technique": "photo-2026-05-11-table",
   "titre": "Table",
-  "date": "2026-05-11",
-  "lienInstagram": "https://www.instagram.com/p/DYNIORqG9yH/",
-  "description": "Ce couteau de table est conçu autour d'une lame en acier XC100, un acier carbone reconnu pour sa finesse de grain et sa tenue de coupe. Le profil a été travaillé pour offrir une pénétration fluide et un tranchant durable, idéal pour accompagner vos repas.\n\nLe manche est façonné en noyer ondé stabilisé, révélant des nuances brun profond et des reflets miel. L'assemblage avec des rivets en fibre de carbone assure une légèreté et un équilibre parfaits pour un usage quotidien tout en élégance.",
-  "type": "couteau",
   "format": "photo",
-  "image": "/images/couteaux/photo-2026-05-11-table.webp",
-  "prix": 0,
-  "disponible": false,
-  "favori": false,
+  "type": "couteau",
+  "description": "Ce couteau de table est conçu autour d'une lame en acier XC100, un acier carbone reconnu pour sa finesse de grain et sa tenue de coupe. Le profil a été travaillé pour offrir une pénétration fluide et un tranchant durable, idéal pour accompagner vos repas.\n\nLe manche est façonné en noyer ondé stabilisé, révélant des nuances brun profond et des reflets miel. L'assemblage avec des rivets en fibre de carbone assure une légèreté et un équilibre parfaits pour un usage quotidien tout en élégance.",
   "caracteristiques": {
     "acier": "XC100",
     "manche": "noyer ondé stabilisé"
-  }
+  },
+  "image": "/images/couteaux/photo-2026-05-11-table.webp",
+  "galerie": [],
+  "prix": 119,
+  "lienInstagram": "https://www.instagram.com/p/DYNIORqG9yH/",
+  "date": "2026-05-11",
+  "disponible": true,
+  "favori": false
 }
