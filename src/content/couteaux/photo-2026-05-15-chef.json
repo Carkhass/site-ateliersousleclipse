@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-05-15-chef",
+  "titre": "Chef",
+  "date": "2026-05-15",
+  "lienInstagram": "https://www.instagram.com/p/DYXfZyIgu5L/",
+  "description": "Ce couteau de chef a été conçu avec un acier C125U, permettant d'obtenir un tranchant d'une grande finesse et une ligne de trempe sélective (hamon) très marquée. Le profil occidental assure une prise en main naturelle pour tous les travaux de découpe.\n\nLe manche est réalisé en loupe d'orme stabilisée, une essence de bois aux motifs complexes, fixée par des rivets en acier inoxydable. Cette pièce allie la robustesse nécessaire à un usage quotidien en cuisine et l'esthétique sobre propre à mon atelier.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-05-15-chef.webp",
+  "prix": 0,
+  "disponible": false,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "loupe d'orme stabilisée, rivets inox"
+  }
+}
