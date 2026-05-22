@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-05-22-bon-ap",
+  "titre": "Bon'Ap",
+  "date": "2026-05-22",
+  "lienInstagram": "https://www.instagram.com/p/DYpdJ7rgi_R/",
+  "description": "Le couteau Bon'Ap est conçu pour offrir une expérience de coupe exceptionnelle au quotidien. Sa lame est façonnée en acier carbone C125U, un choix rigoureux garantissant un tranchant rasoir durable et une grande finesse d'émouture. Cet acier de haute pureté développe avec le temps une patine unique, témoin de vos préparations culinaires.\n\nLe manche est réalisé en loupe de bouleau, un bois aux motifs complexes et chaleureux, solidement fixé par des rivets en acier inoxydable. L'ergonomie de cette pièce assure une prise en main ferme et équilibrée, idéale pour les travaux de découpe précis en cuisine. Un compagnon fiable et performant pour sublimer vos moments de partage autour de la table.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-05-22-bon-ap.webp",
+  "prix": 195,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "loupe de bouleau, rivets inox"
+  }
+}
