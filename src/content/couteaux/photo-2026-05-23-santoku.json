@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-05-23-santoku",
+  "titre": "Santoku",
+  "date": "2026-05-23",
+  "lienInstagram": "https://www.instagram.com/p/DYsRC1NAiIr/",
+  "description": "Ce couteau de type Santoku se distingue par une esthétique épurée et performante. Façonné dans un acier carbone C125U, il offre un tranchant d'une finesse exceptionnelle et une excellente tenue de coupe. Contrairement à mes réalisations habituelles, cette lame ne présente pas de ligne de trempe sélective (hamon), révélant ainsi la sobriété brute et homogène de l'acier.\n\nLe manche est réalisé pour la première fois en bois de rose de Madagascar, une essence précieuse aux nuances rouge et bordeaux profond qui se révèlent pleinement à la lumière du soleil. Il est assemblé avec un intercalaire en G10 full black et des rivets en fibre de carbone, assurant une prise en main équilibrée et une durabilité optimale pour un usage quotidien en cuisine.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-05-23-santoku.webp",
+  "prix": 0,
+  "disponible": false,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "bois de rose de Madagascar, G10 full black et rivets carbone"
+  }
+}
