@@ -1,0 +1,590 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content'; 
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "L'Atelier sous l'Éclipse",
+  "image": "https://ateliersousleclipse.fr/images/og-home.jpg",
+  "description": "French artisan knifemaker specialized in crafting high-end culinary and table knives. Expertise in traditional differential hardening (Hamon).",
+  "url": "https://ateliersousleclipse.fr/en",
+  "address": {
+    "@type": "PostalAddress",
+    "address": "793 Chemin du Trêve d'Ars",
+    "addressLocality": "Reyrieux",
+    "postalCode": "01600",
+    "addressCountry": "FR"
+  },
+  "knowsAbout": ["Custom knifemaking", "Bladesmithing", "Traditional Hamon", "High-end knives"],
+  "priceRange": "€€€"
+};
+
+// --- PATCHED NEWS LOGIC ---
+const toutesLesActus = await getCollection('actus') || [];
+const maintenant = new Date();
+
+// 1. Define time margins
+const ilYaUnMois = new Date();
+ilYaUnMois.setDate(maintenant.getDate() - 30);
+
+const margeVisibilitePasse = new Date();
+margeVisibilitePasse.setDate(maintenant.getDate() - 3); // The event remains visible 3 days after its date
+
+// 2. Filter events for the agenda (recent + near future)
+const agendaAffiche = toutesLesActus
+  .filter(a => a.data.type === 'evenement' && new Date(a.data.date_event || a.data.date) >= ilYaUnMois)
+  .sort((a, b) => new Date(a.data.date_event || a.data.date).getTime() - new Date(b.data.date_event || b.data.date).getTime());
+
+// 3. Isolate featured events (Future + passed less than 3 days ago)
+const futurs = agendaAffiche.filter(a => {
+  // FORCES priority on date_event if it exists
+  const dateEffective = a.data.date_event 
+    ? new Date(a.data.date_event) 
+    : new Date(a.data.date);
+    
+  return dateEffective >= margeVisibilitePasse;
+});
+
+const prochainEvent = futurs[0];
+const autresEvents = futurs.slice(1, 4);
+
+// 4. Recent news (all types combined, for the global feed)
+const actusRecentes = toutesLesActus
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 4);
+---
+
+<BaseLayout 
+  title="Atelier sous l'éclipse – Custom Knifemaker in France"
+  description="Discover Atelier sous l'éclipse: unique custom knives, entirely handcrafted with passion and traditional techniques in France."
+  ogImage="/images/og-home.jpg"
+  url="https://ateliersousleclipse.fr/en"
+  isHome={true} 
+>
+  <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+
+
+  <section class="py-24 bg-bg overflow-hidden" aria-labelledby="vitrine-title">
+  <div class="max-w-7xl mx-auto px-6">
+    
+    <h2 id="vitrine-title" class="sr-only">Gallery of our custom knives and forging details</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+      
+      <div class="vitrine-column reveal" data-delay="0">
+        <div class="vitrine-stack shadow-2xl rounded-sm overflow-hidden bg-surface">
+          <img src="/images/vitrine/Détails-nakiri-tsuki-morta-G10.webp" 
+               class="crossfade-img active" 
+               alt="Nakiri Tsuki blade detail and Morta wood handle"
+               loading="lazy"
+               width="400" height="500" />
+          <img src="/images/vitrine/Détails-couteau-camp-ébène.webp" 
+               class="crossfade-img" 
+               alt="Close-up of ebony handle for custom camp knife"
+               loading="lazy" />
+          <img src="/images/vitrine/Détails-table-olivier.webp" 
+               class="crossfade-img" 
+               alt="Olive wood handle finish on fine dining knife"
+               loading="lazy" />
+          <img src="/images/vitrine/Détails-grand-bonap-satiné.webp" 
+               class="crossfade-img" 
+               alt="Satin finish detail on Grand Bon'Ap custom blade"
+               loading="lazy" />
+        </div>
+      </div>
+
+      <div class="vitrine-column reveal" data-delay="2000">
+        <div class="vitrine-stack shadow-2xl rounded-sm overflow-hidden bg-surface">
+          <img src="/images/vitrine/Couteau-Nakiri-Tsuki-morta.webp" 
+               class="crossfade-img active" 
+               alt="Custom Nakiri Tsuki culinary knife with Morta handle"
+               loading="lazy" />
+          <img src="/images/vitrine/Couteau-camp-ébène.webp" 
+               class="crossfade-img" 
+               alt="Rugged camp knife with ebony handle"
+               loading="lazy" />
+          <img src="/images/vitrine/Couteau-Petty-Tsuki-ébène.webp" 
+               class="crossfade-img" 
+               alt="Versatile Petty Tsuki knife for precision culinary work"
+               loading="lazy" />
+        </div>
+      </div>
+
+      <div class="vitrine-column reveal" data-delay="4000">
+        <div class="vitrine-stack shadow-2xl rounded-sm overflow-hidden bg-surface">
+          <img src="/images/vitrine/Ensemble-couteau-table.webp" 
+               class="crossfade-img active" 
+               alt="Set of handcrafted table knives for fine dining"
+               loading="lazy" />
+          <img src="/images/vitrine/Couteau-table-olivier.webp" 
+               class="crossfade-img" 
+               alt="Elegant table knife with olive wood handle"
+               loading="lazy" />
+          <img src="/images/vitrine/Détails-table-loupe-peuplier.webp" 
+               class="crossfade-img" 
+               alt="Focus on stabilized poplar burl handle"
+               loading="lazy" />
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="btn-vitrine-container reveal flex justify-center w-full px-4">
+  <a href="/en/couteaux" 
+     class="group relative w-full max-w-[280px] md:max-w-none md:w-auto px-4 py-4 md:px-12 md:py-4 overflow-hidden border border-muted/20 rounded-sm bg-transparent transition-all duration-700 hover:border-accent/50 inline-block text-center"
+     aria-label="View the entire collection of custom knives">
+    
+    <span class="absolute inset-0 w-0 bg-surface/50 transition-all duration-500 ease-out group-hover:w-full"></span>
+    
+    <span class="relative font-serif text-[15px] sm:text-base md:text-xl uppercase tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.5em] text-muted group-hover:text-accent transition-colors duration-500 block whitespace-nowrap">
+      Explore the Collection
+    </span>
+  </a>
+</div>
+</section>
+
+  <!-- ========================================================= -->
+  <!-- SECTION Maker's mark -->
+  <!-- ========================================================= -->
+<section 
+  class={`parallax-section poincon-section relative w-full h-[70vh] md:h-[70vh] mt-12 my-32 overflow-visible z-0 ${agendaAffiche.length > 0 ? '-mt-32' : ''}`} 
+  style="clip-path: none;" /* Removed clip-path to use skew instead */
+  data-parallax-speed="300" /* Keeping your speed values */
+  data-parallax-zoom="1.1"
+  data-parallax-zoom-strength="0.1"
+>
+  <div class="absolute inset-0 origin-center scale-[1.3] skew-y-[4deg] overflow-hidden" data-parallax-target>
+    <picture>
+      <source media="(max-width: 768px)" srcset="/images/fond-poincon-mobile.webp">
+      <img 
+        src="/images/fond-poincon-parallax2.webp" 
+        alt="Close-up of the YJ maker's mark from Atelier sous l'éclipse on a custom blade" 
+        class="w-full h-full object-cover" 
+      />
+    </picture>
+    
+    <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/60 opacity-80"></div>
+  </div>
+  
+  <div class="absolute inset-0 bg-gradient-to-b from-[#1a1a1a] via-transparent to-transparent h-32 opacity-50"></div>
+  <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/20 to-transparent h-32"></div>
+</section>
+
+
+<!-- ========================================================= -->
+<!-- SECTION COUTEAUX - THEME CUISINE -->
+<!-- ========================================================= -->
+<section class="section-couteaux theme-cuisine relative z-10 mt-12 pt-48 pb-32">
+  <div class="section-2-grid mx-auto px-4 grid gap-12 items-center lg:grid-cols-[65%_35%]">
+
+    <div class="swiper my-knives-swiper fade-slide-left">
+      <div class="swiper-wrapper">
+
+        <div class="swiper-slide">
+          <figure>
+            <div class="knife-image">
+              <img src="/images/cuisine/atelier-sous-leclipse-couteau-artisanal-nakiri-detoure-noyer.webp" alt="Custom Nakiri culinary knife by Atelier sous l'éclipse, C125U steel with hamon, stabilized walnut handle" />
+            </div>
+            <figcaption>Nakiri</figcaption>
+          </figure>
+        </div>
+
+        <div class="swiper-slide">
+          <figure>
+            <div class="knife-image">
+              <img src="/images/cuisine/atelier-sous-leclipse-couteau-artisanal-detoure-petty-wacapou.webp" alt="Custom Petty culinary knife by Atelier sous l'éclipse, C125U steel with hamon, natural wacapou wood handle" />
+            </div>
+            <figcaption>Petty</figcaption>
+          </figure>
+        </div>
+
+        <div class="swiper-slide">
+          <figure>
+            <div class="knife-image">
+              <img src="/images/cuisine/atelier-sous-leclipse-couteau-artisanal-detoure-grand-bonap-olivier.webp" alt="Custom Grand Bon'ap culinary knife by Atelier sous l'éclipse, C125U steel with hamon, olive wood handle" />
+            </div>
+            <figcaption>Grand Bon'ap</figcaption>
+          </figure>
+        </div>
+
+        <div class="swiper-slide">
+          <figure>
+            <div class="knife-image">
+              <img src="/images/cuisine/atelier-sous-leclipse-couteau-artisanal-detoure-gyuto.webp" alt="Custom Gyuto culinary knife by Atelier sous l'éclipse, C125U steel with hamon, stabilized spalted beech handle" />
+            </div>
+            <figcaption>Gyuto</figcaption>
+          </figure>
+        </div>
+
+        <div class="swiper-slide">
+          <figure>
+            <div class="knife-image">
+              <img src="/images/cuisine/atelier-sous-leclipse-couteau-artisanal-detoure-lance-bois-de-fer.webp" alt="Custom Oyster Lance knife by Atelier sous l'éclipse, 80CRV2 steel, ironwood handle, acid stonewash finish" />
+            </div>
+            <figcaption>Lance à huîtres</figcaption>
+          </figure>
+        </div>
+
+        <div class="swiper-slide">
+          <figure>
+            <div class="knife-image">
+              <img src="/images/cuisine/atelier-sous-leclipse-couteau-artisanal-detoure-long-bonap-cocobolo.webp" alt="Custom Long Bon'ap culinary knife by Atelier sous l'éclipse, C125U steel with hamon, cocobolo wood handle" />
+            </div>
+            <figcaption>Long Bon'ap</figcaption>
+          </figure>
+        </div>
+
+        <div class="swiper-slide">
+          <figure>
+            <div class="knife-image">
+              <img src="/images/cuisine/atelier-sous-leclipse-couteau-artisanal-baby-bonap-noyer.webp" alt="Custom Baby Bon'ap culinary knife by Atelier sous l'éclipse, C100 steel with hamon, walnut wood handle" />
+            </div>
+            <figcaption>Baby Bon'ap</figcaption>
+          </figure>
+        </div>
+
+      </div>
+
+      <div class="swiper-pagination"></div>
+
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+
+    <div class="fade-slide-right w-3/4 mr-auto">    
+      <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
+        Culinary Excellence&nbsp;!
+      </h2>
+      <p class="text-lg text-muted leading-relaxed reveal-child">
+        I take particular pleasure in shaping culinary knives—a true passion for gastronomy cannot be faked! 
+        Naturally, the majority of my creations are dedicated to the culinary arts and fine dining.
+      </p>
+
+      <p class="text-lg text-muted leading-relaxed reveal-child">
+        From the surgical precision of a petty to the authority of a large chef's knife, each piece is designed to become 
+        the natural extension of your hand.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========================================================= -->
+<!-- SECTION COUTEAUX - THEME TABLE -->
+<!-- ========================================================= -->
+<section class="section-couteaux theme-table bg-surface">
+  <div class="section-2-grid slider-right mx-auto px-4 grid gap-12 items-center lg:grid-cols-[35%_65%]">
+
+    <div class="fade-slide-left text-right w-3/4 ml-auto"> 
+      <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
+        Fine Dining
+      </h2>
+      <p class="text-lg text-muted leading-relaxed reveal-child">
+        A marriage of sleek lines and premium materials, my table knives embody an uncompromising vision of the art of hosting... but rest assured, they are equally suited to elevate your everyday meals&nbsp;!
+      </p>
+    </div>
+
+    <div class="swiper my-knives-swiper fade-slide-right">
+      <div class="swiper-wrapper">
+
+        <div class="swiper-slide">
+          <figure>
+            <div class="knife-image">
+              <img src="/images/table/atelier-sous-leclipse-couteau-artisanal-table-ebene-aubier.webp" alt="Custom table knife by Atelier sous l'éclipse, C100 steel, two-tone ebony handle" />
+            </div>
+            <figcaption>Two-tone Ebony</figcaption>
+          </figure>
+        </div>
+
+        <div class="swiper-slide">
+          <figure>
+            <div class="knife-image">
+              <img src="/images/table/atelier-sous-leclipse-couteau-artisanal-table-wacapou.webp" alt="Custom table knife by Atelier sous l'éclipse, C100 steel, wacapou wood handle" />
+            </div>
+            <figcaption>Wacapou</figcaption>
+          </figure>
+        </div>
+
+        <div class="swiper-slide">
+          <figure>
+            <div class="knife-image">
+              <img src="/images/table/atelier-sous-leclipse-couteau-artisanal-table-loupe-peuplier.webp" alt="Custom table knife by Atelier sous l'éclipse, C100 steel, poplar burl handle" />
+            </div>
+            <figcaption>Poplar Burl</figcaption>
+          </figure>
+        </div>
+
+      </div>
+
+      <div class="swiper-pagination"></div>
+
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========================================================= -->
+<!-- SECTION COUTEAUX - THEME OUTDOOR -->
+<!-- ========================================================= -->
+<section class="section-couteaux theme-outdoor">
+  <div class="section-2-grid mx-auto px-4 grid gap-12 items-center lg:grid-cols-[65%_35%]">
+
+    <div class="swiper my-knives-swiper fade-slide-left">
+      <div class="swiper-wrapper">
+
+        <div class="swiper-slide">
+          <figure>
+            <div class="knife-image">
+              <img src="/images/outdoor/atelier-sous-leclipse-couteau-artisanal-camp-manguier.webp" alt="Custom Camp Knife by Atelier sous l'éclipse, 80CRV2 steel, stabilized curly mango wood handle" />
+            </div>
+            <figcaption>Curly Mango</figcaption>
+          </figure>
+        </div>
+
+        <div class="swiper-slide">
+          <figure>
+            <div class="knife-image">
+              <img src="/images/outdoor/atelier-sous-leclipse-couteau-artisanal-camp-morta.webp" alt="Custom Camp Knife by Atelier sous l'éclipse, 80CRV2 steel, stabilized morta wood handle" />
+            </div>
+            <figcaption>Stabilized Morta</figcaption>
+          </figure>
+        </div>
+
+        <div class="swiper-slide">
+          <figure>
+            <div class="knife-image">
+              <img src="/images/outdoor/atelier-sous-leclipse-couteau-artisanal-camp-ebene.webp" alt="Custom Camp Knife by Atelier sous l'éclipse, 80CRV2 steel, black ebony wood handle" />
+            </div>
+            <figcaption>Black Ebony</figcaption>
+          </figure>
+        </div>
+
+        <div class="swiper-slide">
+          <figure>
+            <div class="knife-image">
+              <img src="/images/outdoor/atelier-sous-leclipse-couteau-artisanal-fighter-koa.webp" alt="Custom Fighter outdoor knife by Atelier sous l'éclipse, 80CRV2 steel, Koa wood handle" />
+            </div>
+            <figcaption>Koa Fighter</figcaption>
+          </figure>
+        </div>
+
+      </div>
+
+      <div class="swiper-pagination"></div>
+
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+
+    <div class="fade-slide-right w-3/4 mr-auto"> 
+      <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
+        The Great Outdoors&nbsp;!
+      </h2>
+      <p class="text-lg text-muted leading-relaxed reveal-child">
+        If you have an adventurous spirit, a love for wide open spaces, the scent of pine forests, 
+        and remote trails... The Workshop has some reliable companions to offer you.
+      </p>      
+      <p class="text-lg text-muted leading-relaxed reveal-child">
+        Tough steels selected for their technical characteristics, a robust edge to transition smoothly 
+        from fine cutting to the most demanding tasks, yet always bearing the unique signature of the workshop.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { initSwipers, initLightbox } from '../../scripts/init/init-swiper-glightbox.js';
+
+  if (typeof window !== 'undefined') {
+    // Initialise tous les sliders Swiper présents dans la page
+    initSwipers();
+
+    // Initialise la lightbox sur les images ciblées
+    initLightbox();
+  }
+</script>
+
+
+  <!-- ========================================================= -->
+  <!-- SECTION ACTU -->
+  <!-- ========================================================= -->
+
+{agendaAffiche.length > 0 && (
+<section class="relative py-32 mt-24 z-10">
+  
+  <div class="absolute inset-0 bg-[#1a1a1a] shadow-2xl skew-y-[-4deg] scale-x-110 -z-10 origin-center border-y border-white/5"></div>
+
+  <div class="max-w-7xl mx-auto px-4">
+    
+    <div class="mb-16 text-center md:text-left fade-slide-up">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-[var(--color-accent-light)] reveal-child">
+        Meet the Maker
+      </h2>
+      <p class="text-muted mt-2 reveal-child italic">Join me at these upcoming exhibitions and knife shows</p>
+    </div>
+
+    <div class="hidden lg:grid grid-cols-12 gap-10 mb-6 items-center h-6">
+      <div class="col-span-3"></div>
+      <div class="col-span-9 grid grid-cols-4 gap-8">
+        <div class="col-span-2">
+          <span class="text-accent text-[11px] font-bold uppercase tracking-[0.3em] flex items-center gap-2">
+            <span class="w-6 h-[1px] bg-accent/30"></span> Next Exhibition
+          </span>
+        </div>
+        <div class="col-span-2">
+          <span class="text-muted text-[11px] font-bold uppercase tracking-[0.3em]">Following Events</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      
+      <aside class="lg:col-span-3 fade-slide-left bg-[#e8dfd4] p-6 rounded-2xl border border-black/5 shadow-xl h-fit">
+        <h3 class="font-serif text-xl text-[#7a1e1e] mb-6 flex items-center gap-2">
+          <span>📅</span> Calendar
+        </h3>
+        <div class="space-y-6">
+          {agendaAffiche.map((event, index) => {
+            const dateObj = new Date(event.data.date_event || event.data.date);
+            const isPasse = dateObj < maintenant;
+            // Passage en anglais pour les mois (en-US)
+            const mois = dateObj.toLocaleDateString('en-US', { month: 'short' }).replace('.', '');
+            const jour = dateObj.getDate();
+            
+            return (
+              <div class={`flex items-center gap-4 group transition-opacity ${isPasse ? 'opacity-50' : ''}`} style={`transition-delay: ${index * 100}ms`}>
+                <div class={`p-2 rounded text-center min-w-[55px] border ${isPasse ? 'bg-black/5 border-black/10 text-gray-500' : 'bg-accent/10 border-accent/20 text-accent'}`}>
+                  <span class={`block text-xs uppercase font-bold leading-none mb-1 ${isPasse ? 'line-through' : ''}`}>{mois}</span>
+                  <span class={`text-xl font-bold leading-none ${isPasse ? 'line-through' : ''}`}>{jour}</span>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <p class="text-sm font-bold text-[#2b1b1d] leading-tight">{event.data.titre}</p>
+                    {isPasse && <span class="text-[10px] bg-black/10 px-1 rounded text-gray-600 uppercase font-bold whitespace-nowrap">Completed</span>}
+                  </div>
+                  <p class="text-xs text-gray-600 italic mt-0.5">{event.data.lieu || "Location TBA"}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </aside>
+
+      <div class="lg:col-span-9 grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
+        {prochainEvent && (
+          <div class="md:col-span-2 flex flex-col fade-slide-up mx-auto md:mx-0 w-[85%] md:w-full max-w-[280px] md:max-w-[340px]">
+            <span class="lg:hidden text-accent text-[11px] font-bold uppercase tracking-[0.3em] mb-4">Next Exhibition</span>
+            
+            <a href={prochainEvent.data.lienInstagram} target="_blank" class="group block rounded-2xl overflow-hidden border-4 border-transparent bg-[#f0e8dd] shadow-2xl transition-all duration-500 hover:shadow-accent/20 hover:-translate-y-2">
+              <div class="aspect-[3/4] md:aspect-[4/5] overflow-hidden border-b-4 border-accent bg-[#1a1a1a]">
+                <img src={prochainEvent.data.image} alt="Next exhibition preview" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
+              </div>
+              <div class="p-5">
+                <div class="flex justify-between items-center gap-4">
+                  <div>
+                    <h4 class="text-lg font-serif font-bold text-[#2b1b1d] group-hover:text-accent transition-colors leading-tight">{prochainEvent.data.titre}</h4>
+                    <p class="text-xs text-gray-600 italic mt-1 flex items-center gap-1">
+                      <span class="text-accent">📅</span> {prochainEvent.data.date_formattee || new Date(prochainEvent.data.date_event || prochainEvent.data.date).toLocaleDateString('en-US')}
+                    </p>
+                    <p class="text-xs text-gray-600 italic mt-1 flex items-center gap-1"><span class="text-accent">📍</span> {prochainEvent.data.lieu}</p>
+                  </div>
+                  <span class="shrink-0 border border-accent text-accent px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter group-hover:bg-accent group-hover:text-white transition-all">Upcoming</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        )}
+
+        <div class="md:col-span-2 flex flex-col fade-slide-right">
+          <span class="lg:hidden text-muted text-[11px] font-bold uppercase tracking-[0.3em] mb-4">Following Events</span>
+          <div class="space-y-4">
+            {autresEvents.length > 0 ? autresEvents.map((event, index) => (
+              
+              /* Petites cartes (Utilisation de date_formattee si dispo) */
+              <a href={event.data.lienInstagram} target="_blank" class="group flex items-center gap-4 bg-[#e8dfd4]/80 p-3 rounded-xl border border-black/5 hover:bg-[#e8dfd4] hover:border-accent/20 transition-all" style={`transition-delay: ${index * 150}ms`}>
+                <div class="w-14 h-14 shrink-0 rounded-lg overflow-hidden border border-black/10">
+                  <img src={event.data.image} alt="" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <div class="min-w-0">
+                  <p class="text-[10px] text-accent font-black uppercase">
+                    {event.data.date_formattee ? event.data.date_formattee.split('/').slice(0,2).join('/') : new Date(event.data.date_event || event.data.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
+                  </p>
+                  <h5 class="text-xs font-bold text-[#2b1b1d] truncate group-hover:text-accent transition-colors">{event.data.titre}</h5>
+                </div>
+              </a>
+
+            )) : (
+              <div class="py-10 flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-2xl opacity-60">
+                 <span class="text-xl mb-2">✨</span>
+                 <p class="text-[10px] text-muted italic uppercase font-bold text-center">More dates coming soon</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+)}
+
+
+  <!-- ========================================================= -->
+  <!-- SECTION PRESENTATION -->
+  <!-- ========================================================= -->
+
+
+ <section class="max-w-[1280px] mx-auto px-4 py-16 grid md:grid-cols-2 gap-12 items-center min-h-[55vh]">
+  <div class="relative fade-slide-left">
+    <img 
+      src="/images/portrait-yann2.webp" 
+      alt="Portrait of Yann, French custom knifemaker"
+      class="img-zoom max-w-md w-full h-auto rounded-lg shadow-xl object-cover border-4 border-accent mx-auto md:ml-auto"
+      tabindex="0"
+    />
+  </div>
+  <div class="fade-slide-left text-center md:text-left">
+    <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-accent reveal-child">
+      About the Maker
+    </h2>
+    <p class="text-lg text-muted leading-relaxed mb-4 reveal-child">
+      My first language was that of computers, a realm where precision is law and patience a virtue.<br />
+      Today, I speak a different language: that of metal and wood.<br />
+    </p>
+    <p class="text-lg text-muted leading-relaxed mb-6 reveal-child">
+      Over the years, I have refined my craft, fueled by practice and passion.<br />
+      Today, I dedicate this expertise to those seeking unique pieces, carefully shaped and crafted to endure.
+    </p>
+    <a href="/en/me-connaitre" class="cta-premium inline-block px-6 py-3 text-white rounded reveal-child">
+      Discover my journey
+    </a>
+  </div>
+</section>
+
+<script>
+  import { initVitrine } from '../../scripts/animations/anim-vitrine.js';
+
+  const runAllInits = () => {
+    // On ne garde que la Vitrine ici
+    initVitrine();
+  };
+
+  // Premier chargement
+  runAllInits();
+
+  // Chargements suivants (navigation fluide Astro)
+  document.addEventListener('astro:page-load', runAllInits);
+</script>
+
+<section class="py-12 bg-surface/30 text-center px-4 max-w-4xl mx-auto opacity-80 text-sm italic">
+  <p>
+    Specializing in <strong>custom knifemaking</strong> in France, Atelier sous l'éclipse offers 
+    handcrafted knives made from premium carbon steels. Each piece is unique, showcasing the mastery of 
+    <strong>traditional differential hardening (Hamon)</strong> and the natural beauty of fine woods.
+  </p>
+</section>
+
+</BaseLayout>

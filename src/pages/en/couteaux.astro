@@ -1,0 +1,534 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+
+// 1. Safe fetching of collections
+const resCouteaux = await getCollection('couteaux').catch(() => []);
+const resDivers = await getCollection('divers').catch(() => []);
+
+// 2. Keep ONLY knives for this page
+// SORTING: By descending date (newest first)
+const tousLesItems = [...(resCouteaux || [])].sort((a, b) => {
+  const dateA = new Date(a.data?.date || 0).getTime();
+  const dateB = new Date(b.data?.date || 0).getTime();
+  
+  return dateB - dateA;
+});
+
+// 3. Filter valid images
+const couteauxTries = tousLesItems.filter(item => {
+  const img = Array.isArray(item.data.image) ? item.data.image[0] : item.data.image;
+  return img && typeof img === 'string' && img.trim() !== '';
+});
+
+// Schema.org Data for SEO (International format)
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Custom Knives by Atelier sous l'éclipse",
+  "numberOfItems": couteauxTries.length,
+  "itemListElement": couteauxTries.map((item, index) => {
+    const firstImage = Array.isArray(item.data.image) ? item.data.image[0] : item.data.image;
+    
+    // --- 1. Availability Logic ---
+    const estDispo = item.data.disponible === true || String(item.data.disponible) === "true";
+    const availabilityStatus = estDispo ? "https://schema.org/InStock" : "https://schema.org/OutOfStock";
+    
+    // --- 2. Price Logic (Google requires numeric format) ---
+    const prixSchema = item.data.prix > 0 ? item.data.prix : "0";
+
+    return {
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "Product",
+        "name": item.data.titre,
+        "image": new URL(firstImage || '', Astro.site || 'https://ateliersousleclipse.fr').href,
+        "description": item.data.description || "",
+        "brand": {
+          "@type": "Brand",
+          "name": "L'Atelier sous l'éclipse"
+        },
+        // --- 3. OFFERS BLOCK FOR GOOGLE ---
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "EUR",
+          "price": prixSchema,
+          "availability": availabilityStatus,
+          "itemCondition": "https://schema.org/NewCondition",
+          "url": Astro.site ? new URL(Astro.url.pathname, Astro.site).href : 'https://ateliersousleclipse.fr/en/couteaux'
+        }
+      }
+    };
+  })
+};
+---
+
+<BaseLayout
+  title="Custom Knives & Unique Pieces | Creations by Atelier sous l'éclipse"
+  description="Discover my handcrafted knives made in France: Culinary knives, table knives, outdoor blades, and exceptional pieces."
+  bodyClass="page-couteaux"
+  ogImage="/images/og-creations.jpg" 
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+
+  <main class="min-h-screen bg-bg text-text pt-32 pb-20 px-4 md:px-20 overflow-x-hidden">
+  <header class="text-center mb-12 fade-slide-left max-w-4xl mx-auto">
+    <h1 class="text-3xl md:text-5xl font-serif font-bold mb-8 text-accent reveal-child">
+      The Creations
+    </h1>
+    
+    <div class="space-y-4 px-4 text-lg text-muted leading-relaxed">
+      <p class="reveal-child">
+        Every knife, every <span class="font-serif text-accent font-bold">Hamon</span> is unique.
+        All blades presented here are entirely handcrafted by me at <span class="font-serif text-accent font-bold">Atelier sous l'éclipse</span>.
+      </p>
+      <p class="reveal-child">
+        Here you will find my latest creations from Instagram, as well as reference models to inspire your future custom projects.
+      </p>
+      <p class="reveal-child">
+      Some pieces find their homes quickly. To get privileged early access before public releases, join the list here: 
+      <button id="open-club-modal" class="cursor-pointer cta-premium px-5 py-3.5 rounded text-white font-bold text-xs uppercase tracking-[0.2em] mt-6 hover:scale-[1.02] active:scale-95 transition-all shadow-lg">
+        Join the Collector's List
+      </button>
+      </p>
+    </div>
+
+    <div class="flex flex-wrap md:justify-center gap-2 md:gap-4 mt-10 no-select filter-grid ">
+      <button class="filter-btn active" data-filter="dispo">📦 Available</button>
+      <button class="filter-btn" data-filter="all">Gallery</button>
+      <button class="filter-btn" data-filter="modele">⚒️ Models</button>
+      <button class="filter-btn" data-filter="video">🎬 Videos</button>
+    </div>
+  </header>
+
+  <div id="knife-grid" class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-12 max-w-7xl mx-auto">
+  {couteauxTries.map((item) => {
+    const rawImage = item.data.image;
+    const imagePath = Array.isArray(rawImage) ? rawImage[0] : rawImage;
+    if (!imagePath) return null;
+
+    const isVideo = item.data.type === "video" || item.data.format === "video";
+    const estDispo = item.data.disponible === true || String(item.data.disponible) === "true";
+    const typeFiltre = isVideo ? 'video' : (item.data.type || 'insta');
+    const urlInsta = item.data.lienInstagram || "#";
+
+    // PATCH : Identification du modèle Table
+    const isTableModel = imagePath.includes("2026-03-19-table");
+
+    return (
+      <article 
+  class="knife-card fade-in-up" 
+  data-type={typeFiltre}
+  data-dispo={String(estDispo)}>
+
+  {/* LA BULLE DE CASCA (Uniquement pour l'Easter Egg) */}
+        {isTableModel && (
+          <div class="casca-popup absolute -top-10 left-2 z-[100] opacity-0 flex items-end gap-2 drop-shadow-md pointer-events-none">
+            
+            {/* L'avatar de Casca (en premier) */}
+            <div class="w-20 h-20 rounded-full border-2 border-[#faf8f5] shadow-inner overflow-hidden shrink-0 bg-[#7a2a2a]">
+              <img 
+                src="/images/casca-smile.webp" 
+                alt="Casca" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* La bulle de texte (pointe vers la gauche) */}
+            <div class="bg-[#faf8f5] text-[#7a2a2a] border border-[#7a2a2a]/20 px-3 py-2 rounded-2xl rounded-bl-none text-xs font-serif font-bold italic shadow-sm">
+              I picked up a scent over here... 🐾
+            </div>
+            
+          </div>
+        )}
+
+  <div class="tampon-container absolute">
+    {estDispo ? (
+      <img src="/images/tampon-dispo.webp" alt="Available" class="w-full h-full object-contain" />
+    ) : (
+      <img src="/images/tampon-pdispo.webp" alt="Sold Out" class="w-full h-full object-contain" />
+    )}
+  </div>
+
+{/* SECTION IMAGE / CANVAS */}
+  <div class={`w-full relative overflow-hidden border-b-4 border-[var(--color-accent)] rounded-t-sm ratio-insta ${isTableModel ? 'hamon-scratcher-container' : ''}`}>
+    {isTableModel ? (
+      <div class="scratcher-placeholder absolute inset-0 flex items-center justify-center text-accent/20 italic">
+          Revealing Hamon...
+      </div>
+    ) : (
+      isVideo ? (
+        <a href={urlInsta} target="_blank" rel="noopener noreferrer" class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center group cursor-pointer pointer-events-auto">
+          <Image src={imagePath} alt={item.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain transition-all duration-500" />
+          <div class="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none">
+            <img src="/images/play-button.webp" alt="Play" class="w-16 h-16 drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] transition-transform duration-300 group-hover:scale-110" />
+          </div>
+        </a>
+      ) : (
+        <a href={imagePath} class="absolute inset-x-0 top-0 bottom-0 z-[10] flex items-center justify-center glightbox-insta cursor-pointer pointer-events-auto" data-title={item.data.titre}>
+          <Image src={imagePath} alt={item.data.titre} width={500} height={625} format="webp" class="w-full h-full object-contain transition-transform duration-700 hover:scale-105" />
+        </a>
+      )
+    )}
+  </div>
+
+{/* SECTION CONTENU */}
+  <div class="p-3 md:p-6 flex flex-col flex-grow relative">
+    
+    <div class="flex flex-col md:flex-row justify-between items-center mb-2 gap-1 relative">
+      <h3 class="font-serif font-bold text-[#7a2a2a] leading-tight">
+        {item.data.titre}
+      </h3>
+      
+      <button class="toggle-details md:hidden text-[#7a2a2a] focus:outline-none">
+  <span class="label-details">DETAILS</span>
+  <span class="label-close hidden">CLOSE</span>
+</button>
+    </div>
+
+    {/* Zone de contenu : flex-grow pour pousser le bouton vers le bas si la carte s'étire */}
+    <div class="details-content flex flex-col flex-grow">
+      <div class="flex flex-col flex-grow">
+        
+        {/* Un seul trait propre au-dessus des infos techniques */}
+        <div class="flex flex-col gap-1 py-2 border-t border-[#7a2a2a]/10">
+          {item.data.caracteristiques?.acier && (
+            <div class="flex items-baseline gap-2">
+              <span class="text-[10px] font-bold uppercase text-[#7a2a2a]/60 w-12 shrink-0">Steel</span>
+              <span class="text-[11px] font-mono text-[#4a4a4a] italic">{item.data.caracteristiques.acier}</span>
+            </div>
+          )}
+          {item.data.caracteristiques?.manche && (
+            <div class="flex items-baseline gap-2">
+              <span class="text-[10px] font-bold uppercase text-[#7a2a2a]/60 w-12 shrink-0">Handle</span>
+              <span class="text-[11px] font-mono text-[#4a4a4a] line-clamp-1">{item.data.caracteristiques.manche}</span>
+            </div>
+          )}
+          {item.data.description && (
+            /* Un trait propre pour séparer les infos techniques de la description libre */
+            <p class="text-[11px] md:text-sm text-gray-700 leading-relaxed mt-2 pt-2 border-t border-[#7a2a2a]/10">
+              {item.data.description}
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+
+    {/* Le bloc prix : un seul trait au-dessus, repoussé tout en bas grâce au flex-grow du dessus */}
+    <div class="mt-auto pt-3 border-t border-[#7a2a2a]/10 flex flex-col md:flex-row justify-between items-center gap-2 relative z-[60]"> 
+      <div class="text-center md:text-left">
+        <span class="price-tag font-serif font-bold text-[#7a2a2a]">
+          {item.data.prix > 0 ? `€${item.data.prix}` : "Made to order"}
+        </span>
+      </div>
+      
+      <span 
+        role="button"
+        tabindex="0"
+        class="trigger-booking-global cursor-pointer rounded font-bold uppercase tracking-wider transition-all active:scale-95 shadow-md text-center"
+        style={!estDispo ? "background-color: transparent; border: 2px solid var(--color-accent); color: var(--color-accent);" : "background-color: var(--color-accent); color: var(--color-bg);"}
+        data-ref={item.data.titre}
+        data-dispo={String(estDispo)}
+      >
+        {estDispo ? 'Reserve' : 'Inquire'}
+      </span>
+    </div>
+  </div>
+
+</article>
+    );
+  })}
+</div>
+</main>
+
+  
+<div id="booking-modal" class="fixed inset-0 z-[999] items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm modal-overlay"></div>
+    
+    <div class="relative bg-[#f0e8dd] w-full max-w-lg rounded-xl shadow-2xl border border-[#7a2a2a]/20 overflow-hidden transform transition-all">
+      <button class="close-x-btn absolute top-4 right-4 text-[#7a2a2a] hover:rotate-90 transition-transform text-2xl z-10">✕</button>
+      
+      <div class="p-8">
+        <h2 id="modal-title" class="text-3xl font-serif font-bold text-[#7a2a2a] mb-2">Reserve this knife</h2>
+        <p id="modal-ref" class="text-sm font-bold uppercase tracking-widest text-[#7a2a2a]/60 mb-6 italic">Reference: </p>
+        
+        <form class="space-y-4" action="/contact.php" method="POST">
+          <input type="hidden" id="modal-input-ref" name="ref_couteau">
+          
+          <div class="grid grid-cols-2 gap-4">
+            <input type="text" name="nom" placeholder="Your name" class="bg-white/50 border border-[#7a2a2a]/20 p-3 rounded outline-none focus:border-[#7a2a2a]" required>
+            <input type="email" name="email" placeholder="Your email" class="bg-white/50 border border-[#7a2a2a]/20 p-3 rounded outline-none focus:border-[#7a2a2a]" required>
+          </div>
+          
+          <textarea id="modal-msg" name="message" rows="5" class="w-full bg-white/50 border border-[#7a2a2a]/20 p-3 rounded outline-none focus:border-[#7a2a2a] resize-none" required></textarea>
+          
+          <button type="submit" class="w-full bg-[#7a2a2a] text-[#f0e8dd] font-bold py-4 rounded hover:bg-black transition-colors uppercase tracking-widest shadow-lg">
+            Send request
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  
+<section class="w-full max-w-none bg-surface py-16 inspiration-section">
+
+  <div class="max-w-6xl mx-auto px-4 space-y-6 text-center fade-slide-up">
+    <h2 class="text-3xl md:text-4xl font-serif font-bold text-accent reveal-child">
+      Inspiration
+    </h2>
+    <p class="text-lg text-muted leading-relaxed reveal-child">
+      Japanese aesthetics, sober and natural, inspire me deeply. 
+      I love working with authentic materials for the handles: raw textures, organic colors.
+    </p>
+    <p class="text-lg text-muted leading-relaxed reveal-child">
+      On many of my creations, you will notice a “line” on the blade: the <i class="font-serif italic text-accent">Hamon</i>. 
+      Sometimes fluid, sometimes untamed, it is the signature left by selective quenching — 
+      an ancestral Japanese craft. Every hamon is unique, born of steel, fire, and gesture.
+    </p>
+  </div>
+
+  <div class="fade-slide-up mt-10">
+    <div class="embla mx-auto">
+      <div class="embla__viewport">
+        <div class="embla__container">
+          {[
+            "hamon-1",
+            "hamon-2",
+            "hamon-3",
+            "hamon-4",
+            "hamon-5",
+            "hamon-6"
+          ].map(name => (
+            <div class="embla__slide" key={name}>
+              <div class="embla__parallax">
+                <div class="embla__parallax__layer">
+                  <img 
+                    src={`/images/slider/${name}.webp`} 
+                    alt={`Custom knife detail with hamon by Atelier sous l'éclipse - ${name}`} 
+                    class="embla__parallax__img" 
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="embla__controls mt-4 flex items-center justify-between">
+        <div class="embla__buttons flex gap-2">
+          <button class="embla__button embla__button--prev" type="button" aria-label="Previous"></button>
+          <button class="embla__button embla__button--next" type="button" aria-label="Next"></button>
+        </div>
+        <div class="embla__dots flex gap-2"></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ========================================================= -->
+<!-- SECTION CLUB  -->
+<!-- ========================================================= -->
+
+<div id="club-modal" class="fixed inset-0 z-[120] hidden items-center justify-center p-4">
+  <div id="close-club-bg" class="absolute inset-0 bg-black/70 backdrop-blur-md cursor-pointer transition-opacity duration-300 opacity-0"></div>
+  
+  <div id="club-modal-content" class="relative bg-surface p-8 md:p-10 rounded-2xl shadow-2xl max-w-md w-full text-center transform transition-all duration-300 scale-95 opacity-0 border border-white/10">
+    
+    <button id="close-club-btn" aria-label="Close" class="absolute top-4 right-4 text-muted hover:text-white transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+    </button>
+
+    <div id="club-form-container">
+      <h3 class="text-2xl font-serif font-bold text-accent mb-2">The Collector's List</h3>
+      <p class="text-muted text-sm mb-6 leading-relaxed">
+        I complete an average of 2 to 3 pieces per week. Leave your email to receive the Friday showcase and get priority access to my new creations.
+      </p>
+      
+      <form id="club-form" class="space-y-4 text-left">
+  
+  <label for="prenom-club" class="sr-only">Your first name</label>
+  <input 
+    type="text" 
+    id="prenom-club" 
+    placeholder="Your first name..." 
+    class="w-full p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 text-sm outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-inner" 
+    required
+  >
+
+  <label for="email-club" class="sr-only">Your email address</label>
+  <input 
+    type="email" 
+    id="email-club" 
+    placeholder="Your email..." 
+    class="w-full p-3 rounded bg-white border border-gray-300 text-gray-900 placeholder-gray-500 text-sm outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all shadow-inner" 
+    required
+  >
+
+  <div class="flex justify-center pt-2">
+    <button 
+      type="submit" 
+      id="btn-club"
+      class="cta-premium w-auto px-8 py-3.5 rounded text-white font-bold text-xs uppercase tracking-[0.2em] hover:scale-[1.02] active:scale-95 transition-all shadow-lg"
+    >
+      Request Access
+    </button>
+  </div>
+
+</form>
+    </div>
+
+    <div id="msg-club-success" class="hidden py-4">
+      <h3 class="text-2xl font-serif font-bold text-accent mb-2">Request Sent</h3>
+      <p class="text-muted text-sm mb-6">Welcome to the list. Keep an eye on your inbox this Friday.</p>
+      <button id="close-club-success" class="cta-premium px-5 py-3.5 rounded text-white font-bold text-xs uppercase tracking-[0.2em] mt-6 hover:scale-[1.02] active:scale-95 transition-all shadow-lg">
+        Close
+      </button>
+    </div>
+
+  </div>
+</div>
+
+</BaseLayout>
+
+
+<script>
+  import { initFilters } from '../../scripts/features/knife-filters.js';
+  import { initBookingLogic } from '../../scripts/features/booking-modal.js';
+  import { initHamonScratcher } from '../../scripts/features/hamon-easter-egg.js';
+  import EmblaCarousel from 'embla-carousel';
+  import { initEmbla } from '../../scripts/init/init-embla.js';
+  import GLightbox from 'glightbox';
+  import 'glightbox/dist/css/glightbox.min.css';
+
+  let lightboxInstance = null;
+
+  function initAccordion() {
+    document.querySelectorAll('.toggle-details').forEach(btn => {
+      btn.onclick = (e) => {
+        e.preventDefault(); e.stopPropagation();
+        const content = btn.closest('.knife-card').querySelector('.details-content');
+        btn.classList.toggle('active');
+        content.classList.toggle('is-open');
+        const svg = btn.querySelector('svg');
+        if (svg) svg.style.transform = content.classList.contains('is-open') ? 'rotate(180deg)' : 'rotate(0deg)';
+      };
+    });
+  }
+
+  function initPage() {
+    document.querySelectorAll('.embla').forEach((root) => initEmbla(root, EmblaCarousel));
+    
+    initFilters();
+    initBookingLogic();
+    initAccordion();
+    initHamonScratcher(); 
+
+    if (lightboxInstance) lightboxInstance.destroy();
+    lightboxInstance = GLightbox({ 
+        selector: 'a.glightbox-insta', 
+        skin: 'hamon', 
+        touchNavigation: true, 
+        loop: true, 
+        zoomable: false, 
+        draggable: true 
+    });
+  }
+
+  document.addEventListener('astro:page-load', initPage);
+  if (document.readyState !== 'loading') { 
+    if (!window.astroPageLoadExecuted) initPage(); 
+  } else { 
+    document.addEventListener('DOMContentLoaded', initPage); 
+  }
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const openBtn = document.getElementById('open-club-modal');
+    const modal = document.getElementById('club-modal');
+    const bg = document.getElementById('close-club-bg');
+    const content = document.getElementById('club-modal-content');
+    const closeBtn = document.getElementById('close-club-btn');
+    const closeSuccessBtn = document.getElementById('close-club-success');
+    const form = document.getElementById('club-form');
+    const submitBtn = document.getElementById('btn-club');
+    const formContainer = document.getElementById('club-form-container');
+    const successMsg = document.getElementById('msg-club-success');
+    
+    const WEBHOOK_URL = "https://n8n.yahncloud.fr/webhook/rejoindre-club"; 
+
+    // Fonction pour ouvrir
+    function openModal() {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      // Petit délai pour déclencher la transition CSS
+      setTimeout(() => {
+        bg.classList.remove('opacity-0');
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    // Fonction pour fermer
+    function closeModal() {
+      bg.classList.add('opacity-0');
+      content.classList.remove('scale-100', 'opacity-100');
+      content.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        // Reset du formulaire en douce
+        setTimeout(() => {
+          formContainer.classList.remove('hidden');
+          successMsg.classList.add('hidden');
+          form.reset();
+        }, 300);
+      }, 300);
+    }
+
+    // Événements d'ouverture / fermeture
+    if(openBtn) openBtn.addEventListener('click', openModal);
+    if(closeBtn) closeBtn.addEventListener('click', closeModal);
+    if(bg) bg.addEventListener('click', closeModal);
+    if(closeSuccessBtn) closeSuccessBtn.addEventListener('click', closeModal);
+
+    // Envoi du formulaire à n8n
+    if(form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const prenom = document.getElementById('prenom-club').value;
+        const email = document.getElementById('email-club').value;
+        
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = "Processing...";
+        submitBtn.style.pointerEvents = "none";
+        submitBtn.style.opacity = "0.7";
+
+        try {
+          await fetch(WEBHOOK_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prenom: prenom, email: email })
+          });
+          
+          // Succès : on switch le contenu
+          formContainer.classList.add('hidden');
+          successMsg.classList.remove('hidden');
+          
+        } catch (error) {
+          submitBtn.innerText = "Error, please try again";
+          setTimeout(() => { 
+            submitBtn.innerText = originalText; 
+            submitBtn.style.pointerEvents = "auto";
+            submitBtn.style.opacity = "1";
+          }, 3000);
+        }
+      });
+    }
+  });
+</script>

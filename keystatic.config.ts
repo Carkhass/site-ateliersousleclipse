@@ -25,6 +25,7 @@ export default config({
         }),
         
         description: fields.text({ label: 'Caractéristiques / Histoire', multiline: true }),
+        descriptionEn: fields.text({ label: 'Description (EN)' }),
 
         caracteristiques: fields.object({
           acier: fields.text({ label: 'Acier (ex: C125U, XC75...)' }),

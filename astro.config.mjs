@@ -3,7 +3,7 @@ import tailwind from '@astrojs/tailwind';
 import keystatic from '@keystatic/astro';
 import { fileURLToPath } from 'node:url';
 import react from '@astrojs/react';
-import sitemap from '@astrojs/sitemap'; // <-- 1. Importation du sitemap
+import sitemap from '@astrojs/sitemap'; 
 
 // On vérifie si on est en train de travailler en local
 const isDev = process.env.NODE_ENV === 'development';
@@ -14,11 +14,30 @@ export default defineConfig({
 
   // Mode statique pur pour l'hébergement OVH
   output: 'static', 
-  
+
+  // 👇 1. L'ACTIVATION DU MULTILINGUISME (i18n) 👇
+  i18n: {
+    defaultLocale: "fr",
+    locales: ["fr", "en"],
+    routing: {
+      prefixDefaultLocale: false, // Le français reste sur la racine (pas de /fr/)
+      strategy: "pathname" // Active le routage par dossier (ex: /en/couteaux)
+    }
+  },
+
   integrations: [
     tailwind(), 
     react(),
-    sitemap(), // <-- 2. Ajout de l'intégration ici
+    // 👇 2. LE SITEMAP OPTIMISÉ POUR LE SEO INTERNATIONAL 👇
+    sitemap({
+      i18n: {
+        defaultLocale: 'fr',
+        locales: {
+          fr: 'fr-FR',
+          en: 'en-US', // Indique à Google les régions ciblées
+        },
+      },
+    }), 
     ...(isDev ? [keystatic()] : []),
   ],
 

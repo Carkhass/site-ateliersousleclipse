@@ -1,16 +1,41 @@
 ---
 import "../styles/global.css";
-// On peut importer Image d'astro si on veut optimiser, mais restons sur du simple efficace ici
+
 const {
   title = "Atelier sous l’Eclipse | Couteaux Artisanaux Faits Main en France",
-  description = "Découvrez l'Atelier sous l’Eclipse : coutellerie d'art et couteaux de cuisine artisanaux façonnés à la main. Pièces uniques et forge traditionnelle.",
+  description = "Découvrez l'Atelier sous l’Eclipse : coutellerie d'art et couteaux de cuisine artisanaux façonnés à la main.",
   ogImage = "/images/og-home.jpg",
-  url = "https://ateliersousleclipse.fr/",
+  url = Astro.url.href,
   bodyClass = "",
-  lang = "fr",
-  // Ajout d'une prop pour savoir si on affiche le H1 dans le Hero ou pas
   isHome = false 
 } = Astro.props;
+
+// --- DÉTECTION DE LANGUE (Une seule fois !) ---
+const isEn = Astro.url.pathname.startsWith('/en');
+const lang = isEn ? "en" : "fr";
+
+// --- GESTION DES LIENS (MULTILINGUE) ---
+const links = {
+  home: isEn ? '/en/' : '/',
+  knives: isEn ? '/en/couteaux' : '/couteaux',
+  about: isEn ? '/en/me-connaitre' : '/me-connaitre',
+  stages: isEn ? '/en/stages' : '/stages',
+  contact: '#contact'
+};
+
+const frLink = isEn ? (Astro.url.pathname.replace(/^\/en/, '') || '/') : Astro.url.pathname;
+const enLink = isEn ? Astro.url.pathname : `/en${Astro.url.pathname === '/' ? '' : Astro.url.pathname}`;
+
+// --- GESTION SEO ---
+const canonicalURL = Astro.url.href;
+const alternateURL = isEn 
+  ? Astro.url.href.replace('/en', '') 
+  : Astro.url.href.replace(Astro.site.origin, Astro.site.origin + '/en');
+
+// --- HERO TEXT ---
+const heroSubtitle = isEn 
+  ? "Where fire meets clay, the <em>hamon</em> line unveils the unseen" 
+  : "Où le feu rencontre l'argile, la ligne du <em>hamon</em> dessine l'invisible";
 ---
 
 <!DOCTYPE html>
@@ -19,57 +44,62 @@ const {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
+  
+  <link rel="canonical" href={canonicalURL} />
+  <link rel="alternate" hreflang={lang} href={canonicalURL} />
+  <link rel="alternate" hreflang={isEn ? "fr" : "en"} href={alternateURL} />
+  
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-  <link rel="canonical" href={url} />
   <meta name="description" content={description} />
 
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content={url} />
-  <meta property="og:image" content={new URL(ogImage, Astro.site || url).href} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:image" content={new URL(ogImage, Astro.site).href} />
   
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content={new URL(ogImage, Astro.site || url).href} />
+  <meta name="twitter:image" content={new URL(ogImage, Astro.site).href} />
 
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Atelier sous l’éclipse",
-    "alternateName": "L'Atelier sous l'Eclipse",
-    "url": "https://ateliersousleclipse.fr/",
-    "logo": "https://ateliersousleclipse.fr/images/logo-atelier-eclipse.png",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "customer service",
-      "email": "yannj@ateliersousleclipse.fr"
-    },
+    "url": Astro.site.href,
+    "logo": new URL("/images/logo-atelier-eclipse.png", Astro.site).href,
     "sameAs": [
       "https://www.instagram.com/ateliersousleclipse",
       "https://www.facebook.com/AtelierSousEclipse/"
     ]
   })} />
+  
   <script is:inline>document.documentElement.classList.replace('no-js', 'js');</script>
 </head>
 
-<body class={`flex flex-col min-h-screen font-sans bg-bg text-text ${bodyClass}`}>
-  
-  <header id="site-header" class="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm transition-all duration-500">
+<header id="site-header" class="fixed top-0 left-0 w-full z-50 bg-transparent backdrop-blur-sm transition-all duration-500">
     <div class="container mx-auto px-4 flex justify-between items-center h-20 relative">
       <div class="flex items-center space-x-4 header-brand">
         <span id="header-logo-placeholder"></span>
         <span id="header-title-placeholder"></span>
       </div>
-      <nav class="hidden md:flex space-x-3 font-semibold">
-        <a href="/" class="text-magnify hover:text-accent transition-colors">Accueil</a>
-        <a href="/couteaux" class="text-magnify hover:text-accent transition-colors">Couteaux</a>
-        <a href="/me-connaitre" class="text-magnify hover:text-accent transition-colors">Me connaître</a>
-        <a href="/stages" class="text-magnify hover:text-accent transition-colors">Stages</a>
-        <a href="#contact" class="text-magnify hover:text-accent transition-colors">Contact</a>
+      
+      <nav class="hidden md:flex space-x-6 font-semibold items-center">
+        <a href={links.home} class="text-magnify hover:text-accent transition-colors">{isEn ? 'Home' : 'Accueil'}</a>
+        <a href={links.knives} class="text-magnify hover:text-accent transition-colors">{isEn ? 'Knives' : 'Couteaux'}</a>
+        <a href={links.about} class="text-magnify hover:text-accent transition-colors">{isEn ? 'About' : 'Me connaître'}</a>
+        <a href={links.stages} class="text-magnify hover:text-accent transition-colors">{isEn ? 'Workshops' : 'Stages'}</a>
+        <a href={links.contact} class="text-magnify hover:text-accent transition-colors">Contact</a>
       </nav>
+      
       <div class="flex items-center space-x-4">
+        <div class="flex items-center gap-1.5 font-mono text-[16px] tracking-[0.1em] uppercase bg-surface/30 px-3 py-2 rounded-full border border-white/5 backdrop-blur-md">
+          <a href={frLink} class={`transition-all duration-300 ${!isEn ? 'text-accent font-bold scale-110' : 'text-muted hover:text-text'}`}>FR</a>
+          <span class="text-muted/20">/</span>
+          <a href={enLink} class={`transition-all duration-300 ${isEn ? 'text-accent font-bold scale-110' : 'text-muted hover:text-text'}`}>EN</a>
+        </div>
+
         <button id="theme-toggle" class="text-magnify p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Changer le thème">🌙</button>
         <button id="menu-toggle" class="icon-toggle md:hidden p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Ouvrir le menu">
           <span class="icon-burger">☰</span>
@@ -81,28 +111,33 @@ const {
 
   <div class="menu-overlay"></div>
   <nav class="menu-mobile fixed top-5 right-2 w-56 max-h-[90vh] overflow-y-auto bg-surface backdrop-blur-sm rounded-xl shadow-xl p-6 flex flex-col space-y-4 transition-transform duration-300 z-[100]">
-    <a href="/" class="hover:text-accent">Accueil</a>
-    <a href="/couteaux" class="hover:text-accent">Couteaux</a>
-    <a href="/me-connaitre" class="hover:text-accent">Me connaître</a>
-    <a href="/stages" class="hover:text-accent">Stages</a>
-    <a href="#contact" class="hover:text-accent">Contact</a>
+    <a href={links.home} class="hover:text-accent">{isEn ? 'Home' : 'Accueil'}</a>
+    <a href={links.knives} class="hover:text-accent">{isEn ? 'Knives' : 'Couteaux'}</a>
+    <a href={links.about} class="hover:text-accent">{isEn ? 'About' : 'Me connaître'}</a>
+    <a href={links.stages} class="hover:text-accent">{isEn ? 'Workshops' : 'Stages'}</a>
+    <a href={links.contact} class="hover:text-accent">Contact</a>
+    
+    <div class="border-t border-muted/20 pt-4 flex gap-4">
+        <a href={frLink} class={!isEn ? 'text-accent font-bold' : ''}>FR</a>
+        <a href={enLink} class={isEn ? 'text-accent font-bold' : ''}>EN</a>
+    </div>
   </nav>
 
   <main class="flex-1">
     <div id="hero-sentinel" class="h-[1px] w-full"></div>
 
+
   <!-- ========================================================= -->
   <!-- SECTION HERO -->
   <!-- ========================================================= -->
-
-    <section 
+<section 
       class="hero-section parallax-section hamon-hero relative w-screen flex items-center justify-center h-screen" 
       data-parallax-speed="50"
     >
       <div class="absolute inset-0" data-parallax-target>
         <img 
           src="/images/hero-hamon.webp" 
-          alt="Ligne de trempe sélective (hamon) sur une lame de couteau artisanal" 
+          alt="Selective hardening line (hamon) on a custom artisanal knife blade" 
           class="w-full h-full object-cover"
           fetchpriority="high"
         />
@@ -110,7 +145,7 @@ const {
 
       <div id="hero-content" class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
         <div id="hero-logo-anchor" class="flex items-center justify-center mb-4">
-          <img id="hero-logo" src="/images/poinçon-large-transparent.png" alt="Poinçon de l'Atelier sous l'éclipse" class="in-hero reveal fade-in-up" />
+          <img id="hero-logo" src="/images/poinçon-large-transparent.png" alt="Atelier sous l'éclipse maker's mark" class="in-hero reveal fade-in-up" />
           <img id="hero-logo-ghost" src="/images/poinçon-large-transparent.png" alt="" aria-hidden="true" class="ghost ghost-logo" />
         </div>
 
@@ -118,7 +153,7 @@ const {
   {isHome ? (
     <h1 id="hero-title" class="in-hero font-brand tracking-wide transition-all duration-700 reveal fade-in-up">
       L’Atelier sous l’éclipse
-      <span class="sr-only"> : Coutellerie d'art et couteaux de cuisine artisanaux fabriqués main</span>
+      <span class="sr-only"> : Custom knifemaking and artisanal culinary knives, handcrafted in France</span>
     </h1>
   ) : (
     <span id="hero-title" class="in-hero font-brand text-4xl md:text-6xl tracking-wide transition-all duration-700 reveal fade-in-up block">
@@ -127,9 +162,7 @@ const {
   )}
   </div>
 
-        <p id="hero-subtitle" class="hero-subtitle text-lg md:text-xl  max-w-none mx-auto opacity-0 mt-4">
-          Où le feu rencontre l'argile, la ligne du <em>hamon</em> dessine l'invisible
-        </p>
+        <p id="hero-subtitle" class="hero-subtitle text-lg md:text-xl max-w-none mx-auto opacity-0 mt-4" set:html={heroSubtitle} />
       </div>
     </section>
 
@@ -140,45 +173,52 @@ const {
   <!-- ========================================================= -->
   <!-- SECTION CONTACT -->
   <!-- ========================================================= -->
-  <section id="contact" 
+ <section id="contact" 
     class="parallax-section premium-section relative w-full text-center text-white overflow-hidden py-12 md:py-16"
     data-parallax-speed="120"
   >
     <div class="absolute inset-0" data-parallax-target>
-      <img src="/images/packaging-ateliersousleclipse.webp" alt="Coffret de présentation couteau artisanal" class="w-full h-full object-cover" loading="lazy" />
+      <img src="/images/packaging-ateliersousleclipse.webp" alt="Artisan knife presentation box" class="w-full h-full object-cover" loading="lazy" />
     </div>
     <div class="absolute inset-0 bg-black/45 backdrop-blur-[2px]"></div>
 
     <div class="relative z-10 px-4 max-w-6xl w-full space-y-8 mx-auto">
       <p class="text-2xl md:text-3xl font-serif italic fade-slide-up">
-        « Chaque lame raconte une histoire… écrivons la vôtre. »
+        {isEn 
+          ? "“Every blade tells a story... let's write yours.”" 
+          : "« Chaque lame raconte une histoire… écrivons la vôtre. »"}
       </p>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 justify-items-center items-stretch max-w-4xl mx-auto">
         <div class="card-3d-wrapper fade-slide-up delay-300 md:justify-self-end w-full max-w-[320px]">
           <div class="card-3d">
             <div class="card-face card-front">
-              <img src="/images/carte-visite-ateliersousleclipse-recto.webp" alt="Carte de visite Atelier sous l'éclipse Recto" />
+              <img src="/images/carte-visite-ateliersousleclipse-recto.webp" alt="Atelier sous l'éclipse business card front" />
             </div>
             <div class="card-face card-back">
-              <img src="/images/carte-visite-ateliersousleclipse-verso.webp" alt="Coordonnées Atelier sous l'éclipse Verso" />
+              <img src="/images/carte-visite-ateliersousleclipse-verso.webp" alt="Atelier sous l'éclipse contact details back" />
             </div>
           </div>
         </div>
 
         <form id="contact-form" class="contact-form bg-black/50 backdrop-blur-md p-6 md:p-8 rounded-lg w-full max-w-[350px] flex flex-col fade-slide-up delay-450 justify-self-start border border-white/10 shadow-2xl" action="/contact.php" method="POST">
-          <h3 class="text-xl font-serif font-bold text-white mb-6 text-center tracking-wide">Contactez l'artisan</h3>
+          <h3 class="text-xl font-serif font-bold text-white mb-6 text-center tracking-wide">
+            {isEn ? "Contact the Maker" : "Contactez l'artisan"}
+          </h3>
           <div class="space-y-4 flex-grow flex flex-col text-left">
-            <label for="nom" class="sr-only">Nom</label>
-            <input type="text" id="nom" name="nom" placeholder="Votre nom" class="w-full p-3 rounded bg-white/10 border border-white/20 text-white text-sm outline-none focus:border-accent transition-all" required>
+            <label for="nom" class="sr-only">{isEn ? "Name" : "Nom"}</label>
+            <input type="text" id="nom" name="nom" placeholder={isEn ? "Your name" : "Votre nom"} class="w-full p-3 rounded bg-white/10 border border-white/20 text-white text-sm outline-none focus:border-accent transition-all" required>
+            
             <label for="email" class="sr-only">Email</label>
-            <input type="email" id="email" name="email" placeholder="Votre email" class="w-full p-3 rounded bg-white/10 border border-white/20 text-white text-sm outline-none focus:border-accent transition-all" required>
+            <input type="email" id="email" name="email" placeholder={isEn ? "Your email" : "Votre email"} class="w-full p-3 rounded bg-white/10 border border-white/20 text-white text-sm outline-none focus:border-accent transition-all" required>
+            
             <input type="text" name="website" style="display:none !important" tabindex="-1">
+            
             <label for="message" class="sr-only">Message</label>
-            <textarea id="message" name="message" placeholder="Parlez-moi de votre projet de couteau..." class="w-full p-3 rounded bg-white/10 border border-white/20 text-white text-sm resize-none flex-grow min-h-[120px] outline-none focus:border-accent transition-all" required></textarea>
+            <textarea id="message" name="message" placeholder={isEn ? "Tell me about your knife project..." : "Parlez-moi de votre projet de couteau..."} class="w-full p-3 rounded bg-white/10 border border-white/20 text-white text-sm resize-none flex-grow min-h-[120px] outline-none focus:border-accent transition-all" required></textarea>
           </div>
           <button type="submit" class="cta-premium w-full px-5 py-3.5 rounded text-white font-bold text-xs uppercase tracking-[0.2em] mt-6 hover:scale-[1.02] active:scale-95 transition-all shadow-lg">
-            Envoyer le message
+            {isEn ? "Send Message" : "Envoyer le message"}
           </button>
         </form>
       </div>
@@ -188,32 +228,41 @@ const {
   <footer class="bg-surface text-muted text-center p-8 mt-auto relative overflow-visible">
     <div class="flex justify-center space-x-6">
       <div class="relative group overflow-visible">
-        <a href="https://www.instagram.com/ateliersousleclipse?igsh=MXI3bTMwMnc0bTZ6Zw==" aria-label="Suivre l'Atelier sur Instagram" class="hover:text-accent hover:scale-110 transition-transform inline-block" target="_blank" rel="noopener">
+        <a href="https://www.instagram.com/ateliersousleclipse?igsh=MXI3bTMwMnc0bTZ6Zw==" aria-label="Follow the Atelier on Instagram" class="hover:text-accent hover:scale-110 transition-transform inline-block" target="_blank" rel="noopener">
           <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-10 h-10"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.75-2.25a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0z"/></svg>
         </a>
-        <img src="/images/qr-code-INSTA-2.0.webp" alt="QR code Instagram" class="qr absolute top-[-170px] left-1/2 -translate-x-1/2 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-transform duration-300 bg-white p-1 z-[9999] pointer-events-none shadow-xl border border-gray-200" />
+        <img src="/images/qr-code-INSTA-2.0.webp" alt="Instagram QR code" class="qr absolute top-[-170px] left-1/2 -translate-x-1/2 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-transform duration-300 bg-white p-1 z-[9999] pointer-events-none shadow-xl border border-gray-200" />
       </div>
 
       <div class="relative group overflow-visible">
-        <a href="https://www.facebook.com/AtelierSousEclipse/" aria-label="Suivre l'Atelier sur Facebook" class="hover:text-accent hover:scale-110 transition-transform inline-block" target="_blank" rel="noopener">
+        <a href="https://www.facebook.com/AtelierSousEclipse/" aria-label="Follow the Atelier on Facebook" class="hover:text-accent hover:scale-110 transition-transform inline-block" target="_blank" rel="noopener">
           <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-10 h-10"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-2.9h2v-2.2c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2v2h2.3L15 14.9h-2v7A10 10 0 0 0 22 12"/></svg>
         </a>
-        <img src="/images/qr-code-FB-2.0.webp" alt="QR code Facebook" class="qr absolute top-[-170px] left-1/2 -translate-x-1/2 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-transform duration-300 bg-white p-1 z-[9999] pointer-events-none shadow-xl border border-gray-200" />
+        <img src="/images/qr-code-FB-2.0.webp" alt="Facebook QR code" class="qr absolute top-[-170px] left-1/2 -translate-x-1/2 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-transform duration-300 bg-white p-1 z-[9999] pointer-events-none shadow-xl border border-gray-200" />
       </div>
     </div>
-    <p class="mt-4 text-xs tracking-widest uppercase">&copy; {new Date().getFullYear()} Atelier sous l’éclipse — Artisan Coutelier en France.</p>
+    
+    <p class="mt-4 text-xs tracking-widest uppercase">
+      &copy; {new Date().getFullYear()} Atelier sous l’éclipse — {isEn ? "Artisan Knifemaker in France." : "Artisan Coutelier en France."}
+    </p>
   </footer>
 
   <div id="merci-popup" class="fixed inset-0 z-[110] hidden items-center justify-center p-4">
     <div class="absolute inset-0 bg-black/60 backdrop-blur-md close-merci"></div>
     <div class="relative bg-surface p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center transform transition-all duration-300 scale-95 opacity-0 border border-white/10">
       <div id="merci-image" class="w-32 h-32 mx-auto mb-4 opacity-0 scale-90 transition-all duration-500">
-        <img src="/images/merci-ateliersousleclipse2.webp" alt="Merci de votre message" class="w-full h-full object-contain" />
+        <img src="/images/merci-ateliersousleclipse2.webp" alt="Confirmation" class="w-full h-full object-contain" />
       </div>
-      <h3 class="text-2xl font-serif font-bold text-accent mb-2">Message envoyé</h3>
-      <p class="text-muted mb-6 text-sm">Merci pour votre confiance. Je reviens vers vous rapidement pour discuter de votre lame.</p>
+      <h3 class="text-2xl font-serif font-bold text-accent mb-2">
+        {isEn ? "Message sent" : "Message envoyé"}
+      </h3>
+      <p class="text-muted mb-6 text-sm">
+        {isEn 
+          ? "Thank you for your trust. I will get back to you shortly to discuss your blade project." 
+          : "Merci pour votre confiance. Je reviens vers vous rapidement pour discuter de votre lame."}
+      </p>
       <button class="close-merci bg-accent text-bg px-8 py-2 rounded-full font-bold hover:bg-white transition-colors text-xs uppercase tracking-widest">
-        Fermer
+        {isEn ? "Close" : "Fermer"}
       </button>
     </div>
   </div>

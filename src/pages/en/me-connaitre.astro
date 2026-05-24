@@ -1,0 +1,422 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { Image } from 'astro:assets';
+
+// --- IMAGE PATHS DEFINITION ---
+const photoYann = "/images/portrait-yann.webp"; 
+const photoHamon = "/images/ligne-trempe.webp";
+const photoManche = "/images/manche-bois-cocobolo.webp";
+const photoBoisEchantillon = "/images/echantillons-bois.webp"; 
+const photoG10Echantillon = "/images/manche-g10-ebene.webp";   
+const photoBerserk = "/images/berserk-inspiration.webp";   
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Yann Jacquot",
+  "jobTitle": "Artisan Knifemaker",
+  "affiliation": {
+    "@type": "ProfessionalService",
+    "name": "L'Atelier sous l'éclipse"
+  },
+  "url": "https://ateliersousleclipse.fr/en/me-connaitre"
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+
+<BaseLayout 
+  title="The Craftsman | Atelier sous l'éclipse"
+  description="Discover Yann's journey, from computer science to artisanal forging. A quest for meaning and creation between French traditions and Japanese inspiration."
+>
+  <main class="pt-32 pb-20 bg-bg text-text overflow-x-hidden">
+
+  <section class="max-w-7xl mx-auto px-6 md:px-20 mb-24 md:mb-32">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    
+    <div class="reveal fade-slide-left text-center lg:text-left">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[var(--color-accent)] mb-8 tracking-tight reveal-child leading-tight">
+        The craftsman behind the Atelier <span class="sr-only"> : Yann, custom knifemaker in France</span>
+      </h1>
+      
+      <div class="space-y-6 text-base md:text-lg leading-relaxed text-muted text-left">
+        <p class="reveal-child">
+          My name is <span class="font-serif text-accent font-bold">Yann</span>. Based in Reyrieux, just north of Lyon in France, my journey didn't start with the clash of an anvil, but in the immaterial world of computer science. Trained in IT, I spent my youth exploring virtual realms before realizing I had a deep need to create something concrete, something tangible.
+        </p>
+        <p class="reveal-child">
+          Everything changed in 2017. Driven by my curiosity and my love for good food (I love to cook, and I love doing it with good tools even more), I found an old coal forge and an anvil. In my small workshop in Trévoux, I began taming the fire to bring my first blades to life. What started as a hobby quickly forged itself into a quest for raw creativity.
+        </p>
+      </div>
+    </div>
+
+    {/* Image : Easter Egg Zone integrated for synchronization */}
+    <div class="relative reveal fade-slide-right group mt-12 lg:mt-0 overflow-visible">
+      
+      {/* Pivot container, the button must be INSIDE */}
+      <div class="pivot-container portrait-mode aspect-[4/5] bg-surface rounded-lg overflow-hidden shadow-2xl border-[8px] md:border-[12px] border-white reveal-child relative">
+        
+        <Image 
+          src={photoYann} 
+          alt="Yann Jacquot, custom knifemaker in France with his dog Casca" 
+          width={600} 
+          height={750} 
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
+        />
+
+        {/* --- EASTER EGG ZONE (Casca's nose) --- */}
+        {/* Invisible but clickable. % coordinates ensure responsiveness */}
+        <button 
+  id="casca-nose-trigger"
+  class="absolute rounded-full cursor-help easter-egg-trigger"
+  style="top: 65%; left: 36%; width: 11%; height: 9%; z-index: 100;" 
+  aria-label="Atelier Secret"
+></button>
+      </div>
+
+      <div 
+        id="casca-bubble" 
+        class="absolute opacity-0 scale-95 pointer-events-none transition-all duration-500 z-50"
+        style="top: 7%; left: 35%; width: 280px;"
+      >
+        <div class="relative bg-white text-bg p-4 rounded-2xl shadow-2xl border-2 border-accent font-sans text-sm leading-relaxed">
+          <div class="absolute bottom-[-10px] left-10 w-5 h-5 bg-white border-r-2 border-b-2 border-accent rotate-45"></div>
+          
+          <p class="font-bold text-accent mb-1">🐾 Casca says :</p>
+<p class="text-muted">
+  "Woof !<br>
+  Go check the <span class="font-bold text-accent italic">knives</span> gallery, one of them seems to have lost its shine.<br>
+  But be careful: a beautiful <span class="font-bold text-accent">Hamon</span> doesn't reveal itself at first glance, you have to know how to make the steel speak!"
+</p>
+          
+          <button id="close-casca-bubble" class="mt-3 text-[10px] uppercase tracking-widest font-bold text-muted hover:text-accent transition-colors">Close</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{/* ========================================================= */}
+{/* SECTION SOBRIETE EFFICACITE - FOND STABLE & IMAGES AERÉES */}
+{/* ========================================================= */}
+<section class="section-dark-skew relative py-24 md:py-32 mb-32">
+  <div class="max-w-6xl mx-auto px-6 md:px-20 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+      
+      {/* Texte : Order 1 pour passer au dessus sur mobile */}
+      <div class="reveal fade-slide-right order-1 lg:order-2 text-center lg:text-left">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold text-[var(--color-accent-light)] mb-8 tracking-tight reveal-child">
+          Minimalism & Efficiency
+        </h2>
+        <div class="space-y-6 text-lg text-muted leading-relaxed mt-4">
+  <p class="reveal-child">My design is deeply rooted in Japanese knifemaking. I admire the Japanese blacksmiths' ability to wed formidable efficiency with a stripped-down, minimalist aesthetic.</p>
+  <p class="reveal-child">My specialty? <em>Selective quenching</em> on carbon steels (such as <span class="font-serif text-[var(--color-accent-light)] font-bold">C125U</span>, <span class="font-serif text-[var(--color-accent-light)] font-bold">C100</span>, or <span class="font-serif text-[var(--color-accent-light)] font-bold">26C3</span>). This technique creates the <span class="font-serif text-[var(--color-accent-light)] font-bold">Hamon</span>, a lifeline on the steel, standing as a testament to the perfect balance between hardness and flexibility.</p>
+</div>
+      </div>
+
+      {/* Images : Utilisation de js-parallax-item */}
+      <div class="reveal order-2 lg:order-1 relative">
+         <div class="flex flex-col items-center md:grid md:grid-cols-2 gap-0 md:gap-8 relative">
+            <div class="group js-parallax-item w-[85%] md:w-full z-10">
+               <div class="pivot-container inverse aspect-[3/4] bg-surface rounded shadow-2xl border border-white/10 overflow-hidden reveal-child">
+                  <Image src={photoHamon} alt="Selective quenching Hamon line" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+               </div>
+            </div>
+            <div class="group js-parallax-item w-[85%] md:w-full mt-4 md:mt-16 z-20">
+               <div class="pivot-container aspect-[3/4] bg-surface rounded shadow-2xl border border-white/10 overflow-hidden reveal-child">
+                  <Image src={photoManche} alt="Cocobolo wood handle" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+               </div>
+            </div>
+         </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+{/* ========================================================= */}
+{/* SECTION MATIÈRE ÉQUILIBRE  */}
+{/* ========================================================= */}
+<section class="max-w-7xl mx-auto px-6 md:px-20 mb-32">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    
+    <div class="reveal fade-slide-left text-center lg:text-left">
+       <h2 class="text-3xl md:text-4xl font-serif font-bold text-[var(--color-accent)] mb-8 tracking-tight reveal-child">
+         Materials & Balance
+       </h2>
+       <div class="space-y-6 text-lg text-muted leading-relaxed mt-4 antialiased">
+         <p class="reveal-child">The choice of materials is the starting point of every creation. I select rare woods for their history: the depth of ancient bog oak (<span class="font-serif text-accent font-bold">morta</span>) or the striking contrasts of <span class="font-serif text-accent font-bold">Amboyna burl</span>.</p>
+         <p class="reveal-child">Each wood is chosen for its grain and density, which I sometimes pair with composites like G10, carbon fiber, or micarta, valued for their unyielding resilience.</p>
+       </div>
+    </div>
+
+    <div class="reveal">
+      <div class="flex flex-col items-center md:grid md:grid-cols-2 gap-0 md:gap-8 relative pt-10 md:pt-0">
+        {/* AJOUT DE js-parallax-item ICI */}
+        <div class="group js-parallax-item w-[85%] md:w-full z-10">
+           <div class="pivot-container inverse aspect-[3/4] bg-surface rounded shadow-md border border-black/5 overflow-hidden reveal-child">
+              <Image src={photoBoisEchantillon} alt="Wood samples" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+           </div>
+        </div>
+        {/* AJOUT DE js-parallax-item ICI */}
+        <div class="group js-parallax-item w-[85%] md:w-full mt-4 md:mt-16 z-20">
+           <div class="pivot-container aspect-[3/4] bg-surface rounded shadow-md border border-black/5 overflow-hidden reveal-child">
+              <Image src={photoG10Echantillon} alt="G10 and Ebony assembly" width={450} height={600} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+           </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+{/* ========================================================= */}
+{/* SECTION BERSERK  */}
+{/* ========================================================= */}
+
+<section class="max-w-5xl mx-auto px-4 mb-32 reveal fade-slide-up group">
+  <div class="bg-surface p-8 md:p-16 rounded-2xl shadow-xl relative overflow-hidden border border-black/5">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+      
+      {/* Texte : Centré sur mobile, Gauche sur Desktop */}
+      <div class="lg:col-span-3 text-center lg:text-left">
+        <h2 class="text-3xl md:text-4xl font-serif font-bold mb-8 tracking-tight text-[var(--color-accent)] reveal-child">
+          Why "Sous l'Éclipse"?
+        </h2>
+        
+        {/* Suppression de la bordure gauche sur mobile pour plus de propreté */}
+        <div class="space-y-6 text-base md:text-lg text-muted leading-relaxed italic border-none lg:border-l-2 lg:border-accent/20 lg:pl-6 antialiased">
+          <p class="reveal-child">
+            The workshop's name is a tribute to <span class="font-serif text-accent font-bold">Berserk</span>, the manga created by Kentaro Miura, who sadly passed away on May 6, 2021.
+          </p>
+          <p class="reveal-child">
+            Berserk is a tale of rare intensity and unfathomable depth, chronicling the epic of a mercenary warrior struggling against fate and causality. Tragically unfinished, the story will never see the conclusion it truly deserves.
+          </p>
+          <p class="reveal-child">
+            This intensity and total dedication serve as my compass. It is what I try to breathe into my work: a humble struggle against raw materials to reveal their hidden beauty.
+          </p>
+        </div>
+      </div>
+
+      {/* Image : Plus d'espace au dessus sur mobile */}
+      <div class="relative lg:col-span-2 mt-8 lg:mt-0">
+          <div class="pivot-container w-full h-auto bg-gray-100 rounded shadow-inner flex items-center justify-center overflow-hidden border border-black/5 reveal-child">
+            <Image 
+              src={photoBerserk} 
+              alt="Tribute to Berserk" 
+              width={600}
+              height={800} 
+              class="w-full h-auto block group-hover:scale-105 transition-transform duration-700" 
+            />
+          </div>
+          {/* L'ombre portée décorative */}
+          <div class="absolute inset-0 border-2 border-[var(--color-accent)]/20 translate-x-4 translate-y-4 -z-10 rounded"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  </main>
+  
+</BaseLayout>
+
+<style>
+  .reveal { opacity: 0; }
+  .reveal.visible { opacity: 1; }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+    text-transform: none; 
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  main {
+    /* Très important pour que le biseau ne crée pas de scroll horizontal */
+    overflow-x: hidden; 
+  }
+
+  /* --- NOUVEAU : FOND SOMBRE BIAISÉ --- */
+  .section-dark-skew {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-dark-skew::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -10vw; /* Débordement extérieur pour garantir la diagonale */
+    right: -10vw;
+    bottom: 0;
+    background-color: #1a1a1a;
+    transform: skewY(-2deg);
+    z-index: -1;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  }
+
+  /* --- LOGIQUE DU PIVOT FLUIDE --- */
+  .pivot-container {
+    transform: rotate(0deg);
+    /* On réduit un peu le temps pour plus de réactivité au scroll */
+    transition: transform 600ms cubic-bezier(0.2, 0, 0.2, 1);
+    will-change: transform;
+    transform-origin: center;
+  }
+
+
+/* Sur mobile, le JS pilote SANS transition pour une réactivité totale */
+@media (max-width: 1023px) {
+  /* On augmente l'espace entre le texte et le bloc images */
+  .section-dark-skew .order-2 {
+    margin-top: 2rem; /* Ajoute une marge de sécurité */
+  }
+
+  /* On s'assure que le bloc texte est prioritaire */
+  .section-dark-skew .order-1 {
+    position: relative;
+    z-index: 50;
+    padding-bottom: 2rem; /* Espace interne pour respirer */
+  }
+
+  .js-parallax-item .pivot-container {
+    transition: none !important;
+    will-change: transform;
+  }
+}
+
+  /* Sur Desktop, on garde tes effets de pivot au hover intacts */
+  @media (min-width: 1024px) {
+    .group:hover .pivot-container.inverse {
+      transform: rotate(-3deg);
+    }
+    .group:hover .pivot-container:not(.inverse) {
+      transform: rotate(3deg);
+    }
+  }
+
+  .pivot-container.portrait-mode {
+    transform: rotate(3deg);
+  }
+
+  .group:hover .pivot-container.portrait-mode {
+    transform: rotate(0deg);
+  }
+
+  .group:hover .pivot-container:not(.portrait-mode) {
+    transform: rotate(3deg);
+  }
+
+  .group:hover .pivot-container.inverse {
+    transform: rotate(-3deg);
+  }
+
+/* --- Style spécifique pour la truffe --- */
+
+  .easter-egg-trigger {
+  background: transparent;
+  border: none;
+  outline: none;
+  /* On utilise plus le translate(-50%,-50%) si tes coordonnées 70/42 sont déjà bonnes */
+  /* car le scale du parent pourrait mal réagir avec */
+  pointer-events: auto;
+}
+
+  /* --- MODE DÉBOGAGE : À SUPPRIMER APRÈS RÉGLAGE --- */
+  .debug-mode {
+    background: rgba(255, 0, 0, 0.4) !important;
+    border: 2px solid red !important;
+    box-shadow: 0 0 10px red;
+  }
+
+  .easter-egg-trigger:focus-visible {
+    box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.5);
+  }
+
+  #casca-bubble {
+    /* Filtre pour donner un petit côté "BD" propre */
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+  }
+
+  /* Animation de flottement pour la bulle */
+  .opacity-100#casca-bubble {
+    animation: floatBubble 3s ease-in-out infinite;
+  }
+
+  @keyframes floatBubble {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* --- AJUSTEMENT MOBILE POUR LA BULLE DE CASCA --- */
+@media (max-width: 767px) {
+  #casca-bubble {
+    /* On descend la bulle pour qu'elle soit sous la truffe sur mobile */
+    top: 12% !important; 
+    left: 20% !important;
+    transform: translateX(-50%) scale(0.9);
+    width: 260px !important;
+    z-index: 100;
+  }
+
+
+}
+
+  
+</style>
+
+<script>
+  import { initArtisanParallax } from "../scripts/animations/anim-page-meconnaitre.js";
+
+  // 1. Logique de l'Easter Egg
+  const initCascaEasterEgg = () => {
+    const trigger = document.getElementById('casca-nose-trigger');
+    const bubble = document.getElementById('casca-bubble');
+    const closeBtn = document.getElementById('close-casca-bubble');
+    const woofSound = new Audio('/sounds/woof.mp3');
+
+    if (!trigger || !bubble) return;
+
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      
+      // 1. Son
+      woofSound.play().catch(() => {});
+
+      // 2. LocalStorage
+      localStorage.setItem('hamon_quest', 'active');
+
+      // 3. Affichage Bulle
+      bubble.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+      bubble.classList.add('opacity-100', 'scale-100');
+
+      // On cache la zone rouge de débug si elle est encore là
+      trigger.classList.remove('debug-mode');
+    });
+
+    closeBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      bubble.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+      bubble.classList.remove('opacity-100', 'scale-100');
+    });
+  };
+
+  // 2. Fonction globale d'initialisation
+  const runPageInit = () => {
+    initArtisanParallax();
+    initCascaEasterEgg();
+  };
+
+  // 3. Écouteurs de chargement
+  // DOMContentLoaded pour le premier chargement "dur"
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runPageInit);
+  } else {
+    runPageInit();
+  }
+
+  // astro:page-load pour les navigations fluides via ViewTransitions
+  document.addEventListener('astro:page-load', runPageInit);
+</script>
