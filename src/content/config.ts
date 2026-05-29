@@ -9,7 +9,10 @@ const couteaux = defineCollection({
     // On s'assure que format accepte tout (string, null, ou absent)
     format: z.string().or(z.null()).optional(), 
     type: z.string().or(z.null()).optional(),
+    
     description: z.string().or(z.null()).optional(),
+    descriptionEn: z.string().or(z.null()).optional(), // <--- LA LIGNE MAGIQUE EST ICI
+
     image: z.preprocess((val) => {
        if (typeof val === 'string') return [val];
        return val;

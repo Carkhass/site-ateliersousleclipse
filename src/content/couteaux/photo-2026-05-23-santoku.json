@@ -1,17 +1,18 @@
 {
-  "slug_technique": "photo-2026-05-23-santoku",
   "titre": "Santoku",
-  "date": "2026-05-23",
-  "lienInstagram": "https://www.instagram.com/p/DYsRC1NAiIr/",
-  "description": "Ce couteau de type Santoku se distingue par une esthétique épurée et performante. Façonné dans un acier carbone C125U, il offre un tranchant d'une finesse exceptionnelle et une excellente tenue de coupe. Contrairement à mes réalisations habituelles, cette lame ne présente pas de ligne de trempe sélective (hamon), révélant ainsi la sobriété brute et homogène de l'acier.\n\nLe manche est réalisé pour la première fois en bois de rose de Madagascar, une essence précieuse aux nuances rouge et bordeaux profond qui se révèlent pleinement à la lumière du soleil. Il est assemblé avec un intercalaire en G10 full black et des rivets en fibre de carbone, assurant une prise en main équilibrée et une durabilité optimale pour un usage quotidien en cuisine.",
-  "type": "couteau",
   "format": "photo",
-  "image": "/images/couteaux/photo-2026-05-23-santoku.webp",
-  "prix": 0,
-  "disponible": false,
-  "favori": false,
+  "type": "couteau",
+  "description": "Ce couteau de type Santoku se distingue par une esthétique épurée et performante. Façonné dans un acier carbone C125U, il offre un tranchant d'une finesse exceptionnelle et une excellente tenue de coupe. Contrairement à mes réalisations habituelles, cette lame ne présente pas de ligne de trempe sélective (hamon), révélant ainsi la sobriété brute et homogène de l'acier.\n\nLe manche est réalisé pour la première fois en bois de rose de Madagascar, une essence précieuse aux nuances rouge et bordeaux profond qui se révèlent pleinement à la lumière du soleil. Il est assemblé avec un intercalaire en G10 full black et des rivets en fibre de carbone, assurant une prise en main équilibrée et une durabilité optimale pour un usage quotidien en cuisine.",
+  "descriptionEn": "This Santoku‑style knife stands out with a clean, performance‑driven aesthetic. Crafted from C125U high‑carbon steel, it delivers an exceptionally fine edge and outstanding edge retention. Unlike most of my work, this blade does not feature a selective hardening line (hamon), showcasing instead the raw, uniform elegance of the steel.  The handle is made for the very first time from Madagascar rosewood — a precious species with deep red and burgundy tones that reveal their full beauty under sunlight. It is paired with a full‑black G10 liner and carbon‑fiber pins, offering a balanced grip and optimal durability for everyday use in the kitchen.",
   "caracteristiques": {
     "acier": "C125U",
     "manche": "bois de rose de Madagascar, G10 full black et rivets carbone"
-  }
+  },
+  "image": "/images/couteaux/photo-2026-05-23-santoku.webp",
+  "galerie": [],
+  "prix": 0,
+  "lienInstagram": "https://www.instagram.com/p/DYsRC1NAiIr/",
+  "date": "2026-05-23",
+  "disponible": false,
+  "favori": false
 }

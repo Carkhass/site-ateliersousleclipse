@@ -45,7 +45,7 @@ const schemaData = {
         "@type": "Product",
         "name": item.data.titre,
         "image": new URL(firstImage || '', Astro.site || 'https://ateliersousleclipse.fr').href,
-        "description": item.data.description || "",
+        "description": item.data.descriptionEn || item.data.description || "",
         "brand": {
           "@type": "Brand",
           "name": "L'Atelier sous l'éclipse"
@@ -209,7 +209,7 @@ const schemaData = {
           {item.data.description && (
             /* Un trait propre pour séparer les infos techniques de la description libre */
             <p class="text-[11px] md:text-sm text-gray-700 leading-relaxed mt-2 pt-2 border-t border-[#7a2a2a]/10">
-              {item.data.description}
+              {item.data.descriptionEn || item.data.description}
             </p>
           )}
         </div>
