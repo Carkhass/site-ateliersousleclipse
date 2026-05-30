@@ -8,7 +8,7 @@
   "format": "photo",
   "image": "/images/couteaux/photo-2026-05-22-bon-ap.webp",
   "prix": 195,
-  "disponible": true,
+  "disponible": false,
   "favori": false,
   "caracteristiques": {
     "acier": "C125U",
