@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-06-01-office",
+  "titre": "Office",
+  "date": "2026-06-01",
+  "lienInstagram": "https://www.instagram.com/p/DZDJyhFgk14/",
+  "description": "Ce couteau d'office est doté d'une lame en acier carbone C125U, réputé pour sa finesse de grain exceptionnelle. Ce choix technique garantit un tranchant rasoir durable et une grande facilité d'affûtage au quotidien. La ligne de trempe sélective souligne le caractère unique de cette pièce de cuisine.\n\nLe manche est façonné en loupe d'érable stabilisée, offrant des nuances visuelles riches et une excellente résistance à l'humidité. Des intercalaires en G10 et des rivets en fibre de carbone complètent l'assemblage pour une durabilité optimale. C'est l'outil idéal pour tous les travaux de précision en cuisine, de l'épluchage à la découpe fine.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-06-01-office.webp",
+  "prix": 119,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "loupe d'érable stabilisée, G10 et rivets carbone"
+  }
+}
