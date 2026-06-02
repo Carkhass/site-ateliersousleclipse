@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-06-02-office",
+  "titre": "Office",
+  "date": "2026-06-02",
+  "lienInstagram": "https://www.instagram.com/p/DZF3bgwgiVN/",
+  "description": "Ce couteau d'office est façonné dans un acier carbone C125U, réputé pour sa finesse de grain et sa tenue de coupe exceptionnelle. La lame présente une ligne de trempe sélective révélée avec soin, offrant un contraste saisissant et un tranchant redoutable.\n\nLe manche en amarante, un bois précieux aux nuances violettes naturelles, est souligné par des intercalaires en G10 et assemblé avec des rivets en fibre de verre. Son ergonomie compacte assure une prise en main ferme et précise pour tous les travaux de découpe du quotidien.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-06-02-office.webp",
+  "prix": 105,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Amarante, G10 et rivets fibre de verre"
+  }
+}
