@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-06-05-gyuto-tsuki-k-tip",
+  "titre": "Gyuto Tsuki k-tip",
+  "date": "2026-06-05",
+  "lienInstagram": "https://www.instagram.com/p/DZNlKqCAp_O/",
+  "description": "Ce couteau de cuisine de type Gyuto se distingue par son profil k-tip dynamique et son équilibre en main. Façonné dans mon atelier, il arbore une lame en acier carbone C125U révélant une ligne de trempe sélective d'une grande pureté.\n\nLe manche en genévrier, réputé pour son parfum persistant et sa résistance naturelle, est assemblé avec des rivets en fibre de carbone. Ce compagnon offre un tranchant d'une finesse remarquable, idéal pour un travail précis et sans effort en cuisine.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-06-05-gyuto-tsuki-k-tip.webp",
+  "prix": 240,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "genévrier, rivets carbone"
+  }
+}
