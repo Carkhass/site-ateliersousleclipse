@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-06-08-nakiri-wa-tsuki",
+  "titre": "Nakiri Wa Tsuki",
+  "date": "2026-06-08",
+  "lienInstagram": "https://www.instagram.com/p/DZVKqkHgnGD/",
+  "description": "Ce Nakiri Wa Tsuki est un couteau de cuisine d'exception, conçu pour offrir une précision de tranchant remarquable. Sa lame en acier C125U présente une ligne de trempe sélective révélant toute la technicité de mon travail thermique.\n\nLe manche octogonal en ébène pale moon utilise un montage \"Tsuki\" inspiré de la tradition japonaise. Ce profil assure une prise en main ergonomique et un équilibre parfait pour le travail des végétaux.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-06-08-nakiri-wa-tsuki.webp",
+  "prix": 0,
+  "disponible": false,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "ébène pale moon"
+  }
+}
