@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-06-09-gyuto-230mm",
+  "titre": "Gyuto 230mm",
+  "date": "2026-06-09",
+  "lienInstagram": "https://www.instagram.com/p/DZXt_uzAn98/",
+  "description": "Ce couteau de cuisine de type Gyuto de 230 mm est façonné dans un acier carbone C125U, réputé pour sa finesse de grain et sa tenue de coupe exceptionnelle. Sa lame présente une émouture dégressive de 3 mm d'épaisseur au talon jusqu'à la pointe, offrant une pénétration dans les aliments d'une fluidité incomparable.\n\nLe manche est réalisé en loupe d'amboine stabilisée, un bois précieux aux nuances chaudes, sublimé par un insert en amourette et des rivets en fibre de carbone. L'équilibre de cette pièce de 370 mm a été minutieusement ajusté pour un poids plume de moins de 150 g, garantissant une agilité parfaite pour un usage quotidien en gastronomie.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-06-09-gyuto-230mm.webp",
+  "prix": 340,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "loupe d'amboine stabilisée, insert en amourette et rivets carbone"
+  }
+}
