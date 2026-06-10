@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-06-10-le-lyonnais",
+  "titre": "Le Lyonnais",
+  "date": "2026-06-10",
+  "lienInstagram": "https://www.instagram.com/p/DZaX0XOAohb/",
+  "description": "Le Lyonnais est un couteau de cuisine combinant une ligne et un profil occidentaux. Façonné en acier carbone C125U, il présente une ligne de trempe sélective (hamon) unique et tourmentée. Son manche dégressif sur les derniers centimètres offre une prise en main ergonomique et un équilibre optimal pour le travail de découpe.\n\nLe manche est réalisé en palissandre de Bahia sur aubier, offrant un contraste naturel saisissant, sécurisé par des rivets en acier inoxydable. Ce couteau est conçu pour offrir un tranchant d'une grande finesse et une excellente tenue de coupe au quotidien.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-06-10-le-lyonnais.webp",
+  "prix": 280,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Palissandre (de Bahia) sur aubier"
+  }
+}
