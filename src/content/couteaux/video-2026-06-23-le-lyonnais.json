@@ -1,0 +1,17 @@
+{
+  "slug_technique": "video-2026-06-23-le-lyonnais",
+  "titre": "Le Lyonnais",
+  "date": "2026-06-23",
+  "lienInstagram": "https://www.instagram.com/reel/DZ7yc6kjeeS/",
+  "description": "Le Lyonnais est un couteau de cuisine conçu pour offrir une coupe d'une grande précision. Sa lame en acier carbone présente une ligne de trempe sélective révélée avec soin, garantissant un tranchant durable et un profil affûté.\n\nLe manche est façonné en palissandre de Bahia bi-ton, offrant un contraste naturel saisissant et une prise en main ergonomique. Une pièce équilibrée, pensée pour accompagner chaque geste en cuisine avec fluidité.",
+  "type": "video",
+  "format": "video",
+  "image": "/images/couteaux/video-2026-06-23-le-lyonnais.webp",
+  "prix": 0,
+  "disponible": false,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "Acier carbone avec ligne de trempe (Hamon)",
+    "manche": "Palissandre de Bahia bi-ton"
+  }
+}
