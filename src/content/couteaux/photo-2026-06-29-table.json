@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-06-29-table",
+  "titre": "Table",
+  "date": "2026-06-29",
+  "lienInstagram": "https://www.instagram.com/p/DaLSJPllKlL/",
+  "description": "Ce couteau de table est doté d'une lame en acier carbone XC100, réputé pour sa grande finesse de grain et sa facilité d'affûtage. Le traitement thermique rigoureux appliqué dans mon atelier garantit un tranchant rasoir et une excellente tenue de coupe au quotidien.\n\nPour le manche, j'ai choisi un ébène noir du Gabon d'une grande sobriété, contrasté par des rivets en fibre de carbone. Ce mariage de matières offre une prise en main équilibrée et élégante, idéale pour sublimer vos repas.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-06-29-table.webp",
+  "prix": 105,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "XC100",
+    "manche": "ébène noir du Gabon et rivets carbone"
+  }
+}
