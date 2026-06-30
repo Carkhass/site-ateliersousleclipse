@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-06-30-table",
+  "titre": "Table",
+  "date": "2026-06-30",
+  "lienInstagram": "https://www.instagram.com/p/DaN1HpDEt0S/",
+  "description": "Ce couteau de table est doté d'une lame en acier carbone XC100, garantissant un tranchant rasoir et une excellente tenue de coupe. Le profil est conçu pour offrir une glisse parfaite lors des repas, tandis que l'acier développera une patine unique au fil des utilisations.\n\nLe manche est façonné en moutouchi, un bois précieux apprécié pour sa sobriété et sa douceur en main. Fixé par des rivets en acier inoxydable, il assure une prise en main équilibrée et durable pour accompagner votre quotidien.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-06-30-table.webp",
+  "prix": 100,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "XC100",
+    "manche": "moutouchi et rivets inox"
+  }
+}
