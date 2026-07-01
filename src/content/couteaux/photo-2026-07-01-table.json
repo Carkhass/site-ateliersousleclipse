@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-07-01-table",
+  "titre": "Table",
+  "date": "2026-07-01",
+  "lienInstagram": "https://www.instagram.com/p/DaQfWvWgkTN/",
+  "description": "Ce couteau de table est doté d'une lame en acier carbone XC100, offrant un tranchant rigoureux et une excellente géométrie de coupe. Son profil épuré est conçu pour accompagner vos repas avec efficacité et sobriété.\n\nLe manche est façonné dans une loupe de frêne sélectionnée pour son veinage contrasté. Une stabilisation partielle à la résine laisse apparaître un relief naturel et texturé sous les doigts, conférant un caractère brut et unique à cette pièce.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-07-01-table.webp",
+  "prix": 0,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "XC100",
+    "manche": "Loupe de frêne"
+  }
+}
