@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-07-02-nakiri-tsuki-tate",
+  "titre": "Nakiri Tsuki Tate",
+  "date": "2026-07-02",
+  "lienInstagram": "https://www.instagram.com/p/DaS-eF-jbt3/",
+  "description": "Ce couteau Nakiri Tsuki Tate est conçu pour offrir une expérience de découpe exceptionnelle en cuisine. Sa lame en acier C125U présente une émoulure fine et un traitement thermique rigoureux, garantissant un tranchant rasoir et durable.\n\nLe manche en ébène des Philippines sur aubier adopte un profil inédit en forme de bouclier, offrant une ergonomie ambidextre remarquable. Ajusté sur un montage Tsuki avec intercalaire G10 et rivets en fibre de carbone, cet outil équilibré s'impose comme un compagnon indispensable pour le travail des végétaux.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-07-02-nakiri-tsuki-tate.webp",
+  "prix": 280,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "ébène des Philippines sur aubier"
+  }
+}
