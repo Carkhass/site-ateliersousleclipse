@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-07-06-grand-bon-ap-kissaki",
+  "titre": "Grand Bon'Ap Kissaki",
+  "date": "2026-07-06",
+  "lienInstagram": "https://www.instagram.com/p/DadZDMLgtRe/",
+  "description": "Ce couteau de cuisine Grand Bon'Ap Kissaki se distingue par sa lame en acier carbone C125U, offrant un tranchant d'une finesse et d'une durabilité exceptionnelles. Sa ligne de trempe sélective (hamon) souligne le caractère unique de cette pièce conçue pour la précision culinaire.\n\nLe manche est façonné en marronnier stabilisé teinté d'un bleu profond, ajusté avec des rivets en fibre de carbone pour une excellente ergonomie. Un outil équilibré et performant, idéal pour les passionnés de gastronomie à la recherche d'un profil typé.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-07-06-grand-bon-ap-kissaki.webp",
+  "prix": 260,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "marronnier stabilisé teinté"
+  }
+}
