@@ -1,0 +1,17 @@
+{
+  "slug_technique": "video-2026-07-07-grand-bon-ap",
+  "titre": "Grand Bon'ap",
+  "date": "2026-07-07",
+  "lienInstagram": "https://www.instagram.com/reel/DafQntvFEuI/",
+  "description": "Le Grand Bon'ap est un couteau conçu pour le quotidien et les plaisirs de la table. Sa lame en acier carbone présente une ligne de trempe sélective (hamon) bien marquée, révélant un tranchant rasoir d'une grande finesse.\n\nLe manche est réalisé en marronnier teinté et stabilisé, offrant des nuances profondes et une excellente ergonomie en main. Une pièce équilibrée, pensée pour durer et accompagner chaque repas avec élégance.",
+  "type": "video",
+  "format": "video",
+  "image": "/images/couteaux/video-2026-07-07-grand-bon-ap.webp",
+  "prix": 0,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "Acier carbone (Hamon)",
+    "manche": "Marronnier teinté stabilisé"
+  }
+}
