@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-07-08-bon-ap",
+  "titre": "Bon'Ap",
+  "date": "2026-07-08",
+  "lienInstagram": "https://www.instagram.com/p/DaibKhIlSTt/",
+  "description": "Le Bon'Ap est un couteau utilitaire pensé pour la cuisine et les moments de partage. Sa lame en acier C125U offre un tranchant d'une finesse remarquable et une excellente tenue de coupe au quotidien.\n\nLe manche est façonné en boco sur aubier, un bois précieux offrant un contraste naturel saisissant, sécurisé par des rivets en carbone. Une pièce ergonomique et équilibrée, idéale pour l'apéritif ou les préparations culinaires de précision.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-07-08-bon-ap.webp",
+  "prix": 195,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Boco sur aubier"
+  }
+}
