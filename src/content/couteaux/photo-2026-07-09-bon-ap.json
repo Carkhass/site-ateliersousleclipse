@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-07-09-bon-ap",
+  "titre": "Bon'Ap",
+  "date": "2026-07-09",
+  "lienInstagram": "https://www.instagram.com/p/DalACKRjMQf/",
+  "description": "Le Bon'Ap est un couteau de table pensé pour le quotidien et les moments de partage. Sa lame en acier C125U présente une ligne de trempe sélective révélée avec précision, offrant un tranchant rasoir et durable.\n\nLe manche est façonné en marronnier stabilisé et teinté, une essence de bois aux motifs profonds ajustée avec des rivets en carbone. Une pièce ergonomique et équilibrée, conçue pour durer.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-07-09-bon-ap.webp",
+  "prix": 0,
+  "disponible": false,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "marronnier stabilisé teinté et rivets carbone"
+  }
+}
