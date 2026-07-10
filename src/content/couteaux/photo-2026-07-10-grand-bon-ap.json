@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-07-10-grand-bon-ap",
+  "titre": "Grand Bon'Ap",
+  "date": "2026-07-10",
+  "lienInstagram": "https://www.instagram.com/p/Dank6eggNtP/",
+  "description": "Le Grand Bon'Ap est un couteau de table et de cuisine polyvalent, conçu pour offrir une expérience de coupe exceptionnelle au quotidien. Sa lame en acier carbone C125U garantit un tranchant rasoir durable et une grande finesse d'émouture.\n\nLe manche est façonné en manguier teinté et stabilisé, révélant des ondes magnifiques sous une teinte sombre et profonde. Fixé par des rivets en acier inoxydable, il assure une prise en main ergonomique et équilibrée pour toutes vos préparations culinaires.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-07-10-grand-bon-ap.webp",
+  "prix": 265,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "manguier teinté stabilisé, rivets inox"
+  }
+}
