@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-07-17-bon-ap",
+  "titre": "Bon'Ap",
+  "date": "2026-07-17",
+  "lienInstagram": "https://www.instagram.com/p/Da5qS4mAkAO/",
+  "description": "Le Bon'Ap est un couteau de cuisine pensé pour l'efficacité et l'élégance lors de la préparation. Sa lame en acier carbone C125U offre un tranchant rasoir durable ainsi qu'une belle ligne de trempe sélective.\n\nSon manche en loupe de peuplier teinté et stabilisé apporte un contraste visuel unique tout en assurant une prise en main confortable. Assemblé avec des rivets en carbone, ce couteau allie légèreté, équilibre et haute précision culinaire.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-07-17-bon-ap.webp",
+  "prix": 0,
+  "disponible": false,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Loupe de peuplier teinté stabilisé, rivets carbone"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-07-13-sous-l-eclipse-dans-la-poche",
+  "titre": "Sous l'éclipse dans la poche",
+  "date": "2026-07-13",
+  "lienInstagram": "https://www.instagram.com/p/DauqSshjj73/",
+  "description": "Ce couteau pliant à cran forcé constitue le tout premier prototype d'un modèle pensé pour l'emport quotidien. Sa lame effilée dotée d'un contretranchant est façonnée en acier carbone C125U pour une tenue de tranchant remarquable, associée à un ressort en C48.\n\nLe manche s'inspire des lignes du Bon'Ap, retravaillé pour offrir une prise en main fluide et naturelle. Ses plaquettes en moutouchi sont montées sur des platines en G10 noir, apportant élégance et rigide assemblage.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-07-13-sous-l-eclipse-dans-la-poche.webp",
+  "prix": 0,
+  "disponible": false,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U (lame), C48 (ressort)",
+    "manche": "Moutouchi sur platines en G10 noir"
+  }
+}
