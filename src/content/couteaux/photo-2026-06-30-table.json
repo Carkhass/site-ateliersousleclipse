@@ -8,7 +8,7 @@
   "format": "photo",
   "image": "/images/couteaux/photo-2026-06-30-table.webp",
   "prix": 100,
-  "disponible": true,
+  "disponible": false,
   "favori": false,
   "caracteristiques": {
     "acier": "XC100",
