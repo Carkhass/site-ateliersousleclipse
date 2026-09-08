@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-09-08-baby-santoku",
+  "titre": "Baby Santoku",
+  "date": "2026-09-08",
+  "lienInstagram": "https://www.instagram.com/p/DdCALMADGrh/",
+  "description": "Ce couteau au format Baby Santoku est façonné en acier carbone C125U, réputé pour son tranchant rasoir et sa tenue de fil exceptionnelle. La ligne de trempe sélective souligne la finesse géométrique de la lame, particulièrement adaptée aux découpes précises du quotidien.\n\nLe manche est réalisé en tamarin échauffé stabilisé, souligné par des intercalaires en G10 et assemblé avec des rivets en fibre de carbone. L'équilibre en main apporte une grande maniabilité pour le travail minutieux des légumes et aromates.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-09-08-baby-santoku.webp",
+  "prix": 0,
+  "disponible": false,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "tamarin échauffé stabilisé, G10 et rivets carbone"
+  }
+}
