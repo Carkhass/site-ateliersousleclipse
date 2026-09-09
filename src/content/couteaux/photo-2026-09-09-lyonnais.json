@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-09-09-lyonnais",
+  "titre": "Lyonnais",
+  "date": "2026-09-09",
+  "lienInstagram": "https://www.instagram.com/p/DdEmPTpipYT/",
+  "description": "Ce couteau Lyonnais revisite des lignes traditionnelles à travers un profil hybride, pensé à mi-chemin entre un chef et un trancheur. Sa lame en acier C125U assure un tranchant redoutable et une excellente tenue de fil pour le travail précis des viandes comme des légumes.\n\nLe manche en érable ondé échauffé stabilisé, fixé par des rivets inox, offre une prise en main équilibrée et des motifs naturels contrastés. Une pièce polyvalente façonnée dans mon atelier pour sublimer vos préparations culinaires.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-09-09-lyonnais.webp",
+  "prix": 290,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "érable ondé échauffé stabilisé, rivets inox"
+  }
+}
