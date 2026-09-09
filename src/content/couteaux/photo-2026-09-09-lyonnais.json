@@ -3,7 +3,7 @@
   "titre": "Lyonnais",
   "date": "2026-09-09",
   "lienInstagram": "https://www.instagram.com/p/DdEmPTpipYT/",
-  "description": "Ce couteau Lyonnais revisite des lignes traditionnelles à travers un profil hybride, pensé à mi-chemin entre un chef et un trancheur. Sa lame en acier C125U assure un tranchant redoutable et une excellente tenue de fil pour le travail précis des viandes comme des légumes.\n\nLe manche en érable ondé échauffé stabilisé, fixé par des rivets inox, offre une prise en main équilibrée et des motifs naturels contrastés. Une pièce polyvalente façonnée dans mon atelier pour sublimer vos préparations culinaires.",
+  "description": "Ce couteau Lyonnais revisite une silhouette traditionnelle avec une géométrie pensée pour la précision en cuisine. Sa lame en acier C125U offre un tranchant particulièrement mordant et une excellente tenue de fil.\n\nLe manche est réalisé en érable ondé échauffé stabilisé, monté avec des rivets en inox pour résister à un usage quotidien soutenu. Ce profil hybride assure une polyvalence parfaite, aussi performant sur les viandes que sur la découpe des légumes.",
   "type": "couteau",
   "format": "photo",
   "image": "/images/couteaux/photo-2026-09-09-lyonnais.webp",
@@ -12,6 +12,6 @@
   "favori": false,
   "caracteristiques": {
     "acier": "C125U",
-    "manche": "érable ondé échauffé stabilisé, rivets inox"
+    "manche": "Érable ondé échauffé stabilisé, rivets inox"
   }
 }
