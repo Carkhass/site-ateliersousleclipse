@@ -3,7 +3,7 @@
   "titre": "Bon'Ap",
   "date": "2026-09-10",
   "lienInstagram": "https://www.instagram.com/p/DdHL05DkgDn/",
-  "description": "Ce couteau Bon'Ap est façonné dans un acier 26c3, une nuance réputée pour sa pureté et sa capacité à offrir un tranchant rasoir d'une finesse remarquable. Sa lame présente une géométrie étudiée pour un confort de travail optimal et des découpes nettes en cuisine comme à table.\n\nLe manche met en valeur une loupe d'érable aux motifs denses et organiques, fixée durablement avec des rivets en inox. Cette pièce unique a été spécialement conçue dans le cadre d'une collaboration avec La Planche Française.",
+  "description": "Ce couteau Bon'Ap est façonné en acier 26c3, une nuance riche en carbone réputée pour la finesse de son grain et la tenue remarquable de son tranchant. Sa lame compacte offre une précision de coupe idéale pour les plaisirs de la table.\n\nLe manche est réalisé dans une loupe d'érable aux veinages denses et texturés, complété par des rivets discrets en inox. Cette pièce unique a été créée spécialement pour une collaboration avec La Planche Française.",
   "type": "couteau",
   "format": "photo",
   "image": "/images/couteaux/photo-2026-09-10-bon-ap.webp",
@@ -12,6 +12,6 @@
   "favori": false,
   "caracteristiques": {
     "acier": "26c3",
-    "manche": "Loupe d'érable, rivets inox"
+    "manche": "loupe d'érable, rivets inox"
   }
 }
