@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-09-11-tables",
+  "titre": "Tables",
+  "date": "2026-09-11",
+  "lienInstagram": "https://www.instagram.com/p/DdJqr4Vm3sj/",
+  "description": "Ce couteau de table est façonné en acier XC100, offrant un tranchant net et une excellente tenue de fil pour vos pièces de viande comme pour les légumes. Sa lame fine assure une pénétration franche et fluide dans l'assiette.\n\nLe manche est taillé dans une loupe de frêne stabilisé, révélant des motifs organiques complexes tout en restant insensible à l'humidité. Un compagnon sobre et précis, conçu pour apporter du caractère à vos repas.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-09-11-tables.webp",
+  "prix": 120,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "xc100",
+    "manche": "loupe de frêne stabilisé"
+  }
+}
