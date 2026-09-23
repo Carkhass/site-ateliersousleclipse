@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-09-23-petty-tsuki",
+  "titre": "Petty Tsuki",
+  "date": "2026-09-23",
+  "lienInstagram": "https://www.instagram.com/p/Ddov_uhDX6p/",
+  "description": "Ce petit couteau d'office Petty Tsuki est façonné en acier C125U, garantissant une tenue de tranchant remarquable et une géométrie très fine. Sa lame compacte de 100 mm permet un contrôle absolu pour émincer et préparer les petites pièces avec une grande précision.\n\nLe manche de 115 mm en loupe d'érable stabilisée est complété par un spacer en G10 et des rivets en fibre de carbone. L'ensemble procure un équilibre agile et une prise en main confortable pour les gestes minutieux en cuisine.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-09-23-petty-tsuki.webp",
+  "prix": 0,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "Loupe d'érable stabilisée, spacer en G10 et rivets carbone"
+  }
+}
