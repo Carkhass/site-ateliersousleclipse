@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-09-24-utilitaire-de-cuisine",
+  "titre": "Utilitaire de cuisine",
+  "date": "2026-09-24",
+  "lienInstagram": "https://www.instagram.com/p/DdrSCyZES72/",
+  "description": "Ce couteau utilitaire de cuisine adopte un profil occidental affirmé, offrant une excellente présence en main pour les préparations précises. Sa lame en acier 26C3 de 90 mm garantit un tranchant rasoir particulièrement durable et d'une grande finesse.\n\nLe manche de 100 mm est façonné en ébène noir du Gabon, souligné par un spacer contrasté en alisier et fixé par des rivets inox. Une pièce équilibrée et maniable, pensée aussi bien pour le travail sur planche qu'autour d'une belle côte de bœuf.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-09-24-utilitaire-de-cuisine.webp",
+  "prix": 0,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "26C3",
+    "manche": "Ébène noir du Gabon, spacer en alisier, rivets inox"
+  }
+}
