@@ -384,7 +384,7 @@ const schemaData = {
 
     <div id="msg-club-success" class="hidden py-4">
       <h3 class="text-2xl font-serif font-bold text-accent mb-2">Request Sent</h3>
-      <p class="text-muted text-sm mb-6">Welcome to the list. Keep an eye on your inbox this Friday.</p>
+      <p class="text-muted text-sm mb-6">Welcome to the list.</p>
       <button id="close-club-success" class="cta-premium px-5 py-3.5 rounded text-white font-bold text-xs uppercase tracking-[0.2em] mt-6 hover:scale-[1.02] active:scale-95 transition-all shadow-lg">
         Close
       </button>
@@ -459,7 +459,8 @@ const schemaData = {
     const formContainer = document.getElementById('club-form-container');
     const successMsg = document.getElementById('msg-club-success');
     
-    const WEBHOOK_URL = "https://n8n.yahncloud.fr/webhook/rejoindre-club"; 
+    //const WEBHOOK_URL = "https://n8n.yahncloud.fr/webhook/rejoindre-club"; 
+    const RELAY_URL = "/club-handler.php";
 
     // Fonction pour ouvrir
     function openModal() {
@@ -496,32 +497,34 @@ const schemaData = {
     if(bg) bg.addEventListener('click', closeModal);
     if(closeSuccessBtn) closeSuccessBtn.addEventListener('click', closeModal);
 
-    // Envoi du formulaire à n8n
-    if(form) {
+    // Envoi du formulaire au relais sécurisé
+    if (form) {
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const prenom = document.getElementById('prenom-club').value;
-        const email = document.getElementById('email-club').value;
+        const prenom = (document.getElementById('prenom-club') as HTMLInputElement).value;
+        const email = (document.getElementById('email-club') as HTMLInputElement).value;
         
         const originalText = submitBtn.innerText;
-        submitBtn.innerText = "Processing...";
+        submitBtn.innerText = "Traitement...";
         submitBtn.style.pointerEvents = "none";
         submitBtn.style.opacity = "0.7";
 
         try {
-          await fetch(WEBHOOK_URL, {
+          const res = await fetch(RELAY_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ prenom: prenom, email: email })
+            body: JSON.stringify({ prenom, email })
           });
+
+          if (!res.ok) throw new Error("Erreur serveur");
           
-          // Succès : on switch le contenu
+          // Succès : on affiche le message de confirmation
           formContainer.classList.add('hidden');
           successMsg.classList.remove('hidden');
           
         } catch (error) {
-          submitBtn.innerText = "Error, please try again";
+          submitBtn.innerText = "Erreur, réessayez";
           setTimeout(() => { 
             submitBtn.innerText = originalText; 
             submitBtn.style.pointerEvents = "auto";
