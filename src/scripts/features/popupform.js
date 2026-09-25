@@ -1,7 +1,6 @@
 // src/scripts/features/popupform.js
 
 export function popupform() {
-  // On cible tous les formulaires pointant vers le PHP de l'Atelier
   const forms = document.querySelectorAll('form[action="/contact.php"]');
   const merciPopup = document.getElementById('merci-popup');
 
@@ -11,26 +10,39 @@ export function popupform() {
     if (form.dataset.initialized === 'true') return;
     form.dataset.initialized = 'true';
 
+    // 1. Déclenchement du chronomètre dès que l'utilisateur interagit avec le formulaire
+    let formStartTime = Date.now();
+    const timerInput = form.querySelector('input[name="_form_timer"]');
+    if (timerInput) timerInput.value = formStartTime.toString();
+
+    form.addEventListener('focusin', () => {
+      if (!timerInput.value) {
+        timerInput.value = Date.now().toString();
+      }
+    }, { once: true });
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const submitBtn = form.querySelector('[type="submit"]');
       if (submitBtn) submitBtn.disabled = true;
 
+      // 2. Création des données avec jeton d'interaction JS
+      const formData = new FormData(form);
+      formData.append('_js_timestamp', Date.now().toString());
+
       try {
         const response = await fetch(form.action, {
           method: 'POST',
-          body: new FormData(form),
+          body: formData,
         });
 
         if (response.ok) {
-          // 1. Fermer la modale de réservation si elle est ouverte
           const bookingModal = document.getElementById('booking-modal');
           if (bookingModal) {
             bookingModal.classList.remove('visible-fade');
             document.body.classList.remove('active-modal');
           }
 
-          // 2. Afficher le MERCI universel
           merciPopup.classList.remove('hidden');
           merciPopup.classList.add('flex');
           
@@ -49,6 +61,7 @@ export function popupform() {
           }, 10);
 
           form.reset();
+          if (timerInput) timerInput.value = Date.now().toString();
         } else {
           alert("Une erreur est survenue lors de l'envoi.");
         }
@@ -60,7 +73,6 @@ export function popupform() {
     });
   });
 
-  // Gestion de la fermeture de la popup Merci (clic overlay ou bouton)
   document.addEventListener('click', (e) => {
     if (e.target.classList.contains('close-merci') || e.target === merciPopup) {
       merciPopup.classList.add('hidden');
