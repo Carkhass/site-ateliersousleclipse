@@ -7,7 +7,7 @@
   "type": "couteau",
   "format": "photo",
   "image": "/images/couteaux/photo-2026-09-24-utilitaire-de-cuisine.webp",
-  "prix": 160,
+  "prix": 0,
   "disponible": true,
   "favori": false,
   "caracteristiques": {
