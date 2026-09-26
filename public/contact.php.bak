@@ -1,0 +1,220 @@
+<?php
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
+
+// Emplacement du fichier de configuration
+$config = require __DIR__ . '/private/config.php';
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    exit('Méthode non autorisée');
+}
+
+// Réponse silencieuse pour berner les bots sans déclencher de seconde tentative
+function fake_bot_success() {
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['status' => 'success', 'message' => 'Message envoyé avec succès']);
+    exit;
+}
+
+// Nettoyage strict des en-têtes (anti header-injection)
+function clean_header($data) {
+    return str_replace(["\r", "\n"], '', trim($data));
+}
+
+// Charger PHPMailer
+require __DIR__ . '/vendor/phpmailer/src/Exception.php';
+require __DIR__ . '/vendor/phpmailer/src/PHPMailer.php';
+require __DIR__ . '/vendor/phpmailer/src/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// Récupération et nettoyage des champs généraux
+$nom       = isset($_POST['nom']) ? clean_header($_POST['nom']) : '';
+$email     = isset($_POST['email']) ? clean_header($_POST['email']) : '';
+$telephone = isset($_POST['telephone']) ? clean_header($_POST['telephone']) : '';
+$message   = isset($_POST['message']) ? trim($_POST['message']) : '';
+
+// Récupération des informations spécifiques au couteau (si formulaire de réservation)
+$couteau_ref    = isset($_POST['couteau_ref']) ? clean_header($_POST['couteau_ref']) : '';
+$couteau_acier  = isset($_POST['couteau_acier']) ? clean_header($_POST['couteau_acier']) : '';
+$couteau_manche = isset($_POST['couteau_manche']) ? clean_header($_POST['couteau_manche']) : '';
+$couteau_prix   = isset($_POST['couteau_prix']) ? clean_header($_POST['couteau_prix']) : '';
+$couteau_date   = isset($_POST['couteau_date']) ? clean_header($_POST['couteau_date']) : '';
+$couteau_image  = isset($_POST['couteau_image']) ? clean_header($_POST['couteau_image']) : '';
+
+// ======================================================================
+// --- SÉCURITÉ ANTI-BOT & ANTI-SPAM ---
+// ======================================================================
+
+// 1. HONEYPOTS MULTIPLES (website & fax_number)
+if (!empty($_POST['website']) || !empty($_POST['fax_number'])) {
+    fake_bot_success();
+}
+
+// 2. PIÈGE TEMPOREL & JETON JS (Bloque les scripts directs et formulaires éclairs)
+$form_timer = isset($_POST['_form_timer']) ? (float)$_POST['_form_timer'] : 0;
+$js_ts      = isset($_POST['_js_timestamp']) ? (float)$_POST['_js_timestamp'] : 0;
+$now_ms     = microtime(true) * 1000;
+
+// Rejet si le jeton JS est absent (soumission directe via curl/python)
+if ($js_ts <= 0) {
+    fake_bot_success();
+}
+
+// Soumission trop rapide (impossible en moins de 2.5 secondes pour un humain)
+if ($form_timer > 0 && ($now_ms - $form_timer) < 2500) {
+    fake_bot_success();
+}
+
+// 3. DÉTECTION DU SPAM "SCRAPING DE TITRE" (ex: Williams)
+if (preg_match('/[—\-–]\s*atelier\s*sous\s*l[’\']?éclipse/iu', $message)) {
+    fake_bot_success();
+}
+
+// Détection des adresses email générées avec une suite anormale de consonnes
+$email_user = strstr($email, '@', true) ?: '';
+if (preg_match('/[bcdfghjklmnpqrstvwxz]{5,}/i', $email_user)) {
+    fake_bot_success();
+}
+
+// 4. DÉTECTION DES FAUX HISTORIQUES DE MAIL (ex: Oscar AI / démarchage)
+if (preg_match('/(On\s+[A-Za-z]+,\s+[A-Za-z]+\s+\d+|Le\s+\d+\s+[A-Za-z]+.*a\s+écrit\s*:)/iu', $message)) {
+    fake_bot_success();
+}
+
+// 5. MOTS-CLÉS DE DÉMARCHAGE SEO, B2B & SPAM
+$spam_keywords = [
+    'visibilité ia', 'oscar ai', 'chatgpt', 'claude', 'blogbest', 'pages d\'acquisition',
+    'moteurs de recherche', 'audit seo', 'référencement', 'euros par mois', 'backlinks',
+    'positionnement google', 'gagner en visibilité', 'ferme le dossier', 'magasin de couteaux',
+    'notre agence', 'génération de leads', 'triplez votre', 'triplent leur', 'potentiel marché',
+    'prize', 'winner', 'money', 'crypto', 'telegra.ph', 'telegram', 'trademark', 'copyright',
+    'unauthorized', 'infringement', 'violation', 'meta platforms', 'willow road', 'menlo park'
+];
+
+$lowercase_msg = mb_strtolower($message, 'UTF-8');
+foreach ($spam_keywords as $word) {
+    if (mb_strpos($lowercase_msg, $word) !== false) {
+        fake_bot_success();
+    }
+}
+
+// 6. CARACTÈRES NON DÉSIRÉS & TROP DE LIENS
+if (preg_match('/\p{Cyrillic}/u', $message) || preg_match('/\p{Han}/u', $message)) {
+    fake_bot_success();
+}
+
+if (preg_match_all('/https?:\/\//i', $message) > 1) {
+    fake_bot_success();
+}
+
+// --- VALIDATION DES DONNÉES HUMAINES ---
+if (mb_strlen($nom) < 2 || !filter_var($email, FILTER_VALIDATE_EMAIL) || mb_strlen($message) < 10) {
+    http_response_code(422);
+    exit('Données invalides');
+}
+
+// ======================================================================
+// --- ENVOI DU MAIL (PHPMailer) ---
+// ======================================================================
+
+$mail = new PHPMailer(true);
+
+try {
+    $mail->CharSet = PHPMailer::CHARSET_UTF8;
+    
+    $mail->isSMTP();
+    $mail->Host       = $config['smtp_host'];
+    $mail->SMTPAuth   = true;
+    $mail->Username   = $config['smtp_user'];
+    $mail->Password   = $config['smtp_pass'];
+    $mail->SMTPSecure = $config['smtp_secure'];
+    $mail->Port       = $config['smtp_port'];
+
+    // EXPÉDITEUR & DESTINATAIRE
+    $mail->setFrom($config['smtp_user'], "Atelier sous l'Eclipse");
+    $mail->addAddress($config['to_email'], $config['to_name']);
+    $mail->addReplyTo($email, $nom);
+
+    $mail->isHTML(true);
+
+    // Objet du mail personnalisé
+    if (!empty($couteau_ref)) {
+        $mail->Subject = "?? Réservation : {$couteau_ref} [{$couteau_acier}] - {$nom}";
+    } else {
+        $mail->Subject = "Nouveau message de {$nom}";
+    }
+
+    $safe_nom = htmlspecialchars($nom, ENT_QUOTES, 'UTF-8');
+    $safe_message = nl2br(htmlspecialchars($message, ENT_QUOTES, 'UTF-8'));
+
+    // Bloc Fiche Couteau avec miniature si présent
+    $bloc_couteau = '';
+    if (!empty($couteau_ref)) {
+        $img_html = '';
+        if (!empty($couteau_image)) {
+            $full_img_url = 'https://ateliersousleclipse.fr' . $couteau_image;
+            $img_html = "
+                <div style='margin-bottom: 12px; text-align: center;'>
+                    <img src='{$full_img_url}' alt='{$couteau_ref}' style='max-width: 100%; max-height: 220px; border-radius: 6px; border: 1px solid #dcd3c8;' />
+                </div>";
+        }
+
+        $bloc_couteau = "
+        <div style='background-color: #faf5ee; border: 1px solid #7a2a2a; border-left: 6px solid #7a2a2a; border-radius: 6px; padding: 16px; margin: 15px 0;'>
+            <h3 style='color: #7a2a2a; margin: 0 0 10px 0; font-size: 16px;'>??? Pièce concernée :</h3>
+            {$img_html}
+            <table style='width: 100%; border-collapse: collapse; font-size: 14px; color: #222222;'>
+                <tr><td style='padding: 3px 0; width: 90px; color: #7a2a2a; font-weight: bold;'>Modèle :</td><td style='color: #111111; font-weight: bold;'>{$couteau_ref}</td></tr>
+                <tr><td style='padding: 3px 0; color: #7a2a2a; font-weight: bold;'>Acier :</td><td style='color: #111111;'>{$couteau_acier}</td></tr>
+                <tr><td style='padding: 3px 0; color: #7a2a2a; font-weight: bold;'>Manche :</td><td style='color: #111111;'>{$couteau_manche}</td></tr>
+                <tr><td style='padding: 3px 0; color: #7a2a2a; font-weight: bold;'>Prix :</td><td style='color: #7a2a2a; font-weight: bold;'>{$couteau_prix}</td></tr>
+                " . (!empty($couteau_date) ? "<tr><td style='padding: 3px 0; color: #7a2a2a; font-weight: bold;'>Date :</td><td style='color: #555555;'>{$couteau_date}</td></tr>" : "") . "
+            </table>
+        </div>";
+    }
+
+    // CORPS DU MAIL (Couleurs strictes verrouillées pour corriger le bug blanc sur blanc dans Thunderbird)
+    $mail->Body = "
+    <div style='background-color: #ffffff; color: #222222; font-family: Arial, Helvetica, sans-serif; font-size: 15px; line-height: 1.5; padding: 20px; max-width: 600px; border: 1px solid #e5e5e5; border-radius: 8px;'>
+        <h2 style='color: #7a2a2a; margin-top: 0; border-bottom: 2px solid #7a2a2a; padding-bottom: 8px;'>
+            " . (!empty($couteau_ref) ? "Nouvelle réservation d'un couteau" : "Nouveau message de contact") . "
+        </h2>
+
+        <p style='color: #222222; margin: 8px 0;'>
+            <strong style='color: #111111;'>Nom :</strong> {$safe_nom}
+        </p>
+        <p style='color: #222222; margin: 8px 0;'>
+            <strong style='color: #111111;'>Email :</strong> <a href='mailto:{$email}' style='color: #7a2a2a; text-decoration: none;'>{$email}</a>
+        </p>
+        " . (!empty($telephone) ? "
+        <p style='color: #222222; margin: 8px 0;'>
+            <strong style='color: #111111;'>Téléphone :</strong> <a href='tel:{$telephone}' style='color: #7a2a2a; text-decoration: none;'>{$telephone}</a>
+        </p>" : "") . "
+
+        {$bloc_couteau}
+
+        <div style='background-color: #f7f4ef; color: #222222; padding: 15px; border-radius: 6px; margin-top: 15px; border: 1px solid #e8ded2;'>
+            <p style='margin: 0 0 8px 0; color: #7a2a2a; font-weight: bold; font-size: 13px; text-transform: uppercase;'>Message du client :</p>
+            <p style='margin: 0; color: #111111; line-height: 1.6;'>{$safe_message}</p>
+        </div>
+    </div>";
+
+    // Version texte brut
+    $mail->AltBody = "Nouveau message de {$nom} ({$email})\n"
+                   . (!empty($telephone) ? "Téléphone : {$telephone}\n" : "")
+                   . (!empty($couteau_ref) ? "\nModèle : {$couteau_ref}\nAcier : {$couteau_acier}\nManche : {$couteau_manche}\nPrix : {$couteau_prix}\nDate : {$couteau_date}\n\n" : "\n")
+                   . "Message :\n{$message}";
+
+    $mail->send();
+    
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['status' => 'success', 'message' => 'Message envoyé avec succès']);
+    exit;
+
+} catch (Exception $e) {
+    http_response_code(500);
+    echo "Erreur d'envoi";
+}
