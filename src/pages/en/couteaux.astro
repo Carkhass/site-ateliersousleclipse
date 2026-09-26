@@ -225,13 +225,18 @@ const schemaData = {
       </div>
       
       <span 
-        role="button"
-        tabindex="0"
-        class="trigger-booking-global cursor-pointer rounded font-bold uppercase tracking-wider transition-all active:scale-95 shadow-md text-center"
-        style={!estDispo ? "background-color: transparent; border: 2px solid var(--color-accent); color: var(--color-accent);" : "background-color: var(--color-accent); color: var(--color-bg);"}
-        data-ref={item.data.titre}
-        data-dispo={String(estDispo)}
-      >
+  role="button"
+  tabindex="0"
+  class="trigger-booking-global cursor-pointer rounded font-bold uppercase tracking-wider transition-all active:scale-95 shadow-md text-center"
+  style={!estDispo ? "background-color: transparent; border: 2px solid var(--color-accent); color: var(--color-accent);" : "background-color: var(--color-accent); color: var(--color-bg);"}
+  data-ref={item.data.titre}
+  data-dispo={String(estDispo)}
+  data-acier={item.data.caracteristiques?.acier || 'Non précisé'}
+  data-manche={item.data.caracteristiques?.manche || 'Non précisé'}
+  data-prix={item.data.prix > 0 ? `${item.data.prix} €` : 'Sur commande'}
+  data-date={item.data.date || ''}
+  data-image={imagePath}
+>
         {estDispo ? 'Reserve' : 'Inquire'}
       </span>
     </div>
