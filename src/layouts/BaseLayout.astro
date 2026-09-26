@@ -212,7 +212,16 @@ const heroSubtitle = isEn
             <label for="email" class="sr-only">Email</label>
             <input type="email" id="email" name="email" placeholder={isEn ? "Your email" : "Votre email"} class="w-full p-3 rounded bg-white/10 border border-white/20 text-white text-sm outline-none focus:border-accent transition-all" required>
             
-            <input type="text" name="website" style="display:none !important" tabindex="-1">
+            <!-- Nouveau champ Téléphone -->
+            <label for="telephone" class="sr-only">{isEn ? "Phone (optional)" : "Téléphone"}</label>
+            <input type="tel" id="telephone" name="telephone" placeholder={isEn ? "Phone number (optional)" : "Téléphone (ex: 06 12 34 56 78)"} class="w-full p-3 rounded bg-white/10 border border-white/20 text-white text-sm outline-none focus:border-accent transition-all">
+
+            <!-- Pièges à bots (Honeypot mis à jour) -->
+            <div style="position: absolute; left: -9999px; top: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
+              <input type="text" name="website" tabindex="-1" autocomplete="off" />
+              <input type="text" name="fax_number" tabindex="-1" autocomplete="off" />
+              <input type="hidden" name="_form_timer" id="form-timer" value="" />
+            </div>
             
             <label for="message" class="sr-only">Message</label>
             <textarea id="message" name="message" placeholder={isEn ? "Tell me about your knife project..." : "Parlez-moi de votre projet de couteau..."} class="w-full p-3 rounded bg-white/10 border border-white/20 text-white text-sm resize-none flex-grow min-h-[120px] outline-none focus:border-accent transition-all" required></textarea>

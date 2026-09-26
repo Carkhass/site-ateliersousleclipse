@@ -289,6 +289,16 @@ const schemaData = {
             <input type="text" name="nom" placeholder="Votre nom" class="bg-white/50 border border-[#7a2a2a]/20 p-3 rounded outline-none focus:border-[#7a2a2a] text-gray-900" required>
             <input type="email" name="email" placeholder="Votre email" class="bg-white/50 border border-[#7a2a2a]/20 p-3 rounded outline-none focus:border-[#7a2a2a] text-gray-900" required>
           </div>
+
+          <!-- Nouveau champ Téléphone pour la réservation -->
+          <input type="tel" name="telephone" placeholder="Téléphone (ex: 06 12 34 56 78)" class="w-full bg-white/50 border border-[#7a2a2a]/20 p-3 rounded outline-none focus:border-[#7a2a2a] text-gray-900">
+
+          <!-- Pièges à bots -->
+          <div style="position: absolute; left: -9999px; top: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
+            <input type="text" name="website" tabindex="-1" autocomplete="off" />
+            <input type="text" name="fax_number" tabindex="-1" autocomplete="off" />
+            <input type="hidden" name="_form_timer" id="modal-form-timer" value="" />
+          </div>
           
           <textarea id="modal-msg" name="message" rows="4" class="w-full bg-white/50 border border-[#7a2a2a]/20 p-3 rounded outline-none focus:border-[#7a2a2a] resize-none text-gray-900" required></textarea>
           
