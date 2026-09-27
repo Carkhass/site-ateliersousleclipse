@@ -10,7 +10,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 // Configuration
 $n8n_webhook_url = 'https://n8n.yahncloud.fr/webhook/rejoindre-club';
-$backup_dir = __DIR__ . '/private-data';
+$backup_dir = dirname(__DIR__) . '/carnet-data';
 $csv_file = $backup_dir . '/inscriptions-club.csv';
 $notify_email = 'contact@ateliersousleclipse.fr'; // Ton email pour la copie de secours
 

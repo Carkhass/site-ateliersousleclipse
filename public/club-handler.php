@@ -12,7 +12,7 @@ header('Content-Type: application/json; charset=utf-8');
 $n8n_webhook_url = 'https://n8n.yahncloud.fr/webhook/rejoindre-club';
 $backup_dir = dirname(__DIR__) . '/carnet-data';
 $csv_file = $backup_dir . '/inscriptions-club.csv';
-$notify_email = 'contact@ateliersousleclipse.fr'; // Ton email pour la copie de secours
+$notify_email = 'contact@ateliersousleclipse.fr';
 
 // Récupération des données JSON ou FormData
 $raw_input = file_get_contents('php://input');
@@ -24,6 +24,8 @@ if (!$data) {
 
 $prenom = isset($data['prenom']) ? trim(strip_tags($data['prenom'])) : '';
 $email  = isset($data['email']) ? trim(filter_var($data['email'], FILTER_SANITIZE_EMAIL)) : '';
+// Détection et sécurisation de la langue (fr ou en)
+$lang   = (isset($data['lang']) && strtolower(trim($data['lang'])) === 'en') ? 'en' : 'fr';
 
 // Validation
 if (empty($prenom) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -33,11 +35,10 @@ if (empty($prenom) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 // -------------------------------------------------------------
-// 1. SAUVEGARDE LOCALE SUR OVH (Fichier CSV sécurisé)
+// 1. SAUVEGARDE LOCALE SUR OVH (CSV avec colonne Langue)
 // -------------------------------------------------------------
 if (!is_dir($backup_dir)) {
     mkdir($backup_dir, 0755, true);
-    // Créer un .htaccess pour interdire l'accès web direct au dossier
     file_put_contents($backup_dir . '/.htaccess', "Deny from all\n");
 }
 
@@ -47,12 +48,12 @@ $is_new_file = !file_exists($csv_file);
 $fp = fopen($csv_file, 'a');
 if ($fp) {
     if ($is_new_file) {
-        fputcsv($fp, ['Date', 'Prénom', 'Email', 'Statut n8n']);
+        fputcsv($fp, ['Date', 'Prénom', 'Email', 'Langue', 'Statut n8n']);
     }
 }
 
 // -------------------------------------------------------------
-// 2. TENTATIVE DE TRANSMISSION À N8N
+// 2. TRANSMISSION À N8N AVEC LA LANGUE
 // -------------------------------------------------------------
 $n8n_success = false;
 
@@ -64,10 +65,11 @@ curl_setopt_array($ch, [
     CURLOPT_POSTFIELDS => json_encode([
         'prenom' => $prenom,
         'email' => $email,
+        'lang' => $lang,
         'date' => $date,
         'source' => 'site-ovh-relay'
     ]),
-    CURLOPT_CONNECTTIMEOUT => 3, // Ne bloque pas le visiteur si le homelab est down
+    CURLOPT_CONNECTTIMEOUT => 3,
     CURLOPT_TIMEOUT => 4,
 ]);
 
@@ -81,7 +83,7 @@ if ($http_code >= 200 && $http_code < 300) {
 
 // Écriture dans le CSV
 if ($fp) {
-    fputcsv($fp, [$date, $prenom, $email, $n8n_success ? 'SYNCHRONISE' : 'EN_ATTENTE_HOMELAB']);
+    fputcsv($fp, [$date, $prenom, $email, strtoupper($lang), $n8n_success ? 'SYNCHRONISE' : 'EN_ATTENTE_HOMELAB']);
     fclose($fp);
 }
 
@@ -89,10 +91,13 @@ if ($fp) {
 // 3. SECOURS EMAIL SI N8N ÉTAIT INJOIGNABLE
 // -------------------------------------------------------------
 if (!$n8n_success && !empty($notify_email)) {
-    $subject = "⚠️ Inscription Carnet (Homelab hors ligne) : $prenom";
+    $raw_subject = "⚠️ Inscription Carnet [" . strtoupper($lang) . "] (Homelab hors ligne) : $prenom";
+    $subject = mb_encode_mimeheader($raw_subject, 'UTF-8', 'B', "\r\n");
+
     $message = "Une nouvelle inscription a été enregistrée sur OVH mais votre n8n n'a pas répondu :\n\n"
              . "Prénom : $prenom\n"
              . "Email  : $email\n"
+             . "Langue : " . strtoupper($lang) . "\n"
              . "Date   : $date\n\n"
              . "Pensez à l'ajouter à votre Google Sheet manuellement si besoin.";
     $headers = "From: Atelier sous l'Éclipse <no-reply@ateliersousleclipse.fr>\r\n"
@@ -101,8 +106,9 @@ if (!$n8n_success && !empty($notify_email)) {
     @mail($notify_email, $subject, $message, $headers);
 }
 
-// Réponse toujours positive au client tant que la sauvegarde OVH a fonctionné
+// Réponse au navigateur
 echo json_encode([
     'success' => true,
-    'n8n_synced' => $n8n_success
+    'n8n_synced' => $n8n_success,
+    'lang' => $lang
 ]);
