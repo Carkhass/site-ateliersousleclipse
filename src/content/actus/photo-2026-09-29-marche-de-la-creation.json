@@ -1,0 +1,20 @@
+{
+  "slug_technique": "photo-2026-09-29-marche-de-la-creation",
+  "titre": "Marché de la Création",
+  "date": "2026-09-29",
+  "lienInstagram": "https://www.instagram.com/p/Dd3tafIiBS6/",
+  "description": "Fidèle au rendez-vous à Trévoux ! Ce dimanche 4 octobre, l'Atelier reprend sa place habituelle au Marché de la Création le long de la Saône.\n\nVenez découvrir mes dernières pièces destinées aux arts de la table, observer les lignes de trempe et échanger autour du travail de l'acier et des bois précieux de 10h à 18h.",
+  "type": "evenement",
+  "format": "photo",
+  "image": "/images/actus/photo-2026-09-29-marche-de-la-creation.webp",
+  "prix": 0,
+  "disponible": false,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "Non précisé",
+    "manche": "Non précisé"
+  },
+  "lieu": "Trévoux",
+  "date_event": "2026-10-04",
+  "date_formattee": "04/10/2026"
+}
