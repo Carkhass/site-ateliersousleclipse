@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-09-29-office",
+  "titre": "Office",
+  "date": "2026-09-29",
+  "lienInstagram": "https://www.instagram.com/p/Dd4LC3igGD4/",
+  "description": "Ce couteau d'office reçoit un acier carbone C125U réputé pour la pureté de sa structure et la finesse extrême de son tranchant. Sa lame maniable et précise répond parfaitement aux exigences des découpes minutieuses en cuisine.\n\nLe manche est réalisé en satiné rubané et fixé par des rivets en inox, adoptant un profil atypique type « bouclier ». Cette géométrie particulière assure un calage parfait au creux des doigts et un confort remarquable à l'usage.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-09-29-office.webp",
+  "prix": 0,
+  "disponible": false,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "C125U",
+    "manche": "satiné rubané, rivets inox"
+  }
+}
