@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-09-30-bon-ap",
+  "titre": "Bon'Ap",
+  "date": "2026-09-30",
+  "lienInstagram": "https://www.instagram.com/p/Dd6vnaJk1uh/",
+  "description": "Ce couteau Bon'Ap est façonné autour d'une lame en acier 26C3, issu de mon tout premier lot dans cette nuance. Ce carbone pur offre une finesse de grain remarquable et permet d'obtenir un tranchant redoutablement précis et durable.\n\nLe manche est monté en cocobolo aux teintes rouge sombre profondes, fixé par des rivets en fibre de carbone. La prise en main équilibrée assure une gestuelle fluide pour sublimer les repas au quotidien.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-09-30-bon-ap.webp",
+  "prix": 0,
+  "disponible": false,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "26C3",
+    "manche": "Cocobolo, rivets en fibre de carbone"
+  }
+}
