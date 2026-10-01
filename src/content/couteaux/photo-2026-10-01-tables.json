@@ -1,0 +1,17 @@
+{
+  "slug_technique": "photo-2026-10-01-tables",
+  "titre": "Tables",
+  "date": "2026-10-01",
+  "lienInstagram": "https://www.instagram.com/p/Dd9ULpuknfW/",
+  "description": "Ces couteaux de table sont façonnés dans un acier carbone XC100 réputé pour son tranchant précis et sa tenue de fil. Chaque lame présente une émouture soignée avec une ligne de trempe sélective qui souligne la géométrie de la pièce.\n\nLes manches explorent différentes matières avec du buis au grain dense, du moutouchi chaleureux et de l'olivier aux motifs contrastés. L'équilibre en main est pensé pour une découpe fluide et agréable lors des repas.",
+  "type": "couteau",
+  "format": "photo",
+  "image": "/images/couteaux/photo-2026-10-01-tables.webp",
+  "prix": 0,
+  "disponible": true,
+  "favori": false,
+  "caracteristiques": {
+    "acier": "XC100",
+    "manche": "Buis, moutouchi et olivier"
+  }
+}
