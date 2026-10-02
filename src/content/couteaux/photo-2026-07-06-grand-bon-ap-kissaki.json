@@ -8,7 +8,7 @@
   "format": "photo",
   "image": "/images/couteaux/photo-2026-07-06-grand-bon-ap-kissaki.webp",
   "prix": 260,
-  "disponible": true,
+  "disponible": false,
   "favori": false,
   "caracteristiques": {
     "acier": "C125U",
