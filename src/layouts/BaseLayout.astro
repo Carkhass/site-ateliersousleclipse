@@ -94,11 +94,11 @@ const heroSubtitle = isEn
       </nav>
       
       <div class="flex items-center space-x-4">
-        <div class="flex items-center gap-1.5 font-mono text-[16px] tracking-[0.1em] uppercase bg-surface/30 px-3 py-2 rounded-full border border-white/5 backdrop-blur-md">
-          <a href={frLink} class={`transition-all duration-300 ${!isEn ? 'text-accent font-bold scale-110' : 'text-muted hover:text-text'}`}>FR</a>
-          <span class="text-muted/20">/</span>
-          <a href={enLink} class={`transition-all duration-300 ${isEn ? 'text-accent font-bold scale-110' : 'text-muted hover:text-text'}`}>EN</a>
-        </div>
+        <div class="flex items-center gap-1 font-mono text-[11px] md:text-[14px] tracking-[0.05em] md:tracking-[0.1em] uppercase bg-surface/30 px-2 py-1 md:px-3 md:py-1.5 rounded-full border border-white/5 backdrop-blur-md shrink-0">
+  <a href={frLink} class={`transition-all duration-300 ${!isEn ? 'text-accent font-bold scale-105' : 'text-muted hover:text-text'}`}>FR</a>
+  <span class="text-muted/30 text-[10px] md:text-xs">/</span>
+  <a href={enLink} class={`transition-all duration-300 ${isEn ? 'text-accent font-bold scale-105' : 'text-muted hover:text-text'}`}>EN</a>
+</div>
 
         <button id="theme-toggle" class="text-magnify p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Changer le thème">🌙</button>
         <button id="menu-toggle" class="icon-toggle md:hidden p-2 rounded bg-surface text-text hover:text-accent transition-colors" aria-label="Ouvrir le menu">
