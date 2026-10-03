@@ -474,13 +474,80 @@ const schemaData = {
     initHamonScratcher(); // On appelle juste la fonction exportée
 
     if (lightboxInstance) lightboxInstance.destroy();
+    
     lightboxInstance = GLightbox({ 
         selector: 'a.glightbox-insta', 
         skin: 'hamon', 
         touchNavigation: true, 
         loop: true, 
         zoomable: false, 
-        draggable: true 
+        draggable: true,
+        closeOnBackdropClick: true
+    });
+
+    let isLightboxHistoryActive = false;
+
+    // 1. Quand la lightbox s'ouvre
+    lightboxInstance.on('open', () => {
+      // Ajout d'un état d'historique pour gérer la touche "Retour" d'Android/iOS
+      if (!isLightboxHistoryActive) {
+        history.pushState({ lightboxOpen: true }, '');
+        isLightboxHistoryActive = true;
+      }
+
+      // Détection du clic ou tap rapide sur mobile
+      const container = document.querySelector('.glightbox-container');
+      if (!container) return;
+
+      container.querySelectorAll('.gslide').forEach(slide => {
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchStartTime = 0;
+
+        // Début du contact
+        slide.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].clientX;
+          touchStartY = e.changedTouches[0].clientY;
+          touchStartTime = Date.now();
+        }, { passive: true });
+
+        // Fin du contact : si c'est un "tap" court (< 10px de mouvement, < 300ms)
+        slide.addEventListener('touchend', (e) => {
+          const diffX = Math.abs(e.changedTouches[0].clientX - touchStartX);
+          const diffY = Math.abs(e.changedTouches[0].clientY - touchStartY);
+          const duration = Date.now() - touchStartTime;
+
+          // Si le doigt n'a pas glissé pour faire défiler -> Fermeture
+          if (diffX < 10 && diffY < 10 && duration < 300) {
+            lightboxInstance.close();
+          }
+        });
+
+        // Clic direct pour desktop ou si le navigateur mobile le déclenche
+        slide.addEventListener('click', (e) => {
+          if (!e.target.closest('.gnext') && !e.target.closest('.gprev')) {
+            lightboxInstance.close();
+          }
+        });
+      });
+    });
+
+    // 2. Quand la lightbox se ferme (par clic, croix ou tap)
+    lightboxInstance.on('close', () => {
+      if (isLightboxHistoryActive) {
+        isLightboxHistoryActive = false;
+        if (history.state?.lightboxOpen) {
+          history.back(); // Nettoie l'entrée d'historique proprement
+        }
+      }
+    });
+
+    // 3. Si l'utilisateur utilise le bouton "Retour" de son smartphone
+    window.addEventListener('popstate', () => {
+      if (lightboxInstance && isLightboxHistoryActive) {
+        isLightboxHistoryActive = false;
+        lightboxInstance.close();
+      }
     });
   }
 
@@ -559,7 +626,7 @@ const schemaData = {
           const res = await fetch(RELAY_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ prenom, email })
+            body: JSON.stringify({ prenom, email, lang: "fr" })
           });
 
           if (!res.ok) throw new Error("Erreur serveur");
